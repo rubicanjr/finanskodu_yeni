@@ -1,30 +1,30 @@
 /*
   DESIGN: Cyber Finance About Section
-  - Founder introduction with photo placeholder
+  - Team introduction with photo
+  - Three Sabancı University Industrial Engineering graduates
   - Engineering + Finance background emphasis
-  - Personal story with professional tone
 */
 
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
-import { Linkedin, GraduationCap, Briefcase, Target, Sparkles } from "lucide-react";
+import { Linkedin, GraduationCap, Briefcase, Target, Sparkles, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const credentials = [
   {
     icon: GraduationCap,
-    title: "Endüstri Mühendisi",
-    description: "Sistem optimizasyonu ve süreç mühendisliği uzmanlığı",
+    title: "Sabancı Üniversitesi",
+    description: "Endüstri Mühendisliği mezunları",
   },
   {
     icon: Briefcase,
-    title: "Finans Profesyoneli",
-    description: "Yıllarca kurumsal finans deneyimi",
+    title: "Finans Deneyimi",
+    description: "Yıllarca kurumsal finans tecrübesi",
   },
   {
     icon: Target,
-    title: "Verimlilik Mimarı",
+    title: "Verimlilik Odaklı",
     description: "AI ve no-code araçlarla süreç otomasyonu",
   },
 ];
@@ -51,10 +51,10 @@ export default function AboutSection() {
           className="text-center mb-16"
         >
           <span className="text-primary font-mono text-sm tracking-wider mb-4 block">
-            // KURUCU
+            // EKİP
           </span>
           <h2 className="font-display font-bold text-3xl sm:text-4xl md:text-5xl mb-6">
-            Ben <span className="gradient-text">Kimim?</span>
+            Biz <span className="gradient-text">Kimiz?</span>
           </h2>
         </motion.div>
 
@@ -67,21 +67,15 @@ export default function AboutSection() {
             className="lg:col-span-2"
           >
             <div className="relative max-w-sm mx-auto lg:mx-0">
-              {/* Photo Placeholder with Glow */}
+              {/* Photo with Glow */}
               <div className="relative">
                 <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 via-transparent to-primary/10 rounded-2xl blur-xl" />
-                <div className="relative aspect-square rounded-2xl overflow-hidden glass-card neon-border">
-                  {/* Placeholder - User can add their photo */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-primary/20 flex items-center justify-center">
-                    <div className="text-center p-6">
-                      <div className="w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                        <span className="font-display font-bold text-4xl text-primary">RC</span>
-                      </div>
-                      <p className="text-sm text-muted-foreground">
-                        Fotoğraf eklenecek
-                      </p>
-                    </div>
-                  </div>
+                <div className="relative aspect-[3/4] rounded-2xl overflow-hidden glass-card neon-border">
+                  <img
+                    src="/images/team-photo.jpg"
+                    alt="Finans Kodu Ekibi"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
               </div>
 
@@ -107,34 +101,38 @@ export default function AboutSection() {
             className="lg:col-span-3"
           >
             <div className="space-y-6">
-              {/* Name & Title */}
+              {/* Team Title */}
               <div>
-                <h3 className="font-display font-bold text-2xl sm:text-3xl mb-2">
-                  Rubi Can İçliyürek
-                </h3>
+                <div className="flex items-center gap-3 mb-2">
+                  <Users className="w-6 h-6 text-primary" />
+                  <h3 className="font-display font-bold text-2xl sm:text-3xl">
+                    Finans Kodu Ekibi
+                  </h3>
+                </div>
                 <p className="text-primary font-medium">
-                  Endüstri Mühendisi & Finans Stratejisti
+                  Sabancı Üniversitesi Endüstri Mühendisleri
                 </p>
               </div>
 
               {/* Story */}
               <div className="space-y-4 text-muted-foreground leading-relaxed">
                 <p>
-                  Finans dünyasında yıllarca çalıştım. Excel tablolarında boğuldum, 
-                  manuel raporlama süreçlerinde saatlerimi harcadım. Bir gün kendime 
-                  sordum: <span className="text-foreground font-medium">"Bir mühendis olarak bu kaosun 
-                  içinde neden hâlâ bu kadar verimsiz çalışıyorum?"</span>
+                  Üç arkadaş olarak Sabancı Üniversitesi Endüstri Mühendisliği bölümünden mezun olduk. 
+                  Finans dünyasında yıllarca çalıştık. Excel tablolarında boğulduk, 
+                  manuel raporlama süreçlerinde saatlerimizi harcadık. Bir gün kendimize 
+                  sorduk: <span className="text-foreground font-medium">"Mühendisler olarak bu kaosun 
+                  içinde neden hâlâ bu kadar verimsiz çalışıyoruz?"</span>
                 </p>
                 <p>
-                  İşte o gün Finans Kodu doğdu. Endüstri mühendisliği eğitimimi, 
-                  finans tecrübemi ve yapay zeka tutkumu birleştirerek, finansçıların 
-                  hayatını kolaylaştıracak sistemler geliştirmeye başladım.
+                  İşte o gün Finans Kodu doğdu. Endüstri mühendisliği eğitimimizi, 
+                  finans tecrübemizi ve yapay zeka tutkumuzu birleştirerek, finansçıların 
+                  hayatını kolaylaştıracak sistemler geliştirmeye başladık.
                 </p>
                 <p>
                   Bugün, <span className="text-primary font-semibold">no-code araçlar</span> ve{" "}
                   <span className="text-primary font-semibold">AI destekli sistemler</span> ile 
-                  yüzlerce finans profesyonelinin operasyonel yükünü hafifletiyorum. 
-                  Çünkü inanıyorum ki, finansın karmaşıklığını çözmek için{" "}
+                  yüzlerce finans profesyonelinin operasyonel yükünü hafifletiyoruz. 
+                  Çünkü inanıyoruz ki, finansın karmaşıklığını çözmek için{" "}
                   <span className="text-foreground font-medium">mühendislik düşüncesi</span> gerekir.
                 </p>
               </div>
@@ -173,7 +171,7 @@ export default function AboutSection() {
                   <Sparkles className="w-5 h-5 text-primary shrink-0 mt-1" />
                   <p className="text-foreground italic font-display">
                     "Finansal kaosunuzu, kod yazmadan düzenli bir Mühendislik Harikası'na 
-                    dönüştürüyorum. Size zaman ve hız kazandırıyorum."
+                    dönüştürüyoruz. Size zaman ve hız kazandırıyoruz."
                   </p>
                 </div>
               </motion.div>
