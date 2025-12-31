@@ -1,25 +1,56 @@
-import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
-import { Streamdown } from 'streamdown';
+/*
+  DESIGN PHILOSOPHY: Cyber Finance - Dijital Labirent Estetiği
+  
+  Finans Kodu web sitesi - One-pager mikro site
+  - Dark mode ağırlıklı, teknolojik ve premium his
+  - Logodaki labirent ve neon ışık motifini yansıtan tasarım
+  - GEO uyumlu, mobil öncelikli, yüksek dönüşüm hedefli
+  
+  Renk Paleti:
+  - Ana: Lacivert/koyu mavi (#0D1117)
+  - Vurgu: Neon cyan (#00D4FF)
+  - Metin: Beyaz/gri tonları
+  
+  Tipografi:
+  - Başlıklar: Space Grotesk
+  - Gövde: Inter
+  - Teknik: JetBrains Mono
+*/
 
-/**
- * All content in this page are only for example, replace with your own feature implementation
- * When building pages, remember your instructions in Frontend Best Practices, Design Guide and Common Pitfalls
- */
+import Navigation from "@/components/Navigation";
+import HeroSection from "@/components/HeroSection";
+import ManifestoSection from "@/components/ManifestoSection";
+import ProductsSection from "@/components/ProductsSection";
+import TestimonialsSection from "@/components/TestimonialsSection";
+import AboutSection from "@/components/AboutSection";
+import Footer from "@/components/Footer";
+
 export default function Home() {
-  // If theme is switchable in App.tsx, we can implement theme toggling like this:
-  // const { theme, toggleTheme } = useTheme();
-
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      {/* Navigation */}
+      <Navigation />
+
+      {/* Main Content */}
       <main>
-        {/* Example: lucide-react for icons */}
-        <Loader2 className="animate-spin" />
-        Example Page
-        {/* Example: Streamdown for markdown rendering */}
-        <Streamdown>Any **markdown** content</Streamdown>
-        <Button variant="default">Example Button</Button>
+        {/* Hero Section */}
+        <HeroSection />
+
+        {/* Manifesto - Problem & Solution */}
+        <ManifestoSection />
+
+        {/* Products Showcase */}
+        <ProductsSection />
+
+        {/* Testimonials / Social Proof */}
+        <TestimonialsSection />
+
+        {/* About the Founder */}
+        <AboutSection />
       </main>
+
+      {/* Footer & Contact */}
+      <Footer />
     </div>
   );
 }
