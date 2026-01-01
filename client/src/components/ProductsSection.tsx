@@ -3,6 +3,7 @@
   - Glassmorphism product cards
   - Hover effects with neon glow
   - Grid layout with featured product
+  - All products link to Shopier
 */
 
 import { motion } from "framer-motion";
@@ -10,7 +11,8 @@ import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { ExternalLink, Sparkles, BookOpen, Lightbulb, Layers, ArrowUpRight, LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
+
+const SHOPIER_URL = "https://www.shopier.com/finanskodu";
 
 interface Product {
   id: number;
@@ -61,13 +63,17 @@ const products: Product[] = [
   },
 ];
 
-function ProductCard({ product, onClick }: { product: Product; onClick: () => void }) {
+function ProductCard({ product }: { product: Product }) {
   const IconComponent = product.icon;
+  
+  const handleClick = () => {
+    window.open(SHOPIER_URL, "_blank");
+  };
   
   return (
     <div
       className="group relative h-full glass-card rounded-2xl p-6 border border-border hover:border-primary/30 transition-all duration-300 cursor-pointer"
-      onClick={onClick}
+      onClick={handleClick}
     >
       {/* Badge */}
       {product.badge && (
@@ -112,13 +118,17 @@ function ProductCard({ product, onClick }: { product: Product; onClick: () => vo
   );
 }
 
-function FeaturedProductCard({ product, onClick }: { product: Product; onClick: () => void }) {
+function FeaturedProductCard({ product }: { product: Product }) {
   const IconComponent = product.icon;
+  
+  const handleClick = () => {
+    window.open(SHOPIER_URL, "_blank");
+  };
   
   return (
     <div
       className="group relative h-full glass-card rounded-2xl p-8 border border-primary/20 hover:border-primary/40 transition-all duration-300 cursor-pointer overflow-hidden"
-      onClick={onClick}
+      onClick={handleClick}
     >
       {/* Glow Effect */}
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
@@ -165,6 +175,10 @@ function FeaturedProductCard({ product, onClick }: { product: Product; onClick: 
           {/* CTA */}
           <Button
             className="bg-primary text-primary-foreground hover:bg-primary/90 neon-glow font-display font-semibold group/btn shrink-0"
+            onClick={(e) => {
+              e.stopPropagation();
+              window.open(SHOPIER_URL, "_blank");
+            }}
           >
             İncele
             <ArrowUpRight className="ml-2 w-4 h-4 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
@@ -178,10 +192,6 @@ function FeaturedProductCard({ product, onClick }: { product: Product; onClick: 
 export default function ProductsSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  const handleProductClick = (productTitle: string) => {
-    toast.info(`"${productTitle}" ürün sayfası yakında aktif olacak. LinkedIn üzerinden satın alabilirsiniz.`);
-  };
 
   const featuredProduct = products[0];
   const otherProducts = products.slice(1);
@@ -223,10 +233,7 @@ export default function ProductsSection() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="md:col-span-2 lg:col-span-2"
           >
-            <FeaturedProductCard 
-              product={featuredProduct} 
-              onClick={() => handleProductClick(featuredProduct.title)} 
-            />
+            <FeaturedProductCard product={featuredProduct} />
           </motion.div>
 
           {/* Other Products */}
@@ -237,10 +244,7 @@ export default function ProductsSection() {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
             >
-              <ProductCard 
-                product={product} 
-                onClick={() => handleProductClick(product.title)} 
-              />
+              <ProductCard product={product} />
             </motion.div>
           ))}
         </div>
@@ -253,15 +257,15 @@ export default function ProductsSection() {
           className="mt-12 text-center"
         >
           <p className="text-muted-foreground mb-4">
-            Tüm ürünler LinkedIn üzerinden satın alınabilir
+            Tüm ürünleri Shopier mağazamızdan satın alabilirsiniz
           </p>
           <Button
             variant="outline"
             size="lg"
             className="border-border hover:border-primary hover:text-primary font-display bg-transparent"
-            onClick={() => window.open("https://www.linkedin.com/in/rubi-can-icliyurek/", "_blank")}
+            onClick={() => window.open(SHOPIER_URL, "_blank")}
           >
-            LinkedIn'de İncele
+            Shopier Mağazamız
             <ExternalLink className="ml-2 w-4 h-4" />
           </Button>
         </motion.div>
