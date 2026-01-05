@@ -1,9 +1,11 @@
 /*
   DESIGN: Cyber Finance Products Section
-  - Glassmorphism product cards
-  - Hover effects with neon glow
-  - Grid layout with featured product
-  - All products link to Shopier
+  GEO OPTIMIZED: Semantic HTML with <section>, <article> for each product
+  
+  - Glassmorphism product cards wrapped in <article>
+  - Secure external links with target="_blank" rel="noopener noreferrer"
+  - Lazy loading for images
+  - Machine-readable product structure
 */
 
 import { motion } from "framer-motion";
@@ -66,14 +68,12 @@ const products: Product[] = [
 function ProductCard({ product }: { product: Product }) {
   const IconComponent = product.icon;
   
-  const handleClick = () => {
-    window.open(SHOPIER_URL, "_blank");
-  };
-  
   return (
-    <div
-      className="group relative h-full glass-card rounded-2xl p-6 border border-border hover:border-primary/30 transition-all duration-300 cursor-pointer"
-      onClick={handleClick}
+    <article
+      className="group relative h-full glass-card rounded-2xl p-6 border border-border hover:border-primary/30 transition-all duration-300"
+      itemScope
+      itemType="https://schema.org/Product"
+      aria-labelledby={`product-title-${product.id}`}
     >
       {/* Badge */}
       {product.badge && (
@@ -86,52 +86,61 @@ function ProductCard({ product }: { product: Product }) {
 
       {/* Icon */}
       <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-        <IconComponent className="w-6 h-6 text-primary" />
+        <IconComponent className="w-6 h-6 text-primary" aria-hidden="true" />
       </div>
 
       {/* Title & Description */}
-      <h3 className="font-display font-bold text-xl mb-2 group-hover:text-primary transition-colors">
+      <h3 
+        id={`product-title-${product.id}`}
+        className="font-display font-bold text-xl mb-2 group-hover:text-primary transition-colors"
+        itemProp="name"
+      >
         {product.title}
       </h3>
-      <p className="text-muted-foreground text-sm mb-4">
+      <p className="text-muted-foreground text-sm mb-4" itemProp="description">
         {product.description}
       </p>
 
       {/* Features */}
-      <div className="flex flex-wrap gap-1.5 mb-4">
+      <ul className="flex flex-wrap gap-1.5 mb-4" aria-label={`${product.title} özellikleri`}>
         {product.features.map((feature, idx) => (
-          <span
+          <li
             key={idx}
             className="px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground text-xs"
           >
             {feature}
-          </span>
+          </li>
         ))}
-      </div>
+      </ul>
 
-      {/* Link */}
-      <div className="flex items-center gap-1 text-primary text-sm font-medium group-hover:gap-2 transition-all">
+      {/* Link - Secure external link */}
+      <a 
+        href={SHOPIER_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-1 text-primary text-sm font-medium group-hover:gap-2 transition-all"
+        itemProp="url"
+        aria-label={`${product.title} detaylarını Shopier'de gör`}
+      >
         <span>Detayları Gör</span>
-        <ExternalLink className="w-4 h-4" />
-      </div>
-    </div>
+        <ExternalLink className="w-4 h-4" aria-hidden="true" />
+      </a>
+    </article>
   );
 }
 
 function FeaturedProductCard({ product }: { product: Product }) {
   const IconComponent = product.icon;
   
-  const handleClick = () => {
-    window.open(SHOPIER_URL, "_blank");
-  };
-  
   return (
-    <div
-      className="group relative h-full glass-card rounded-2xl p-8 border border-primary/20 hover:border-primary/40 transition-all duration-300 cursor-pointer overflow-hidden"
-      onClick={handleClick}
+    <article
+      className="group relative h-full glass-card rounded-2xl p-8 border border-primary/20 hover:border-primary/40 transition-all duration-300 overflow-hidden"
+      itemScope
+      itemType="https://schema.org/Product"
+      aria-labelledby={`featured-product-title-${product.id}`}
     >
       {/* Glow Effect */}
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" aria-hidden="true">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent" />
       </div>
 
@@ -139,7 +148,7 @@ function FeaturedProductCard({ product }: { product: Product }) {
         {/* Badge */}
         {product.badge && (
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 mb-6">
-            <Sparkles className="w-3.5 h-3.5 text-primary" />
+            <Sparkles className="w-3.5 h-3.5 text-primary" aria-hidden="true" />
             <span className="text-xs font-semibold text-primary">{product.badge}</span>
           </div>
         )}
@@ -148,44 +157,53 @@ function FeaturedProductCard({ product }: { product: Product }) {
           <div className="flex-1">
             {/* Icon */}
             <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-              <IconComponent className="w-7 h-7 text-primary" />
+              <IconComponent className="w-7 h-7 text-primary" aria-hidden="true" />
             </div>
 
             {/* Title & Description */}
-            <h3 className="font-display font-bold text-2xl mb-3 group-hover:text-primary transition-colors">
+            <h3 
+              id={`featured-product-title-${product.id}`}
+              className="font-display font-bold text-2xl mb-3 group-hover:text-primary transition-colors"
+              itemProp="name"
+            >
               {product.title}
             </h3>
-            <p className="text-muted-foreground mb-6 max-w-lg">
+            <p className="text-muted-foreground mb-6 max-w-lg" itemProp="description">
               {product.description}
             </p>
 
             {/* Features */}
-            <div className="flex flex-wrap gap-2 mb-6">
+            <ul className="flex flex-wrap gap-2 mb-6" aria-label={`${product.title} özellikleri`}>
               {product.features.map((feature, idx) => (
-                <span
+                <li
                   key={idx}
                   className="px-3 py-1 rounded-full bg-secondary text-secondary-foreground text-sm"
                 >
                   {feature}
-                </span>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
 
-          {/* CTA */}
+          {/* CTA - Secure external link */}
           <Button
+            asChild
             className="bg-primary text-primary-foreground hover:bg-primary/90 neon-glow font-display font-semibold group/btn shrink-0"
-            onClick={(e) => {
-              e.stopPropagation();
-              window.open(SHOPIER_URL, "_blank");
-            }}
           >
-            İncele
-            <ArrowUpRight className="ml-2 w-4 h-4 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+            <a 
+              href={SHOPIER_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              itemProp="url"
+              aria-label={`${product.title} ürününü Shopier'de incele`}
+            >
+              İncele
+              <ArrowUpRight className="ml-2 w-4 h-4 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" aria-hidden="true" />
+            </a>
           </Button>
         </div>
       </div>
-    </div>
+    </article>
   );
 }
 
@@ -197,17 +215,23 @@ export default function ProductsSection() {
   const otherProducts = products.slice(1);
 
   return (
-    <section id="urunler" className="relative py-24 overflow-hidden">
+    <section 
+      id="urunler" 
+      className="relative py-24 overflow-hidden"
+      aria-labelledby="products-heading"
+    >
       {/* Background */}
       <div
         className="absolute inset-0 bg-cover bg-center opacity-30"
         style={{ backgroundImage: "url('/images/products-bg.jpg')" }}
+        role="img"
+        aria-label="Ürünler bölümü arka planı"
       />
       <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background" />
 
       <div className="container relative z-10" ref={ref}>
         {/* Section Header */}
-        <motion.div
+        <motion.header
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
@@ -216,13 +240,13 @@ export default function ProductsSection() {
           <span className="text-primary font-mono text-sm tracking-wider mb-4 block">
             // DİJİTAL VİTRİN
           </span>
-          <h2 className="font-display font-bold text-3xl sm:text-4xl md:text-5xl mb-6">
+          <h2 id="products-heading" className="font-display font-bold text-3xl sm:text-4xl md:text-5xl mb-6">
             Dijital <span className="gradient-text">Ürünler</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Finansal verimliliğinizi artıracak, özenle hazırlanmış dijital ürün koleksiyonumuz
           </p>
-        </motion.div>
+        </motion.header>
 
         {/* Products Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -250,25 +274,33 @@ export default function ProductsSection() {
         </div>
 
         {/* Bottom CTA */}
-        <motion.div
+        <motion.nav
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mt-12 text-center"
+          aria-label="Mağaza bağlantısı"
         >
           <p className="text-muted-foreground mb-4">
             Tüm ürünleri Shopier mağazamızdan satın alabilirsiniz
           </p>
           <Button
+            asChild
             variant="outline"
             size="lg"
             className="border-border hover:border-primary hover:text-primary font-display bg-transparent"
-            onClick={() => window.open(SHOPIER_URL, "_blank")}
           >
-            Shopier Mağazamız
-            <ExternalLink className="ml-2 w-4 h-4" />
+            <a 
+              href={SHOPIER_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Shopier mağazamızı ziyaret et"
+            >
+              Shopier Mağazamız
+              <ExternalLink className="ml-2 w-4 h-4" aria-hidden="true" />
+            </a>
           </Button>
-        </motion.div>
+        </motion.nav>
       </div>
     </section>
   );

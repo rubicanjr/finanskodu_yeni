@@ -1,8 +1,11 @@
 /*
   DESIGN: Cyber Finance About Section
-  - Team introduction without photo
-  - Three Sabancı University Industrial Engineering graduates
-  - Engineering + Finance background emphasis
+  GEO OPTIMIZED: E-E-A-T (Expertise, Experience, Authoritativeness, Trustworthiness)
+  
+  - Semantic HTML with <section>, <article>
+  - Founder name and credentials prominently displayed
+  - Schema.org Person markup
+  - Sabancı University Industrial Engineering emphasis
 */
 
 import { motion } from "framer-motion";
@@ -34,17 +37,23 @@ export default function AboutSection() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="hakkimda" className="relative py-24 overflow-hidden">
+    <section 
+      id="hakkimda" 
+      className="relative py-24 overflow-hidden"
+      aria-labelledby="about-heading"
+    >
       {/* Background */}
       <div
         className="absolute inset-0 bg-cover bg-center opacity-20"
         style={{ backgroundImage: "url('/images/founder-bg.jpg')" }}
+        role="img"
+        aria-label="Ekip bölümü arka planı"
       />
       <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background" />
 
       <div className="container relative z-10" ref={ref}>
         {/* Section Header */}
-        <motion.div
+        <motion.header
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
@@ -53,57 +62,62 @@ export default function AboutSection() {
           <span className="text-primary font-mono text-sm tracking-wider mb-4 block">
             // EKİP
           </span>
-          <h2 className="font-display font-bold text-3xl sm:text-4xl md:text-5xl mb-6">
+          <h2 id="about-heading" className="font-display font-bold text-3xl sm:text-4xl md:text-5xl mb-6">
             Biz <span className="gradient-text">Kimiz?</span>
           </h2>
-        </motion.div>
+        </motion.header>
 
-        {/* Content - Centered without photo */}
-        <motion.div
+        {/* Content - Article with Person Schema */}
+        <motion.article
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="max-w-3xl mx-auto"
+          itemScope
+          itemType="https://schema.org/Person"
+          aria-labelledby="founder-name"
         >
           <div className="space-y-6">
-            {/* Team Title */}
-            <div className="text-center">
+            {/* Founder/Team Title - E-E-A-T Optimized */}
+            <header className="text-center">
               <div className="flex items-center justify-center gap-3 mb-2">
-                <Users className="w-6 h-6 text-primary" />
-                <h3 className="font-display font-bold text-2xl sm:text-3xl">
+                <Users className="w-6 h-6 text-primary" aria-hidden="true" />
+                <h3 id="founder-name" className="font-display font-bold text-2xl sm:text-3xl" itemProp="name">
                   Finans Kodu Ekibi
                 </h3>
               </div>
-              <p className="text-primary font-medium">
+              <p className="text-primary font-medium" itemProp="jobTitle">
                 Sabancı Üniversitesi Endüstri Mühendisleri
               </p>
-            </div>
+              <meta itemProp="alumniOf" content="Sabancı Üniversitesi" />
+              <meta itemProp="knowsAbout" content="Artificial Intelligence, Financial Operations, B2B Strategy, Industrial Engineering" />
+            </header>
 
-            {/* Story */}
-            <div className="space-y-4 text-muted-foreground leading-relaxed text-center">
+            {/* Story - Semantic paragraphs */}
+            <div className="space-y-4 text-muted-foreground leading-relaxed text-center" itemProp="description">
               <p>
-                Üç arkadaş olarak Sabancı Üniversitesi Endüstri Mühendisliği bölümünden mezun olduk. 
+                Üç arkadaş olarak <strong>Sabancı Üniversitesi Endüstri Mühendisliği</strong> bölümünden mezun olduk. 
                 Finans dünyasında yıllarca çalıştık. Excel tablolarında boğulduk, 
                 manuel raporlama süreçlerinde saatlerimizi harcadık. Bir gün kendimize 
-                sorduk: <span className="text-foreground font-medium">"Mühendisler olarak bu kaosun 
-                içinde neden hâlâ bu kadar verimsiz çalışıyoruz?"</span>
+                sorduk: <em className="text-foreground font-medium not-italic">"Mühendisler olarak bu kaosun 
+                içinde neden hâlâ bu kadar verimsiz çalışıyoruz?"</em>
               </p>
               <p>
-                İşte o gün Finans Kodu doğdu. Endüstri mühendisliği eğitimimizi, 
-                finans tecrübemizi ve yapay zeka tutkumuzu birleştirerek, finansçıların 
+                İşte o gün <strong>Finans Kodu</strong> doğdu. <strong>Endüstri mühendisliği</strong> eğitimimizi, 
+                finans tecrübemizi ve <strong>yapay zeka</strong> tutkumuzu birleştirerek, finansçıların 
                 hayatını kolaylaştıracak sistemler geliştirmeye başladık.
               </p>
               <p>
-                Bugün, <span className="text-primary font-semibold">no-code araçlar</span> ve{" "}
-                <span className="text-primary font-semibold">AI destekli sistemler</span> ile 
+                Bugün, <strong className="text-primary">no-code araçlar</strong> ve{" "}
+                <strong className="text-primary">AI destekli sistemler</strong> ile 
                 yüzlerce finans profesyonelinin operasyonel yükünü hafifletiyoruz. 
                 Çünkü inanıyoruz ki, finansın karmaşıklığını çözmek için{" "}
-                <span className="text-foreground font-medium">mühendislik düşüncesi</span> gerekir.
+                <em className="text-foreground font-medium not-italic">mühendislik düşüncesi</em> gerekir.
               </p>
             </div>
 
-            {/* Credentials */}
-            <div className="grid sm:grid-cols-3 gap-4 pt-6">
+            {/* Credentials - Description List */}
+            <dl className="grid sm:grid-cols-3 gap-4 pt-6" aria-label="Ekip yetkinlikleri">
               {credentials.map((cred, index) => (
                 <motion.div
                   key={index}
@@ -113,47 +127,55 @@ export default function AboutSection() {
                   className="glass-card rounded-xl p-4 text-center"
                 >
                   <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mx-auto mb-3">
-                    <cred.icon className="w-5 h-5 text-primary" />
+                    <cred.icon className="w-5 h-5 text-primary" aria-hidden="true" />
                   </div>
-                  <h4 className="font-display font-semibold text-sm mb-1">
+                  <dt className="font-display font-semibold text-sm mb-1">
                     {cred.title}
-                  </h4>
-                  <p className="text-xs text-muted-foreground">
+                  </dt>
+                  <dd className="text-xs text-muted-foreground">
                     {cred.description}
-                  </p>
+                  </dd>
                 </motion.div>
               ))}
-            </div>
+            </dl>
 
-            {/* Quote */}
-            <motion.div
+            {/* Quote - Blockquote */}
+            <motion.figure
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.4, delay: 0.7 }}
               className="pt-6 border-t border-border/30"
             >
               <div className="flex items-start justify-center gap-3">
-                <Sparkles className="w-5 h-5 text-primary shrink-0 mt-1" />
-                <p className="text-foreground italic font-display text-center max-w-xl">
+                <Sparkles className="w-5 h-5 text-primary shrink-0 mt-1" aria-hidden="true" />
+                <blockquote className="text-foreground italic font-display text-center max-w-xl">
                   "Finansal kaosunuzu, kod yazmadan düzenli bir Mühendislik Harikası'na 
                   dönüştürüyoruz. Size zaman ve hız kazandırıyoruz."
-                </p>
+                </blockquote>
               </div>
-            </motion.div>
+            </motion.figure>
 
-            {/* Social Link */}
-            <div className="pt-6 text-center">
+            {/* Social Link - Secure external link */}
+            <nav className="pt-6 text-center" aria-label="Sosyal medya bağlantıları">
               <Button
+                asChild
                 variant="outline"
                 className="border-border hover:border-primary hover:text-primary bg-transparent"
-                onClick={() => window.open("https://www.linkedin.com/in/rubi-can-icliyurek/", "_blank")}
               >
-                <Linkedin className="w-4 h-4 mr-2" />
-                LinkedIn'de Bağlan
+                <a 
+                  href="https://www.linkedin.com/in/rubi-can-icliyurek/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  itemProp="sameAs"
+                  aria-label="LinkedIn profilimizi ziyaret et"
+                >
+                  <Linkedin className="w-4 h-4 mr-2" aria-hidden="true" />
+                  LinkedIn'de Bağlan
+                </a>
               </Button>
-            </div>
+            </nav>
           </div>
-        </motion.div>
+        </motion.article>
       </div>
     </section>
   );

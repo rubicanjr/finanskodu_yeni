@@ -1,8 +1,12 @@
 /*
   DESIGN: Cyber Finance Navigation
+  GEO OPTIMIZED: Semantic HTML with <nav>, ARIA labels
+  
   - Floating glassmorphism navbar
   - Logo + nav links + CTA
   - Scroll-triggered background opacity
+  - Mobile-friendly with thumb zone optimization
+  - Lazy loading for logo image
 */
 
 import { useState, useEffect } from "react";
@@ -43,21 +47,27 @@ export default function Navigation() {
           ? "glass py-3"
           : "bg-transparent py-5"
       }`}
+      role="navigation"
+      aria-label="Ana navigasyon"
     >
       <div className="container flex items-center justify-between">
-        {/* Logo */}
+        {/* Logo - Home link */}
         <a
-          href="#"
+          href="#hero"
           onClick={(e) => {
             e.preventDefault();
             window.scrollTo({ top: 0, behavior: "smooth" });
           }}
           className="flex items-center gap-3 group"
+          aria-label="Finans Kodu - Ana sayfaya dön"
         >
           <img
             src="/images/logo.jpg"
             alt="Finans Kodu Logo"
             className="w-10 h-10 rounded-full object-cover ring-2 ring-primary/30 group-hover:ring-primary/60 transition-all"
+            loading="lazy"
+            width="40"
+            height="40"
           />
           <span className="font-display font-bold text-xl text-foreground group-hover:text-primary transition-colors">
             Finans Kodu
@@ -65,12 +75,14 @@ export default function Navigation() {
         </a>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-8" role="menubar">
           {navLinks.map((link) => (
             <button
               key={link.href}
               onClick={() => scrollToSection(link.href)}
               className="text-muted-foreground hover:text-primary transition-colors font-medium text-sm tracking-wide"
+              role="menuitem"
+              aria-label={`${link.label} bölümüne git`}
             >
               {link.label}
             </button>
@@ -78,6 +90,7 @@ export default function Navigation() {
           <Button
             onClick={() => scrollToSection("#urunler")}
             className="bg-primary text-primary-foreground hover:bg-primary/90 neon-glow font-display font-semibold"
+            aria-label="Dijital ürün koleksiyonlarını incele"
           >
             Koleksiyonları İncele
           </Button>
@@ -87,28 +100,39 @@ export default function Navigation() {
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           className="md:hidden p-2 text-foreground hover:text-primary transition-colors"
-          aria-label="Toggle menu"
+          aria-label={isMobileMenuOpen ? "Menüyü kapat" : "Menüyü aç"}
+          aria-expanded={isMobileMenuOpen}
+          aria-controls="mobile-menu"
         >
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          {isMobileMenuOpen ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
         </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - Thumb Zone Optimized */}
       {isMobileMenuOpen && (
-        <div className="md:hidden glass mt-2 mx-4 rounded-lg p-4 animate-in fade-in slide-in-from-top-2 duration-200">
+        <div 
+          id="mobile-menu"
+          className="md:hidden glass mt-2 mx-4 rounded-lg p-4 animate-in fade-in slide-in-from-top-2 duration-200"
+          role="menu"
+          aria-label="Mobil navigasyon menüsü"
+        >
           <div className="flex flex-col gap-4">
             {navLinks.map((link) => (
               <button
                 key={link.href}
                 onClick={() => scrollToSection(link.href)}
                 className="text-muted-foreground hover:text-primary transition-colors font-medium text-left py-2"
+                role="menuitem"
+                aria-label={`${link.label} bölümüne git`}
               >
                 {link.label}
               </button>
             ))}
+            {/* CTA Button - Positioned for thumb reach on mobile */}
             <Button
               onClick={() => scrollToSection("#urunler")}
               className="bg-primary text-primary-foreground hover:bg-primary/90 neon-glow font-display font-semibold w-full mt-2"
+              aria-label="Dijital ürün koleksiyonlarını incele"
             >
               Koleksiyonları İncele
             </Button>
