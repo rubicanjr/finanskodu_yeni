@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 const navLinks = [
   { href: "#manifesto", label: "Manifesto" },
   { href: "#urunler", label: "Ürünler" },
+  { href: "#blog", label: "Blog" },
   { href: "#hakkimda", label: "Hakkımda" },
   { href: "#iletisim", label: "İletişim" },
 ];

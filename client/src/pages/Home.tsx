@@ -11,7 +11,7 @@
   - <header> for hero section (contains h1)
   - <main> for primary content
   - <section> for each content block
-  - <article> for products and testimonials
+  - <article> for products, testimonials, and blog posts
   - <footer> for contact and links
   
   Renk Paleti:
@@ -31,6 +31,7 @@ import ManifestoSection from "@/components/ManifestoSection";
 import ProductsSection from "@/components/ProductsSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import AboutSection from "@/components/AboutSection";
+import BlogSection from "@/components/BlogSection";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -57,6 +58,9 @@ export default function Home() {
 
         {/* Products Showcase - Each product in <article> */}
         <ProductsSection />
+
+        {/* Blog - Articles and insights */}
+        <BlogSection />
 
         {/* Testimonials / Social Proof - <figure> with <blockquote> */}
         <TestimonialsSection />
