@@ -1,6 +1,7 @@
 /*
   DESIGN: Cyber Finance Hero Section
   GEO OPTIMIZED: Semantic HTML with <header> and <h1>
+  CRO OPTIMIZED: Benefit-focused copy, social proof, clear CTA
   
   - Full viewport height with labyrinth background
   - Strong headline with gradient text
@@ -9,7 +10,7 @@
 */
 
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles, Code2, Brain, Clock, Zap } from "lucide-react";
+import { ArrowRight, Sparkles, Code2, Brain, Clock, Zap, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const stats = [
@@ -75,29 +76,27 @@ export default function HeroSection() {
             </span>
           </motion.div>
 
-          {/* Main Heading - H1 for SEO/GEO */}
+          {/* Main Heading - H1 for SEO/GEO - CRO Optimized */}
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="font-display font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight mb-6"
           >
-            Finansal Operasyonlarınızı{" "}
+            Finans Profesyonelleri İçin{" "}
             <span className="gradient-text neon-text">Yapay Zeka</span>{" "}
-            Hızıyla Yönetin
+            Asistanı
           </motion.h1>
 
-          {/* Subheading with semantic emphasis */}
+          {/* Subheading - CRO Optimized: Benefit-focused copy */}
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
           >
-            <strong>Endüstri Mühendisliği</strong> disiplinini, <strong>Finansal Operasyonlar</strong> ve{" "}
-            <strong>Yapay Zeka</strong> teknolojileriyle birleştiriyoruz. Finansal kaosunuzu, kod yazmadan 
-            düzenli bir <em className="text-primary font-semibold not-italic">Mühendislik Harikası</em>'na 
-            dönüştürüyoruz.
+            Excel'de saatler süren analizleri dakikalara indiren hazır promptlar, şablonlar ve stratejiler.{" "}
+            <em className="text-primary font-semibold not-italic">Kaos bitti, düzen başladı.</em>
           </motion.p>
 
           {/* CTA Buttons - Thumb Zone Optimized */}
@@ -112,9 +111,9 @@ export default function HeroSection() {
               size="lg"
               onClick={scrollToProducts}
               className="bg-primary text-primary-foreground hover:bg-primary/90 neon-glow font-display font-semibold text-lg px-8 py-6 group"
-              aria-label="Dijital ürün koleksiyonlarını incele"
+              aria-label="Dijital ürünleri keşfet"
             >
-              Koleksiyonları İncele
+              Dijital Ürünleri Keşfet
               <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
             </Button>
             <Button
@@ -128,11 +127,24 @@ export default function HeroSection() {
             </Button>
           </motion.nav>
 
+          {/* Social Proof Micro-Copy - Trust Signal */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="mt-6 flex items-center justify-center gap-2"
+          >
+            <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" aria-hidden="true" />
+            <span className="text-sm text-muted-foreground/80">
+              500+ Finans Profesyoneli Tarafından Kullanılıyor
+            </span>
+          </motion.div>
+
           {/* Stats with semantic list */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
             className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto mt-16 pt-16 border-t border-border/30"
             role="list"
             aria-label="Platform özellikleri"
@@ -142,7 +154,7 @@ export default function HeroSection() {
                 key={index}
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4, delay: 0.5 + index * 0.1 }}
+                transition={{ duration: 0.4, delay: 0.6 + index * 0.1 }}
                 className="glass-card rounded-xl p-4 text-center"
                 role="listitem"
               >

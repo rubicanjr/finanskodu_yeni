@@ -1,11 +1,21 @@
 /*
   DESIGN PHILOSOPHY: Cyber Finance - Dijital Labirent Estetiği
   GEO OPTIMIZED: Generative Engine Optimization Standards
+  CRO OPTIMIZED: Sales Funnel Section Ordering
   
   Finans Kodu web sitesi - One-pager mikro site
   - Dark mode ağırlıklı, teknolojik ve premium his
   - Logodaki labirent ve neon ışık motifini yansıtan tasarım
   - GEO uyumlu, mobil öncelikli, yüksek dönüşüm hedefli
+  
+  Section Order (CRO Optimized Sales Funnel):
+  1. Hero Section - Attention & Interest
+  2. Products - Immediate Value Proposition
+  3. Manifesto - Story & Vision
+  4. Blog - Content & Authority
+  5. Testimonials - Social Proof
+  6. About - Trust & Credibility
+  7. Footer - Contact & Conversion
   
   Semantic Structure:
   - <header> for hero section (contains h1)
@@ -27,11 +37,11 @@
 
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
-import ManifestoSection from "@/components/ManifestoSection";
 import ProductsSection from "@/components/ProductsSection";
+import ManifestoSection from "@/components/ManifestoSection";
+import BlogSection from "@/components/BlogSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import AboutSection from "@/components/AboutSection";
-import BlogSection from "@/components/BlogSection";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -49,27 +59,34 @@ export default function Home() {
       <Navigation />
 
       {/* Hero Section - Contains the main <header> with <h1> */}
+      {/* CRO: Attention & Interest - First impression */}
       <HeroSection />
 
       {/* Main Content Area */}
       <main id="main-content" role="main">
-        {/* Manifesto - Problem & Solution with <dl> structure */}
-        <ManifestoSection />
-
         {/* Products Showcase - Each product in <article> */}
+        {/* CRO: Immediate Value Proposition - Show products right after hero */}
         <ProductsSection />
 
+        {/* Manifesto - Problem & Solution with <dl> structure */}
+        {/* CRO: Story & Vision - Build emotional connection */}
+        <ManifestoSection />
+
         {/* Blog - Articles and insights */}
+        {/* CRO: Content & Authority - Demonstrate expertise */}
         <BlogSection />
 
         {/* Testimonials / Social Proof - <figure> with <blockquote> */}
+        {/* CRO: Social Proof - Build trust through others */}
         <TestimonialsSection />
 
         {/* About the Team - E-E-A-T optimized */}
+        {/* CRO: Trust & Credibility - Human connection */}
         <AboutSection />
       </main>
 
       {/* Footer & Contact - Contains <address> for contact info */}
+      {/* CRO: Final Conversion Point */}
       <Footer />
     </div>
   );

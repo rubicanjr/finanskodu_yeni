@@ -14,8 +14,8 @@ import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const navLinks = [
-  { href: "#manifesto", label: "Manifesto" },
   { href: "#urunler", label: "Ürünler" },
+  { href: "#manifesto", label: "Manifesto" },
   { href: "#blog", label: "Blog" },
   { href: "#hakkimda", label: "Hakkımda" },
   { href: "#iletisim", label: "İletişim" },
@@ -91,9 +91,9 @@ export default function Navigation() {
           <Button
             onClick={() => scrollToSection("#urunler")}
             className="bg-primary text-primary-foreground hover:bg-primary/90 neon-glow font-display font-semibold"
-            aria-label="Dijital ürün koleksiyonlarını incele"
+            aria-label="Dijital ürünleri keşfet"
           >
-            Koleksiyonları İncele
+            Dijital Ürünleri Keşfet
           </Button>
         </div>
 
@@ -133,9 +133,9 @@ export default function Navigation() {
             <Button
               onClick={() => scrollToSection("#urunler")}
               className="bg-primary text-primary-foreground hover:bg-primary/90 neon-glow font-display font-semibold w-full mt-2"
-              aria-label="Dijital ürün koleksiyonlarını incele"
+              aria-label="Dijital ürünleri keşfet"
             >
-              Koleksiyonları İncele
+              Dijital Ürünleri Keşfet
             </Button>
           </div>
         </div>
