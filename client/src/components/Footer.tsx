@@ -55,7 +55,7 @@ const socialLinks = [
 const quickLinks = [
   { label: "Manifesto", href: "#manifesto" },
   { label: "Ürünler", href: "#urunler" },
-  { label: "Hakkımda", href: "#hakkimda" },
+  { label: "Hakkımızda", href: "#hakkimda" },
 ];
 
 export default function Footer() {
@@ -163,7 +163,7 @@ export default function Footer() {
                 birleştiren verimlilik platformu.
               </p>
               <p className="mt-2">
-                Kurucu: <a 
+                Kurucu Stratejist: <a 
                   href="https://www.linkedin.com/in/rubi-can-icliyurek/" 
                   target="_blank" 
                   rel="noopener noreferrer"

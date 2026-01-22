@@ -1,218 +1,128 @@
 /*
   DESIGN: Cyber Finance Products Section
-  GEO OPTIMIZED: Semantic HTML with <section>, <article> for each product
+  GEO OPTIMIZED: Semantic HTML with <section>, <article>
   
-  - Glassmorphism product cards wrapped in <article>
-  - Secure external links with target="_blank" rel="noopener noreferrer"
-  - Lazy loading for images
-  - Machine-readable product structure
+  - 10 products in responsive 3-4 column grid
+  - External links open in new tab with security attributes
+  - Product disclaimer note below each description
+  - Neon glow effects on hover
 */
 
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
-import { ExternalLink, Sparkles, BookOpen, Lightbulb, Layers, ArrowUpRight, LucideIcon } from "lucide-react";
+import { 
+  ExternalLink, 
+  Layers, 
+  Brain, 
+  LayoutDashboard, 
+  Package, 
+  BookOpen, 
+  Crown, 
+  Users, 
+  UserCheck, 
+  TrendingUp,
+  Calendar,
+  LucideIcon
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-const SHOPIER_URL = "https://www.shopier.com/finanskodu";
 
 interface Product {
   id: number;
   title: string;
   description: string;
   icon: LucideIcon;
-  featured: boolean;
-  badge: string | null;
-  features: string[];
+  link: string;
+  badge?: string;
+  badgeColor?: string;
 }
 
 const products: Product[] = [
   {
     id: 1,
-    title: "Finans Kodu Koleksiyonu",
-    description: "Finansal operasyonlarınızı dönüştürecek kapsamlı şablon ve otomasyon seti. Excel'den kurtulun, verimliliğe geçin.",
+    title: "FİNANS KODU: Kaos İçinde Düzen",
+    description: "Finansal operasyonlarınızı dönüştürecek kapsamlı metodoloji ve araç seti.",
     icon: Layers,
-    featured: true,
+    link: "https://www.hikie.space/finanskodu/file/3813040824b54db8bba17e4f4b2dd56f",
     badge: "En Popüler",
-    features: ["50+ Hazır Şablon", "AI Prompt Setleri", "Video Eğitimler", "Topluluk Erişimi"],
+    badgeColor: "bg-primary",
   },
   {
     id: 2,
-    title: "Kaos İçinde Düzen",
-    description: "Karmaşık finansal süreçlerinizi sistematik hale getiren metodoloji ve araç seti.",
-    icon: Sparkles,
-    featured: false,
-    badge: "Yeni",
-    features: ["Süreç Haritaları", "Kontrol Listeleri", "Otomasyon Rehberi"],
+    title: "AI Prompt Kütüphanesi",
+    description: "Finans profesyonelleri için özel olarak tasarlanmış yapay zeka prompt koleksiyonu.",
+    icon: Brain,
+    link: "https://www.hikie.space/finanskodu/file/6cf62b1f141d48d1af13cb5ca04a53ab",
   },
   {
     id: 3,
-    title: "AI Prompt Kütüphanesi",
-    description: "Finans profesyonelleri için özel olarak tasarlanmış yapay zeka prompt koleksiyonu.",
-    icon: Lightbulb,
-    featured: false,
-    badge: null,
-    features: ["100+ Prompt", "ChatGPT Uyumlu", "Sürekli Güncelleme"],
+    title: "Finansal Kokpit (Dashboard)",
+    description: "Tüm finansal verilerinizi tek bir ekranda izleyin ve analiz edin.",
+    icon: LayoutDashboard,
+    link: "https://www.hikie.space/finanskodu/file/97301ecf159f43b29dbd4df27005e11c",
+    badge: "Yeni",
+    badgeColor: "bg-green-500",
   },
   {
     id: 4,
+    title: "Finans Kodu Koleksiyonu",
+    description: "Tüm dijital ürünlerimizi içeren kapsamlı paket. Excel'den kurtulun, verimliliğe geçin.",
+    icon: Package,
+    link: "https://www.hikie.space/finanskodu/file/947c92609953489cb1d929b41546e309",
+  },
+  {
+    id: 5,
     title: "Finansçının El Kitabı",
     description: "Modern finansçının dijital dönüşüm yolculuğu için kapsamlı rehber.",
     icon: BookOpen,
-    featured: false,
-    badge: null,
-    features: ["E-Kitap", "Pratik Örnekler", "Bonus İçerikler"],
+    link: "https://www.hikie.space/finanskodu/file/cedbc017e960447ea07d4b6b11d48483",
+  },
+  {
+    id: 6,
+    title: "FULL PAKET",
+    description: "Tüm ürünlere sınırsız erişim. Maksimum değer, minimum maliyet.",
+    icon: Crown,
+    link: "https://www.hikie.space/finanskodu/file/1b3adbf2aa454b63a0c3f9d0f3d5220f",
+    badge: "Premium",
+    badgeColor: "bg-amber-500",
+  },
+  {
+    id: 7,
+    title: "Finans Kodu Forum",
+    description: "Finans profesyonelleri topluluğuna katılın, sorular sorun, deneyimlerinizi paylaşın.",
+    icon: Users,
+    link: "https://www.hikie.space/finanskodu/forum/a8adebd8f9ef4c3b8051a425eb18481a",
+    badge: "Ücretsiz",
+    badgeColor: "bg-blue-500",
+  },
+  {
+    id: 8,
+    title: "1:1 Finansal Check-Up",
+    description: "Kişiselleştirilmiş finansal analiz ve strateji danışmanlığı seansı.",
+    icon: UserCheck,
+    link: "https://www.hikie.space/finanskodu/file/f24c51cbdeb94149857af492db48f85e",
+  },
+  {
+    id: 9,
+    title: "Algoritmik Strateji Bülteni (1 Ay)",
+    description: "Aylık algoritmik strateji analizleri ve piyasa içgörüleri.",
+    icon: TrendingUp,
+    link: "https://www.hikie.space/finanskodu/file/580f50a8894f4076aaca0b93ae255406",
+  },
+  {
+    id: 10,
+    title: "Algoritmik Strateji Bülteni (3 Ay)",
+    description: "3 aylık algoritmik strateji paketi. Uzun vadeli analiz ve takip.",
+    icon: Calendar,
+    link: "https://www.hikie.space/finanskodu/file/0245fdcfe8ac429ba9fad3c5948ee04c",
+    badge: "Tasarruflu",
+    badgeColor: "bg-emerald-500",
   },
 ];
-
-function ProductCard({ product }: { product: Product }) {
-  const IconComponent = product.icon;
-  
-  return (
-    <article
-      className="group relative h-full glass-card rounded-2xl p-6 border border-border hover:border-primary/30 transition-all duration-300"
-      itemScope
-      itemType="https://schema.org/Product"
-      aria-labelledby={`product-title-${product.id}`}
-    >
-      {/* Badge */}
-      {product.badge && (
-        <div className="absolute top-4 right-4">
-          <span className="px-2 py-1 rounded-full bg-primary/10 border border-primary/20 text-xs font-semibold text-primary">
-            {product.badge}
-          </span>
-        </div>
-      )}
-
-      {/* Icon */}
-      <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-        <IconComponent className="w-6 h-6 text-primary" aria-hidden="true" />
-      </div>
-
-      {/* Title & Description */}
-      <h3 
-        id={`product-title-${product.id}`}
-        className="font-display font-bold text-xl mb-2 group-hover:text-primary transition-colors"
-        itemProp="name"
-      >
-        {product.title}
-      </h3>
-      <p className="text-muted-foreground text-sm mb-4" itemProp="description">
-        {product.description}
-      </p>
-
-      {/* Features */}
-      <ul className="flex flex-wrap gap-1.5 mb-4" aria-label={`${product.title} özellikleri`}>
-        {product.features.map((feature, idx) => (
-          <li
-            key={idx}
-            className="px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground text-xs"
-          >
-            {feature}
-          </li>
-        ))}
-      </ul>
-
-      {/* Link - Secure external link */}
-      <a 
-        href={SHOPIER_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center gap-1 text-primary text-sm font-medium group-hover:gap-2 transition-all"
-        itemProp="url"
-        aria-label={`${product.title} detaylarını Shopier'de gör`}
-      >
-        <span>Detayları Gör</span>
-        <ExternalLink className="w-4 h-4" aria-hidden="true" />
-      </a>
-    </article>
-  );
-}
-
-function FeaturedProductCard({ product }: { product: Product }) {
-  const IconComponent = product.icon;
-  
-  return (
-    <article
-      className="group relative h-full glass-card rounded-2xl p-8 border border-primary/20 hover:border-primary/40 transition-all duration-300 overflow-hidden"
-      itemScope
-      itemType="https://schema.org/Product"
-      aria-labelledby={`featured-product-title-${product.id}`}
-    >
-      {/* Glow Effect */}
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" aria-hidden="true">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent" />
-      </div>
-
-      <div className="relative z-10">
-        {/* Badge */}
-        {product.badge && (
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 mb-6">
-            <Sparkles className="w-3.5 h-3.5 text-primary" aria-hidden="true" />
-            <span className="text-xs font-semibold text-primary">{product.badge}</span>
-          </div>
-        )}
-
-        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
-          <div className="flex-1">
-            {/* Icon */}
-            <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-              <IconComponent className="w-7 h-7 text-primary" aria-hidden="true" />
-            </div>
-
-            {/* Title & Description */}
-            <h3 
-              id={`featured-product-title-${product.id}`}
-              className="font-display font-bold text-2xl mb-3 group-hover:text-primary transition-colors"
-              itemProp="name"
-            >
-              {product.title}
-            </h3>
-            <p className="text-muted-foreground mb-6 max-w-lg" itemProp="description">
-              {product.description}
-            </p>
-
-            {/* Features */}
-            <ul className="flex flex-wrap gap-2 mb-6" aria-label={`${product.title} özellikleri`}>
-              {product.features.map((feature, idx) => (
-                <li
-                  key={idx}
-                  className="px-3 py-1 rounded-full bg-secondary text-secondary-foreground text-sm"
-                >
-                  {feature}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* CTA - Secure external link */}
-          <Button
-            asChild
-            className="bg-primary text-primary-foreground hover:bg-primary/90 neon-glow font-display font-semibold group/btn shrink-0"
-          >
-            <a 
-              href={SHOPIER_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              itemProp="url"
-              aria-label={`${product.title} ürününü Shopier'de incele`}
-            >
-              İncele
-              <ArrowUpRight className="ml-2 w-4 h-4 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" aria-hidden="true" />
-            </a>
-          </Button>
-        </div>
-      </div>
-    </article>
-  );
-}
 
 export default function ProductsSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  const featuredProduct = products[0];
-  const otherProducts = products.slice(1);
 
   return (
     <section 
@@ -222,7 +132,7 @@ export default function ProductsSection() {
     >
       {/* Background */}
       <div
-        className="absolute inset-0 bg-cover bg-center opacity-30"
+        className="absolute inset-0 bg-cover bg-center opacity-10"
         style={{ backgroundImage: "url('/images/products-bg.jpg')" }}
         role="img"
         aria-label="Ürünler bölümü arka planı"
@@ -243,64 +153,99 @@ export default function ProductsSection() {
           <h2 id="products-heading" className="font-display font-bold text-3xl sm:text-4xl md:text-5xl mb-6">
             Dijital <span className="gradient-text">Ürünler</span>
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          <p className="text-muted-foreground max-w-2xl mx-auto">
             Finansal verimliliğinizi artıracak, özenle hazırlanmış dijital ürün koleksiyonumuz
           </p>
         </motion.header>
 
-        {/* Products Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Featured Product - Spans 2 columns on large screens */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="md:col-span-2 lg:col-span-2"
-          >
-            <FeaturedProductCard product={featuredProduct} />
-          </motion.div>
+        {/* Products Grid - 3-4 columns responsive */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {products.map((product, index) => {
+            const IconComponent = product.icon;
+            return (
+              <motion.article
+                key={product.id}
+                initial={{ opacity: 0, y: 30 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.4, delay: 0.1 + index * 0.05 }}
+                className="group glass-card rounded-xl p-6 hover:border-primary/30 transition-all duration-300 relative flex flex-col"
+                itemScope
+                itemType="https://schema.org/Product"
+              >
+                {/* Badge */}
+                {product.badge && (
+                  <span className={`absolute top-4 right-4 ${product.badgeColor} text-white text-xs font-semibold px-2 py-1 rounded-full`}>
+                    {product.badge}
+                  </span>
+                )}
 
-          {/* Other Products */}
-          {otherProducts.map((product, index) => (
-            <motion.div
-              key={product.id}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
-            >
-              <ProductCard product={product} />
-            </motion.div>
-          ))}
+                {/* Icon */}
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                  <IconComponent className="w-6 h-6 text-primary" aria-hidden="true" />
+                </div>
+
+                {/* Title */}
+                <h3 className="font-display font-semibold text-lg mb-2" itemProp="name">
+                  {product.title}
+                </h3>
+
+                {/* Description */}
+                <p className="text-muted-foreground text-sm mb-3 flex-grow" itemProp="description">
+                  {product.description}
+                </p>
+
+                {/* Disclaimer Note */}
+                <p className="text-xs text-muted-foreground/70 italic mb-4">
+                  Sitede ürün açıklamasının altında ürünün özellikleri ve sıkça sorulan sorular mevcut, bunları inceleyin.
+                </p>
+
+                {/* CTA Button */}
+                <Button
+                  asChild
+                  variant="outline"
+                  className="w-full border-border hover:border-primary hover:text-primary bg-transparent group-hover:neon-glow"
+                >
+                  <a
+                    href={product.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${product.title} ürününü incele`}
+                    itemProp="url"
+                  >
+                    İncele
+                    <ExternalLink className="ml-2 w-4 h-4" aria-hidden="true" />
+                  </a>
+                </Button>
+              </motion.article>
+            );
+          })}
         </div>
 
         {/* Bottom CTA */}
-        <motion.nav
-          initial={{ opacity: 0, y: 30 }}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="mt-12 text-center"
-          aria-label="Mağaza bağlantısı"
+          transition={{ duration: 0.4, delay: 0.6 }}
+          className="text-center mt-12"
         >
           <p className="text-muted-foreground mb-4">
-            Tüm ürünleri Shopier mağazamızdan satın alabilirsiniz
+            Tüm ürünleri Hikie mağazamızdan satın alabilirsiniz
           </p>
           <Button
             asChild
-            variant="outline"
-            size="lg"
-            className="border-border hover:border-primary hover:text-primary font-display bg-transparent"
+            className="bg-primary text-primary-foreground hover:bg-primary/90 neon-glow font-display font-semibold"
           >
-            <a 
-              href={SHOPIER_URL}
+            <a
+              href="https://www.hikie.space/finanskodu"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Shopier mağazamızı ziyaret et"
+              aria-label="Hikie mağazamızı ziyaret et"
             >
-              Shopier Mağazamız
+              Hikie Mağazamız
               <ExternalLink className="ml-2 w-4 h-4" aria-hidden="true" />
             </a>
           </Button>
-        </motion.nav>
+        </motion.div>
       </div>
     </section>
   );

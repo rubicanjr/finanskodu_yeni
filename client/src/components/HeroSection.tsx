@@ -10,7 +10,7 @@
 */
 
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles, Code2, Brain, Clock, Zap, Star } from "lucide-react";
+import { ArrowRight, Code2, Brain, Clock, Zap, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const stats = [
@@ -63,19 +63,6 @@ export default function HeroSection() {
       {/* Content */}
       <div className="container relative z-10 pt-24 pb-16">
         <div className="max-w-4xl mx-auto text-center">
-          {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card mb-8"
-          >
-            <Sparkles className="w-4 h-4 text-primary" aria-hidden="true" />
-            <span className="text-sm font-medium text-muted-foreground">
-              Yapay Zeka Destekli Verimlilik Platformu
-            </span>
-          </motion.div>
-
           {/* Main Heading - H1 for SEO/GEO - CRO Optimized */}
           <motion.h1
             initial={{ opacity: 0, y: 30 }}

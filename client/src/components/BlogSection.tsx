@@ -6,6 +6,7 @@
  * - Neon glow effects on hover
  * - Geometric patterns inspired by the labyrinth logo
  * - Premium, sophisticated typography
+ * - 3 blog posts with full content
  */
 
 import { motion } from "framer-motion";
@@ -26,33 +27,101 @@ interface BlogPost {
 
 const blogPosts: BlogPost[] = [
   {
-    id: "excel-den-kacis",
-    title: "Excel'den Kaçış: Finansın Geleceği Neden Kodlarda Gizli?",
-    excerpt: "Finans dünyasında yıllardır değişmeyen bir ritüel var: Sabah kahvesi, açılan sonsuz Excel dosyaları, manuel veri girişleri ve \"Acaba formül bozuldu mu?\" gerginliği.",
-    content: `Finans dünyasında yıllardır değişmeyen bir ritüel var: Sabah kahvesi, açılan sonsuz Excel dosyaları, manuel veri girişleri ve "Acaba formül bozuldu mu?" gerginliği.
+    id: "excel-den-algoritmik-finansa",
+    title: "Excel'den Algoritmik Finansa Geçiş: Manuel Hataları Sıfırlama Rehberi",
+    excerpt: "Finansal piyasaların hızı nanosaniyelerle ölçülürken, yatırım kararlarınızı hala statik Excel tablolarına mı emanet ediyorsunuz?",
+    content: `**Giriş:** Finansal piyasaların hızı nanosaniyelerle ölçülürken, yatırım kararlarınızı hala statik Excel tablolarına mı emanet ediyorsunuz? Excel, finans dünyasının alfabesidir, ancak romanı yazmak için artık yetersizdir. "Fat Finger" (hatalı tuşlama) riskinden, formül kaymalarına kadar manuel takibin gizli maliyetlerini ve algoritmik sistemlere geçişin yol haritasını inceliyoruz.
 
-Yıllarca endüstri mühendisliği ve finansal operasyonların merkezinde yer almış biri olarak şunu net bir şekilde gördüm: İnsan zihni, verileri "kopyala-yapıştır" yapmak için değil, strateji üretmek için var. Ancak vaktimizin %80'ini operasyona, sadece %20'sini analize harcıyoruz.
+**Excel Nerede Tıkanıyor?**
 
-**Finans Kodu Neden Var?**
+Yatırımcıların %80'i stratejilerini Excel üzerinde kurgular. Ancak piyasa dinamiktir, Excel ise statiktir.
 
-Bu platform, finansal özgürlüğü sadece "para kazanmak" olarak değil, "zaman kazanmak" olarak görenler için kuruldu.
+• **Veri Gecikmesi:** Siz veriyi çekip formülü güncelleyene kadar fırsat kaçar.
+• **İnsan Hatası:** Bir hücredeki yanlış referans, tüm portföy yönetiminizi çökertebilir.
+• **Duygusal Müdahale:** Excel size "SAT" dese bile, o hücreyi silip "BEKLE" yazmak çok kolaydır. Algoritma ise acımasızdır ve disiplinlidir.
 
-Burada şunları konuşacağız:
+**Neden Algoritmik Finansa Geçmelisiniz?**
 
-• **Otomasyon:** Tekrarlayan işleri Python ve No-Code araçlarına devretmek.
+Algoritmik finans, kod yazmaktan ibaret değildir; bir disiplin inşasıdır.
 
-• **Yapay Zeka:** Finansal analizlerde AI asistanlarını (ChatGPT, Claude, Gemini) birer stajyer gibi kullanmak.
+1. **Backtest Gücü:** Stratejinizin son 10 yılda, kriz anlarında nasıl davrandığını saniyeler içinde simüle edebilirsiniz.
+2. **Hız ve Kesinlik:** Duygulara yer yoktur. Şartlar oluştuğunda sistem tetiği çeker.
+3. **7/24 İzleme:** Siz uyurken veya toplantıdayken sisteminiz nöbettedir.
 
-• **Verimlilik:** Karmaşık tabloları basit dashboardlara dönüştürmek.
+**Nasıl Başlanır?**
 
-Finansın geleceği artık sadece rakamları bilenlerin değil, o rakamları kodlarla yönetebilenlerin olacak.
+Python veya basit "No-Code" algoritmik platformlar, Excel mantığını bir üst seviyeye taşır. "EĞER" (IF) formüllerinizi, "Emir Gönder" komutlarına dönüştürmek sandığınızdan daha kolaydır. Finans Kodu olarak, bu dijital dönüşümde karmaşık kodlar yerine, uygulanabilir sistemler kurmanıza rehberlik ediyoruz.
 
-Bu yolculukta kemerlerinizi bağlayın. Excel'i kapatıp, terminali açma vakti geldi.`,
+**Sonuç:** Excel bir hesap makinesidir, Algoritma ise bir pilottur. Kokpite geçme zamanınız geldi.`,
     image: "/images/blog-excel-escape.jpg",
     author: "Finans Kodu Ekibi",
-    date: "8 Ocak 2026",
+    date: "15 Ocak 2025",
+    readTime: "5 dk",
+    tags: ["Algoritmik Finans", "Excel", "Otomasyon", "Python"]
+  },
+  {
+    id: "whatsapp-tuyolari-vs-veri",
+    title: "Whatsapp Tüyoları vs. Veri İstihbaratı: Kararınızı Neye Göre Vermelisiniz?",
+    excerpt: "Telefonunuza gelen 'Bu hisse uçacak' mesajı bir fırsat mı, yoksa bir tuzak mı?",
+    content: `**Giriş:** Telefonunuza gelen "Bu hisse uçacak" mesajı bir fırsat mı, yoksa bir tuzak mı? Finans dünyasında bilgi ikiye ayrılır: Manipülasyona açık "Tüyo" ve matematiksel gerçekliğe dayalı "Veri İstihbaratı". Neden tüyoların sizi batıracağını, verinin ise nasıl özgürleştireceğini anlatıyoruz.
+
+**Tüyo Ekonomisi Nasıl Çalışır?**
+
+Ücretsiz peynir sadece fare kapanında olur. Whatsapp ve Telegram gruplarında yayılan tüyolar, genellikle "Pump and Dump" (Şişir ve Boşalt) stratejisinin bir parçasıdır. Siz "içeriden bilgi" aldığınızı sanırken, aslında malı size satmak isteyenlerin likiditesi olursunuz.
+
+• **Kaynak Belirsizdir:** "Bir abim söyledi" finansal bir argüman değildir.
+• **Zamanlama Yanlıştır:** Haber size ulaştığında, akıllı para (Smart Money) pozisyonunu çoktan kapatmıştır.
+
+**Veri İstihbaratı (Data Intelligence) Nedir?**
+
+Finans Kodu yaklaşımında biz "söylentiye" değil, "ayak izlerine" bakarız.
+
+• **Takas Analizi:** Malı kim topluyor?
+• **Bilanço Kalitesi:** Şirket gerçekten kar ediyor mu?
+• **Teknik Göstergeler:** Fiyat, hacimle destekleniyor mu?
+
+**Tüyo Bağımlılığından Kurtulma Reçetesi**
+
+Yatırımcı olmak, başkasının aklıyla hareket etmemektir. Kendi "Filtreleme Sisteminizi" kurmalısınız. Bir hisseyi alırken referansınız "Whatsapp Grubu" değil, "Yatırım Stratejisi Belgeniz" olmalı.
+
+**Sonuç:** Tüyo kumarbazlar içindir, Veri İstihbaratı ise servetini korumak ve büyütmek isteyen mühendis ruhlu yatırımcılar içindir. Seçim sizin.`,
+    image: "/images/solution-section-bg.jpg",
+    author: "Finans Kodu Ekibi",
+    date: "10 Ocak 2025",
     readTime: "4 dk",
-    tags: ["Otomasyon", "Yapay Zeka", "Verimlilik", "Excel"]
+    tags: ["Veri İstihbaratı", "Yatırım", "Manipülasyon", "Strateji"]
+  },
+  {
+    id: "otomatik-strateji-takip",
+    title: "Zamanı Olmayan Yatırımcılar İçin Otomatik Strateji Takip Sistemleri",
+    excerpt: "Toplantıdasınız, ameliyattasınız veya uçaktasınız... Tam o anda piyasa çöktü veya beklediğiniz fırsat geldi.",
+    content: `**Giriş:** Toplantıdasınız, ameliyattasınız veya uçaktasınız... Tam o anda piyasa çöktü veya beklediğiniz fırsat geldi. Ekran başında olmadığınız için kaybettiğiniz fırsatların maliyetini hiç hesapladınız mı? Modern yatırımcı için "Zaman", paradan daha değerli bir sermayedir. İşte ekran bağımlılığını bitiren otomatik takip sistemleri.
+
+**FOMO ve Stres**
+
+Beyaz yakalı yatırımcının en büyük düşmanı ekran başında geçiremediği zamandır. Sürekli telefona bakarak çalışmak, hem kariyerinize hem de portföyünüze zarar verir.
+
+• **Kararsızlık:** Sınırlı zamanda hızlı karar vermeye çalışmak hata yaptırır.
+• **Psikolojik Yıpranma:** Piyasayı sürekli izlemek (Screen Time) stres seviyenizi artırır.
+
+**Otomatik Takip Sistemi Nedir?**
+
+Yapay zeka ve algoritmaların devreye girdiği yer burasıdır. Siz stratejinizi bir kez kurarsınız, sistem sizin adınıza 7/24 piyasayı tarar.
+
+• **Fiyat Alarmları:** "X hissesi, 50 günlük ortalamasını yukarı keserse bana haber ver."
+• **Koşullu Emirler:** "Zarar %2'ye ulaşırsa otomatik sat, bana sorma."
+• **Trend Takibi:** Yükseliş trendi bittiğinde sizi uyarır.
+
+**Finans Kodu Çözümü: Kaos İçinde Düzen**
+
+Bizim sunduğumuz dijital ürünler ve sistemler, sizin yerinize piyasanın "gürültüsünü" izler. Size sadece nihai kararı vermek veya sistemi onaylamak kalır. Bu sayede ana işinize odaklanırken, birikimleriniz enflasyona karşı profesyonelce korunur.
+
+**Sonuç:** Hayat, ekran başında mum çubuklarını izlemek için çok kısa. Sisteminizi kurun, arkanıza yaslanın ve bırakın algoritmalar sizin için çalışsın.`,
+    image: "/images/problem-section-bg.jpg",
+    author: "Finans Kodu Ekibi",
+    date: "5 Ocak 2025",
+    readTime: "4 dk",
+    tags: ["Otomasyon", "Yapay Zeka", "Zaman Yönetimi", "Algoritmik"]
   }
 ];
 
@@ -70,7 +139,7 @@ export default function BlogSection() {
       aria-labelledby="blog-heading"
     >
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0a1628] via-[#0d1f35] to-[#0a1628]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-secondary/20 to-background" />
       
       {/* Geometric Pattern Overlay */}
       <div 
@@ -89,23 +158,22 @@ export default function BlogSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="inline-block text-cyan-400 font-mono text-sm tracking-wider mb-4">
+          <span className="text-primary font-mono text-sm tracking-wider mb-4 block">
             // BLOG
           </span>
           <h2 
             id="blog-heading"
-            className="text-4xl md:text-5xl font-bold text-white mb-6"
-            style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+            className="font-display font-bold text-3xl sm:text-4xl md:text-5xl mb-6"
           >
-            Finans & Teknoloji <span className="text-cyan-400">Yazıları</span>
+            Finans <span className="gradient-text">İçgörüleri</span>
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            Finansal operasyonlarınızı dönüştürecek içgörüler, ipuçları ve stratejiler
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+            Algoritmik finans, yapay zeka ve verimlilik stratejileri hakkında derinlemesine analizler
           </p>
         </motion.div>
 
         {/* Blog Posts Grid */}
-        <div className="grid gap-8 max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {blogPosts.map((post, index) => (
             <motion.article
               key={post.id}
@@ -113,24 +181,24 @@ export default function BlogSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="group relative bg-gradient-to-br from-[#0d1f35]/80 to-[#0a1628]/80 backdrop-blur-sm rounded-2xl overflow-hidden border border-cyan-500/10 hover:border-cyan-500/30 transition-all duration-500"
+              className="group relative glass-card rounded-2xl overflow-hidden border border-border hover:border-primary/30 transition-all duration-500"
             >
               {/* Featured Image */}
-              <div className="relative h-64 md:h-80 overflow-hidden">
+              <div className="relative h-48 overflow-hidden">
                 <img
                   src={post.image}
                   alt={post.title}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0a1628] via-[#0a1628]/50 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
                 
                 {/* Tags */}
                 <div className="absolute top-4 left-4 flex flex-wrap gap-2">
-                  {post.tags.slice(0, 3).map((tag) => (
+                  {post.tags.slice(0, 2).map((tag) => (
                     <span
                       key={tag}
-                      className="px-3 py-1 bg-cyan-500/20 backdrop-blur-sm text-cyan-300 text-xs font-medium rounded-full border border-cyan-500/30"
+                      className="px-2 py-1 bg-primary/20 backdrop-blur-sm text-primary text-xs font-medium rounded-full border border-primary/30"
                     >
                       {tag}
                     </span>
@@ -139,56 +207,55 @@ export default function BlogSection() {
               </div>
 
               {/* Content */}
-              <div className="p-6 md:p-8">
+              <div className="p-6">
                 {/* Meta Info */}
-                <div className="flex items-center gap-4 text-gray-400 text-sm mb-4">
-                  <div className="flex items-center gap-1.5">
-                    <User className="w-4 h-4" />
+                <div className="flex items-center gap-4 text-muted-foreground text-xs mb-3">
+                  <div className="flex items-center gap-1">
+                    <User className="w-3 h-3" />
                     <span>{post.author}</span>
                   </div>
-                  <div className="flex items-center gap-1.5">
-                    <Calendar className="w-4 h-4" />
+                  <div className="flex items-center gap-1">
+                    <Calendar className="w-3 h-3" />
                     <span>{post.date}</span>
                   </div>
-                  <div className="flex items-center gap-1.5">
-                    <Clock className="w-4 h-4" />
-                    <span>{post.readTime} okuma</span>
+                  <div className="flex items-center gap-1">
+                    <Clock className="w-3 h-3" />
+                    <span>{post.readTime}</span>
                   </div>
                 </div>
 
                 {/* Title */}
                 <h3 
-                  className="text-2xl md:text-3xl font-bold text-white mb-4 group-hover:text-cyan-400 transition-colors duration-300"
-                  style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                  className="font-display font-bold text-lg mb-3 group-hover:text-primary transition-colors duration-300 line-clamp-2"
                 >
                   {post.title}
                 </h3>
 
                 {/* Excerpt or Full Content */}
-                <div className="text-gray-300 leading-relaxed">
+                <div className="text-muted-foreground text-sm leading-relaxed">
                   {expandedPost === post.id ? (
-                    <div className="space-y-4">
+                    <div className="space-y-3">
                       {post.content.split('\n\n').map((paragraph, idx) => (
                         <p 
                           key={idx}
-                          className="text-gray-300"
+                          className="text-muted-foreground"
                           dangerouslySetInnerHTML={{
                             __html: paragraph
-                              .replace(/\*\*(.*?)\*\*/g, '<strong class="text-cyan-400 font-semibold">$1</strong>')
-                              .replace(/•/g, '<span class="text-cyan-400">•</span>')
+                              .replace(/\*\*(.*?)\*\*/g, '<strong class="text-primary font-semibold">$1</strong>')
+                              .replace(/•/g, '<span class="text-primary">•</span>')
                           }}
                         />
                       ))}
                     </div>
                   ) : (
-                    <p>{post.excerpt}</p>
+                    <p className="line-clamp-3">{post.excerpt}</p>
                   )}
                 </div>
 
                 {/* Read More Button */}
                 <button
                   onClick={() => togglePost(post.id)}
-                  className="mt-6 inline-flex items-center gap-2 text-cyan-400 font-medium hover:text-cyan-300 transition-colors duration-300 group/btn"
+                  className="mt-4 inline-flex items-center gap-2 text-primary font-medium text-sm hover:text-primary/80 transition-colors duration-300 group/btn"
                   aria-expanded={expandedPost === post.id}
                 >
                   <span>{expandedPost === post.id ? "Kapat" : "Devamını Oku"}</span>
@@ -201,23 +268,10 @@ export default function BlogSection() {
               </div>
 
               {/* Glow Effect */}
-              <div className="absolute -inset-px bg-gradient-to-r from-cyan-500/0 via-cyan-500/10 to-cyan-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none" />
+              <div className="absolute -inset-px bg-gradient-to-r from-primary/0 via-primary/10 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none" />
             </motion.article>
           ))}
         </div>
-
-        {/* Coming Soon Notice */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="text-center mt-12"
-        >
-          <p className="text-gray-500 text-sm">
-            Daha fazla içerik için bizi takip edin. Yeni yazılar yakında...
-          </p>
-        </motion.div>
       </div>
     </section>
   );

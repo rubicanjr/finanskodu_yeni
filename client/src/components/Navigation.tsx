@@ -17,7 +17,7 @@ const navLinks = [
   { href: "#urunler", label: "Ürünler" },
   { href: "#manifesto", label: "Manifesto" },
   { href: "#blog", label: "Blog" },
-  { href: "#hakkimda", label: "Hakkımda" },
+  { href: "#hakkimda", label: "Hakkımızda" },
   { href: "#iletisim", label: "İletişim" },
 ];
 
