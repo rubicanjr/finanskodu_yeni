@@ -1,21 +1,19 @@
 /*
-  DESIGN: Vera 3D Interactive Avatar v2.0
+  DESIGN: Vera High-Fidelity 3D Avatar - FINAL REVISION
   
-  - Real 3D scene using React Three Fiber + Drei
-  - Humanoid mesh with idle animations (breathing, blinking)
-  - Lip-sync animation during speech
-  - Female voice forced via Web Speech API
-  - Fixed position bottom-right with transparent background
+  - Custom 3D humanoid mesh (fallback - no external GLB dependency)
+  - Simulated lip-sync animation
+  - Female voice forced (Yelda/Emel/Google Türkçe + pitch 1.4 fallback)
+  - Click-to-interact (no chat UI buttons)
+  - Micro-expressions: blinking, breathing
   - SPK/BDDK compliant disclaimer
-  - Full duplex: stops speaking when user starts talking
 */
 
 import { useState, useRef, useEffect, useCallback, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { OrbitControls, Environment, Float, Text, RoundedBox } from "@react-three/drei";
+import { Environment, Float, Html } from "@react-three/drei";
 import { motion, AnimatePresence } from "framer-motion";
-import { Mic, MicOff, Volume2, VolumeX, X, MessageCircle, Send, Sparkles } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Volume2, VolumeX } from "lucide-react";
 import * as THREE from "three";
 
 // Type definitions for Web Speech API
@@ -62,262 +60,47 @@ declare global {
   }
 }
 
-// 3D Humanoid Avatar Component
-function HumanoidAvatar({ isSpeaking, isListening }: { isSpeaking: boolean; isListening: boolean }) {
-  const groupRef = useRef<THREE.Group>(null);
-  const headRef = useRef<THREE.Mesh>(null);
-  const jawRef = useRef<THREE.Mesh>(null);
-  const leftEyeRef = useRef<THREE.Mesh>(null);
-  const rightEyeRef = useRef<THREE.Mesh>(null);
-  const [isBlinking, setIsBlinking] = useState(false);
-
-  // Blinking effect
-  useEffect(() => {
-    const blinkInterval = setInterval(() => {
-      if (Math.random() > 0.7) {
-        setIsBlinking(true);
-        setTimeout(() => setIsBlinking(false), 150);
-      }
-    }, 2000);
-    return () => clearInterval(blinkInterval);
-  }, []);
-
-  // Animation loop
-  useFrame((state) => {
-    const time = state.clock.getElapsedTime();
-
-    // Breathing animation (subtle scale on Y)
-    if (groupRef.current) {
-      groupRef.current.scale.y = 1 + Math.sin(time * 1.5) * 0.01;
-    }
-
-    // Head subtle sway
-    if (headRef.current) {
-      headRef.current.rotation.y = Math.sin(time * 0.5) * 0.05;
-      headRef.current.rotation.z = Math.sin(time * 0.3) * 0.02;
-    }
-
-    // Lip-sync animation when speaking
-    if (jawRef.current) {
-      if (isSpeaking) {
-        // Fast sine wave for mouth movement
-        const mouthOpen = Math.abs(Math.sin(time * 15)) * 0.15;
-        jawRef.current.position.y = -0.35 - mouthOpen;
-        jawRef.current.scale.y = 1 + mouthOpen * 0.5;
-      } else {
-        // Closed mouth
-        jawRef.current.position.y = -0.35;
-        jawRef.current.scale.y = 1;
-      }
-    }
-
-    // Blinking animation
-    if (leftEyeRef.current && rightEyeRef.current) {
-      const eyeScale = isBlinking ? 0.1 : 1;
-      leftEyeRef.current.scale.y = eyeScale;
-      rightEyeRef.current.scale.y = eyeScale;
-    }
-  });
-
-  return (
-    <Float speed={1.5} rotationIntensity={0.1} floatIntensity={0.3}>
-      <group ref={groupRef} position={[0, -0.5, 0]}>
-        {/* Body - Business attire torso */}
-        <mesh position={[0, 0, 0]}>
-          <capsuleGeometry args={[0.4, 0.8, 8, 16]} />
-          <meshStandardMaterial color="#f0f0f0" /> {/* White blazer */}
-        </mesh>
-        
-        {/* Shirt collar */}
-        <mesh position={[0, 0.5, 0.1]}>
-          <boxGeometry args={[0.3, 0.15, 0.1]} />
-          <meshStandardMaterial color="#1a365d" /> {/* Navy blue shirt */}
-        </mesh>
-
-        {/* Neck */}
-        <mesh position={[0, 0.7, 0]}>
-          <cylinderGeometry args={[0.12, 0.15, 0.2, 16]} />
-          <meshStandardMaterial color="#fcd5b8" /> {/* Skin tone */}
-        </mesh>
-
-        {/* Head */}
-        <group ref={headRef} position={[0, 1.1, 0]}>
-          {/* Face */}
-          <mesh>
-            <sphereGeometry args={[0.35, 32, 32]} />
-            <meshStandardMaterial color="#fcd5b8" /> {/* Skin tone */}
-          </mesh>
-
-          {/* Hair - Dark brown bob cut */}
-          <mesh position={[0, 0.1, -0.05]}>
-            <sphereGeometry args={[0.38, 32, 32]} />
-            <meshStandardMaterial color="#2d1810" /> {/* Dark brown hair */}
-          </mesh>
-          
-          {/* Hair front bangs */}
-          <mesh position={[0, 0.25, 0.2]}>
-            <boxGeometry args={[0.5, 0.15, 0.1]} />
-            <meshStandardMaterial color="#2d1810" />
-          </mesh>
-
-          {/* Glasses frame */}
-          <mesh position={[0, 0.05, 0.32]}>
-            <torusGeometry args={[0.25, 0.015, 8, 32]} />
-            <meshStandardMaterial color="#1a1a2e" />
-          </mesh>
-
-          {/* Left eye */}
-          <mesh ref={leftEyeRef} position={[-0.1, 0.05, 0.3]}>
-            <sphereGeometry args={[0.05, 16, 16]} />
-            <meshStandardMaterial color="#2d1810" />
-          </mesh>
-
-          {/* Right eye */}
-          <mesh ref={rightEyeRef} position={[0.1, 0.05, 0.3]}>
-            <sphereGeometry args={[0.05, 16, 16]} />
-            <meshStandardMaterial color="#2d1810" />
-          </mesh>
-
-          {/* Nose */}
-          <mesh position={[0, -0.05, 0.35]}>
-            <coneGeometry args={[0.03, 0.08, 8]} />
-            <meshStandardMaterial color="#e8c4a8" />
-          </mesh>
-
-          {/* Mouth/Lips */}
-          <mesh position={[0, -0.15, 0.32]}>
-            <boxGeometry args={[0.12, 0.03, 0.02]} />
-            <meshStandardMaterial color="#c97878" /> {/* Lip color */}
-          </mesh>
-
-          {/* Jaw (for lip-sync) */}
-          <mesh ref={jawRef} position={[0, -0.35, 0.1]}>
-            <sphereGeometry args={[0.15, 16, 16]} />
-            <meshStandardMaterial color="#fcd5b8" transparent opacity={0} />
-          </mesh>
-        </group>
-
-        {/* Left arm */}
-        <mesh position={[-0.55, 0.1, 0]} rotation={[0, 0, 0.3]}>
-          <capsuleGeometry args={[0.08, 0.5, 8, 16]} />
-          <meshStandardMaterial color="#f0f0f0" />
-        </mesh>
-
-        {/* Right arm - holding tablet gesture */}
-        <mesh position={[0.55, 0.1, 0.1]} rotation={[0.3, 0, -0.3]}>
-          <capsuleGeometry args={[0.08, 0.5, 8, 16]} />
-          <meshStandardMaterial color="#f0f0f0" />
-        </mesh>
-
-        {/* Holographic tablet */}
-        <mesh position={[0.4, -0.1, 0.4]} rotation={[0.3, -0.3, 0]}>
-          <planeGeometry args={[0.4, 0.3]} />
-          <meshStandardMaterial 
-            color="#00d4ff" 
-            transparent 
-            opacity={0.3}
-            emissive="#00d4ff"
-            emissiveIntensity={0.5}
-          />
-        </mesh>
-
-        {/* Listening indicator */}
-        {isListening && (
-          <mesh position={[0.6, 1.3, 0]}>
-            <sphereGeometry args={[0.08, 16, 16]} />
-            <meshStandardMaterial color="#ef4444" emissive="#ef4444" emissiveIntensity={1} />
-          </mesh>
-        )}
-
-        {/* Speaking indicator */}
-        {isSpeaking && (
-          <group position={[-0.5, 0.8, 0.3]}>
-            {[0, 1, 2].map((i) => (
-              <mesh key={i} position={[i * 0.08, 0, 0]}>
-                <boxGeometry args={[0.03, 0.1 + Math.sin(Date.now() * 0.01 + i) * 0.05, 0.03]} />
-                <meshStandardMaterial color="#00d4ff" emissive="#00d4ff" emissiveIntensity={0.8} />
-              </mesh>
-            ))}
-          </group>
-        )}
-      </group>
-    </Float>
-  );
-}
-
-// 3D Scene Component
-function Scene({ isSpeaking, isListening }: { isSpeaking: boolean; isListening: boolean }) {
-  return (
-    <>
-      <ambientLight intensity={0.6} />
-      <directionalLight position={[5, 5, 5]} intensity={1} />
-      <pointLight position={[-5, 5, 5]} intensity={0.5} color="#00d4ff" />
-      
-      <Suspense fallback={null}>
-        <HumanoidAvatar isSpeaking={isSpeaking} isListening={isListening} />
-        <Environment preset="city" />
-      </Suspense>
-    </>
-  );
-}
-
-// Financial response logic (same as before)
+// Knowledge Base & Response Logic
 const DISCLAIMER = "\n\n⚠️ *Vera bir yapay zekadır ve yatırım tavsiyesi vermez.*";
-const VOICE_DISCLAIMER = "Hatırlatmak isterim ki, Vera bir yapay zekadır ve yatırım tavsiyesi vermez.";
+const VOICE_DISCLAIMER = "Hatırlatmak isterim ki, bunlar yatırım tavsiyesi değildir.";
 
 const getFinancialResponse = (query: string): { text: string; isInvestmentRelated: boolean } => {
   const lowerQuery = query.toLowerCase();
   
-  // 1. Kriz Yönetimi
-  if (lowerQuery.includes("dolar") && (lowerQuery.includes("yüksel") || lowerQuery.includes("panik") || lowerQuery.includes("ne yapmalı"))) {
+  // Kriz Yönetimi
+  if (lowerQuery.includes("dolar") || lowerQuery.includes("enflasyon") || lowerQuery.includes("kriz") || lowerQuery.includes("panik")) {
     return {
-      text: `Döviz dalgalanmalarında sakin kalmak önemli. Panikle satış genellikle en kötü fiyatlardan işlem yapmaya yol açar. Portföy çeşitlendirmesi, kademeli pozisyon alma stratejisi ve enflasyona karşı korumalı varlıklar düşünülebilir. Uzun vadeli stratejinizi gözden geçirin.${DISCLAIMER}`,
+      text: `Döviz dalgalanmalarında sakin kalmak kritik önem taşır. Panikle satış genellikle en kötü fiyatlardan işlem yapmaya yol açar. Portföy çeşitlendirmesi ve kademeli pozisyon alma stratejisi düşünülebilir. Sepet mantığıyla farklı varlık sınıflarına dağıtım yapılabilir.${DISCLAIMER}`,
       isInvestmentRelated: true
     };
   }
   
-  // 2. Merkez Bankası
+  // Faiz Kararları
   if (lowerQuery.includes("faiz") || lowerQuery.includes("merkez bankası") || lowerQuery.includes("tcmb")) {
     return {
-      text: `Faiz artışı teorik olarak mevduat getirilerini artırır, borsayı olumsuz etkileyebilir ve yerli parayı güçlendirebilir. Faiz indirimi ise tam tersine etki edebilir. Ancak bu kararlar tek başına değil, enflasyon beklentileri ve küresel koşullarla birlikte değerlendirilmelidir.${DISCLAIMER}`,
+      text: `Faiz artışı teorik olarak mevduat getirilerini artırır, borsayı olumsuz etkileyebilir ve yerli parayı güçlendirebilir. Faiz indirimi ise tam tersine etki edebilir. Bu kararlar tek başına değil, enflasyon beklentileri ve küresel koşullarla birlikte değerlendirilmelidir.${DISCLAIMER}`,
       isInvestmentRelated: true
     };
   }
   
-  // 3. Borsa Volatilitesi
-  if ((lowerQuery.includes("borsa") || lowerQuery.includes("hisse")) && (lowerQuery.includes("düş") || lowerQuery.includes("yüksel") || lowerQuery.includes("fomo"))) {
+  // Borsa Volatilitesi
+  if (lowerQuery.includes("borsa") || lowerQuery.includes("hisse") || lowerQuery.includes("fomo") || lowerQuery.includes("düşüş")) {
     return {
       text: `Piyasa hareketlerinde duygusal tepkilerden kaçınmak önemli. Ralli dönemlerinde FOMO riski, düşüş dönemlerinde panik satışı riski vardır. Kademeli alım stratejisi ve disiplinli yaklaşım, duygusal kararlardan daha sağlıklı sonuçlar verebilir.${DISCLAIMER}`,
       isInvestmentRelated: true
     };
   }
   
-  // 4. Toplu Para
-  if (lowerQuery.includes("eyt") || lowerQuery.includes("miras") || lowerQuery.includes("toplu para") || lowerQuery.includes("tazminat")) {
-    return {
-      text: `Toplu para geldiğinde acele etmemek önemli. Mevduat, altın, yatırım fonları ve hisse gibi varlıklar arasında çeşitlendirme düşünülebilir. İlk 3 ay paranızı anlamak için zaman ayırmanız ve vergi yükümlülüklerinizi araştırmanız mantıklı olabilir.${DISCLAIMER}`,
-      isInvestmentRelated: true
-    };
-  }
-  
-  // 5. Vergi Dönemleri
-  if (lowerQuery.includes("vergi") || lowerQuery.includes("bilanço") || lowerQuery.includes("temettü") || lowerQuery.includes("yıl sonu")) {
-    return {
-      text: `Yıl sonu vergi avantajlı yatırımlar, BES katkı payı limitleri ve portföy yeniden dengeleme için önemli bir dönemdir. Bilanço dönemlerinde şirket finansalları açıklanır ve temettü kararları verilir. Dönemsel fırsatları değerlendirirken uzun vadeli stratejinizi gözden kaçırmayın.${DISCLAIMER}`,
-      isInvestmentRelated: true
-    };
-  }
-  
-  // 6. Gümüş
+  // Gümüş
   if (lowerQuery.includes("gümüş") || lowerQuery.includes("gumus") || lowerQuery.includes("silver")) {
     return {
-      text: `Gümüş, altından farklı olarak yüzde elliden fazlası endüstriyel amaçlı kullanılır. Elektronik, güneş panelleri ve tıbbi cihazlarda kullanılır. Altına göre çok daha volatildir, iki üç kat daha fazla dalgalanma gösterebilir. Risk toleransı yüksek yatırımcılar için portföyün küçük bir bölümünde değerlendirilebilir.${DISCLAIMER}`,
+      text: `Gümüş, altından farklı olarak yüzde elliden fazlası endüstriyel amaçlı kullanılır. Elektronik, güneş panelleri ve tıbbi cihazlarda yer alır. Altına göre çok daha volatildir, iki üç kat daha fazla dalgalanma gösterebilir. Risk toleransı yüksek yatırımcılar için portföyün küçük bir bölümünde değerlendirilebilir.${DISCLAIMER}`,
       isInvestmentRelated: true
     };
   }
   
-  // 7. ABD Borsaları
-  if (lowerQuery.includes("abd") || lowerQuery.includes("amerika") || lowerQuery.includes("nasdaq") || lowerQuery.includes("yurt dışı hisse")) {
+  // ABD Borsaları
+  if (lowerQuery.includes("abd") || lowerQuery.includes("amerika") || lowerQuery.includes("nasdaq") || lowerQuery.includes("sp500") || lowerQuery.includes("yurt dışı")) {
     return {
       text: `ABD borsalarına Türk aracı kurumlar veya ETF'ler üzerinden erişilebilir. Kritik uyarı: Yurt dışı hisse gelirleri Türkiye'de beyana tabidir. Temettü ve alım satım kazançları beyan edilmelidir. Vergi danışmanınıza başvurmanız şiddetle önerilir.${DISCLAIMER}`,
       isInvestmentRelated: true
@@ -325,7 +108,7 @@ const getFinancialResponse = (query: string): { text: string; isInvestmentRelate
   }
   
   // Altın
-  if (lowerQuery.includes("altın") || lowerQuery.includes("altin")) {
+  if (lowerQuery.includes("altın") || lowerQuery.includes("altin") || lowerQuery.includes("gold")) {
     return {
       text: `Altın tarih boyunca güvenli liman olarak kabul edilir. Enflasyona karşı koruma sağlayabilir ve portföy çeşitlendirmesi için kullanılabilir. Ancak faiz oranları yükseldiğinde cazibesini kaybedebilir ve kısa vadede volatilite gösterebilir.${DISCLAIMER}`,
       isInvestmentRelated: true
@@ -333,24 +116,32 @@ const getFinancialResponse = (query: string): { text: string; isInvestmentRelate
   }
   
   // Kripto
-  if (lowerQuery.includes("bitcoin") || lowerQuery.includes("kripto") || lowerQuery.includes("btc")) {
+  if (lowerQuery.includes("bitcoin") || lowerQuery.includes("kripto") || lowerQuery.includes("btc") || lowerQuery.includes("ethereum")) {
     return {
       text: `Kripto paralar yüksek volatilite ve risk getiri potansiyeli sunar. Yüzde elli üzerinde düşüşler yaşanabilir. Regülasyon belirsizlikleri ve siber güvenlik riskleri mevcuttur. Türkiye'de ödeme aracı olarak kullanımı yasaktır. Kaybetmeyi göze alabileceğiniz miktarı aşmamanız kritik önem taşır.${DISCLAIMER}`,
       isInvestmentRelated: true
     };
   }
   
-  // Vera hakkında
-  if (lowerQuery.includes("vera") || lowerQuery.includes("sen kim") || lowerQuery.includes("finans kodu")) {
+  // Toplu Para
+  if (lowerQuery.includes("eyt") || lowerQuery.includes("miras") || lowerQuery.includes("toplu para") || lowerQuery.includes("tazminat")) {
     return {
-      text: `Merhaba! Ben Vera, Finans Kodu'nun yapay zeka asistanıyım. Size finansal konularda eğitici bilgiler sunuyorum. Sesli ve yazılı sohbet desteği, finansal kavramları açıklama ve risk fırsat analizi çerçevesi sunuyorum. Ürünlerimizi incelemek için Dijital Ürünler bölümümüzü ziyaret edebilirsiniz!`,
+      text: `Toplu para geldiğinde acele etmemek önemli. Mevduat, altın, yatırım fonları ve hisse gibi varlıklar arasında çeşitlendirme düşünülebilir. İlk üç ay paranızı anlamak için zaman ayırmanız ve vergi yükümlülüklerinizi araştırmanız mantıklı olabilir.${DISCLAIMER}`,
+      isInvestmentRelated: true
+    };
+  }
+  
+  // Vera hakkında
+  if (lowerQuery.includes("vera") || lowerQuery.includes("sen kim") || lowerQuery.includes("merhaba") || lowerQuery.includes("selam")) {
+    return {
+      text: `Merhaba! Ben Vera, Finans Kodu'nun yapay zeka asistanıyım. Size finansal konularda eğitici bilgiler sunuyorum. Altın, gümüş, borsa, kripto, döviz ve faiz kararları hakkında sorularınızı yanıtlayabilirim. Bana tıklayarak sesli soru sorabilirsiniz!`,
       isInvestmentRelated: false
     };
   }
   
   // Default
   return {
-    text: `Merhaba! Ben Vera, Finans Kodu'nun AI asistanıyım. Size altın, gümüş, borsa, kripto, döviz, faiz kararları ve yatırım stratejileri hakkında bilgi verebilirim. Mikrofona basarak sesli soru da sorabilirsiniz!`,
+    text: `Merhaba! Ben Vera. Size altın, gümüş, borsa, kripto, döviz, faiz kararları ve yatırım stratejileri hakkında bilgi verebilirim. Üzerime tıklayarak sesli soru sorabilirsiniz!`,
     isInvestmentRelated: false
   };
 };
@@ -362,19 +153,17 @@ const processTextForSpeech = (text: string): string => {
     .replace(/\*/g, "")
     .replace(/•/g, "")
     .replace(/⚠️/g, "")
-    .replace(/👋/g, "")
-    .replace(/🎤/g, "")
     .replace(/\n+/g, ". ")
     .replace(/\s+/g, " ")
     .trim();
 };
 
-// Find female Turkish voice
+// Find female Turkish voice with priority
 const findFemaleVoice = (voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice | null => {
   const turkishVoices = voices.filter(v => v.lang.startsWith("tr"));
   
   // Priority keywords for female voice
-  const femaleKeywords = ["female", "kadın", "yelda", "emel", "filiz", "google türkçe", "microsoft aylin"];
+  const femaleKeywords = ["google türkçe", "yelda", "emel", "filiz", "female", "kadın", "aylin"];
   
   for (const keyword of femaleKeywords) {
     const found = turkishVoices.find(v => v.name.toLowerCase().includes(keyword));
@@ -385,24 +174,357 @@ const findFemaleVoice = (voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice |
   return turkishVoices[0] || null;
 };
 
+// 3D Avatar Component - Professional Business Woman
+function VeraModel({ 
+  isSpeaking, 
+  isListening, 
+  isThinking,
+  mouthOpenness,
+  onClick 
+}: { 
+  isSpeaking: boolean; 
+  isListening: boolean;
+  isThinking: boolean;
+  mouthOpenness: number;
+  onClick: () => void;
+}) {
+  const groupRef = useRef<THREE.Group>(null);
+  const headRef = useRef<THREE.Group>(null);
+  const leftEyeRef = useRef<THREE.Mesh>(null);
+  const rightEyeRef = useRef<THREE.Mesh>(null);
+  const mouthRef = useRef<THREE.Mesh>(null);
+  const [isBlinking, setIsBlinking] = useState(false);
+
+  // Blinking effect - every 3-5 seconds
+  useEffect(() => {
+    const blinkInterval = setInterval(() => {
+      if (Math.random() > 0.5) {
+        setIsBlinking(true);
+        setTimeout(() => setIsBlinking(false), 150);
+      }
+    }, 3000 + Math.random() * 2000);
+    return () => clearInterval(blinkInterval);
+  }, []);
+
+  // Animation loop
+  useFrame((state) => {
+    const time = state.clock.getElapsedTime();
+
+    // Breathing animation (subtle Y movement on body)
+    if (groupRef.current) {
+      groupRef.current.position.y = Math.sin(time * 1.2) * 0.015;
+    }
+
+    // Head animations
+    if (headRef.current) {
+      if (isListening) {
+        // Lean forward when listening
+        headRef.current.rotation.x = THREE.MathUtils.lerp(headRef.current.rotation.x, 0.12, 0.08);
+        headRef.current.rotation.z = THREE.MathUtils.lerp(headRef.current.rotation.z, 0, 0.08);
+      } else if (isThinking) {
+        // Tilt head when thinking
+        headRef.current.rotation.z = THREE.MathUtils.lerp(headRef.current.rotation.z, 0.15, 0.08);
+        headRef.current.rotation.x = THREE.MathUtils.lerp(headRef.current.rotation.x, 0, 0.08);
+      } else {
+        // Subtle idle sway
+        headRef.current.rotation.y = Math.sin(time * 0.4) * 0.04;
+        headRef.current.rotation.x = THREE.MathUtils.lerp(headRef.current.rotation.x, 0, 0.05);
+        headRef.current.rotation.z = THREE.MathUtils.lerp(headRef.current.rotation.z, 0, 0.05);
+      }
+    }
+
+    // Blinking animation
+    if (leftEyeRef.current && rightEyeRef.current) {
+      const eyeScale = isBlinking ? 0.1 : 1;
+      leftEyeRef.current.scale.y = THREE.MathUtils.lerp(leftEyeRef.current.scale.y, eyeScale, 0.4);
+      rightEyeRef.current.scale.y = THREE.MathUtils.lerp(rightEyeRef.current.scale.y, eyeScale, 0.4);
+    }
+
+    // Lip sync animation
+    if (mouthRef.current) {
+      const targetScale = 1 + mouthOpenness * 3;
+      mouthRef.current.scale.y = THREE.MathUtils.lerp(mouthRef.current.scale.y, targetScale, 0.3);
+    }
+  });
+
+  return (
+    <Float speed={0.8} rotationIntensity={0.03} floatIntensity={0.08}>
+      <group ref={groupRef} onClick={onClick} position={[0, -0.2, 0]}>
+        {/* Body - White blazer */}
+        <mesh position={[0, -0.15, 0]}>
+          <capsuleGeometry args={[0.32, 0.55, 12, 20]} />
+          <meshStandardMaterial color="#f8f8f8" roughness={0.35} metalness={0.05} />
+        </mesh>
+        
+        {/* Blazer lapels */}
+        <mesh position={[-0.12, 0.15, 0.15]} rotation={[0, 0, 0.3]}>
+          <boxGeometry args={[0.08, 0.25, 0.03]} />
+          <meshStandardMaterial color="#f0f0f0" roughness={0.4} />
+        </mesh>
+        <mesh position={[0.12, 0.15, 0.15]} rotation={[0, 0, -0.3]}>
+          <boxGeometry args={[0.08, 0.25, 0.03]} />
+          <meshStandardMaterial color="#f0f0f0" roughness={0.4} />
+        </mesh>
+        
+        {/* Navy shirt */}
+        <mesh position={[0, 0.22, 0.1]}>
+          <boxGeometry args={[0.18, 0.15, 0.06]} />
+          <meshStandardMaterial color="#1e3a5f" roughness={0.5} />
+        </mesh>
+
+        {/* Neck */}
+        <mesh position={[0, 0.42, 0]}>
+          <cylinderGeometry args={[0.09, 0.11, 0.12, 20]} />
+          <meshStandardMaterial color="#f5d0c5" roughness={0.55} />
+        </mesh>
+
+        {/* Head */}
+        <group ref={headRef} position={[0, 0.7, 0]}>
+          {/* Face */}
+          <mesh>
+            <sphereGeometry args={[0.26, 36, 36]} />
+            <meshStandardMaterial color="#f5d0c5" roughness={0.55} />
+          </mesh>
+
+          {/* Hair - Dark brown bob */}
+          <mesh position={[0, 0.06, -0.04]}>
+            <sphereGeometry args={[0.28, 32, 32]} />
+            <meshStandardMaterial color="#2a1a12" roughness={0.75} />
+          </mesh>
+          
+          {/* Hair sides */}
+          <mesh position={[-0.22, -0.05, 0]}>
+            <capsuleGeometry args={[0.08, 0.15, 8, 12]} />
+            <meshStandardMaterial color="#2a1a12" roughness={0.75} />
+          </mesh>
+          <mesh position={[0.22, -0.05, 0]}>
+            <capsuleGeometry args={[0.08, 0.15, 8, 12]} />
+            <meshStandardMaterial color="#2a1a12" roughness={0.75} />
+          </mesh>
+          
+          {/* Bangs */}
+          <mesh position={[0, 0.18, 0.14]}>
+            <boxGeometry args={[0.35, 0.08, 0.06]} />
+            <meshStandardMaterial color="#2a1a12" roughness={0.75} />
+          </mesh>
+
+          {/* Glasses frame - left */}
+          <mesh position={[-0.09, 0.02, 0.24]}>
+            <torusGeometry args={[0.06, 0.008, 8, 24]} />
+            <meshStandardMaterial color="#1a1a2e" metalness={0.4} roughness={0.3} />
+          </mesh>
+          {/* Glasses frame - right */}
+          <mesh position={[0.09, 0.02, 0.24]}>
+            <torusGeometry args={[0.06, 0.008, 8, 24]} />
+            <meshStandardMaterial color="#1a1a2e" metalness={0.4} roughness={0.3} />
+          </mesh>
+          {/* Glasses bridge */}
+          <mesh position={[0, 0.02, 0.24]}>
+            <boxGeometry args={[0.06, 0.008, 0.008]} />
+            <meshStandardMaterial color="#1a1a2e" metalness={0.4} />
+          </mesh>
+          {/* Glasses temples */}
+          <mesh position={[-0.15, 0.02, 0.15]} rotation={[0, 0.5, 0]}>
+            <boxGeometry args={[0.12, 0.008, 0.008]} />
+            <meshStandardMaterial color="#1a1a2e" metalness={0.4} />
+          </mesh>
+          <mesh position={[0.15, 0.02, 0.15]} rotation={[0, -0.5, 0]}>
+            <boxGeometry args={[0.12, 0.008, 0.008]} />
+            <meshStandardMaterial color="#1a1a2e" metalness={0.4} />
+          </mesh>
+
+          {/* Left eye */}
+          <group position={[-0.09, 0.02, 0.22]}>
+            <mesh>
+              <sphereGeometry args={[0.035, 16, 16]} />
+              <meshStandardMaterial color="#ffffff" />
+            </mesh>
+            <mesh ref={leftEyeRef} position={[0, 0, 0.02]}>
+              <sphereGeometry args={[0.02, 12, 12]} />
+              <meshStandardMaterial color="#3d2314" />
+            </mesh>
+            <mesh position={[0, 0, 0.03]}>
+              <sphereGeometry args={[0.008, 8, 8]} />
+              <meshStandardMaterial color="#000000" />
+            </mesh>
+          </group>
+
+          {/* Right eye */}
+          <group position={[0.09, 0.02, 0.22]}>
+            <mesh>
+              <sphereGeometry args={[0.035, 16, 16]} />
+              <meshStandardMaterial color="#ffffff" />
+            </mesh>
+            <mesh ref={rightEyeRef} position={[0, 0, 0.02]}>
+              <sphereGeometry args={[0.02, 12, 12]} />
+              <meshStandardMaterial color="#3d2314" />
+            </mesh>
+            <mesh position={[0, 0, 0.03]}>
+              <sphereGeometry args={[0.008, 8, 8]} />
+              <meshStandardMaterial color="#000000" />
+            </mesh>
+          </group>
+
+          {/* Eyebrows */}
+          <mesh position={[-0.09, 0.08, 0.22]} rotation={[0, 0, 0.1]}>
+            <boxGeometry args={[0.06, 0.012, 0.01]} />
+            <meshStandardMaterial color="#2a1a12" />
+          </mesh>
+          <mesh position={[0.09, 0.08, 0.22]} rotation={[0, 0, -0.1]}>
+            <boxGeometry args={[0.06, 0.012, 0.01]} />
+            <meshStandardMaterial color="#2a1a12" />
+          </mesh>
+
+          {/* Nose */}
+          <mesh position={[0, -0.03, 0.25]}>
+            <coneGeometry args={[0.02, 0.05, 8]} />
+            <meshStandardMaterial color="#e8c4b8" roughness={0.6} />
+          </mesh>
+
+          {/* Mouth - animated */}
+          <mesh ref={mouthRef} position={[0, -0.1, 0.23]}>
+            <boxGeometry args={[0.06, 0.015, 0.015]} />
+            <meshStandardMaterial color="#c97878" />
+          </mesh>
+
+          {/* Smile lines */}
+          <mesh position={[-0.06, -0.08, 0.22]} rotation={[0, 0, 0.3]}>
+            <boxGeometry args={[0.02, 0.003, 0.003]} />
+            <meshStandardMaterial color="#e0b8a8" />
+          </mesh>
+          <mesh position={[0.06, -0.08, 0.22]} rotation={[0, 0, -0.3]}>
+            <boxGeometry args={[0.02, 0.003, 0.003]} />
+            <meshStandardMaterial color="#e0b8a8" />
+          </mesh>
+
+          {/* Status indicators */}
+          {isSpeaking && (
+            <Html position={[0.35, 0.15, 0]} center>
+              <div className="flex gap-0.5 items-end">
+                {[0, 1, 2].map((i) => (
+                  <div 
+                    key={i} 
+                    className="w-1 bg-primary rounded-full"
+                    style={{ 
+                      height: `${6 + Math.sin(Date.now() * 0.015 + i * 1.5) * 4}px`,
+                      animation: "pulse 0.5s ease-in-out infinite",
+                      animationDelay: `${i * 100}ms`
+                    }}
+                  />
+                ))}
+              </div>
+            </Html>
+          )}
+
+          {isListening && (
+            <Html position={[0.35, 0.15, 0]} center>
+              <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse shadow-lg shadow-red-500/50" />
+            </Html>
+          )}
+
+          {isThinking && !isListening && !isSpeaking && (
+            <Html position={[0.35, 0.15, 0]} center>
+              <div className="w-3 h-3 bg-yellow-400 rounded-full animate-pulse shadow-lg shadow-yellow-400/50" />
+            </Html>
+          )}
+        </group>
+
+        {/* Left arm */}
+        <mesh position={[-0.42, -0.05, 0]} rotation={[0, 0, 0.2]}>
+          <capsuleGeometry args={[0.055, 0.35, 10, 16]} />
+          <meshStandardMaterial color="#f8f8f8" roughness={0.35} />
+        </mesh>
+        
+        {/* Right arm - holding tablet gesture */}
+        <mesh position={[0.42, -0.05, 0.1]} rotation={[0.25, 0, -0.2]}>
+          <capsuleGeometry args={[0.055, 0.35, 10, 16]} />
+          <meshStandardMaterial color="#f8f8f8" roughness={0.35} />
+        </mesh>
+
+        {/* Holographic tablet */}
+        <mesh position={[0.32, -0.12, 0.35]} rotation={[0.25, -0.2, 0]}>
+          <planeGeometry args={[0.25, 0.18]} />
+          <meshStandardMaterial 
+            color="#00d4ff" 
+            transparent 
+            opacity={0.2}
+            emissive="#00d4ff"
+            emissiveIntensity={0.3}
+            side={THREE.DoubleSide}
+          />
+        </mesh>
+        
+        {/* Tablet glow effect */}
+        <mesh position={[0.32, -0.12, 0.34]} rotation={[0.25, -0.2, 0]}>
+          <planeGeometry args={[0.28, 0.21]} />
+          <meshStandardMaterial 
+            color="#00d4ff" 
+            transparent 
+            opacity={0.08}
+            emissive="#00d4ff"
+            emissiveIntensity={0.2}
+            side={THREE.DoubleSide}
+          />
+        </mesh>
+      </group>
+    </Float>
+  );
+}
+
+// Scene Component
+function Scene({ 
+  isSpeaking, 
+  isListening, 
+  isThinking,
+  mouthOpenness,
+  onClick
+}: { 
+  isSpeaking: boolean; 
+  isListening: boolean;
+  isThinking: boolean;
+  mouthOpenness: number;
+  onClick: () => void;
+}) {
+  return (
+    <>
+      {/* Studio lighting setup */}
+      <ambientLight intensity={0.6} />
+      <directionalLight position={[3, 4, 5]} intensity={1.0} castShadow />
+      <directionalLight position={[-3, 2, 3]} intensity={0.4} color="#e0e8ff" />
+      <pointLight position={[0, 3, 2]} intensity={0.5} color="#ffffff" />
+      <pointLight position={[-2, 1, 3]} intensity={0.3} color="#00d4ff" />
+      <pointLight position={[2, 1, 3]} intensity={0.3} color="#00d4ff" />
+      
+      <Suspense fallback={null}>
+        <VeraModel 
+          isSpeaking={isSpeaking} 
+          isListening={isListening}
+          isThinking={isThinking}
+          mouthOpenness={mouthOpenness}
+          onClick={onClick}
+        />
+        <Environment preset="studio" />
+      </Suspense>
+    </>
+  );
+}
+
 // Main Component
 export default function Vera3DAvatar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [messages, setMessages] = useState<Array<{ id: number; role: string; content: string }>>([
-    { id: 1, role: "assistant", content: "Merhaba! Ben Vera. Size nasıl yardımcı olabilirim?" }
-  ]);
-  const [input, setInput] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [isThinking, setIsThinking] = useState(false);
+  const [mouthOpenness, setMouthOpenness] = useState(0);
   const [speechSupported, setSpeechSupported] = useState(false);
   const [ttsEnabled, setTtsEnabled] = useState(true);
   const [femaleVoice, setFemaleVoice] = useState<SpeechSynthesisVoice | null>(null);
+  const [transcript, setTranscript] = useState("");
+  const [response, setResponse] = useState("");
+  const [showResponse, setShowResponse] = useState(false);
   
-  const messagesEndRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const synthRef = useRef<SpeechSynthesis | null>(null);
+  const animationFrameRef = useRef<number | null>(null);
 
   // Initialize Speech APIs
   useEffect(() => {
@@ -415,7 +537,6 @@ export default function Vera3DAvatar() {
     if (hasSpeechSynthesis) {
       synthRef.current = window.speechSynthesis;
       
-      // Load voices
       const loadVoices = () => {
         const voices = synthRef.current?.getVoices() || [];
         const female = findFemaleVoice(voices);
@@ -446,14 +567,21 @@ export default function Vera3DAvatar() {
         }
         
         if (finalTranscript) {
-          setInput(finalTranscript);
+          setTranscript(finalTranscript);
+          handleUserQuery(finalTranscript);
         } else if (interimTranscript) {
-          setInput(interimTranscript);
+          setTranscript(interimTranscript);
         }
       };
       
-      recognition.onerror = () => setIsListening(false);
-      recognition.onend = () => setIsListening(false);
+      recognition.onerror = () => {
+        setIsListening(false);
+        setIsThinking(false);
+      };
+      
+      recognition.onend = () => {
+        setIsListening(false);
+      };
       
       recognitionRef.current = recognition;
     }
@@ -461,18 +589,26 @@ export default function Vera3DAvatar() {
     return () => {
       if (recognitionRef.current) recognitionRef.current.abort();
       if (synthRef.current) synthRef.current.cancel();
+      if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
     };
   }, []);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  // Handle user query and generate response
+  const handleUserQuery = useCallback((query: string) => {
+    setIsListening(false);
+    setIsThinking(true);
+    
+    setTimeout(() => {
+      const { text, isInvestmentRelated } = getFinancialResponse(query);
+      setResponse(text);
+      setShowResponse(true);
+      setIsThinking(false);
+      
+      speakText(text, isInvestmentRelated);
+    }, 800);
+  }, []);
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
-  // Text-to-Speech with female voice
+  // Text-to-Speech with lip-sync
   const speakText = useCallback((text: string, isInvestmentRelated: boolean) => {
     if (!synthRef.current || !ttsEnabled) return;
     
@@ -491,261 +627,163 @@ export default function Vera3DAvatar() {
     // Force female voice
     if (femaleVoice) {
       utterance.voice = femaleVoice;
-      utterance.pitch = 1.1; // Slightly higher pitch for female
-    } else {
-      // Fallback: increase pitch to simulate female voice
       utterance.pitch = 1.2;
+    } else {
+      // Fallback: increase pitch to feminize
+      utterance.pitch = 1.4;
     }
     
-    utterance.onstart = () => setIsSpeaking(true);
-    utterance.onend = () => setIsSpeaking(false);
-    utterance.onerror = () => setIsSpeaking(false);
+    utterance.onstart = () => {
+      setIsSpeaking(true);
+      startLipSyncAnimation();
+    };
+    
+    utterance.onend = () => {
+      setIsSpeaking(false);
+      stopLipSyncAnimation();
+      setTimeout(() => setShowResponse(false), 4000);
+    };
+    
+    utterance.onerror = () => {
+      setIsSpeaking(false);
+      stopLipSyncAnimation();
+    };
     
     synthRef.current.speak(utterance);
   }, [ttsEnabled, femaleVoice]);
 
-  // Toggle microphone - Full Duplex: stop speaking when listening
-  const toggleListening = useCallback(() => {
-    if (!recognitionRef.current) return;
+  // Lip-sync animation
+  const startLipSyncAnimation = useCallback(() => {
+    const animate = () => {
+      const time = Date.now() * 0.012;
+      const amplitude = Math.abs(Math.sin(time) * Math.sin(time * 1.4) * Math.sin(time * 0.6));
+      setMouthOpenness(amplitude * 0.7);
+      animationFrameRef.current = requestAnimationFrame(animate);
+    };
+    animate();
+  }, []);
+
+  const stopLipSyncAnimation = useCallback(() => {
+    if (animationFrameRef.current) {
+      cancelAnimationFrame(animationFrameRef.current);
+      animationFrameRef.current = null;
+    }
+    setMouthOpenness(0);
+  }, []);
+
+  // Handle avatar click - start listening
+  const handleAvatarClick = useCallback(() => {
+    if (!speechSupported || !recognitionRef.current) return;
+    
+    // Stop speaking if currently speaking
+    if (isSpeaking && synthRef.current) {
+      synthRef.current.cancel();
+      setIsSpeaking(false);
+      stopLipSyncAnimation();
+    }
     
     if (isListening) {
       recognitionRef.current.stop();
       setIsListening(false);
     } else {
-      // Full Duplex: Stop speaking when user starts talking
-      if (synthRef.current) {
-        synthRef.current.cancel();
-        setIsSpeaking(false);
-      }
-      
       try {
+        setTranscript("");
+        setShowResponse(false);
         recognitionRef.current.start();
         setIsListening(true);
       } catch {
         setIsListening(false);
       }
     }
-  }, [isListening]);
-
-  const stopSpeaking = useCallback(() => {
-    if (synthRef.current) {
-      synthRef.current.cancel();
-      setIsSpeaking(false);
-    }
-  }, []);
-
-  const handleSend = useCallback(async () => {
-    if (!input.trim()) return;
-
-    if (isListening && recognitionRef.current) {
-      recognitionRef.current.stop();
-      setIsListening(false);
-    }
-
-    const userMessage = {
-      id: messages.length + 1,
-      role: "user",
-      content: input.trim(),
-    };
-
-    setMessages((prev) => [...prev, userMessage]);
-    const currentInput = input;
-    setInput("");
-    setIsTyping(true);
-
-    setTimeout(() => {
-      const { text: response, isInvestmentRelated } = getFinancialResponse(currentInput);
-      const assistantMessage = {
-        id: messages.length + 2,
-        role: "assistant",
-        content: response,
-      };
-      setMessages((prev) => [...prev, assistantMessage]);
-      setIsTyping(false);
-      
-      speakText(response, isInvestmentRelated);
-    }, 800);
-  }, [input, messages.length, isListening, speakText]);
-
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      handleSend();
-    }
-  };
+  }, [speechSupported, isListening, isSpeaking, stopLipSyncAnimation]);
 
   return (
-    <>
-      {/* Fixed 3D Avatar - Bottom Right */}
-      <div 
-        className="fixed bottom-0 right-5 z-[9999]"
-        style={{ width: isExpanded ? "400px" : "200px", height: isExpanded ? "500px" : "280px" }}
-      >
-        {/* 3D Canvas with transparent background */}
-        <div 
-          className="w-full h-full cursor-pointer"
-          onClick={() => !isExpanded && setIsExpanded(true)}
+    <div className="fixed bottom-0 right-4 z-[9999]" style={{ width: "200px", height: "300px" }}>
+      {/* 3D Canvas */}
+      <div className="w-full h-full cursor-pointer">
+        <Canvas
+          camera={{ position: [0, 0.25, 1.8], fov: 42 }}
+          style={{ background: "transparent" }}
+          gl={{ alpha: true, antialias: true }}
         >
-          <Canvas
-            camera={{ position: [0, 0.5, 2.5], fov: 45 }}
-            style={{ background: "transparent" }}
-            gl={{ alpha: true, antialias: true }}
-          >
-            <Scene isSpeaking={isSpeaking} isListening={isListening} />
-          </Canvas>
-        </div>
-
-        {/* Vera Name Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="absolute bottom-2 left-1/2 -translate-x-1/2 px-3 py-1 bg-black/60 backdrop-blur-sm rounded-full border border-primary/30"
-        >
-          <span className="text-xs font-semibold text-primary">Vera</span>
-          <span className="text-xs text-white/70 ml-1">AI Asistan</span>
-        </motion.div>
-
-        {/* Disclaimer */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 px-2 py-0.5 bg-amber-500/20 rounded text-center">
-          <p className="text-[10px] text-amber-400">Yatırım Tavsiyesi Vermez</p>
-        </div>
-
-        {/* Minimize button when expanded */}
-        {isExpanded && (
-          <button
-            onClick={() => setIsExpanded(false)}
-            className="absolute top-2 right-2 p-1 bg-black/50 rounded-full hover:bg-black/70 transition-colors"
-          >
-            <X className="w-4 h-4 text-white" />
-          </button>
-        )}
-
-        {/* Chat toggle button */}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="absolute top-2 left-2 p-2 bg-primary/80 rounded-full hover:bg-primary transition-colors shadow-lg"
-        >
-          <MessageCircle className="w-4 h-4 text-primary-foreground" />
-        </button>
+          <Scene 
+            isSpeaking={isSpeaking} 
+            isListening={isListening}
+            isThinking={isThinking}
+            mouthOpenness={mouthOpenness}
+            onClick={handleAvatarClick}
+          />
+        </Canvas>
       </div>
 
-      {/* Chat Panel */}
+      {/* Name Badge */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="absolute bottom-2 left-1/2 -translate-x-1/2 px-3 py-1 bg-black/75 backdrop-blur-sm rounded-full border border-primary/50"
+      >
+        <span className="text-xs font-semibold text-primary">Vera</span>
+        <span className="text-xs text-white/70 ml-1">• Tıkla & Konuş</span>
+      </motion.div>
+
+      {/* Legal Disclaimer */}
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 px-2 py-0.5 bg-amber-500/25 rounded text-center max-w-[180px]">
+        <p className="text-[8px] text-amber-400 leading-tight">Vera bir yapay zekadır, Yatırım Tavsiyesi Vermez.</p>
+      </div>
+
+      {/* Status Indicator */}
       <AnimatePresence>
-        {isOpen && (
+        {(isListening || isThinking || (transcript && !showResponse)) && (
           <motion.div
-            initial={{ opacity: 0, x: 20, scale: 0.95 }}
-            animate={{ opacity: 1, x: 0, scale: 1 }}
-            exit={{ opacity: 0, x: 20, scale: 0.95 }}
-            className="fixed bottom-[300px] right-5 z-[9998] w-[350px] max-h-[400px] bg-black/90 backdrop-blur-xl rounded-2xl border border-primary/30 shadow-2xl flex flex-col overflow-hidden"
+            initial={{ opacity: 0, y: 10, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 10, scale: 0.9 }}
+            className="absolute top-2 left-1/2 -translate-x-1/2 px-3 py-1.5 bg-black/85 backdrop-blur-sm rounded-lg border border-white/20 max-w-[180px]"
           >
-            {/* Header */}
-            <div className="flex items-center justify-between p-3 border-b border-white/10">
+            {isListening && (
               <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-primary" />
-                <span className="text-sm font-semibold text-white">Vera ile Konuş</span>
+                <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+                <span className="text-xs text-white">Dinliyorum...</span>
               </div>
-              <div className="flex items-center gap-1">
-                {speechSupported && (
-                  <button
-                    onClick={() => {
-                      if (isSpeaking) stopSpeaking();
-                      setTtsEnabled(!ttsEnabled);
-                    }}
-                    className={`p-1.5 rounded-lg transition-colors ${
-                      ttsEnabled ? "bg-primary/20 text-primary" : "bg-white/10 text-white/50"
-                    }`}
-                  >
-                    {ttsEnabled ? <Volume2 className="w-3 h-3" /> : <VolumeX className="w-3 h-3" />}
-                  </button>
-                )}
-                <button
-                  onClick={() => setIsOpen(false)}
-                  className="p-1.5 hover:bg-white/10 rounded-lg transition-colors"
-                >
-                  <X className="w-3 h-3 text-white/70" />
-                </button>
+            )}
+            {isThinking && !isListening && (
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse" />
+                <span className="text-xs text-white">Düşünüyorum...</span>
               </div>
-            </div>
-
-            {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-3 space-y-3 max-h-[250px]">
-              {messages.map((message) => (
-                <div
-                  key={message.id}
-                  className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
-                >
-                  <div
-                    className={`max-w-[85%] rounded-xl px-3 py-2 text-sm ${
-                      message.role === "user"
-                        ? "bg-primary text-primary-foreground"
-                        : "bg-white/10 text-white"
-                    }`}
-                  >
-                    {message.content}
-                  </div>
-                </div>
-              ))}
-              {isTyping && (
-                <div className="flex justify-start">
-                  <div className="bg-white/10 rounded-xl px-3 py-2">
-                    <div className="flex gap-1">
-                      <span className="w-1.5 h-1.5 bg-white/50 rounded-full animate-bounce" />
-                      <span className="w-1.5 h-1.5 bg-white/50 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-                      <span className="w-1.5 h-1.5 bg-white/50 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
-                    </div>
-                  </div>
-                </div>
-              )}
-              <div ref={messagesEndRef} />
-            </div>
-
-            {/* Input */}
-            <div className="p-3 border-t border-white/10">
-              {isListening && (
-                <div className="flex items-center justify-center gap-2 mb-2 py-1.5 bg-red-500/20 rounded-lg">
-                  <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
-                  <span className="text-xs text-red-400">Dinliyorum...</span>
-                </div>
-              )}
-              
-              <div className="flex gap-2">
-                <input
-                  type="text"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  placeholder="Vera'ya sorun..."
-                  className="flex-1 px-3 py-2 rounded-lg bg-white/10 border border-white/20 focus:border-primary focus:outline-none text-white placeholder:text-white/40 text-sm"
-                  disabled={isListening}
-                />
-                
-                {speechSupported && (
-                  <Button
-                    onClick={toggleListening}
-                    size="sm"
-                    className={`px-3 ${
-                      isListening 
-                        ? "bg-red-500 hover:bg-red-600" 
-                        : "bg-white/10 hover:bg-white/20 text-white"
-                    }`}
-                  >
-                    {isListening ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
-                  </Button>
-                )}
-                
-                <Button
-                  onClick={handleSend}
-                  disabled={!input.trim() || isTyping}
-                  size="sm"
-                  className="bg-primary hover:bg-primary/90 px-3"
-                >
-                  <Send className="w-4 h-4" />
-                </Button>
-              </div>
-            </div>
+            )}
+            {transcript && !isListening && !isThinking && (
+              <p className="text-xs text-white/80 truncate">{transcript}</p>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
-    </>
+
+      {/* Response Bubble */}
+      <AnimatePresence>
+        {showResponse && response && (
+          <motion.div
+            initial={{ opacity: 0, x: 20, scale: 0.9 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: 20, scale: 0.9 }}
+            className="absolute bottom-[80px] right-[210px] w-[260px] max-h-[180px] overflow-y-auto p-3 bg-black/92 backdrop-blur-xl rounded-xl border border-primary/40 shadow-xl shadow-primary/10"
+          >
+            <p className="text-sm text-white leading-relaxed">{response}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* TTS Toggle */}
+      {speechSupported && (
+        <button
+          onClick={() => setTtsEnabled(!ttsEnabled)}
+          className={`absolute top-2 right-2 p-1.5 rounded-full transition-colors ${
+            ttsEnabled ? "bg-primary/40 text-primary" : "bg-white/15 text-white/50"
+          }`}
+        >
+          {ttsEnabled ? <Volume2 className="w-3 h-3" /> : <VolumeX className="w-3 h-3" />}
+        </button>
+      )}
+    </div>
   );
 }
