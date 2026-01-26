@@ -1,21 +1,21 @@
 /*
-  DESIGN: Finans Kodu AI Chatbot - Voice Assistant
+  DESIGN: Finans Kodu - Vera AI Assistant
   COMPLIANCE: SPK/BDDK mevzuatına uygun
   
-  - Sticky chatbot icon in bottom-right corner
-  - Expandable chat window
-  - Financial analysis with risk/reward balance
-  - Mandatory disclaimer on all investment-related responses
-  - Educational and analytical tone, no buy/sell recommendations
+  - 3D-like animated avatar "Vera"
+  - Advanced financial knowledge base (7 critical scenarios)
   - Voice Input: Web Speech API (SpeechRecognition)
-  - Voice Output: Web Speech API (speechSynthesis)
+  - Voice Output: Web Speech API (speechSynthesis) with Turkish prosody
+  - Lip-sync and idle animations
+  - Mouse tracking for eye contact
   - Zero-cost implementation using native browser APIs
 */
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, X, Send, Bot, User, AlertTriangle, Mic, MicOff, Volume2, VolumeX } from "lucide-react";
+import { MessageCircle, X, Send, Bot, User, AlertTriangle, Mic, MicOff, Volume2, VolumeX, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import VeraAvatar from "./VeraAvatar";
 
 interface Message {
   id: number;
@@ -67,12 +67,210 @@ declare global {
   }
 }
 
-const DISCLAIMER = "\n\n⚠️ *Burada yer alan bilgiler yatırım tavsiyesi değildir. Yatırım kararlarınızı kendi araştırmanıza dayanarak veriniz.*";
-const VOICE_DISCLAIMER = "Hatırlatmak isterim ki, bunlar yatırım tavsiyesi değildir.";
+const DISCLAIMER = "\n\n⚠️ *Vera bir yapay zeka asistanıdır ve yatırım tavsiyesi vermez. Kararlarınızı kendi araştırmanıza dayanarak veriniz.*";
+const VOICE_DISCLAIMER = "Hatırlatmak isterim ki, Vera bir yapay zeka asistanıdır ve yatırım tavsiyesi vermez.";
 
-// Predefined responses for common financial topics
+// Enhanced financial responses with 7 critical scenarios
 const getFinancialResponse = (query: string): { text: string; isInvestmentRelated: boolean } => {
   const lowerQuery = query.toLowerCase();
+  
+  // 1. Kriz Yönetimi (Dolar/Enflasyon)
+  if (lowerQuery.includes("dolar") && (lowerQuery.includes("yüksel") || lowerQuery.includes("sıçra") || lowerQuery.includes("panik") || lowerQuery.includes("ne yapmalı"))) {
+    return {
+      text: `**Döviz Dalgalanması ve Varlık Koruma**
+
+Anlıyorum, döviz kurlarındaki ani hareketler endişe verici olabiliyor. Öncelikle sakin kalmak önemli.
+
+**Panikle Satışın Riskleri:**
+• Ani kararlar genellikle en kötü fiyatlardan işlem yapmaya yol açar
+• Piyasa dalgalanmaları geçici olabilir
+• Duygusal kararlar uzun vadeli planları bozar
+
+**Varlık Koruma Stratejileri:**
+• Portföy çeşitlendirmesi - tek bir varlığa bağımlı olmamak
+• Kademeli pozisyon alma/çıkma stratejisi
+• Enflasyona karşı korumalı varlıklar (altın, döviz, enflasyona endeksli tahviller)
+• Acil durum fonu ayırma
+
+**Vera'nın Önerisi:**
+Panik anında "satıp çıkayım mı?" sorusu yerine, "portföyüm dengeli mi?" sorusunu sormak daha sağlıklıdır. Uzun vadeli stratejinizi gözden geçirin.${DISCLAIMER}`,
+      isInvestmentRelated: true
+    };
+  }
+  
+  // 2. Merkez Bankası Haftaları
+  if (lowerQuery.includes("faiz") || lowerQuery.includes("merkez bankası") || lowerQuery.includes("tcmb") || lowerQuery.includes("fed")) {
+    return {
+      text: `**Merkez Bankası Faiz Kararları ve Etkileri**
+
+Faiz kararları finansal piyasaların en önemli göstergelerinden biridir.
+
+**Faiz Artışının Teorik Etkileri:**
+• **Mevduat:** Faiz getirileri artar, tasarruf daha cazip hale gelir
+• **Borsa:** Genellikle olumsuz etkilenir (borçlanma maliyeti artar, alternatif getiri yükselir)
+• **Kredi:** Kredi maliyetleri yükselir, borçlanma zorlaşır
+• **Döviz:** Yerli para genellikle değer kazanır
+
+**Faiz İndiriminin Teorik Etkileri:**
+• **Mevduat:** Getiriler düşer, alternatif arayışı başlar
+• **Borsa:** Genellikle olumlu etkilenir
+• **Kredi:** Borçlanma ucuzlar, tüketim artabilir
+• **Döviz:** Yerli para baskı altına girebilir
+
+**Vera'nın Notu:**
+Faiz kararları tek başına değil, enflasyon beklentileri, küresel koşullar ve ekonomik büyüme ile birlikte değerlendirilmelidir.${DISCLAIMER}`,
+      isInvestmentRelated: true
+    };
+  }
+  
+  // 3. Borsa Volatilitesi (FOMO/Düşüş)
+  if ((lowerQuery.includes("borsa") || lowerQuery.includes("hisse")) && (lowerQuery.includes("yüksel") || lowerQuery.includes("ralli") || lowerQuery.includes("düşüş") || lowerQuery.includes("çöktü") || lowerQuery.includes("fomo"))) {
+    return {
+      text: `**Borsa Volatilitesi ve Strateji Yaklaşımları**
+
+Piyasa hareketleri duygusal tepkilere yol açabilir. İşte farklı senaryolar için düşünce çerçeveleri:
+
+**Ralli Dönemlerinde (FOMO Riski):**
+• "Kaçırıyorum" hissi tehlikeli olabilir
+• **Kademeli alım** mantığı: Tüm sermayeyi tek seferde değil, zaman dilimlerine yayarak yatırım
+• Tepe fiyatlardan alım riski yüksektir
+• "Herkes kazanıyor" dönemleri genellikle dikkatli olunması gereken dönemlerdir
+
+**Düşüş Dönemlerinde:**
+• Panik satışı genellikle en kötü stratejidir
+• **Maliyet düşürme** stratejisi: Düşen fiyatlardan ekleme yaparak ortalama maliyeti düşürme
+• Bekleme stratejisi: Uzun vadeli yatırımcılar için dalgalanmalar normaldir
+• Portföy gözden geçirme fırsatı
+
+**Vera'nın Hatırlatması:**
+Piyasa zamanlaması çok zordur. Disiplinli ve planlı yaklaşım, duygusal kararlardan daha sağlıklı sonuçlar verir.${DISCLAIMER}`,
+      isInvestmentRelated: true
+    };
+  }
+  
+  // 4. Toplu Para (Life Events)
+  if (lowerQuery.includes("eyt") || lowerQuery.includes("miras") || lowerQuery.includes("ev sattım") || lowerQuery.includes("toplu para") || lowerQuery.includes("tazminat") || lowerQuery.includes("emekli")) {
+    return {
+      text: `**Toplu Para Yönetimi (EYT, Miras, Tazminat)**
+
+Hayatınızda önemli bir finansal olay yaşadığınızı anlıyorum. Toplu para geldiğinde doğru adımlar atmak kritik önem taşır.
+
+**Enflasyona Karşı Koruma Sepeti Mantığı:**
+• **Mevduat (%30-40):** Acil ihtiyaçlar ve güvenlik için
+• **Altın (%20-30):** Enflasyon koruması ve çeşitlendirme
+• **Yatırım Fonları (%20-30):** Profesyonel yönetim ve çeşitlendirme
+• **Hisse/Borsa (%10-20):** Uzun vadeli büyüme potansiyeli (risk toleransına göre)
+
+**Kritik Uyarılar:**
+• Acele etmeyin - Paranızı anlamak için zaman ayırın
+• Tek bir varlığa yatırmayın - Çeşitlendirme şart
+• Güvenilir olmayan "fırsatlara" dikkat
+• Vergi yükümlülüklerinizi araştırın
+
+**Vera'nın Önerisi:**
+İlk 3 ay boyunca paranın tamamını mevduatta tutup, bu sürede finansal okuryazarlığınızı artırmanız mantıklı olabilir.${DISCLAIMER}`,
+      isInvestmentRelated: true
+    };
+  }
+  
+  // 5. Dönemsellik (Yıl sonu, Bilanço)
+  if (lowerQuery.includes("yıl sonu") || lowerQuery.includes("vergi") || lowerQuery.includes("bilanço") || lowerQuery.includes("temettü") || lowerQuery.includes("kar payı")) {
+    return {
+      text: `**Dönemsel Finansal Fırsatlar ve Dikkat Noktaları**
+
+Finansal takvim, yatırımcılar için önemli dönemler içerir.
+
+**Yıl Sonu (Aralık-Ocak):**
+• Vergi avantajlı yatırımlar için son fırsatlar
+• BES katkı payı limitleri
+• Portföy yeniden dengeleme zamanı
+• Zarar/kar realizasyonu değerlendirmesi
+
+**Bilanço Dönemleri (Mart, Haziran, Eylül, Aralık):**
+• Şirket finansalları açıklanır
+• Temettü dağıtım kararları
+• Hisse fiyatlarında volatilite artabilir
+• Sektör karşılaştırmaları için ideal dönem
+
+**Temettü Sezonu (Genellikle Mart-Mayıs):**
+• Yüksek temettü veren şirketler öne çıkar
+• "Temettü avcılığı" stratejisi
+• Hak ediş tarihleri önemli
+
+**Vera'nın Hatırlatması:**
+Dönemsel fırsatları değerlendirirken, uzun vadeli stratejinizi gözden kaçırmayın.${DISCLAIMER}`,
+      isInvestmentRelated: true
+    };
+  }
+  
+  // 6. Gümüş Yatırımı (YENİ)
+  if (lowerQuery.includes("gümüş") || lowerQuery.includes("gumus") || lowerQuery.includes("silver")) {
+    return {
+      text: `**Gümüş Yatırımı Analizi**
+
+Gümüş, altından farklı dinamiklere sahip ilginç bir yatırım aracıdır.
+
+**Gümüşün Özellikleri:**
+• **Endüstriyel Kullanım:** Elektronik, güneş panelleri, tıbbi cihazlar, fotoğrafçılık
+• Altının aksine, gümüşün %50'den fazlası endüstriyel amaçlı kullanılır
+• Ekonomik büyüme dönemlerinde talep artabilir
+
+**Altın/Gümüş Rasyosu:**
+• Tarihsel ortalama: 60-70 arası
+• Rasyo yüksekse (80+): Gümüş görece ucuz sayılabilir
+• Rasyo düşükse (50-): Gümüş görece pahalı sayılabilir
+
+**Fırsatlar:**
+• Altına göre daha düşük giriş maliyeti
+• Endüstriyel talep artışı potansiyeli (yeşil enerji)
+• Portföy çeşitlendirmesi
+
+**Riskler:**
+• Altına göre **çok daha volatil** (2-3 kat daha fazla dalgalanma)
+• Endüstriyel talebe bağımlılık (resesyonda düşebilir)
+• Depolama ve saklama maliyetleri (fiziksel için)
+
+**Vera'nın Notu:**
+Gümüş, risk toleransı yüksek yatırımcılar için portföyün küçük bir bölümünde değerlendirilebilir.${DISCLAIMER}`,
+      isInvestmentRelated: true
+    };
+  }
+  
+  // 7. ABD Borsaları (YENİ)
+  if (lowerQuery.includes("abd") || lowerQuery.includes("amerika") || lowerQuery.includes("nasdaq") || lowerQuery.includes("s&p") || lowerQuery.includes("dow jones") || lowerQuery.includes("apple") || lowerQuery.includes("tesla") || lowerQuery.includes("nvidia") || lowerQuery.includes("yurt dışı hisse")) {
+    return {
+      text: `**ABD Borsaları ve Yurt Dışı Hisse Yatırımı**
+
+ABD borsaları, dünyanın en büyük ve en likit piyasalarıdır.
+
+**Erişim Yolları:**
+• Türk aracı kurumlar üzerinden yurt dışı hisse alımı
+• Yabancı hisse senedi fonları
+• ETF'ler (SPY, QQQ vb.)
+
+**Potansiyel Avantajlar:**
+• Dolar bazlı getiri
+• Küresel şirketlere erişim
+• Çeşitlendirme imkanı
+• Yüksek likidite
+
+**⚠️ KRİTİK: VERGİLENDİRME UYARISI**
+Yurt dışı hisse gelirleri Türkiye'de **beyana tabidir:**
+• Temettü gelirleri beyan edilmelidir
+• Alım-satım kazançları beyan edilmelidir
+• Çifte vergilendirmeyi önleme anlaşmaları incelenmelidir
+• Vergi danışmanınıza başvurmanız şiddetle önerilir
+
+**Riskler:**
+• Kur riski (TL/USD dalgalanmaları)
+• Farklı piyasa saatleri
+• Bilgi asimetrisi (şirketleri tanımama)
+
+**Vera'nın Önerisi:**
+Yurt dışı yatırım yapmadan önce vergi yükümlülüklerinizi detaylı araştırın ve gerekirse bir mali müşavire danışın.${DISCLAIMER}`,
+      isInvestmentRelated: true
+    };
+  }
   
   // Altın
   if (lowerQuery.includes("altın") || lowerQuery.includes("altin")) {
@@ -123,7 +321,7 @@ Kripto paralara yatırım yaparken, kaybetmeyi göze alabileceğiniz miktarı a�
     };
   }
   
-  // Hisse Senedi
+  // Hisse Senedi (genel)
   if (lowerQuery.includes("hisse") || lowerQuery.includes("borsa") || lowerQuery.includes("bist") || lowerQuery.includes("pay")) {
     return {
       text: `**Hisse Senedi Analizi**
@@ -171,8 +369,8 @@ Fon seçerken, yönetim ücretleri, geçmiş performans ve fon stratejisini ince
     };
   }
   
-  // Döviz
-  if (lowerQuery.includes("dolar") || lowerQuery.includes("euro") || lowerQuery.includes("döviz") || lowerQuery.includes("doviz")) {
+  // Döviz (genel)
+  if (lowerQuery.includes("euro") || lowerQuery.includes("döviz") || lowerQuery.includes("doviz")) {
     return {
       text: `**Döviz Analizi**
 
@@ -209,60 +407,82 @@ Doğru yatırım stratejisi, kişisel finansal durumunuza, risk toleransınıza 
 • Duygusal kararlardan kaçının
 • Düzenli olarak portföyünüzü gözden geçirin
 
-**Finans Kodu Yaklaşımı:**
-Biz spesifik "AL" veya "SAT" tavsiyeleri vermiyoruz. Bunun yerine, kendi yatırım kararlarınızı verebilmeniz için gerekli analitik araçları ve eğitim içeriklerini sunuyoruz.
+**Vera'nın Yaklaşımı:**
+Ben spesifik "AL" veya "SAT" tavsiyeleri vermiyorum. Bunun yerine, kendi yatırım kararlarınızı verebilmeniz için gerekli analitik çerçeveyi sunuyorum.
 
 Finansal okuryazarlık ve disiplinli bir yaklaşım, uzun vadeli başarının anahtarıdır.${DISCLAIMER}`,
       isInvestmentRelated: true
     };
   }
   
-  // Finans Kodu hakkında
-  if (lowerQuery.includes("finans kodu") || lowerQuery.includes("siz kim") || lowerQuery.includes("ne yapıyor")) {
+  // Vera/Finans Kodu hakkında
+  if (lowerQuery.includes("vera") || lowerQuery.includes("sen kim") || lowerQuery.includes("finans kodu") || lowerQuery.includes("ne yapıyor")) {
     return {
-      text: `**Finans Kodu Hakkında**
+      text: `**Merhaba, Ben Vera! 👋**
 
-Finans Kodu, finans profesyonelleri için yapay zeka destekli verimlilik çözümleri sunan bir platformdur.
+Finans Kodu'nun yapay zeka asistanıyım. Size finansal konularda eğitici bilgiler sunmak için buradayım.
 
-**Sunduğumuz Değer:**
+**Benim Özelliklerim:**
+• Sesli ve yazılı sohbet desteği
+• Finansal kavramları anlaşılır şekilde açıklama
+• Piyasa dinamikleri hakkında genel bilgi
+• Risk ve fırsat analizi çerçevesi sunma
+
+**Finans Kodu Hakkında:**
 • AI Prompt Kütüphanesi - Finansal analizler için hazır promptlar
 • Otomasyon Araçları - Excel'den algoritmik finansa geçiş
 • Eğitim İçerikleri - Dijital dönüşüm rehberleri
 • Topluluk - Finans profesyonelleri forumu
 
-**Misyonumuz:**
-Finansal kaosunuzu, kod yazmadan düzenli bir "Mühendislik Harikası"na dönüştürmek.
+**Önemli Not:**
+Ben bir yapay zeka asistanıyım ve yatırım tavsiyesi vermiyorum. Amacım eğitici ve analitik bilgi sunmaktır.
 
-Ürünlerimizi incelemek için "Dijital Ürünler" bölümümüzü ziyaret edebilirsiniz.`,
+Ürünlerimizi incelemek için "Dijital Ürünler" bölümümüzü ziyaret edebilirsiniz!`,
       isInvestmentRelated: false
     };
   }
   
   // Default response
   return {
-    text: `Merhaba! Ben Finans Kodu Asistan. Size finansal konularda genel bilgi ve analiz sunabilirim.
+    text: `Merhaba! Ben **Vera**, Finans Kodu'nun AI asistanıyım. 👋
 
-**Sorularınız için örnekler:**
+Size finansal konularda yardımcı olabilirim. İşte konuşabileceğimiz bazı konular:
+
+**Yatırım Araçları:**
 • "Altın yatırımı hakkında bilgi ver"
+• "Gümüş yatırımı nasıl yapılır?"
 • "Bitcoin riskleri neler?"
-• "Hisse senedi yatırımı nasıl yapılır?"
-• "Yatırım fonları hakkında bilgi"
-• "Finans Kodu nedir?"
+• "ABD borsalarına nasıl yatırım yapılır?"
 
-Lütfen spesifik bir yatırım aracı veya konu hakkında soru sorun.
+**Piyasa Durumları:**
+• "Dolar yükselirse ne yapmalıyım?"
+• "Faiz kararları piyasayı nasıl etkiler?"
+• "Borsa düşüşünde ne yapmalı?"
 
-*Not: Spesifik "AL" veya "SAT" tavsiyeleri vermiyorum. Amacım eğitici ve analitik bilgi sunmaktır.*`,
+**Özel Durumlar:**
+• "EYT paramı nasıl değerlendirmeliyim?"
+• "Miras kaldı, ne yapmalıyım?"
+
+Mikrofon butonuna basarak sesli soru da sorabilirsiniz! 🎤
+
+*Not: Ben yatırım tavsiyesi vermiyorum, amacım eğitici bilgi sunmaktır.*`,
     isInvestmentRelated: false
   };
 };
 
-// Clean text for speech synthesis (remove markdown formatting)
-const cleanTextForSpeech = (text: string): string => {
+// Process text for better Turkish prosody
+const processTextForSpeech = (text: string): string => {
   return text
     .replace(/\*\*/g, "") // Remove bold
     .replace(/\*/g, "") // Remove italic
     .replace(/•/g, "") // Remove bullets
     .replace(/⚠️/g, "") // Remove emoji
+    .replace(/👋/g, "") // Remove emoji
+    .replace(/🎤/g, "") // Remove emoji
+    .replace(/,/g, ", ") // Add pause after comma
+    .replace(/\./g, ". ") // Add pause after period
+    .replace(/\?/g, "? ") // Add pause after question
+    .replace(/:/g, ": ") // Add pause after colon
     .replace(/\n+/g, ". ") // Replace newlines with periods
     .replace(/\s+/g, " ") // Normalize whitespace
     .trim();
@@ -274,7 +494,7 @@ export default function Chatbot() {
     {
       id: 1,
       role: "assistant",
-      content: "Merhaba! Ben Finans Kodu Asistan. Finansal konularda size yardımcı olabilirim. Yazarak veya mikrofon butonuna basarak sesli soru sorabilirsiniz. 🎤",
+      content: "Merhaba! Ben Vera, Finans Kodu'nun AI asistanıyım. 👋 Finansal konularda size yardımcı olabilirim. Yazarak veya mikrofon butonuna basarak sesli soru sorabilirsiniz!",
     },
   ]);
   const [input, setInput] = useState("");
@@ -283,6 +503,7 @@ export default function Chatbot() {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [speechSupported, setSpeechSupported] = useState(false);
   const [ttsEnabled, setTtsEnabled] = useState(true);
+  const [showAvatar, setShowAvatar] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const synthRef = useRef<SpeechSynthesis | null>(null);
@@ -354,22 +575,22 @@ export default function Chatbot() {
     scrollToBottom();
   }, [messages]);
 
-  // Text-to-Speech function
+  // Text-to-Speech function with improved Turkish prosody
   const speakText = useCallback((text: string, isInvestmentRelated: boolean) => {
     if (!synthRef.current || !ttsEnabled) return;
     
     // Cancel any ongoing speech
     synthRef.current.cancel();
     
-    const cleanedText = cleanTextForSpeech(text);
+    const processedText = processTextForSpeech(text);
     const fullText = isInvestmentRelated 
-      ? `${cleanedText} ${VOICE_DISCLAIMER}`
-      : cleanedText;
+      ? `${processedText} ${VOICE_DISCLAIMER}`
+      : processedText;
     
     const utterance = new SpeechSynthesisUtterance(fullText);
     utterance.lang = "tr-TR";
-    utterance.rate = 1.0;
-    utterance.pitch = 1.0;
+    utterance.rate = 0.9; // Slightly slower for authority
+    utterance.pitch = 0.95; // Slightly lower for trust
     utterance.volume = 1.0;
     
     // Try to find a Turkish voice
@@ -404,7 +625,6 @@ export default function Chatbot() {
         recognitionRef.current.start();
         setIsListening(true);
       } catch {
-        // Recognition might already be running
         setIsListening(false);
       }
     }
@@ -469,10 +689,13 @@ export default function Chatbot() {
         animate={{ scale: 1 }}
         transition={{ delay: 1, type: "spring" }}
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-lg hover:bg-primary/90 transition-all neon-glow flex items-center justify-center ${isOpen ? "hidden" : ""}`}
-        aria-label="Chatbot'u aç"
+        className={`fixed bottom-6 right-6 z-50 w-16 h-16 rounded-full bg-gradient-to-br from-primary to-primary/80 text-primary-foreground shadow-lg hover:shadow-primary/30 hover:shadow-xl transition-all flex items-center justify-center group ${isOpen ? "hidden" : ""}`}
+        aria-label="Vera'yı aç"
       >
-        <MessageCircle className="w-6 h-6" />
+        <div className="relative">
+          <Sparkles className="w-6 h-6 absolute -top-1 -right-1 text-cyan-300 opacity-0 group-hover:opacity-100 transition-opacity" />
+          <MessageCircle className="w-7 h-7" />
+        </div>
       </motion.button>
 
       {/* Chat Window */}
@@ -483,16 +706,19 @@ export default function Chatbot() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="fixed bottom-6 right-6 z-50 w-[380px] max-w-[calc(100vw-3rem)] h-[600px] max-h-[calc(100vh-6rem)] glass-card rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-primary/20"
+            className="fixed bottom-6 right-6 z-50 w-[420px] max-w-[calc(100vw-3rem)] h-[700px] max-h-[calc(100vh-6rem)] glass-card rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-primary/20"
           >
-            {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-border bg-secondary/50">
+            {/* Header with Vera branding */}
+            <div className="flex items-center justify-between p-4 border-b border-border bg-gradient-to-r from-secondary/80 to-secondary/50">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Bot className="w-5 h-5 text-primary" />
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center border border-primary/30">
+                  <Sparkles className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-display font-semibold text-sm">Finans Kodu Asistan</h3>
+                  <h3 className="font-display font-semibold text-sm flex items-center gap-2">
+                    Vera
+                    <span className="text-xs px-2 py-0.5 bg-primary/10 text-primary rounded-full">AI</span>
+                  </h3>
                   <p className="text-xs text-muted-foreground flex items-center gap-1">
                     {speechSupported && (
                       <>
@@ -500,11 +726,22 @@ export default function Chatbot() {
                         Sesli Asistan
                       </>
                     )}
-                    {!speechSupported && "Finansal Asistan"}
+                    {!speechSupported && "Finans Kodu Asistan"}
                   </p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
+                {/* Avatar Toggle */}
+                <button
+                  onClick={() => setShowAvatar(!showAvatar)}
+                  className={`p-2 rounded-lg transition-colors ${
+                    showAvatar ? "bg-primary/10 text-primary" : "bg-secondary text-muted-foreground"
+                  }`}
+                  aria-label={showAvatar ? "Avatarı gizle" : "Avatarı göster"}
+                  title={showAvatar ? "Avatarı gizle" : "Avatarı göster"}
+                >
+                  <Bot className="w-4 h-4" />
+                </button>
                 {/* TTS Toggle */}
                 {speechSupported && (
                   <button
@@ -527,18 +764,36 @@ export default function Chatbot() {
                     setIsOpen(false);
                   }}
                   className="p-2 hover:bg-secondary rounded-lg transition-colors"
-                  aria-label="Chatbot'u kapat"
+                  aria-label="Vera'yı kapat"
                 >
                   <X className="w-5 h-5 text-muted-foreground" />
                 </button>
               </div>
             </div>
 
+            {/* Vera Avatar Section */}
+            <AnimatePresence>
+              {showAvatar && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 200, opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="border-b border-border bg-gradient-to-b from-secondary/30 to-transparent overflow-hidden"
+                >
+                  <VeraAvatar 
+                    isSpeaking={isSpeaking} 
+                    isListening={isListening}
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             {/* Disclaimer Banner */}
             <div className="px-4 py-2 bg-amber-500/10 border-b border-amber-500/20 flex items-start gap-2">
               <AlertTriangle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
               <p className="text-xs text-amber-500/90">
-                Bu chatbot yatırım tavsiyesi vermez. Bilgiler eğitim amaçlıdır.
+                Vera bir AI asistanıdır ve yatırım tavsiyesi vermez.
               </p>
             </div>
 
@@ -553,13 +808,13 @@ export default function Chatbot() {
                     className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
                       message.role === "user"
                         ? "bg-primary/10"
-                        : "bg-secondary"
+                        : "bg-gradient-to-br from-primary/20 to-primary/10 border border-primary/30"
                     }`}
                   >
                     {message.role === "user" ? (
                       <User className="w-4 h-4 text-primary" />
                     ) : (
-                      <Bot className="w-4 h-4 text-primary" />
+                      <Sparkles className="w-4 h-4 text-primary" />
                     )}
                   </div>
                   <div
@@ -575,8 +830,8 @@ export default function Chatbot() {
               ))}
               {isTyping && (
                 <div className="flex gap-3">
-                  <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center">
-                    <Bot className="w-4 h-4 text-primary" />
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary/20 to-primary/10 border border-primary/30 flex items-center justify-center">
+                    <Sparkles className="w-4 h-4 text-primary" />
                   </div>
                   <div className="bg-secondary rounded-2xl rounded-tl-sm px-4 py-3">
                     <div className="flex gap-1">
@@ -598,7 +853,7 @@ export default function Chatbot() {
                       <span className="w-1 h-5 bg-primary rounded-full animate-pulse" style={{ animationDelay: "300ms" }} />
                       <span className="w-1 h-3 bg-primary rounded-full animate-pulse" style={{ animationDelay: "400ms" }} />
                     </div>
-                    <span className="text-xs text-primary">Konuşuyor...</span>
+                    <span className="text-xs text-primary">Vera konuşuyor...</span>
                     <button
                       onClick={stopSpeaking}
                       className="p-1 hover:bg-primary/20 rounded-full transition-colors"
@@ -621,7 +876,7 @@ export default function Chatbot() {
                     <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse" />
                     <div className="absolute inset-0 w-3 h-3 bg-red-500 rounded-full animate-ping" />
                   </div>
-                  <span className="text-xs text-red-400">Dinleniyor... Konuşmaya başlayın</span>
+                  <span className="text-xs text-red-400">Vera dinliyor... Konuşmaya başlayın</span>
                 </div>
               )}
               
@@ -631,7 +886,7 @@ export default function Chatbot() {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyPress={handleKeyPress}
-                  placeholder={isListening ? "Konuşun..." : "Sorunuzu yazın veya mikrofona basın..."}
+                  placeholder={isListening ? "Konuşun..." : "Vera'ya sorunuzu yazın..."}
                   className="flex-1 px-4 py-3 rounded-xl bg-input border border-border focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary text-foreground placeholder:text-muted-foreground text-sm"
                   disabled={isListening}
                 />
@@ -665,7 +920,7 @@ export default function Chatbot() {
               {/* Voice feature hint */}
               {speechSupported && !isListening && (
                 <p className="text-xs text-muted-foreground text-center mt-2">
-                  🎤 Mikrofona basarak sesli soru sorabilirsiniz
+                  🎤 Mikrofona basarak Vera'ya sesli soru sorabilirsiniz
                 </p>
               )}
             </div>
