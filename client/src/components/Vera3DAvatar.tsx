@@ -1,27 +1,21 @@
 /*
-  DESIGN: Vera 3D Avatar - CRITICAL REPAIR v4.0
+  DESIGN: Vera 3D Avatar - CRITICAL REPAIR v4.1
   
   FIXES APPLIED:
-  1. ReadyPlayerMe GLB model with morphTargets
+  1. Custom 3D mesh (no external GLB - avoids 404 errors)
   2. Portrait camera mode (face visible)
-  3. Female voice forced with async loading
-  4. Lip-sync with morphTargetDictionary
+  3. Female voice forced with async loading + pitch hack
+  4. Lip-sync animations
   5. Click-to-interact (no UI buttons)
   6. SPK/BDDK compliant
 */
 
 import { useState, useRef, useEffect, useCallback, Suspense } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { useGLTF, Environment, Html, OrbitControls } from "@react-three/drei";
+import { Environment, Html, OrbitControls, Float } from "@react-three/drei";
 import { motion, AnimatePresence } from "framer-motion";
 import { Volume2, VolumeX } from "lucide-react";
 import * as THREE from "three";
-
-// ReadyPlayerMe Avatar URL - Professional Business Woman with morphTargets
-const VERA_URL = "https://models.readyplayer.me/64b73e86c6a8581023253b3e.glb?morphTargets=true&textureAtlas=1024";
-
-// Fallback female avatar URL
-const FALLBACK_URL = "https://models.readyplayer.me/6409e9e5f0f4e3c9b9e5e5e5.glb?morphTargets=true&textureAtlas=1024";
 
 // Type definitions for Web Speech API
 interface SpeechRecognitionEvent extends Event {
@@ -165,35 +159,26 @@ const processTextForSpeech = (text: string): string => {
     .trim();
 };
 
-// 3D Avatar Component with ReadyPlayerMe GLB
+// 3D Avatar Component - Professional Business Woman (Custom Mesh)
 function VeraModel({ 
   isSpeaking, 
   isListening, 
   isThinking,
   mouthOpenness,
-  onClick,
-  modelUrl
+  onClick 
 }: { 
   isSpeaking: boolean; 
   isListening: boolean;
   isThinking: boolean;
   mouthOpenness: number;
   onClick: () => void;
-  modelUrl: string;
 }) {
   const groupRef = useRef<THREE.Group>(null);
-  const { scene } = useGLTF(modelUrl);
+  const headRef = useRef<THREE.Group>(null);
+  const leftEyeRef = useRef<THREE.Mesh>(null);
+  const rightEyeRef = useRef<THREE.Mesh>(null);
+  const mouthRef = useRef<THREE.Mesh>(null);
   const [isBlinking, setIsBlinking] = useState(false);
-  const meshRef = useRef<THREE.SkinnedMesh | null>(null);
-
-  // Find the skinned mesh with morph targets
-  useEffect(() => {
-    scene.traverse((child) => {
-      if (child instanceof THREE.SkinnedMesh && child.morphTargetDictionary) {
-        meshRef.current = child;
-      }
-    });
-  }, [scene]);
 
   // Blinking effect - every 2-6 seconds
   useEffect(() => {
@@ -210,122 +195,7 @@ function VeraModel({
   useFrame((state) => {
     const time = state.clock.getElapsedTime();
 
-    // Breathing animation (subtle Y movement)
-    if (groupRef.current) {
-      groupRef.current.position.y = Math.sin(time * 1.2) * 0.005;
-      
-      // Lean forward when listening
-      if (isListening) {
-        groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, 0.1, 0.05);
-      } else {
-        groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, 0, 0.05);
-      }
-    }
-
-    // Morph target animations
-    if (meshRef.current && meshRef.current.morphTargetDictionary && meshRef.current.morphTargetInfluences) {
-      const dict = meshRef.current.morphTargetDictionary;
-      const influences = meshRef.current.morphTargetInfluences;
-
-      // Blinking - eyesClosed or eyeBlink
-      const blinkKeys = ["eyesClosed", "eyeBlink", "eyeBlinkLeft", "eyeBlinkRight", "blink"];
-      for (const key of blinkKeys) {
-        if (dict[key] !== undefined) {
-          influences[dict[key]] = isBlinking ? 1 : 0;
-        }
-      }
-
-      // Lip sync - mouthOpen
-      const mouthKeys = ["mouthOpen", "jawOpen", "viseme_aa", "viseme_O"];
-      for (const key of mouthKeys) {
-        if (dict[key] !== undefined) {
-          if (isSpeaking) {
-            // Animated mouth movement when speaking
-            influences[dict[key]] = Math.abs(Math.sin(time * 20)) * mouthOpenness * 0.5;
-          } else {
-            influences[dict[key]] = 0;
-          }
-          break; // Use first available
-        }
-      }
-    }
-  });
-
-  return (
-    <group ref={groupRef} onClick={onClick} position={[0, -1.55, 0]}>
-      <primitive object={scene} scale={1} />
-      
-      {/* Status indicators */}
-      {isSpeaking && (
-        <Html position={[0.3, 1.7, 0]} center>
-          <div className="flex gap-0.5 items-end">
-            {[0, 1, 2].map((i) => (
-              <div 
-                key={i} 
-                className="w-1 bg-primary rounded-full"
-                style={{ 
-                  height: `${6 + Math.sin(Date.now() * 0.015 + i * 1.5) * 4}px`,
-                  animation: "pulse 0.5s ease-in-out infinite",
-                  animationDelay: `${i * 100}ms`
-                }}
-              />
-            ))}
-          </div>
-        </Html>
-      )}
-
-      {isListening && (
-        <Html position={[0.3, 1.7, 0]} center>
-          <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse shadow-lg shadow-red-500/50" />
-        </Html>
-      )}
-
-      {isThinking && !isListening && !isSpeaking && (
-        <Html position={[0.3, 1.7, 0]} center>
-          <div className="w-3 h-3 bg-yellow-400 rounded-full animate-pulse shadow-lg shadow-yellow-400/50" />
-        </Html>
-      )}
-    </group>
-  );
-}
-
-// Fallback Avatar (custom mesh) when GLB fails
-function FallbackAvatar({ 
-  isSpeaking, 
-  isListening, 
-  isThinking,
-  mouthOpenness,
-  onClick 
-}: { 
-  isSpeaking: boolean; 
-  isListening: boolean;
-  isThinking: boolean;
-  mouthOpenness: number;
-  onClick: () => void;
-}) {
-  const groupRef = useRef<THREE.Group>(null);
-  const headRef = useRef<THREE.Group>(null);
-  const mouthRef = useRef<THREE.Mesh>(null);
-  const leftEyeRef = useRef<THREE.Mesh>(null);
-  const rightEyeRef = useRef<THREE.Mesh>(null);
-  const [isBlinking, setIsBlinking] = useState(false);
-
-  // Blinking effect
-  useEffect(() => {
-    const blinkInterval = setInterval(() => {
-      if (Math.random() > 0.5) {
-        setIsBlinking(true);
-        setTimeout(() => setIsBlinking(false), 150);
-      }
-    }, 3000 + Math.random() * 2000);
-    return () => clearInterval(blinkInterval);
-  }, []);
-
-  // Animation loop
-  useFrame((state) => {
-    const time = state.clock.getElapsedTime();
-
-    // Breathing
+    // Breathing animation (subtle Y movement on body)
     if (groupRef.current) {
       groupRef.current.position.y = Math.sin(time * 1.2) * 0.005;
     }
@@ -333,24 +203,32 @@ function FallbackAvatar({
     // Head animations
     if (headRef.current) {
       if (isListening) {
+        // Lean forward when listening
         headRef.current.rotation.x = THREE.MathUtils.lerp(headRef.current.rotation.x, 0.1, 0.05);
-      } else {
+        headRef.current.rotation.z = THREE.MathUtils.lerp(headRef.current.rotation.z, 0, 0.05);
+      } else if (isThinking) {
+        // Tilt head when thinking
+        headRef.current.rotation.z = THREE.MathUtils.lerp(headRef.current.rotation.z, 0.1, 0.05);
         headRef.current.rotation.x = THREE.MathUtils.lerp(headRef.current.rotation.x, 0, 0.05);
+      } else {
+        // Subtle idle sway
         headRef.current.rotation.y = Math.sin(time * 0.4) * 0.03;
+        headRef.current.rotation.x = THREE.MathUtils.lerp(headRef.current.rotation.x, 0, 0.03);
+        headRef.current.rotation.z = THREE.MathUtils.lerp(headRef.current.rotation.z, 0, 0.03);
       }
     }
 
-    // Blinking
+    // Blinking animation
     if (leftEyeRef.current && rightEyeRef.current) {
       const eyeScale = isBlinking ? 0.1 : 1;
       leftEyeRef.current.scale.y = THREE.MathUtils.lerp(leftEyeRef.current.scale.y, eyeScale, 0.4);
       rightEyeRef.current.scale.y = THREE.MathUtils.lerp(rightEyeRef.current.scale.y, eyeScale, 0.4);
     }
 
-    // Lip sync
+    // Lip sync animation
     if (mouthRef.current) {
       if (isSpeaking) {
-        const targetScale = 1 + Math.abs(Math.sin(time * 20)) * mouthOpenness * 2;
+        const targetScale = 1 + Math.abs(Math.sin(time * 20)) * mouthOpenness * 2.5;
         mouthRef.current.scale.y = THREE.MathUtils.lerp(mouthRef.current.scale.y, targetScale, 0.3);
       } else {
         mouthRef.current.scale.y = THREE.MathUtils.lerp(mouthRef.current.scale.y, 1, 0.3);
@@ -359,121 +237,213 @@ function FallbackAvatar({
   });
 
   return (
-    <group ref={groupRef} onClick={onClick} position={[0, 0, 0]}>
-      {/* Body - White blazer */}
-      <mesh position={[0, -0.3, 0]}>
-        <capsuleGeometry args={[0.25, 0.4, 12, 20]} />
-        <meshStandardMaterial color="#f8f8f8" roughness={0.35} />
-      </mesh>
-      
-      {/* Navy shirt */}
-      <mesh position={[0, 0.05, 0.08]}>
-        <boxGeometry args={[0.15, 0.12, 0.05]} />
-        <meshStandardMaterial color="#1e3a5f" roughness={0.5} />
-      </mesh>
+    <Float speed={0.6} rotationIntensity={0.02} floatIntensity={0.05}>
+      <group ref={groupRef} onClick={onClick} position={[0, 0, 0]}>
+        {/* Body - White blazer */}
+        <mesh position={[0, -0.25, 0]}>
+          <capsuleGeometry args={[0.28, 0.5, 12, 20]} />
+          <meshStandardMaterial color="#f8f8f8" roughness={0.35} metalness={0.05} />
+        </mesh>
+        
+        {/* Blazer lapels */}
+        <mesh position={[-0.1, 0.12, 0.13]} rotation={[0, 0, 0.25]}>
+          <boxGeometry args={[0.07, 0.22, 0.025]} />
+          <meshStandardMaterial color="#f0f0f0" roughness={0.4} />
+        </mesh>
+        <mesh position={[0.1, 0.12, 0.13]} rotation={[0, 0, -0.25]}>
+          <boxGeometry args={[0.07, 0.22, 0.025]} />
+          <meshStandardMaterial color="#f0f0f0" roughness={0.4} />
+        </mesh>
+        
+        {/* Navy shirt */}
+        <mesh position={[0, 0.18, 0.08]}>
+          <boxGeometry args={[0.16, 0.14, 0.05]} />
+          <meshStandardMaterial color="#1e3a5f" roughness={0.5} />
+        </mesh>
 
-      {/* Neck */}
-      <mesh position={[0, 0.2, 0]}>
-        <cylinderGeometry args={[0.07, 0.09, 0.1, 20]} />
-        <meshStandardMaterial color="#f5d0c5" roughness={0.55} />
-      </mesh>
-
-      {/* Head */}
-      <group ref={headRef} position={[0, 0.45, 0]}>
-        {/* Face */}
-        <mesh>
-          <sphereGeometry args={[0.2, 36, 36]} />
+        {/* Neck */}
+        <mesh position={[0, 0.38, 0]}>
+          <cylinderGeometry args={[0.08, 0.1, 0.11, 20]} />
           <meshStandardMaterial color="#f5d0c5" roughness={0.55} />
         </mesh>
 
-        {/* Hair - Dark brown bob */}
-        <mesh position={[0, 0.05, -0.03]}>
-          <sphereGeometry args={[0.22, 32, 32]} />
-          <meshStandardMaterial color="#2a1a12" roughness={0.75} />
+        {/* Head */}
+        <group ref={headRef} position={[0, 0.62, 0]}>
+          {/* Face */}
+          <mesh>
+            <sphereGeometry args={[0.23, 36, 36]} />
+            <meshStandardMaterial color="#f5d0c5" roughness={0.55} />
+          </mesh>
+
+          {/* Hair - Dark brown bob */}
+          <mesh position={[0, 0.05, -0.035]}>
+            <sphereGeometry args={[0.25, 32, 32]} />
+            <meshStandardMaterial color="#2a1a12" roughness={0.75} />
+          </mesh>
+          
+          {/* Hair sides */}
+          <mesh position={[-0.19, -0.04, 0]}>
+            <capsuleGeometry args={[0.07, 0.13, 8, 12]} />
+            <meshStandardMaterial color="#2a1a12" roughness={0.75} />
+          </mesh>
+          <mesh position={[0.19, -0.04, 0]}>
+            <capsuleGeometry args={[0.07, 0.13, 8, 12]} />
+            <meshStandardMaterial color="#2a1a12" roughness={0.75} />
+          </mesh>
+          
+          {/* Bangs */}
+          <mesh position={[0, 0.16, 0.12]}>
+            <boxGeometry args={[0.32, 0.07, 0.05]} />
+            <meshStandardMaterial color="#2a1a12" roughness={0.75} />
+          </mesh>
+
+          {/* Glasses frame - left */}
+          <mesh position={[-0.08, 0.02, 0.21]}>
+            <torusGeometry args={[0.052, 0.007, 8, 24]} />
+            <meshStandardMaterial color="#1a1a2e" metalness={0.4} roughness={0.3} />
+          </mesh>
+          {/* Glasses frame - right */}
+          <mesh position={[0.08, 0.02, 0.21]}>
+            <torusGeometry args={[0.052, 0.007, 8, 24]} />
+            <meshStandardMaterial color="#1a1a2e" metalness={0.4} roughness={0.3} />
+          </mesh>
+          {/* Glasses bridge */}
+          <mesh position={[0, 0.02, 0.21]}>
+            <boxGeometry args={[0.05, 0.007, 0.007]} />
+            <meshStandardMaterial color="#1a1a2e" metalness={0.4} />
+          </mesh>
+          {/* Glasses temples */}
+          <mesh position={[-0.13, 0.02, 0.13]} rotation={[0, 0.5, 0]}>
+            <boxGeometry args={[0.1, 0.007, 0.007]} />
+            <meshStandardMaterial color="#1a1a2e" metalness={0.4} />
+          </mesh>
+          <mesh position={[0.13, 0.02, 0.13]} rotation={[0, -0.5, 0]}>
+            <boxGeometry args={[0.1, 0.007, 0.007]} />
+            <meshStandardMaterial color="#1a1a2e" metalness={0.4} />
+          </mesh>
+
+          {/* Left eye */}
+          <group position={[-0.08, 0.02, 0.19]}>
+            <mesh>
+              <sphereGeometry args={[0.032, 16, 16]} />
+              <meshStandardMaterial color="#ffffff" />
+            </mesh>
+            <mesh ref={leftEyeRef} position={[0, 0, 0.018]}>
+              <sphereGeometry args={[0.018, 12, 12]} />
+              <meshStandardMaterial color="#3d2314" />
+            </mesh>
+            <mesh position={[0, 0, 0.028]}>
+              <sphereGeometry args={[0.007, 8, 8]} />
+              <meshStandardMaterial color="#000000" />
+            </mesh>
+          </group>
+
+          {/* Right eye */}
+          <group position={[0.08, 0.02, 0.19]}>
+            <mesh>
+              <sphereGeometry args={[0.032, 16, 16]} />
+              <meshStandardMaterial color="#ffffff" />
+            </mesh>
+            <mesh ref={rightEyeRef} position={[0, 0, 0.018]}>
+              <sphereGeometry args={[0.018, 12, 12]} />
+              <meshStandardMaterial color="#3d2314" />
+            </mesh>
+            <mesh position={[0, 0, 0.028]}>
+              <sphereGeometry args={[0.007, 8, 8]} />
+              <meshStandardMaterial color="#000000" />
+            </mesh>
+          </group>
+
+          {/* Eyebrows */}
+          <mesh position={[-0.08, 0.07, 0.19]} rotation={[0, 0, 0.08]}>
+            <boxGeometry args={[0.055, 0.011, 0.008]} />
+            <meshStandardMaterial color="#2a1a12" />
+          </mesh>
+          <mesh position={[0.08, 0.07, 0.19]} rotation={[0, 0, -0.08]}>
+            <boxGeometry args={[0.055, 0.011, 0.008]} />
+            <meshStandardMaterial color="#2a1a12" />
+          </mesh>
+
+          {/* Nose */}
+          <mesh position={[0, -0.025, 0.22]}>
+            <coneGeometry args={[0.018, 0.045, 8]} />
+            <meshStandardMaterial color="#e8c4b8" roughness={0.6} />
+          </mesh>
+
+          {/* Mouth - animated */}
+          <mesh ref={mouthRef} position={[0, -0.09, 0.2]}>
+            <boxGeometry args={[0.052, 0.014, 0.014]} />
+            <meshStandardMaterial color="#c97878" />
+          </mesh>
+
+          {/* Smile lines */}
+          <mesh position={[-0.055, -0.07, 0.19]} rotation={[0, 0, 0.25]}>
+            <boxGeometry args={[0.018, 0.003, 0.003]} />
+            <meshStandardMaterial color="#e0b8a8" />
+          </mesh>
+          <mesh position={[0.055, -0.07, 0.19]} rotation={[0, 0, -0.25]}>
+            <boxGeometry args={[0.018, 0.003, 0.003]} />
+            <meshStandardMaterial color="#e0b8a8" />
+          </mesh>
+
+          {/* Status indicators */}
+          {isSpeaking && (
+            <Html position={[0.3, 0.12, 0]} center>
+              <div className="flex gap-0.5 items-end">
+                {[0, 1, 2].map((i) => (
+                  <div 
+                    key={i} 
+                    className="w-1 bg-primary rounded-full"
+                    style={{ 
+                      height: `${6 + Math.sin(Date.now() * 0.015 + i * 1.5) * 4}px`,
+                      animation: "pulse 0.5s ease-in-out infinite",
+                      animationDelay: `${i * 100}ms`
+                    }}
+                  />
+                ))}
+              </div>
+            </Html>
+          )}
+
+          {isListening && (
+            <Html position={[0.3, 0.12, 0]} center>
+              <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse shadow-lg shadow-red-500/50" />
+            </Html>
+          )}
+
+          {isThinking && !isListening && !isSpeaking && (
+            <Html position={[0.3, 0.12, 0]} center>
+              <div className="w-3 h-3 bg-yellow-400 rounded-full animate-pulse shadow-lg shadow-yellow-400/50" />
+            </Html>
+          )}
+        </group>
+
+        {/* Left arm */}
+        <mesh position={[-0.38, -0.08, 0]} rotation={[0, 0, 0.18]}>
+          <capsuleGeometry args={[0.05, 0.32, 10, 16]} />
+          <meshStandardMaterial color="#f8f8f8" roughness={0.35} />
         </mesh>
         
-        {/* Hair sides */}
-        <mesh position={[-0.17, -0.04, 0]}>
-          <capsuleGeometry args={[0.06, 0.12, 8, 12]} />
-          <meshStandardMaterial color="#2a1a12" roughness={0.75} />
-        </mesh>
-        <mesh position={[0.17, -0.04, 0]}>
-          <capsuleGeometry args={[0.06, 0.12, 8, 12]} />
-          <meshStandardMaterial color="#2a1a12" roughness={0.75} />
+        {/* Right arm - holding tablet gesture */}
+        <mesh position={[0.38, -0.08, 0.08]} rotation={[0.22, 0, -0.18]}>
+          <capsuleGeometry args={[0.05, 0.32, 10, 16]} />
+          <meshStandardMaterial color="#f8f8f8" roughness={0.35} />
         </mesh>
 
-        {/* Glasses */}
-        <mesh position={[-0.07, 0.02, 0.18]}>
-          <torusGeometry args={[0.045, 0.006, 8, 24]} />
-          <meshStandardMaterial color="#1a1a2e" metalness={0.4} roughness={0.3} />
+        {/* Holographic tablet */}
+        <mesh position={[0.28, -0.14, 0.32]} rotation={[0.22, -0.18, 0]}>
+          <planeGeometry args={[0.22, 0.16]} />
+          <meshStandardMaterial 
+            color="#00d4ff" 
+            transparent 
+            opacity={0.2}
+            emissive="#00d4ff"
+            emissiveIntensity={0.3}
+            side={THREE.DoubleSide}
+          />
         </mesh>
-        <mesh position={[0.07, 0.02, 0.18]}>
-          <torusGeometry args={[0.045, 0.006, 8, 24]} />
-          <meshStandardMaterial color="#1a1a2e" metalness={0.4} roughness={0.3} />
-        </mesh>
-        <mesh position={[0, 0.02, 0.18]}>
-          <boxGeometry args={[0.04, 0.006, 0.006]} />
-          <meshStandardMaterial color="#1a1a2e" metalness={0.4} />
-        </mesh>
-
-        {/* Eyes */}
-        <group position={[-0.07, 0.02, 0.17]}>
-          <mesh>
-            <sphereGeometry args={[0.028, 16, 16]} />
-            <meshStandardMaterial color="#ffffff" />
-          </mesh>
-          <mesh ref={leftEyeRef} position={[0, 0, 0.015]}>
-            <sphereGeometry args={[0.015, 12, 12]} />
-            <meshStandardMaterial color="#3d2314" />
-          </mesh>
-        </group>
-        <group position={[0.07, 0.02, 0.17]}>
-          <mesh>
-            <sphereGeometry args={[0.028, 16, 16]} />
-            <meshStandardMaterial color="#ffffff" />
-          </mesh>
-          <mesh ref={rightEyeRef} position={[0, 0, 0.015]}>
-            <sphereGeometry args={[0.015, 12, 12]} />
-            <meshStandardMaterial color="#3d2314" />
-          </mesh>
-        </group>
-
-        {/* Mouth */}
-        <mesh ref={mouthRef} position={[0, -0.08, 0.18]}>
-          <boxGeometry args={[0.045, 0.012, 0.012]} />
-          <meshStandardMaterial color="#c97878" />
-        </mesh>
-
-        {/* Status indicators */}
-        {isSpeaking && (
-          <Html position={[0.25, 0.1, 0]} center>
-            <div className="flex gap-0.5 items-end">
-              {[0, 1, 2].map((i) => (
-                <div 
-                  key={i} 
-                  className="w-1 bg-primary rounded-full"
-                  style={{ 
-                    height: `${6 + Math.sin(Date.now() * 0.015 + i * 1.5) * 4}px`
-                  }}
-                />
-              ))}
-            </div>
-          </Html>
-        )}
-
-        {isListening && (
-          <Html position={[0.25, 0.1, 0]} center>
-            <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse shadow-lg shadow-red-500/50" />
-          </Html>
-        )}
-
-        {isThinking && !isListening && !isSpeaking && (
-          <Html position={[0.25, 0.1, 0]} center>
-            <div className="w-3 h-3 bg-yellow-400 rounded-full animate-pulse shadow-lg shadow-yellow-400/50" />
-          </Html>
-        )}
       </group>
-    </group>
+    </Float>
   );
 }
 
@@ -483,72 +453,51 @@ function Scene({
   isListening, 
   isThinking,
   mouthOpenness,
-  onClick,
-  useGLB,
-  modelUrl
+  onClick
 }: { 
   isSpeaking: boolean; 
   isListening: boolean;
   isThinking: boolean;
   mouthOpenness: number;
   onClick: () => void;
-  useGLB: boolean;
-  modelUrl: string;
 }) {
   const { camera } = useThree();
 
   // Set portrait camera position
   useEffect(() => {
-    camera.position.set(0, 1.6, 1.2);
-    camera.lookAt(0, 1.55, 0);
+    camera.position.set(0, 0.5, 1.5);
+    camera.lookAt(0, 0.4, 0);
   }, [camera]);
 
   return (
     <>
       {/* Strong lighting for face visibility */}
-      <ambientLight intensity={0.8} />
+      <ambientLight intensity={0.7} />
       <directionalLight position={[0, 2, 3]} intensity={2} castShadow />
-      <directionalLight position={[-2, 1, 2]} intensity={0.6} color="#e0e8ff" />
-      <pointLight position={[2, 2, 2]} intensity={0.5} color="#ffffff" />
+      <directionalLight position={[-2, 1, 2]} intensity={0.5} color="#e0e8ff" />
+      <pointLight position={[2, 2, 2]} intensity={0.4} color="#ffffff" />
+      <pointLight position={[-1, 1, 2]} intensity={0.3} color="#00d4ff" />
+      <pointLight position={[1, 1, 2]} intensity={0.3} color="#00d4ff" />
       
       {/* OrbitControls with zoom disabled */}
       <OrbitControls 
         enableZoom={false} 
         enablePan={false}
-        target={[0, 1.55, 0]}
+        target={[0, 0.4, 0]}
         minPolarAngle={Math.PI / 3}
-        maxPolarAngle={Math.PI / 2}
-        minAzimuthAngle={-Math.PI / 6}
-        maxAzimuthAngle={Math.PI / 6}
+        maxPolarAngle={Math.PI / 1.8}
+        minAzimuthAngle={-Math.PI / 8}
+        maxAzimuthAngle={Math.PI / 8}
       />
       
-      <Suspense fallback={
-        <FallbackAvatar 
+      <Suspense fallback={null}>
+        <VeraModel 
           isSpeaking={isSpeaking} 
           isListening={isListening}
           isThinking={isThinking}
           mouthOpenness={mouthOpenness}
           onClick={onClick}
         />
-      }>
-        {useGLB ? (
-          <VeraModel 
-            isSpeaking={isSpeaking} 
-            isListening={isListening}
-            isThinking={isThinking}
-            mouthOpenness={mouthOpenness}
-            onClick={onClick}
-            modelUrl={modelUrl}
-          />
-        ) : (
-          <FallbackAvatar 
-            isSpeaking={isSpeaking} 
-            isListening={isListening}
-            isThinking={isThinking}
-            mouthOpenness={mouthOpenness}
-            onClick={onClick}
-          />
-        )}
         <Environment preset="studio" />
       </Suspense>
     </>
@@ -564,12 +513,9 @@ export default function Vera3DAvatar() {
   const [speechSupported, setSpeechSupported] = useState(false);
   const [ttsEnabled, setTtsEnabled] = useState(true);
   const [femaleVoice, setFemaleVoice] = useState<SpeechSynthesisVoice | null>(null);
-  const [voicesLoaded, setVoicesLoaded] = useState(false);
   const [transcript, setTranscript] = useState("");
   const [response, setResponse] = useState("");
   const [showResponse, setShowResponse] = useState(false);
-  const [useGLB, setUseGLB] = useState(true);
-  const [modelUrl, setModelUrl] = useState(VERA_URL);
   
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const synthRef = useRef<SpeechSynthesis | null>(null);
@@ -618,7 +564,6 @@ export default function Vera3DAvatar() {
         }
         
         setFemaleVoice(selectedVoice);
-        setVoicesLoaded(true);
         return true;
       };
       
@@ -677,24 +622,6 @@ export default function Vera3DAvatar() {
       
       recognitionRef.current = recognition;
     }
-    
-    // Check if GLB can be loaded
-    fetch(VERA_URL, { method: "HEAD" })
-      .then(res => {
-        if (!res.ok) {
-          // Try fallback
-          return fetch(FALLBACK_URL, { method: "HEAD" });
-        }
-        return res;
-      })
-      .then(res => {
-        if (!res.ok) {
-          setUseGLB(false);
-        }
-      })
-      .catch(() => {
-        setUseGLB(false);
-      });
     
     return () => {
       if (recognitionRef.current) recognitionRef.current.abort();
@@ -823,7 +750,7 @@ export default function Vera3DAvatar() {
       {/* 3D Canvas with Portrait Camera */}
       <div className="w-full h-full cursor-pointer">
         <Canvas
-          camera={{ position: [0, 1.6, 1.2], fov: 35 }}
+          camera={{ position: [0, 0.5, 1.5], fov: 38 }}
           style={{ background: "transparent" }}
           gl={{ alpha: true, antialias: true }}
         >
@@ -833,8 +760,6 @@ export default function Vera3DAvatar() {
             isThinking={isThinking}
             mouthOpenness={mouthOpenness}
             onClick={handleAvatarClick}
-            useGLB={useGLB}
-            modelUrl={modelUrl}
           />
         </Canvas>
       </div>
