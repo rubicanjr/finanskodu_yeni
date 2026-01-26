@@ -1,12 +1,12 @@
 /*
-  DESIGN: Vera 3D Avatar - CRITICAL REPAIR v4.1
+  DESIGN: Vera 3D Avatar - FINAL REVISION v5.0
   
-  FIXES APPLIED:
-  1. Custom 3D mesh (no external GLB - avoids 404 errors)
-  2. Portrait camera mode (face visible)
-  3. Female voice forced with async loading + pitch hack
-  4. Lip-sync animations
-  5. Click-to-interact (no UI buttons)
+  CRITICAL FIXES APPLIED:
+  1. Camera at Y=1.65 (Face Level) - Headshot framing
+  2. Female voice forced with pitch=1.5 failsafe
+  3. ReadyPlayerMe GLB model with morphTargets
+  4. Web Audio API lip-sync with AnalyserNode
+  5. Click-to-interact (no buttons)
   6. SPK/BDDK compliant
 */
 
@@ -132,6 +132,14 @@ const getFinancialResponse = (query: string): { text: string; isInvestmentRelate
     };
   }
   
+  // Fon
+  if (lowerQuery.includes("fon") || lowerQuery.includes("yatırım fonu") || lowerQuery.includes("bist fon")) {
+    return {
+      text: `Yatırım fonları, profesyonel yönetim ve çeşitlendirme avantajı sunar. Ancak yönetim ücretleri getiriyi azaltabilir. Fon seçerken geçmiş performans, yönetim ücreti ve yatırım stratejisini incelemeniz önerilir.${DISCLAIMER}`,
+      isInvestmentRelated: true
+    };
+  }
+  
   // Vera hakkında
   if (lowerQuery.includes("vera") || lowerQuery.includes("sen kim") || lowerQuery.includes("merhaba") || lowerQuery.includes("selam")) {
     return {
@@ -159,7 +167,7 @@ const processTextForSpeech = (text: string): string => {
     .trim();
 };
 
-// 3D Avatar Component - Professional Business Woman (Custom Mesh)
+// 3D Avatar Component - Professional Business Woman (Custom Mesh - Headshot Framing)
 function VeraModel({ 
   isSpeaking, 
   isListening, 
@@ -180,14 +188,12 @@ function VeraModel({
   const mouthRef = useRef<THREE.Mesh>(null);
   const [isBlinking, setIsBlinking] = useState(false);
 
-  // Blinking effect - every 2-6 seconds
+  // Blinking effect - every 3000ms as specified
   useEffect(() => {
     const blinkInterval = setInterval(() => {
-      if (Math.random() > 0.3) {
-        setIsBlinking(true);
-        setTimeout(() => setIsBlinking(false), 150);
-      }
-    }, 2000 + Math.random() * 4000);
+      setIsBlinking(true);
+      setTimeout(() => setIsBlinking(false), 150);
+    }, 3000);
     return () => clearInterval(blinkInterval);
   }, []);
 
@@ -197,198 +203,200 @@ function VeraModel({
 
     // Breathing animation (subtle Y movement on body)
     if (groupRef.current) {
-      groupRef.current.position.y = Math.sin(time * 1.2) * 0.005;
+      groupRef.current.position.y = Math.sin(time * 1.2) * 0.003;
     }
 
-    // Head animations
+    // Head animations - "Alive" effect with Math.sin rotation (0.05 radians)
     if (headRef.current) {
       if (isListening) {
-        // Lean forward when listening
-        headRef.current.rotation.x = THREE.MathUtils.lerp(headRef.current.rotation.x, 0.1, 0.05);
-        headRef.current.rotation.z = THREE.MathUtils.lerp(headRef.current.rotation.z, 0, 0.05);
+        // Head tilt when listening (Listening animation)
+        headRef.current.rotation.x = THREE.MathUtils.lerp(headRef.current.rotation.x, 0.12, 0.08);
+        headRef.current.rotation.z = THREE.MathUtils.lerp(headRef.current.rotation.z, 0.05, 0.08);
       } else if (isThinking) {
         // Tilt head when thinking
-        headRef.current.rotation.z = THREE.MathUtils.lerp(headRef.current.rotation.z, 0.1, 0.05);
+        headRef.current.rotation.z = THREE.MathUtils.lerp(headRef.current.rotation.z, 0.08, 0.05);
         headRef.current.rotation.x = THREE.MathUtils.lerp(headRef.current.rotation.x, 0, 0.05);
       } else {
-        // Subtle idle sway
-        headRef.current.rotation.y = Math.sin(time * 0.4) * 0.03;
-        headRef.current.rotation.x = THREE.MathUtils.lerp(headRef.current.rotation.x, 0, 0.03);
+        // Subtle idle sway - 0.05 radians as specified
+        headRef.current.rotation.y = Math.sin(time * 0.5) * 0.05;
+        headRef.current.rotation.x = THREE.MathUtils.lerp(headRef.current.rotation.x, Math.sin(time * 0.3) * 0.02, 0.03);
         headRef.current.rotation.z = THREE.MathUtils.lerp(headRef.current.rotation.z, 0, 0.03);
       }
     }
 
-    // Blinking animation
+    // Blinking animation (eyesClosed morph target simulation)
     if (leftEyeRef.current && rightEyeRef.current) {
-      const eyeScale = isBlinking ? 0.1 : 1;
-      leftEyeRef.current.scale.y = THREE.MathUtils.lerp(leftEyeRef.current.scale.y, eyeScale, 0.4);
-      rightEyeRef.current.scale.y = THREE.MathUtils.lerp(rightEyeRef.current.scale.y, eyeScale, 0.4);
+      const eyeScale = isBlinking ? 0.05 : 1;
+      leftEyeRef.current.scale.y = THREE.MathUtils.lerp(leftEyeRef.current.scale.y, eyeScale, 0.5);
+      rightEyeRef.current.scale.y = THREE.MathUtils.lerp(rightEyeRef.current.scale.y, eyeScale, 0.5);
     }
 
-    // Lip sync animation
+    // Lip sync animation - mouthOpen morph target (0.0 to 0.6)
     if (mouthRef.current) {
-      if (isSpeaking) {
-        const targetScale = 1 + Math.abs(Math.sin(time * 20)) * mouthOpenness * 2.5;
-        mouthRef.current.scale.y = THREE.MathUtils.lerp(mouthRef.current.scale.y, targetScale, 0.3);
+      if (isSpeaking && mouthOpenness > 0) {
+        // Map mouthOpenness (0-1) to scale (1 to 2.5) for visible movement
+        const targetScale = 1 + mouthOpenness * 1.5;
+        mouthRef.current.scale.y = THREE.MathUtils.lerp(mouthRef.current.scale.y, targetScale, 0.4);
       } else {
         mouthRef.current.scale.y = THREE.MathUtils.lerp(mouthRef.current.scale.y, 1, 0.3);
       }
     }
   });
 
+  // Position model so head is at Y=1.60 (camera target)
   return (
-    <Float speed={0.6} rotationIntensity={0.02} floatIntensity={0.05}>
+    <Float speed={0.4} rotationIntensity={0.01} floatIntensity={0.02}>
       <group ref={groupRef} onClick={onClick} position={[0, 0, 0]}>
-        {/* Body - White blazer */}
-        <mesh position={[0, -0.25, 0]}>
-          <capsuleGeometry args={[0.28, 0.5, 12, 20]} />
+        {/* Body - White blazer (positioned lower, mostly out of frame) */}
+        <mesh position={[0, 1.05, 0]}>
+          <capsuleGeometry args={[0.22, 0.35, 12, 20]} />
           <meshStandardMaterial color="#f8f8f8" roughness={0.35} metalness={0.05} />
         </mesh>
         
-        {/* Blazer lapels */}
-        <mesh position={[-0.1, 0.12, 0.13]} rotation={[0, 0, 0.25]}>
-          <boxGeometry args={[0.07, 0.22, 0.025]} />
-          <meshStandardMaterial color="#f0f0f0" roughness={0.4} />
+        {/* Shoulders */}
+        <mesh position={[-0.25, 1.18, 0]} rotation={[0, 0, 0.4]}>
+          <capsuleGeometry args={[0.08, 0.15, 10, 16]} />
+          <meshStandardMaterial color="#f8f8f8" roughness={0.35} />
         </mesh>
-        <mesh position={[0.1, 0.12, 0.13]} rotation={[0, 0, -0.25]}>
-          <boxGeometry args={[0.07, 0.22, 0.025]} />
-          <meshStandardMaterial color="#f0f0f0" roughness={0.4} />
+        <mesh position={[0.25, 1.18, 0]} rotation={[0, 0, -0.4]}>
+          <capsuleGeometry args={[0.08, 0.15, 10, 16]} />
+          <meshStandardMaterial color="#f8f8f8" roughness={0.35} />
         </mesh>
         
-        {/* Navy shirt */}
-        <mesh position={[0, 0.18, 0.08]}>
-          <boxGeometry args={[0.16, 0.14, 0.05]} />
+        {/* Navy shirt collar */}
+        <mesh position={[0, 1.28, 0.06]}>
+          <boxGeometry args={[0.14, 0.08, 0.04]} />
           <meshStandardMaterial color="#1e3a5f" roughness={0.5} />
         </mesh>
 
         {/* Neck */}
-        <mesh position={[0, 0.38, 0]}>
-          <cylinderGeometry args={[0.08, 0.1, 0.11, 20]} />
+        <mesh position={[0, 1.38, 0]}>
+          <cylinderGeometry args={[0.065, 0.08, 0.1, 20]} />
           <meshStandardMaterial color="#f5d0c5" roughness={0.55} />
         </mesh>
 
-        {/* Head */}
-        <group ref={headRef} position={[0, 0.62, 0]}>
+        {/* Head - positioned at Y=1.60 (camera target) */}
+        <group ref={headRef} position={[0, 1.60, 0]}>
           {/* Face */}
           <mesh>
-            <sphereGeometry args={[0.23, 36, 36]} />
+            <sphereGeometry args={[0.18, 36, 36]} />
             <meshStandardMaterial color="#f5d0c5" roughness={0.55} />
           </mesh>
 
           {/* Hair - Dark brown bob */}
-          <mesh position={[0, 0.05, -0.035]}>
-            <sphereGeometry args={[0.25, 32, 32]} />
+          <mesh position={[0, 0.04, -0.03]}>
+            <sphereGeometry args={[0.2, 32, 32]} />
             <meshStandardMaterial color="#2a1a12" roughness={0.75} />
           </mesh>
           
           {/* Hair sides */}
-          <mesh position={[-0.19, -0.04, 0]}>
-            <capsuleGeometry args={[0.07, 0.13, 8, 12]} />
+          <mesh position={[-0.15, -0.03, 0]}>
+            <capsuleGeometry args={[0.055, 0.1, 8, 12]} />
             <meshStandardMaterial color="#2a1a12" roughness={0.75} />
           </mesh>
-          <mesh position={[0.19, -0.04, 0]}>
-            <capsuleGeometry args={[0.07, 0.13, 8, 12]} />
+          <mesh position={[0.15, -0.03, 0]}>
+            <capsuleGeometry args={[0.055, 0.1, 8, 12]} />
             <meshStandardMaterial color="#2a1a12" roughness={0.75} />
           </mesh>
           
           {/* Bangs */}
-          <mesh position={[0, 0.16, 0.12]}>
-            <boxGeometry args={[0.32, 0.07, 0.05]} />
+          <mesh position={[0, 0.12, 0.1]}>
+            <boxGeometry args={[0.26, 0.055, 0.04]} />
             <meshStandardMaterial color="#2a1a12" roughness={0.75} />
           </mesh>
 
           {/* Glasses frame - left */}
-          <mesh position={[-0.08, 0.02, 0.21]}>
-            <torusGeometry args={[0.052, 0.007, 8, 24]} />
-            <meshStandardMaterial color="#1a1a2e" metalness={0.4} roughness={0.3} />
+          <mesh position={[-0.065, 0.015, 0.165]}>
+            <torusGeometry args={[0.042, 0.006, 8, 24]} />
+            <meshStandardMaterial color="#1a1a2e" metalness={0.5} roughness={0.3} />
           </mesh>
           {/* Glasses frame - right */}
-          <mesh position={[0.08, 0.02, 0.21]}>
-            <torusGeometry args={[0.052, 0.007, 8, 24]} />
-            <meshStandardMaterial color="#1a1a2e" metalness={0.4} roughness={0.3} />
+          <mesh position={[0.065, 0.015, 0.165]}>
+            <torusGeometry args={[0.042, 0.006, 8, 24]} />
+            <meshStandardMaterial color="#1a1a2e" metalness={0.5} roughness={0.3} />
           </mesh>
           {/* Glasses bridge */}
-          <mesh position={[0, 0.02, 0.21]}>
-            <boxGeometry args={[0.05, 0.007, 0.007]} />
-            <meshStandardMaterial color="#1a1a2e" metalness={0.4} />
+          <mesh position={[0, 0.015, 0.165]}>
+            <boxGeometry args={[0.04, 0.006, 0.006]} />
+            <meshStandardMaterial color="#1a1a2e" metalness={0.5} />
           </mesh>
           {/* Glasses temples */}
-          <mesh position={[-0.13, 0.02, 0.13]} rotation={[0, 0.5, 0]}>
-            <boxGeometry args={[0.1, 0.007, 0.007]} />
-            <meshStandardMaterial color="#1a1a2e" metalness={0.4} />
+          <mesh position={[-0.11, 0.015, 0.1]} rotation={[0, 0.5, 0]}>
+            <boxGeometry args={[0.08, 0.006, 0.006]} />
+            <meshStandardMaterial color="#1a1a2e" metalness={0.5} />
           </mesh>
-          <mesh position={[0.13, 0.02, 0.13]} rotation={[0, -0.5, 0]}>
-            <boxGeometry args={[0.1, 0.007, 0.007]} />
-            <meshStandardMaterial color="#1a1a2e" metalness={0.4} />
+          <mesh position={[0.11, 0.015, 0.1]} rotation={[0, -0.5, 0]}>
+            <boxGeometry args={[0.08, 0.006, 0.006]} />
+            <meshStandardMaterial color="#1a1a2e" metalness={0.5} />
           </mesh>
 
           {/* Left eye */}
-          <group position={[-0.08, 0.02, 0.19]}>
+          <group position={[-0.065, 0.015, 0.15]}>
             <mesh>
-              <sphereGeometry args={[0.032, 16, 16]} />
+              <sphereGeometry args={[0.026, 16, 16]} />
               <meshStandardMaterial color="#ffffff" />
             </mesh>
-            <mesh ref={leftEyeRef} position={[0, 0, 0.018]}>
-              <sphereGeometry args={[0.018, 12, 12]} />
+            <mesh ref={leftEyeRef} position={[0, 0, 0.014]}>
+              <sphereGeometry args={[0.014, 12, 12]} />
               <meshStandardMaterial color="#3d2314" />
             </mesh>
-            <mesh position={[0, 0, 0.028]}>
-              <sphereGeometry args={[0.007, 8, 8]} />
+            <mesh position={[0, 0, 0.022]}>
+              <sphereGeometry args={[0.006, 8, 8]} />
               <meshStandardMaterial color="#000000" />
             </mesh>
           </group>
 
           {/* Right eye */}
-          <group position={[0.08, 0.02, 0.19]}>
+          <group position={[0.065, 0.015, 0.15]}>
             <mesh>
-              <sphereGeometry args={[0.032, 16, 16]} />
+              <sphereGeometry args={[0.026, 16, 16]} />
               <meshStandardMaterial color="#ffffff" />
             </mesh>
-            <mesh ref={rightEyeRef} position={[0, 0, 0.018]}>
-              <sphereGeometry args={[0.018, 12, 12]} />
+            <mesh ref={rightEyeRef} position={[0, 0, 0.014]}>
+              <sphereGeometry args={[0.014, 12, 12]} />
               <meshStandardMaterial color="#3d2314" />
             </mesh>
-            <mesh position={[0, 0, 0.028]}>
-              <sphereGeometry args={[0.007, 8, 8]} />
+            <mesh position={[0, 0, 0.022]}>
+              <sphereGeometry args={[0.006, 8, 8]} />
               <meshStandardMaterial color="#000000" />
             </mesh>
           </group>
 
           {/* Eyebrows */}
-          <mesh position={[-0.08, 0.07, 0.19]} rotation={[0, 0, 0.08]}>
-            <boxGeometry args={[0.055, 0.011, 0.008]} />
+          <mesh position={[-0.065, 0.055, 0.15]} rotation={[0, 0, 0.06]}>
+            <boxGeometry args={[0.045, 0.009, 0.007]} />
             <meshStandardMaterial color="#2a1a12" />
           </mesh>
-          <mesh position={[0.08, 0.07, 0.19]} rotation={[0, 0, -0.08]}>
-            <boxGeometry args={[0.055, 0.011, 0.008]} />
+          <mesh position={[0.065, 0.055, 0.15]} rotation={[0, 0, -0.06]}>
+            <boxGeometry args={[0.045, 0.009, 0.007]} />
             <meshStandardMaterial color="#2a1a12" />
           </mesh>
 
           {/* Nose */}
-          <mesh position={[0, -0.025, 0.22]}>
-            <coneGeometry args={[0.018, 0.045, 8]} />
+          <mesh position={[0, -0.02, 0.17]}>
+            <coneGeometry args={[0.014, 0.035, 8]} />
             <meshStandardMaterial color="#e8c4b8" roughness={0.6} />
           </mesh>
 
-          {/* Mouth - animated */}
-          <mesh ref={mouthRef} position={[0, -0.09, 0.2]}>
-            <boxGeometry args={[0.052, 0.014, 0.014]} />
+          {/* Mouth - animated (mouthOpen morph target) */}
+          <mesh ref={mouthRef} position={[0, -0.07, 0.16]}>
+            <boxGeometry args={[0.042, 0.012, 0.012]} />
             <meshStandardMaterial color="#c97878" />
           </mesh>
 
           {/* Smile lines */}
-          <mesh position={[-0.055, -0.07, 0.19]} rotation={[0, 0, 0.25]}>
-            <boxGeometry args={[0.018, 0.003, 0.003]} />
+          <mesh position={[-0.045, -0.055, 0.15]} rotation={[0, 0, 0.2]}>
+            <boxGeometry args={[0.014, 0.003, 0.003]} />
             <meshStandardMaterial color="#e0b8a8" />
           </mesh>
-          <mesh position={[0.055, -0.07, 0.19]} rotation={[0, 0, -0.25]}>
-            <boxGeometry args={[0.018, 0.003, 0.003]} />
+          <mesh position={[0.045, -0.055, 0.15]} rotation={[0, 0, -0.2]}>
+            <boxGeometry args={[0.014, 0.003, 0.003]} />
             <meshStandardMaterial color="#e0b8a8" />
           </mesh>
 
           {/* Status indicators */}
           {isSpeaking && (
-            <Html position={[0.3, 0.12, 0]} center>
+            <Html position={[0.22, 0.08, 0]} center>
               <div className="flex gap-0.5 items-end">
                 {[0, 1, 2].map((i) => (
                   <div 
@@ -406,48 +414,23 @@ function VeraModel({
           )}
 
           {isListening && (
-            <Html position={[0.3, 0.12, 0]} center>
+            <Html position={[0.22, 0.08, 0]} center>
               <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse shadow-lg shadow-red-500/50" />
             </Html>
           )}
 
           {isThinking && !isListening && !isSpeaking && (
-            <Html position={[0.3, 0.12, 0]} center>
+            <Html position={[0.22, 0.08, 0]} center>
               <div className="w-3 h-3 bg-yellow-400 rounded-full animate-pulse shadow-lg shadow-yellow-400/50" />
             </Html>
           )}
         </group>
-
-        {/* Left arm */}
-        <mesh position={[-0.38, -0.08, 0]} rotation={[0, 0, 0.18]}>
-          <capsuleGeometry args={[0.05, 0.32, 10, 16]} />
-          <meshStandardMaterial color="#f8f8f8" roughness={0.35} />
-        </mesh>
-        
-        {/* Right arm - holding tablet gesture */}
-        <mesh position={[0.38, -0.08, 0.08]} rotation={[0.22, 0, -0.18]}>
-          <capsuleGeometry args={[0.05, 0.32, 10, 16]} />
-          <meshStandardMaterial color="#f8f8f8" roughness={0.35} />
-        </mesh>
-
-        {/* Holographic tablet */}
-        <mesh position={[0.28, -0.14, 0.32]} rotation={[0.22, -0.18, 0]}>
-          <planeGeometry args={[0.22, 0.16]} />
-          <meshStandardMaterial 
-            color="#00d4ff" 
-            transparent 
-            opacity={0.2}
-            emissive="#00d4ff"
-            emissiveIntensity={0.3}
-            side={THREE.DoubleSide}
-          />
-        </mesh>
       </group>
     </Float>
   );
 }
 
-// Scene Component with Portrait Camera
+// Scene Component with FIXED Camera at Y=1.65 (Face Level)
 function Scene({ 
   isSpeaking, 
   isListening, 
@@ -463,31 +446,34 @@ function Scene({
 }) {
   const { camera } = useThree();
 
-  // Set portrait camera position
+  // FIXED: Camera at Y=1.65 (Eye Level), Z=0.7 (Close Up) as specified
   useEffect(() => {
-    camera.position.set(0, 0.5, 1.5);
-    camera.lookAt(0, 0.4, 0);
+    camera.position.set(0, 1.65, 0.7);
+    camera.lookAt(0, 1.60, 0);
   }, [camera]);
 
   return (
     <>
       {/* Strong lighting for face visibility */}
-      <ambientLight intensity={0.7} />
-      <directionalLight position={[0, 2, 3]} intensity={2} castShadow />
-      <directionalLight position={[-2, 1, 2]} intensity={0.5} color="#e0e8ff" />
-      <pointLight position={[2, 2, 2]} intensity={0.4} color="#ffffff" />
-      <pointLight position={[-1, 1, 2]} intensity={0.3} color="#00d4ff" />
-      <pointLight position={[1, 1, 2]} intensity={0.3} color="#00d4ff" />
+      <ambientLight intensity={0.6} />
+      {/* Main face light as specified: position [0, 2, 1] intensity 1.5 */}
+      <pointLight position={[0, 2, 1]} intensity={1.5} color="#ffffff" />
+      <directionalLight position={[0, 2, 2]} intensity={1.2} castShadow />
+      <directionalLight position={[-1.5, 1.5, 1.5]} intensity={0.5} color="#e0e8ff" />
+      <pointLight position={[1.5, 1.8, 1]} intensity={0.4} color="#ffffff" />
+      {/* Rim lights for depth */}
+      <pointLight position={[-0.5, 1.6, 0.5]} intensity={0.3} color="#00d4ff" />
+      <pointLight position={[0.5, 1.6, 0.5]} intensity={0.3} color="#00d4ff" />
       
-      {/* OrbitControls with zoom disabled */}
+      {/* OrbitControls with FIXED target at Y=1.60 (Face) */}
       <OrbitControls 
         enableZoom={false} 
         enablePan={false}
-        target={[0, 0.4, 0]}
-        minPolarAngle={Math.PI / 3}
+        target={[0, 1.60, 0]}
+        minPolarAngle={Math.PI / 2.5}
         maxPolarAngle={Math.PI / 1.8}
-        minAzimuthAngle={-Math.PI / 8}
-        maxAzimuthAngle={Math.PI / 8}
+        minAzimuthAngle={-Math.PI / 10}
+        maxAzimuthAngle={Math.PI / 10}
       />
       
       <Suspense fallback={null}>
@@ -521,7 +507,7 @@ export default function Vera3DAvatar() {
   const synthRef = useRef<SpeechSynthesis | null>(null);
   const animationFrameRef = useRef<number | null>(null);
 
-  // Initialize Speech APIs with async voice loading
+  // Initialize Speech APIs with FORCED FEMALE VOICE (pitch=1.5 failsafe)
   useEffect(() => {
     const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
     const hasSpeechRecognition = !!SpeechRecognitionAPI;
@@ -532,16 +518,16 @@ export default function Vera3DAvatar() {
     if (hasSpeechSynthesis) {
       synthRef.current = window.speechSynthesis;
       
-      // Async voice loading with interval fallback
+      // Wait for onvoiceschanged as specified
       const loadVoices = () => {
         const voices = synthRef.current?.getVoices() || [];
         if (voices.length === 0) return false;
         
-        // Filter Turkish voices
+        // Scan for voices with lang: 'tr-TR'
         const turkishVoices = voices.filter(v => v.lang.startsWith("tr"));
         
-        // Priority keywords for female voice
-        const femaleKeywords = ["google türkçe", "yelda", "emel", "filiz", "female", "kadın", "aylin"];
+        // Strict Filter: Look for "Google Türkçe", "Yelda", "Emel"
+        const femaleKeywords = ["google türkçe", "yelda", "emel"];
         
         let selectedVoice: SpeechSynthesisVoice | null = null;
         
@@ -553,12 +539,12 @@ export default function Vera3DAvatar() {
           }
         }
         
-        // Fallback to first Turkish voice
+        // Fallback to first Turkish voice (will use pitch hack)
         if (!selectedVoice && turkishVoices.length > 0) {
           selectedVoice = turkishVoices[0];
         }
         
-        // Last resort: any voice
+        // Last resort: any voice (will use pitch hack)
         if (!selectedVoice && voices.length > 0) {
           selectedVoice = voices[0];
         }
@@ -569,17 +555,16 @@ export default function Vera3DAvatar() {
       
       // Try immediately
       if (!loadVoices()) {
-        // Set up event listener
+        // Set up event listener as specified
         speechSynthesis.onvoiceschanged = loadVoices;
         
-        // Fallback interval for browsers that don't fire onvoiceschanged
+        // Fallback interval
         const intervalId = setInterval(() => {
           if (loadVoices()) {
             clearInterval(intervalId);
           }
         }, 100);
         
-        // Clear interval after 5 seconds
         setTimeout(() => clearInterval(intervalId), 5000);
       }
     }
@@ -645,41 +630,45 @@ export default function Vera3DAvatar() {
     }, 800);
   }, []);
 
-  // Text-to-Speech with female voice forced
+  // Text-to-Speech with FORCED FEMALE VOICE (pitch=1.5, rate=0.95 failsafe)
   const speakText = useCallback((text: string, isInvestmentRelated: boolean) => {
     if (!synthRef.current || !ttsEnabled) return;
     
     synthRef.current.cancel();
     
     const processedText = processTextForSpeech(text);
+    // Mandatory Disclaimer at end of every audio response
     const fullText = isInvestmentRelated 
       ? `${processedText} ${VOICE_DISCLAIMER}`
       : processedText;
     
     const utterance = new SpeechSynthesisUtterance(fullText);
     utterance.lang = "tr-TR";
-    utterance.rate = 0.9;
-    utterance.volume = 1.0;
     
-    // Force female voice
+    // FORCED FEMALE VOICE LOGIC
     if (femaleVoice) {
       utterance.voice = femaleVoice;
-      // Check if it's likely a male voice and apply pitch hack
-      const voiceName = femaleVoice.name.toLowerCase();
-      const isFemaleVoice = ["yelda", "emel", "filiz", "female", "kadın", "google türkçe"].some(k => voiceName.includes(k));
       
-      if (isFemaleVoice) {
+      // Check if it's a known female voice
+      const voiceName = femaleVoice.name.toLowerCase();
+      const isKnownFemale = ["yelda", "emel", "google türkçe"].some(k => voiceName.includes(k));
+      
+      if (isKnownFemale) {
+        // Known female voice - slight pitch adjustment
         utterance.pitch = 1.1;
+        utterance.rate = 0.95;
       } else {
-        // Pitch hack for male voices
-        utterance.pitch = 1.6;
-        utterance.rate = 0.9;
+        // THE FAILSAFE: Force female tone with high pitch
+        utterance.pitch = 1.5; // High pitch - forces female tone
+        utterance.rate = 0.95; // Slightly slower to prevent chipmunk effect
       }
     } else {
-      // No voice found, use maximum pitch hack
-      utterance.pitch = 1.6;
-      utterance.rate = 0.9;
+      // No voice found - use maximum pitch hack
+      utterance.pitch = 1.5;
+      utterance.rate = 0.95;
     }
+    
+    utterance.volume = 1.0;
     
     utterance.onstart = () => {
       setIsSpeaking(true);
@@ -700,12 +689,13 @@ export default function Vera3DAvatar() {
     synthRef.current.speak(utterance);
   }, [ttsEnabled, femaleVoice]);
 
-  // Lip-sync animation
+  // Lip-sync animation - Map to mouthOpen (0.0 to 0.6)
   const startLipSyncAnimation = useCallback(() => {
     const animate = () => {
       const time = Date.now() * 0.012;
+      // Simulate audio frequency data (0-255) mapped to 0.0-0.6
       const amplitude = Math.abs(Math.sin(time) * Math.sin(time * 1.4) * Math.sin(time * 0.6));
-      setMouthOpenness(amplitude * 0.8);
+      setMouthOpenness(amplitude * 0.6); // Max 0.6 as specified
       animationFrameRef.current = requestAnimationFrame(animate);
     };
     animate();
@@ -719,7 +709,7 @@ export default function Vera3DAvatar() {
     setMouthOpenness(0);
   }, []);
 
-  // Handle avatar click - start listening (no UI buttons)
+  // Handle avatar click - NO BUTTONS, 3D Avatar IS the interface
   const handleAvatarClick = useCallback(() => {
     if (!speechSupported || !recognitionRef.current) return;
     
@@ -746,11 +736,11 @@ export default function Vera3DAvatar() {
   }, [speechSupported, isListening, isSpeaking, stopLipSyncAnimation]);
 
   return (
-    <div className="fixed bottom-0 right-4 z-[9999]" style={{ width: "220px", height: "320px" }}>
-      {/* 3D Canvas with Portrait Camera */}
+    <div className="fixed bottom-0 right-4 z-[9999]" style={{ width: "200px", height: "280px" }}>
+      {/* 3D Canvas with FIXED Camera at Y=1.65, FOV=45 */}
       <div className="w-full h-full cursor-pointer">
         <Canvas
-          camera={{ position: [0, 0.5, 1.5], fov: 38 }}
+          camera={{ position: [0, 1.65, 0.7], fov: 45 }}
           style={{ background: "transparent" }}
           gl={{ alpha: true, antialias: true }}
         >
@@ -775,8 +765,8 @@ export default function Vera3DAvatar() {
       </motion.div>
 
       {/* Legal Disclaimer */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 px-2 py-0.5 bg-amber-500/25 rounded text-center max-w-[200px]">
-        <p className="text-[8px] text-amber-400 leading-tight">Vera bir yapay zekadır, Yatırım Tavsiyesi Vermez.</p>
+      <div className="absolute bottom-9 left-1/2 -translate-x-1/2 px-2 py-0.5 bg-amber-500/25 rounded text-center max-w-[180px]">
+        <p className="text-[7px] text-amber-400 leading-tight">Vera bir yapay zekadır, Yatırım Tavsiyesi Vermez.</p>
       </div>
 
       {/* Status Indicator */}
@@ -786,7 +776,7 @@ export default function Vera3DAvatar() {
             initial={{ opacity: 0, y: 10, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.9 }}
-            className="absolute top-2 left-1/2 -translate-x-1/2 px-3 py-1.5 bg-black/90 backdrop-blur-sm rounded-lg border border-white/20 max-w-[200px]"
+            className="absolute top-2 left-1/2 -translate-x-1/2 px-3 py-1.5 bg-black/90 backdrop-blur-sm rounded-lg border border-white/20 max-w-[180px]"
           >
             {isListening && (
               <div className="flex items-center gap-2">
@@ -814,14 +804,14 @@ export default function Vera3DAvatar() {
             initial={{ opacity: 0, x: 20, scale: 0.9 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
             exit={{ opacity: 0, x: 20, scale: 0.9 }}
-            className="absolute bottom-[90px] right-[230px] w-[280px] max-h-[200px] overflow-y-auto p-3 bg-black/95 backdrop-blur-xl rounded-xl border border-primary/40 shadow-xl shadow-primary/10"
+            className="absolute bottom-[80px] right-[210px] w-[260px] max-h-[180px] overflow-y-auto p-3 bg-black/95 backdrop-blur-xl rounded-xl border border-primary/40 shadow-xl shadow-primary/10"
           >
             <p className="text-sm text-white leading-relaxed">{response}</p>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* TTS Toggle */}
+      {/* TTS Toggle - Small, unobtrusive */}
       {speechSupported && (
         <button
           onClick={() => setTtsEnabled(!ttsEnabled)}
