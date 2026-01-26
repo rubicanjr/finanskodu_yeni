@@ -5,7 +5,7 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
-import Vera3DAvatar from "./components/Vera3DAvatar";
+import Sarp3DAvatar from "./components/Sarp3DAvatar";
 
 function Router() {
   return (
@@ -24,7 +24,7 @@ function App() {
         <TooltipProvider>
           <Toaster />
           <Router />
-          <Vera3DAvatar />
+          <Sarp3DAvatar />
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>
