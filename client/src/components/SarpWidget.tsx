@@ -224,6 +224,7 @@ export default function SarpWidget() {
   const [speechSupported, setSpeechSupported] = useState(false);
   const [ttsEnabled, setTtsEnabled] = useState(true);
   const [maleVoice, setMaleVoice] = useState<SpeechSynthesisVoice | null>(null);
+  const [isNativeMaleVoice, setIsNativeMaleVoice] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState("");
   const [pulseIntensity, setPulseIntensity] = useState(0);
@@ -234,7 +235,7 @@ export default function SarpWidget() {
   const pulseIntervalRef = useRef<number | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Initialize Speech APIs with aggressive Male Voice selection
+  // Initialize Speech APIs with iOS-specific Adaptive Pitch algorithm
   useEffect(() => {
     const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
     const hasSpeechRecognition = !!SpeechRecognitionAPI;
@@ -245,17 +246,29 @@ export default function SarpWidget() {
     if (hasSpeechSynthesis) {
       synthRef.current = window.speechSynthesis;
       
-      // Aggressive Male Voice Selection Algorithm
-      const selectMaleVoice = (): SpeechSynthesisVoice | null => {
+      // iOS-specific Adaptive Pitch Voice Selection Algorithm
+      const selectMaleVoice = (): { voice: SpeechSynthesisVoice | null; isNativeMale: boolean } => {
         const voices = synthRef.current?.getVoices() || [];
-        if (voices.length === 0) return null;
+        if (voices.length === 0) return { voice: null, isNativeMale: false };
         
         // Filter Turkish voices
         const turkishVoices = voices.filter(v => 
           v.lang.startsWith("tr") || v.lang === "tr-TR"
         );
         
-        // Priority 1: Explicit Male/Erkek keywords
+        // Priority 1: Apple Male voices (Cem, Alper)
+        const appleMaleNames = ["cem", "alper"];
+        for (const name of appleMaleNames) {
+          const found = turkishVoices.find(v => 
+            v.name.toLowerCase().includes(name)
+          );
+          if (found) {
+            console.log("[Sarp Voice] Found Apple male voice:", found.name);
+            return { voice: found, isNativeMale: true };
+          }
+        }
+        
+        // Priority 2: Explicit Male/Erkek keywords
         const maleKeywords = ["male", "erkek", "mehmet", "ahmet", "mustafa", "ali"];
         for (const keyword of maleKeywords) {
           const found = turkishVoices.find(v => 
@@ -263,34 +276,41 @@ export default function SarpWidget() {
           );
           if (found) {
             console.log("[Sarp Voice] Found explicit male voice:", found.name);
-            return found;
+            return { voice: found, isNativeMale: true };
           }
         }
         
-        // Priority 2: Google voices (often neutral/male on Android)
+        // Priority 3: Google voices (often neutral/male on Android)
         const googleVoice = turkishVoices.find(v => 
           v.name.toLowerCase().includes("google")
         );
         if (googleVoice) {
           console.log("[Sarp Voice] Using Google voice:", googleVoice.name);
-          return googleVoice;
+          return { voice: googleVoice, isNativeMale: true };
         }
         
-        // Priority 3: Any Turkish voice (will use pitch hack)
+        // Priority 4: Any Turkish voice (will use AGGRESSIVE pitch hack for iOS)
+        // This is likely "Yelda" on iOS - a female voice
         if (turkishVoices.length > 0) {
-          console.log("[Sarp Voice] Fallback to Turkish voice:", turkishVoices[0].name);
-          return turkishVoices[0];
+          const voice = turkishVoices[0];
+          const isFemale = ["yelda", "samantha", "female", "kadın"].some(
+            name => voice.name.toLowerCase().includes(name)
+          );
+          console.log(`[Sarp Voice] Fallback to Turkish voice: ${voice.name} (Female: ${isFemale})`);
+          return { voice, isNativeMale: !isFemale };
         }
         
-        // Priority 4: Any available voice
+        // Priority 5: Any available voice
         console.log("[Sarp Voice] No Turkish voice, using default:", voices[0]?.name);
-        return voices[0] || null;
+        return { voice: voices[0] || null, isNativeMale: false };
       };
       
       const loadVoices = () => {
-        const selectedVoice = selectMaleVoice();
-        if (selectedVoice) {
-          setMaleVoice(selectedVoice);
+        const result = selectMaleVoice();
+        if (result.voice) {
+          setMaleVoice(result.voice);
+          setIsNativeMaleVoice(result.isNativeMale);
+          console.log(`[Sarp Voice] Selected: ${result.voice.name}, Native Male: ${result.isNativeMale}`);
           return true;
         }
         return false;
@@ -301,9 +321,10 @@ export default function SarpWidget() {
         speechSynthesis.onvoiceschanged = loadVoices;
       }
       
-      // Retry after delay for mobile devices
+      // Retry after delay for mobile devices (iOS loads voices async)
       setTimeout(loadVoices, 500);
       setTimeout(loadVoices, 1000);
+      setTimeout(loadVoices, 2000);
     }
     
     if (hasSpeechRecognition) {
@@ -410,10 +431,20 @@ export default function SarpWidget() {
       utterance.voice = maleVoice;
     }
     
-    // PITCH SHIFT HACK: Lower pitch (0.8) ensures masculine sound on all devices
-    // Even if device forces female voice, this makes it sound deeper like "Sarp"
-    utterance.pitch = 0.8;
-    utterance.rate = 0.95;
+    // ADAPTIVE PITCH: iOS-specific aggressive pitch shifting
+    // If we have a native male voice (Desktop/Android), use natural settings
+    // If we have a female voice (iOS Yelda), use aggressive pitch 0.6 to simulate male
+    if (isNativeMaleVoice) {
+      // Native male voice - use natural settings
+      utterance.pitch = 0.9;
+      utterance.rate = 0.95;
+      console.log("[Sarp Voice] Using natural pitch for native male voice");
+    } else {
+      // Female voice (iOS) - AGGRESSIVE pitch shift to simulate male
+      utterance.pitch = 0.6;
+      utterance.rate = 0.9;
+      console.log("[Sarp Voice] Using aggressive pitch (0.6) for female voice simulation");
+    }
     utterance.volume = 1.0;
     
     utterance.onstart = () => {
@@ -432,7 +463,7 @@ export default function SarpWidget() {
     };
     
     synthRef.current.speak(utterance);
-  }, [ttsEnabled, maleVoice, startPulseAnimation, stopPulseAnimation]);
+  }, [ttsEnabled, maleVoice, isNativeMaleVoice, startPulseAnimation, stopPulseAnimation]);
 
   // Open widget and unlock audio
   const handleOpenWidget = useCallback(() => {
