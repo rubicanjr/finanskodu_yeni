@@ -256,8 +256,8 @@ export default function SarpWidget() {
           v.lang.startsWith("tr") || v.lang === "tr-TR"
         );
         
-        // Priority 1: Apple Male voices (Cem, Alper)
-        const appleMaleNames = ["cem", "alper"];
+        // Priority 1: Apple Male voices (Cem, Alper, Murat)
+        const appleMaleNames = ["cem", "alper", "murat"];
         for (const name of appleMaleNames) {
           const found = turkishVoices.find(v => 
             v.name.toLowerCase().includes(name)
@@ -268,8 +268,8 @@ export default function SarpWidget() {
           }
         }
         
-        // Priority 2: Explicit Male/Erkek keywords
-        const maleKeywords = ["male", "erkek", "mehmet", "ahmet", "mustafa", "ali"];
+        // Priority 2: Explicit Male/Erkek keywords + Google Türkçe erkek
+        const maleKeywords = ["male", "erkek", "mehmet", "ahmet", "mustafa", "ali", "turkish male", "tr-tr-erkek"];
         for (const keyword of maleKeywords) {
           const found = turkishVoices.find(v => 
             v.name.toLowerCase().includes(keyword)
@@ -432,18 +432,17 @@ export default function SarpWidget() {
     }
     
     // ADAPTIVE PITCH: iOS-specific aggressive pitch shifting
-    // If we have a native male voice (Desktop/Android), use natural settings
-    // If we have a female voice (iOS Yelda), use aggressive pitch 0.6 to simulate male
+    // Strategy from pasted_content_10.txt - pitch=0.55, rate=0.88 for iOS
     if (isNativeMaleVoice) {
-      // Native male voice - use natural settings
-      utterance.pitch = 0.9;
-      utterance.rate = 0.95;
-      console.log("[Sarp Voice] Using natural pitch for native male voice");
+      // Native male voice - use natural settings (slightly deep)
+      utterance.pitch = 0.95;  // Hafif derin (doğal erkek tonu)
+      utterance.rate = 0.92;   // Hafif yavaş (okunabilirlik)
+      console.log("[Sarp Voice] ✅ Native male voice - natural pitch 0.95");
     } else {
-      // Female voice (iOS) - AGGRESSIVE pitch shift to simulate male
-      utterance.pitch = 0.6;
-      utterance.rate = 0.9;
-      console.log("[Sarp Voice] Using aggressive pitch (0.6) for female voice simulation");
+      // iOS/Female voice - AGGRESSIVE pitch fix (deeper than before)
+      utterance.pitch = 0.55;  // 0.6'dan daha düşük (daha derin)
+      utterance.rate = 0.88;   // Daha yavaş (erkek konuşma ritmi)
+      console.log("[Sarp Voice] ⚠️ iOS Mode - aggressive pitch 0.55, rate 0.88");
     }
     utterance.volume = 1.0;
     
