@@ -5,7 +5,7 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
-import Sarp3DAvatar from "./components/Sarp3DAvatar";
+import SarpMobileFirst from "./components/SarpMobileFirst";
 
 function Router() {
   return (
@@ -24,7 +24,7 @@ function App() {
         <TooltipProvider>
           <Toaster />
           <Router />
-          <Sarp3DAvatar />
+          <SarpMobileFirst />
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>
