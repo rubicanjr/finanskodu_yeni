@@ -234,7 +234,7 @@ export default function SarpWidget() {
   const pulseIntervalRef = useRef<number | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Initialize Speech APIs
+  // Initialize Speech APIs with aggressive Male Voice selection
   useEffect(() => {
     const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
     const hasSpeechRecognition = !!SpeechRecognitionAPI;
@@ -245,29 +245,65 @@ export default function SarpWidget() {
     if (hasSpeechSynthesis) {
       synthRef.current = window.speechSynthesis;
       
-      const loadVoices = () => {
+      // Aggressive Male Voice Selection Algorithm
+      const selectMaleVoice = (): SpeechSynthesisVoice | null => {
         const voices = synthRef.current?.getVoices() || [];
-        if (voices.length === 0) return false;
+        if (voices.length === 0) return null;
         
-        const turkishVoices = voices.filter(v => v.lang.startsWith("tr"));
-        let selectedVoice = turkishVoices[0] || voices[0];
+        // Filter Turkish voices
+        const turkishVoices = voices.filter(v => 
+          v.lang.startsWith("tr") || v.lang === "tr-TR"
+        );
         
-        const maleKeywords = ["erkek", "male", "mehmet"];
+        // Priority 1: Explicit Male/Erkek keywords
+        const maleKeywords = ["male", "erkek", "mehmet", "ahmet", "mustafa", "ali"];
         for (const keyword of maleKeywords) {
-          const found = turkishVoices.find(v => v.name.toLowerCase().includes(keyword));
+          const found = turkishVoices.find(v => 
+            v.name.toLowerCase().includes(keyword)
+          );
           if (found) {
-            selectedVoice = found;
-            break;
+            console.log("[Sarp Voice] Found explicit male voice:", found.name);
+            return found;
           }
         }
         
-        setMaleVoice(selectedVoice);
-        return true;
+        // Priority 2: Google voices (often neutral/male on Android)
+        const googleVoice = turkishVoices.find(v => 
+          v.name.toLowerCase().includes("google")
+        );
+        if (googleVoice) {
+          console.log("[Sarp Voice] Using Google voice:", googleVoice.name);
+          return googleVoice;
+        }
+        
+        // Priority 3: Any Turkish voice (will use pitch hack)
+        if (turkishVoices.length > 0) {
+          console.log("[Sarp Voice] Fallback to Turkish voice:", turkishVoices[0].name);
+          return turkishVoices[0];
+        }
+        
+        // Priority 4: Any available voice
+        console.log("[Sarp Voice] No Turkish voice, using default:", voices[0]?.name);
+        return voices[0] || null;
       };
       
+      const loadVoices = () => {
+        const selectedVoice = selectMaleVoice();
+        if (selectedVoice) {
+          setMaleVoice(selectedVoice);
+          return true;
+        }
+        return false;
+      };
+      
+      // Try immediately and on voices changed
       if (!loadVoices()) {
         speechSynthesis.onvoiceschanged = loadVoices;
       }
+      
+      // Retry after delay for mobile devices
+      setTimeout(loadVoices, 500);
+      setTimeout(loadVoices, 1000);
     }
     
     if (hasSpeechRecognition) {
@@ -374,7 +410,9 @@ export default function SarpWidget() {
       utterance.voice = maleVoice;
     }
     
-    utterance.pitch = 0.9;
+    // PITCH SHIFT HACK: Lower pitch (0.8) ensures masculine sound on all devices
+    // Even if device forces female voice, this makes it sound deeper like "Sarp"
+    utterance.pitch = 0.8;
     utterance.rate = 0.95;
     utterance.volume = 1.0;
     
