@@ -2,26 +2,32 @@
  * DualPersonaWidget.tsx
  * Device-Based Persona Switch: Sarp (Desktop) & Vera (Mobile)
  * 
- * SARP (Desktop): Quantitative Analyst, Analytical, Skeptical, Data-Driven
- * VERA (Mobile): Macro Strategist, Visionary, Strategic, Calming
+ * CRITICAL CONSTRAINTS (from Strategy Document):
+ * 1. NO REAL-TIME DATA: Never guess current prices, rates, or specific dates
+ * 2. METHODOLOGY OVER VALUES: Instead of "RSI is 70", say "If RSI is above 70..."
+ * 3. SPK/BDDK COMPLIANCE: No "Buy/Sell/Hold" advice, only educational guidance
+ * 
+ * SARP (Desktop): Technical Analyst, Risk Manager - THE QUANT
+ * - Focus: Formulas, Indicators, Mathematical Models
+ * - Tone: Cold, Analytical, Concise, Skeptical
+ * - Keywords: Arbitrage, Standard Deviation, Support/Resistance, Volume Profile, Breakout, Fakeout
+ * 
+ * VERA (Mobile): Macro Strategist, Behavioral Psychologist - THE STRATEGIST
+ * - Focus: Cause-and-Effect, Psychology, Macro Trends
+ * - Tone: Warm, Educational, Visionary, Calming
+ * - Keywords: Macro Trends, Fed/Central Banks, Investor Sentiment, FOMO, FUD
  * 
  * UNIVERSAL KNOWLEDGE BASE:
- * - Commodities: Gold, Silver, Palladium, Platinum, Brent Oil, Natural Gas
- * - Crypto: Bitcoin, Ethereum, Altcoins, DeFi, Tokenomics, Stablecoins
- * - Traditional Markets: BIST 100/30, US Indices (Nasdaq, S&P 500), ETFs
- * - Banking & Funds: TEFAS Funds, BES funds, Deposit Interest rates
- * - Advanced Metrics: Volatility (VIX), Correlation, Sharpe Ratio, Beta, RSI, MACD
- * - Macro Data: Fed, TCMB, Inflation (CPI/PPI), Unemployment
- * 
- * SPK/BDDK COMPLIANCE:
- * - Never provide direct "Buy/Sell/Hold" advice
- * - Use "Scenario Analysis" and "Educational Context"
- * - Append disclaimer to every response
+ * - Precious Metals: Gold, Silver, Palladium, Platinum
+ * - Crypto Assets: BTC, ETH, Altcoins (Tokenomics, Halving, DeFi, Staking)
+ * - Traditional Markets: Stocks (BIST, Nasdaq), ETFs, Mutual Funds (TEFAS), Bonds
+ * - Pension & Savings: BES, Deposit Accounts, Inflation Hedging
+ * - Advanced Metrics: Volatility (VIX), Correlation (Beta), Sharpe Ratio, Risk/Reward, Drawdown, Arbitrage, Stop-Loss
  */
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, X, Mic, MicOff, Volume2, VolumeX, Send } from "lucide-react";
+import { X, Mic, MicOff, Volume2, VolumeX, Send } from "lucide-react";
 
 // ============ PERSONA DEFINITIONS ============
 interface Persona {
@@ -41,13 +47,14 @@ interface Persona {
     tone: string;
     focus: string[];
     style: string;
+    keywords: string[];
   };
 }
 
 const SARP: Persona = {
   name: "Sarp",
-  title: "Finansal Asistan Sarp",
-  archetype: "Quantitative Analyst (Quant) - The Brake",
+  title: "Teknik Analist Sarp",
+  archetype: "Quantitative Analyst (Quant) - THE BRAKE",
   motto: "Matematik yalan söylemez, insanlar söyler.",
   avatarUrl: "/images/metaperson_mix_2.gif",
   accentColor: "#00D4FF", // Cyan
@@ -58,16 +65,17 @@ const SARP: Persona = {
     useNativeDefault: false,
   },
   personality: {
-    tone: "Analytical, Skeptical, Data-Driven, Cold, Realistic. Anti-FOMO.",
-    focus: ["Technical Analysis", "Risk Calculation", "Anomalies", "Math Models", "Volatility", "Arbitrage"],
-    style: "Short, concise, technical. Uses terms like volatility, arbitrage, anomali, makas. No emotional fluff.",
+    tone: "Cold, Analytical, Concise, Skeptical. Anti-FOMO.",
+    focus: ["Technical Analysis", "Risk Calculation", "Mathematical Models", "Indicators", "Formulas"],
+    style: "Short, concise, technical. No emotional fluff. Focus on methodology, not values.",
+    keywords: ["Arbitraj", "Standart Sapma", "Destek/Direnç", "Hacim Profili", "Breakout", "Fakeout", "Volatilite", "Beta", "Sharpe Oranı"],
   },
 };
 
 const VERA: Persona = {
   name: "Vera",
-  title: "Finansal Asistan Vera",
-  archetype: "Macro Strategist & Behavioral Psychologist - The Steering Wheel",
+  title: "Makro Stratejist Vera",
+  archetype: "Macro Strategist & Behavioral Psychologist - THE STEERING WHEEL",
   motto: "Fiyatı piyasa belirler, değeri sen belirlersin.",
   avatarUrl: "/images/vera-avatar.png",
   accentColor: "#A855F7", // Purple
@@ -78,120 +86,143 @@ const VERA: Persona = {
     useNativeDefault: true,
   },
   personality: {
-    tone: "Visionary, Strategic, Calming, Educational, Sophisticated.",
-    focus: ["Fundamental Analysis", "Macro Trends", "Psychology", "Financial Well-being", "Central Bank Policies"],
-    style: "Fluent, empathetic, storytelling style. Explains complex events simply. Connects the dots.",
+    tone: "Warm, Educational, Visionary, Calming.",
+    focus: ["Macro Trends", "Psychology", "Cause-and-Effect", "Central Bank Policies", "Financial Well-being"],
+    style: "Fluent, empathetic, storytelling. Explains complex events simply. Connects the dots.",
+    keywords: ["Makro Trendler", "Fed", "Merkez Bankaları", "Yatırımcı Duyarlılığı", "FOMO", "FUD", "Finansal Refah"],
   },
 };
 
-// ============ UNIVERSAL KNOWLEDGE BASE ============
+// ============ METHODOLOGY-BASED KNOWLEDGE BASE (NO REAL-TIME DATA) ============
 const getResponse = (input: string, persona: Persona): string => {
   const lowerInput = input.toLowerCase();
   
-  // ============ SARP RESPONSES (Technical, Data-Driven, Quant) ============
+  // ============ SARP RESPONSES (Technical, Methodology-Focused, Quant) ============
+  // RULE: Focus on FORMULAS and INDICATORS, never specific values
   const sarpResponses: Record<string, string> = {
-    // COMMODITIES
-    altın: "Ons altın 2000$ direncini 3. kez deniyor. Oynaklık endeksi düşük. Risk/Ödül oranı şu an alım için 1:3 seviyesinde rasyonel durmuyor. Altın, reel faiz oranlarıyla negatif korelasyon gösteriyor. Reel faizler negatifken altın pozitif getiri sağlar, ancak dolar endeksi güçlenirse ters korelasyon devreye girer.",
-    gümüş: "Gümüş, altına göre daha yüksek beta değerine sahip. Endüstriyel talep faktörü volatiliteyi artırıyor. Altın/Gümüş oranı tarihsel ortalamanın üzerindeyse gümüş relatif ucuz demektir. Teknik olarak, 50 günlük hareketli ortalama kritik destek.",
-    paladyum: "Paladyum, otomotiv sektörü talebiyle hareket ediyor. Elektrikli araç penetrasyonu arttıkça uzun vadeli talep riski var. Arz tarafında Rusya konsantrasyonu jeopolitik risk yaratıyor. Volatilite yüksek, pozisyon boyutunu küçük tutun.",
-    platin: "Platin, paladyuma göre iskontolu işlem görüyor. Hidrojen ekonomisi senaryosunda talep artışı bekleniyor ancak bu uzun vadeli bir tez. Kısa vadede momentum zayıf, RSI nötr bölgede.",
-    petrol: "Brent petrol OPEC+ kararlarına hassas. Teknik olarak, 70-80$ bandı konsolidasyon bölgesi. Stok verileri ve Çin talebi kritik değişkenler. Contango/backwardation yapısı pozisyon maliyetini etkiliyor.",
-    doğalgaz: "Doğalgaz mevsimsellik gösteriyor. Kış aylarında talep artışı fiyatları yukarı iter. Depolama seviyeleri ve hava durumu tahminleri kısa vadeli fiyat belirleyicileri. Volatilite çok yüksek, spekülatif bir enstrüman.",
+    // PRECIOUS METALS
+    altın: "Altın analizi için reel faiz oranlarına bakın. Eğer reel faizler negatifse, altın matematiksel olarak cazip hale gelir. Teknik olarak, 200 günlük hareketli ortalama kritik destek seviyesidir. Fiyat bu ortalamanın üzerindeyse trend yukarı, altındaysa trend aşağı olarak değerlendirilir. Bollinger Bantları genişliyorsa volatilite artıyor demektir.",
+    gümüş: "Gümüş, Altın'a göre betası daha yüksek bir varlıktır, yani daha volatildir. Portföyünüzdeki oynaklığı artırır. Alım kararı için Altın/Gümüş rasyosuna bakın; rasyo tarihsel ortalamanın üzerindeyse gümüş matematiksel olarak ucuz kalmış olabilir. RSI aşırı satım bölgesindeyse ve hacim artıyorsa momentum dönüşü sinyali olabilir.",
+    paladyum: "Paladyum, otomotiv sektörü talebiyle korelasyon gösterir. Elektrikli araç penetrasyonu arttıkça uzun vadeli talep riski oluşur. Teknik analiz için, fiyat 50 günlük ortalamanın altına düşerse kısa vadeli trend zayıflamış demektir. Pozisyon boyutunu volatiliteye göre ayarlayın; ATR (Average True Range) yüksekse pozisyon küçük tutulmalı.",
+    platin: "Platin/Paladyum rasyosu tarihsel olarak analiz edilmeli. Eğer platin iskontolu işlem görüyorsa, rasyo ortalamanın altındadır. Hidrojen ekonomisi senaryoları uzun vadeli talep artışı yaratabilir. Teknik olarak, MACD sinyal çizgisini yukarı keserse momentum pozitife dönmüş demektir.",
     
-    // CRYPTO
-    kripto: "Kripto varlıklar yüksek volatilite gösteriyor. Bitcoin'in 200 günlük hareketli ortalaması kritik destek seviyesi. Risk/ödül oranını hesaplamadan pozisyon açmak istatistiksel olarak kayıp getirir. Sharpe oranı negatife dönmeden portföy ağırlığını %5'in altında tutmanızı öneririm.",
-    bitcoin: "Momentum zayıfladı. 200 haftalık ortalamanın altına sarktık. RSI aşırı satımda ama hacim dönüşü onaylamıyor. Stop-loss seviyenize sadık kalın. Bitcoin, direnç seviyesini test ediyor. Hacim desteklerse teknik göstergeler trend devamı işaret ediyor, ancak volatilite yüksek.",
-    ethereum: "ETH/BTC oranı kritik. Ethereum, stake getirisi sunuyor ancak bu getiri enflasyonla eritilebilir. Gas fee'leri ve Layer 2 adoption metrikleri izlenmeli. Teknik olarak, merge sonrası arz dinamikleri değişti.",
-    altcoin: "Altcoinler Bitcoin'e göre daha yüksek beta taşıyor. Bull market'ta outperform ederler, bear market'ta daha sert düşerler. Likidite riski yüksek, spread'ler geniş. Temel analiz yapmadan altcoin almak kumar.",
-    defi: "DeFi protokollerinde TVL (Total Value Locked) kritik metrik. Smart contract riski, impermanent loss ve oracle manipülasyonu riskleri var. APY'ler sürdürülebilir mi analiz edilmeli. Yüksek getiri = yüksek risk.",
-    stablecoin: "Stablecoin'ler de risksiz değil. Algoritmik stablecoin'ler çökebilir (Terra/Luna örneği). Fiat-backed olanlar için rezerv şeffaflığı kritik. USDT, USDC, DAI farklı risk profillerine sahip.",
+    // CRYPTO ASSETS
+    kripto: "Kripto varlıklarda fiyat hareketinden ziyade hacme odaklanın. Eğer fiyat yükselirken hacim düşüyorsa, bu bir 'Negatif Uyuşmazlık'tır ve trendin zayıfladığını gösterir. Teknik indikatörler aşırı alım bölgesindeyse düzeltme riski matematiksel olarak artar. Risk/ödül oranı hesaplanmadan pozisyon açmak istatistiksel olarak kayıp getirir.",
+    bitcoin: "Bitcoin'in fiyat hareketinden ziyade hacmine odaklanın. Eğer fiyat yükselirken hacim düşüyorsa, bu bir 'Negatif Uyuşmazlık'tır ve trendin zayıfladığını gösterir. 200 günlük hareketli ortalama kritik destek seviyesidir. RSI 70'in üzerindeyse aşırı alım, 30'un altındaysa aşırı satım bölgesindedir. Halving döngüleri arz dinamiklerini etkiler.",
+    ethereum: "ETH/BTC oranı kritik bir göstergedir. Bu oran yükseliyorsa Ethereum Bitcoin'e göre güçleniyor demektir. Stake getirisi analiz edilirken enflasyon oranıyla karşılaştırılmalı. Gas fee'leri ve Layer 2 adoption metrikleri temel analiz için önemlidir. Merge sonrası arz dinamikleri değişti; bu tokenomics'i etkiler.",
+    altcoin: "Altcoinler Bitcoin'e göre daha yüksek beta taşır. Bull market'ta outperform ederler, bear market'ta daha sert düşerler. Likidite riski yüksektir; spread'ler geniş olabilir. Piyasa değeri küçük coinlerde slippage hesaba katılmalı. Temel analiz yapmadan altcoin almak matematiksel olarak kumardır.",
+    defi: "DeFi protokollerinde TVL (Total Value Locked) kritik metriktir. Smart contract riski, impermanent loss ve oracle manipülasyonu riskleri vardır. APY'lerin sürdürülebilirliği analiz edilmeli; yüksek APY genellikle yüksek risk demektir. Protokolün audit raporları ve TVL trendleri incelenmelidir.",
+    staking: "Staking getirisi analiz edilirken, token enflasyonu hesaba katılmalıdır. Eğer staking APY'si token enflasyonunun altındaysa, reel getiri negatiftir. Lock-up süreleri likidite riskini artırır. Validator seçiminde slashing riski değerlendirilmelidir.",
+    halving: "Halving döngüleri, Bitcoin'in arz dinamiklerini belirler. Tarihsel olarak, halving sonrası arz şoku fiyat üzerinde etkili olmuştur. Ancak bu bir garanti değil, bir korelasyondur. Stock-to-Flow modeli bu ilişkiyi matematiksel olarak ifade eder.",
+    tokenomics: "Tokenomics analizi için şunlara bakın: Toplam arz, dolaşımdaki arz, enflasyon oranı, token dağılımı (takım, yatırımcılar, topluluk), vesting schedule. Eğer büyük bir unlock yaklaşıyorsa, arz baskısı oluşabilir.",
     
     // TRADITIONAL MARKETS
-    borsa: "BIST-100 endeksi P/E oranı tarihsel ortalamanın üzerinde. Volatilite endeksi (VIX muadili) yükseliş trendinde. Risk primi hesaplaması yapılmadan hisse senedi almak, kumar oynamakla eşdeğer. Sektörel rotasyon sinyalleri izlenmeli.",
-    hisse: "Hisse senedi seçiminde temel ve teknik analiz birlikte kullanılmalı. P/E, P/B, ROE, borç/özkaynak oranları temel metrikler. Teknik olarak, destek/direnç seviyeleri ve hacim analizi kritik.",
-    nasdaq: "Nasdaq, teknoloji ağırlıklı. Faiz oranlarına hassas çünkü growth stock'lar yüksek faizde iskonto edilir. VIX yükseldiğinde Nasdaq daha sert düşer. Dolar bazlı yatırım, kur riski taşır.",
-    sp500: "S&P 500, ABD ekonomisinin barometresi. Diversifiye bir endeks ama sektör ağırlıkları dengesiz. Teknoloji dominansı risk yaratıyor. Pasif yatırım için uygun ancak timing riski var.",
-    etf: "ETF'ler düşük maliyetli diversifikasyon sağlar. Expense ratio kritik. Tracking error'a dikkat. Sentetik vs fiziksel replikasyon farkını anlayın. Likidite ve spread'ler önemli.",
+    borsa: "Borsa analizi için P/E oranını tarihsel ortalamayla karşılaştırın. Eğer P/E tarihsel ortalamanın üzerindeyse, piyasa pahalı olabilir. Volatilite endeksi (VIX muadili) yükseliş trendindeyse risk primi artıyor demektir. Sektörel rotasyon sinyalleri için sektör ETF'lerinin göreceli performansını izleyin.",
+    hisse: "Hisse senedi seçiminde temel ve teknik analiz birlikte kullanılmalı. Temel metrikler: P/E, P/B, ROE, borç/özkaynak oranı. Teknik olarak, destek/direnç seviyeleri ve hacim analizi kritiktir. Fiyat destek seviyesini hacimle kırarsa trend dönüşü sinyalidir.",
+    nasdaq: "Nasdaq teknoloji ağırlıklı bir endekstir ve faiz oranlarına hassastır. Growth stock'lar yüksek faiz ortamında daha fazla iskonto edilir. VIX yükseldiğinde Nasdaq genellikle daha sert düşer. Dolar bazlı yatırım yapıyorsanız kur riski hesaba katılmalıdır.",
+    sp500: "S&P 500 diversifiye bir endekstir ancak sektör ağırlıkları dengesiz olabilir. Teknoloji dominansı konsantrasyon riski yaratır. Pasif yatırım için uygundur ancak timing riski vardır. 200 günlük ortalama uzun vadeli trend göstergesidir.",
+    etf: "ETF seçiminde expense ratio kritiktir; düşük expense ratio uzun vadede getiriyi artırır. Tracking error'a dikkat edin; endeksten sapma olmamalı. Sentetik vs fiziksel replikasyon farkını anlayın. Likidite ve spread'ler işlem maliyetini etkiler.",
+    tahvil: "Tahvil fiyatları faiz oranlarıyla ters korelasyon gösterir. Faizler yükseldiğinde tahvil fiyatları düşer. Duration, faiz hassasiyetini ölçer; yüksek duration daha fazla fiyat oynaklığı demektir. Kredi spreadi, temerrüt riskini yansıtır.",
     
     // BANKING & FUNDS
-    fon: "Yatırım fonlarının expense ratio'su getiriyi eritiyor. Pasif endeks fonları, aktif yönetilen fonların %80'inden daha iyi performans gösteriyor. Veri bu kadar net. TEFAS üzerinden karşılaştırma yapın.",
-    bes: "BES, devlet katkısı avantajı sunuyor (%30). Ancak fon yönetim ücretleri getiriyi eritebilir. Emeklilik yaşına kadar çıkış cezası var. Uzun vadeli düşünün, fon seçiminde expense ratio'ya dikkat.",
-    mevduat: "Mevduat faizi, enflasyonun altındaysa reel getiri negatif. Kur korumalı mevduat (KKM) farklı risk profili taşıyor. Vade ve faiz oranı trade-off'unu anlayın. TMSF güvencesi 150.000 TL ile sınırlı.",
+    fon: "Yatırım fonlarının expense ratio'su uzun vadede getiriyi eritir. Araştırmalar gösteriyor ki pasif endeks fonları, aktif yönetilen fonların büyük çoğunluğundan daha iyi performans gösterir. TEFAS üzerinden fonları karşılaştırırken Sharpe oranına ve maksimum drawdown'a bakın.",
+    tefas: "TEFAS fonlarını karşılaştırırken şu metriklere bakın: Sharpe oranı (risk-adjusted getiri), maksimum drawdown (en kötü dönem kaybı), expense ratio (yönetim ücreti), benchmark'a göre performans. Yüksek getiri tek başına yeterli değil, risk-adjusted getiri önemli.",
+    bes: "BES'te devlet katkısı avantajı matematiksel olarak önemlidir. Ancak fon yönetim ücretleri getiriyi eritebilir. Emeklilik yaşına kadar çıkış cezası likidite riskidir. Fon seçiminde expense ratio'ya dikkat edin. Uzun vadeli bileşik getiri hesabı yapın.",
+    mevduat: "Mevduat faizi enflasyonla karşılaştırılmalıdır. Eğer nominal faiz enflasyonun altındaysa, reel getiri negatiftir. Vade ve faiz oranı arasında trade-off vardır. TMSF güvencesi limiti bilinmelidir. Kur korumalı mevduat farklı risk profili taşır.",
     
     // FOREX
-    dolar: "USD/TRY teknik analizi: Üst bant direnci test ediliyor. Carry trade pozisyonları riskli. Faiz diferansiyeli daralırsa TL üzerinde baskı artabilir. Hedge stratejisi olmadan döviz pozisyonu taşımak mantıksız.",
-    euro: "EUR/TRY, EUR/USD paritesine de bağlı. Çift kur riski var. ECB ve TCMB politikaları belirleyici. Teknik olarak, trend kanalı içinde hareket ediyor.",
+    dolar: "Döviz analizi için faiz diferansiyeline bakın. Eğer iki ülke arasındaki faiz farkı daralıyorsa, carry trade pozisyonları riskli hale gelir. Teknik olarak, trend kanalları ve hareketli ortalamalar kullanılır. Hedge stratejisi olmadan döviz pozisyonu taşımak kur riskine açık olmak demektir.",
+    euro: "EUR/TRY analizi için hem EUR/USD hem de USD/TRY paritelerini izleyin. Çift kur riski vardır. ECB ve TCMB politikaları belirleyicidir. Teknik olarak, destek/direnç seviyeleri ve trend kanalları kullanılır.",
+    kur: "Kur analizi için Satın Alma Gücü Paritesi (PPP) teorisi kullanılabilir. Eğer kur PPP'nin üzerindeyse aşırı değerli, altındaysa düşük değerli olabilir. Ancak kısa vadede kurlar PPP'den sapabilir. Faiz diferansiyeli ve cari açık kritik makro değişkenlerdir.",
     
     // MACRO DATA
-    enflasyon: "Enflasyon verileri beklentilerin üzerinde. Reel getiri negatif. Enflasyona endeksli tahviller (TIPS muadili) veya emtia sepeti, matematiksel olarak daha iyi koruma sağlar. TÜFE ve ÜFE farkı izlenmeli.",
-    faiz: "Merkez bankası faiz kararı piyasa fiyatlamasının dışında kalırsa volatilite spike'ı beklenir. Faiz futures'ları incelendiğinde piyasa beklentisi okunabilir. Beklentiden sapma durumunda pozisyon yönetimi kritik.",
-    fed: "Fed kararları global piyasaları etkiliyor. Dot plot ve FOMC tutanakları forward guidance veriyor. Fed funds rate ile 10 yıllık tahvil getirisi arasındaki spread resesyon sinyali olabilir.",
-    tcmb: "TCMB politika faizi ve forward guidance kritik. Enflasyon hedeflemesi rejimi altında, reel faiz pozitif olmalı. Rezerv yeterliliği ve swap anlaşmaları da izlenmeli.",
+    enflasyon: "Enflasyon ortamında reel getiri hesaplaması kritiktir. Nominal getiri eksi enflasyon eşittir reel getiri. Eğer reel getiri negatifse, paranızın satın alma gücü eriyor demektir. Enflasyona endeksli varlıklar (emtia, TIPS muadili tahviller) matematiksel olarak koruma sağlar.",
+    faiz: "Merkez bankası faiz kararları piyasa beklentisiyle karşılaştırılmalıdır. Eğer karar beklentinin dışında kalırsa volatilite spike'ı beklenir. Faiz futures'ları piyasa beklentisini gösterir. Yield curve (getiri eğrisi) eğimi ekonomik beklentileri yansıtır; ters eğri resesyon sinyali olabilir.",
+    fed: "Fed kararları global piyasaları etkiler. Dot plot ve FOMC tutanakları forward guidance verir. Fed funds rate ile 10 yıllık tahvil getirisi arasındaki spread izlenmelidir. Negatif spread tarihsel olarak resesyon öncüsü olmuştur.",
+    tcmb: "TCMB politika faizi ve forward guidance kritiktir. Enflasyon hedeflemesi rejiminde reel faiz pozitif olmalıdır. Eğer politika faizi enflasyonun altındaysa, reel faiz negatiftir. Rezerv yeterliliği ve swap anlaşmaları döviz kuru stabilitesini etkiler.",
     
     // ADVANCED METRICS
-    volatilite: "Volatilite, riskin ölçüsüdür. VIX 20'nin üzerindeyse piyasa stresli. Implied volatility vs realized volatility farkı opsiyon stratejileri için kritik. Volatilite clustering özelliği gösterir.",
-    rsi: "RSI 70 üzeri aşırı alım, 30 altı aşırı satım. Ancak trend piyasalarında RSI uzun süre aşırı bölgelerde kalabilir. Diverjans sinyalleri daha güvenilir.",
-    macd: "MACD, trend takip göstergesi. Sinyal çizgisi kesişimleri al/sat sinyali verir ancak gecikmeli. Histogram diverjansı erken uyarı sağlayabilir.",
-    fibonacci: "Fibonacci düzeltme seviyeleri (%23.6, %38.2, %50, %61.8) destek/direnç olarak çalışır. Self-fulfilling prophecy etkisi var çünkü herkes aynı seviyeleri izliyor.",
+    volatilite: "Volatilite riskin ölçüsüdür. VIX 20'nin üzerindeyse piyasa stresli kabul edilir. Implied volatility vs realized volatility farkı opsiyon stratejileri için kritiktir. Volatilite clustering özelliği gösterir; yüksek volatilite dönemleri kümelenir.",
+    beta: "Beta, bir varlığın piyasaya göre oynaklığını ölçer. Beta 1'den büyükse varlık piyasadan daha volatil, küçükse daha az volatildir. Portföy beta'sı, portföyün sistematik riskini gösterir. Düşük beta varlıklar savunmacı, yüksek beta varlıklar agresif kabul edilir.",
+    sharpe: "Sharpe oranı, risk-adjusted getiriyi ölçer. Formül: (Getiri - Risksiz Faiz) / Standart Sapma. Yüksek Sharpe oranı, birim risk başına daha fazla getiri demektir. Sharpe oranı 1'in üzerindeyse iyi, 2'nin üzerindeyse çok iyi kabul edilir.",
+    drawdown: "Maksimum drawdown, bir varlığın zirve-dip arasındaki en büyük düşüşüdür. Risk yönetimi için kritik bir metriktir. Yüksek drawdown, psikolojik olarak taşınması zor pozisyonlar yaratır. Drawdown recovery süresi de önemlidir.",
+    rsi: "RSI 70'in üzerindeyse aşırı alım, 30'un altındaysa aşırı satım bölgesidir. Ancak trend piyasalarında RSI uzun süre aşırı bölgelerde kalabilir. RSI diverjansı daha güvenilir sinyal verir; fiyat yeni zirve yaparken RSI yapmıyorsa negatif diverjans.",
+    macd: "MACD trend takip göstergesidir. MACD çizgisi sinyal çizgisini yukarı keserse alım, aşağı keserse satım sinyalidir. Ancak bu sinyaller gecikmeli olabilir. Histogram diverjansı erken uyarı sağlayabilir.",
+    bollinger: "Bollinger Bantları volatiliteyi ölçer. Bantlar genişliyorsa volatilite artıyor, daralıyorsa azalıyor demektir. Fiyat üst banda yaklaşırsa aşırı alım, alt banda yaklaşırsa aşırı satım sinyali olabilir. Band squeeze sonrası genellikle sert hareket gelir.",
+    fibonacci: "Fibonacci düzeltme seviyeleri (%23.6, %38.2, %50, %61.8) destek/direnç olarak çalışır. Self-fulfilling prophecy etkisi vardır çünkü birçok trader aynı seviyeleri izler. Golden ratio (%61.8) en kritik seviye kabul edilir.",
+    stoploss: "Stop-loss, risk yönetiminin temelidir. Rasyonel stop-loss seviyesi, teknik destek seviyelerinin altına veya ATR'nin katlarına göre belirlenir. Trailing stop, karı korumak için kullanılır. Stop-loss olmadan pozisyon taşımak, sınırsız risk almak demektir.",
+    arbitraj: "Arbitraj, aynı varlığın farklı piyasalardaki fiyat farkından kar elde etmektir. Teoride risksiz kar sağlar ancak pratikte işlem maliyetleri, slippage ve execution riski vardır. Kripto piyasalarında exchange'ler arası arbitraj fırsatları olabilir.",
     
     // PANIC/HYPE REACTIONS
-    düşüyor: "Fiyat düşüşü tek başına bilgi değil. Hacim, momentum ve temel verilerle birlikte değerlendirilmeli. Panik satışı genellikle yanlış zamanlama. Stop-loss disiplini önemli.",
-    yükseliyor: "Fiyat %10 yükseldi ama hacim düşük. Bu bir diverjans. Dikkatli olun. FOMO ile alım yapmak istatistiksel olarak kötü sonuç veriyor.",
-    almalı: "Al/sat tavsiyesi vermem. Risk/ödül oranını, pozisyon boyutunu ve stop-loss seviyenizi kendiniz belirlemelisiniz. Matematik yalan söylemez.",
-    satmalı: "Satış kararı da alış kadar önemli. Trailing stop kullanın. Kar realizasyonu disiplin gerektirir. Duygusal kararlar portföyü eritir.",
+    düşüyor: "Fiyat düşüşü tek başına bilgi değildir. Hacim, momentum ve temel verilerle birlikte değerlendirilmelidir. Eğer fiyat düşerken hacim artıyorsa, satış baskısı güçlü demektir. RSI aşırı satım bölgesindeyse ve hacim azalıyorsa, satış baskısı tükenmiş olabilir.",
+    yükseliyor: "Fiyat yükselişi tek başına alım sinyali değildir. Eğer fiyat yükselirken hacim düşüyorsa, bu negatif diverjans ve trendin zayıfladığı anlamına gelir. RSI aşırı alım bölgesindeyse düzeltme riski matematiksel olarak artar. FOMO ile alım yapmak istatistiksel olarak kötü sonuç verir.",
+    almalı: "Al/sat tavsiyesi vermek SPK mevzuatına aykırıdır. Ancak metodoloji paylaşabilirim: Risk/ödül oranını hesaplayın. Potansiyel kar, potansiyel zararın en az 2 katı olmalı. Pozisyon boyutunu portföyünüzün %1-2'si ile sınırlayın. Stop-loss seviyenizi önceden belirleyin.",
+    satmalı: "Satış kararı da alış kadar önemlidir. Trailing stop kullanarak karı koruyun. Eğer varlık temel tezinizi bozacak şekilde değiştiyse, pozisyonu gözden geçirin. Duygusal kararlar yerine önceden belirlenen kurallara sadık kalın.",
+    ne_olur: "Fiyat tahmini yapmak spekülatiftir ve SPK mevzuatına aykırıdır. Bunun yerine senaryo analizi yapın: Eğer X gerçekleşirse Y olabilir. Teknik göstergeleri ve makro koşulları analiz edin. Risk/ödül oranını hesaplayın.",
+    
+    // DEFAULT
+    default: "Spesifik bir enstrüman veya metrik belirtin. Altın, Bitcoin, borsa, dolar, faiz, RSI, MACD, Bollinger, Fibonacci gibi konularda metodoloji paylaşabilirim. Fiyat tahmini yapmam; bunun yerine analiz araçlarını ve formülleri açıklarım."
   };
 
-  // ============ VERA RESPONSES (Strategic, Empathetic, Macro) ============
+  // ============ VERA RESPONSES (Strategic, Psychology-Focused, Macro) ============
+  // RULE: Focus on CAUSE-AND-EFFECT and PSYCHOLOGY, never specific values
   const veraResponses: Record<string, string> = {
-    // COMMODITIES
-    altın: "Merkez bankalarının rekor alım yaptığı bir dönemdeyiz. Altın, belirsizlik dönemlerinin sigortasıdır. Portföyünüzde çeşitlilik yaratmak için stratejik bir araçtır. Binlerce yıldır güvenli liman olarak kabul ediliyor çünkü psikolojik bir güven hissi veriyor.",
-    gümüş: "Gümüş, hem değerli metal hem de endüstriyel metal özelliği taşıyor. Yeşil enerji dönüşümünde solar panellerde kullanımı artıyor. Uzun vadeli bir hikaye var, ancak kısa vadede altından daha volatil olabilir.",
-    paladyum: "Paladyum, otomotiv sektörünün dönüşümüyle ilginç bir kavşakta. Elektrikli araçlara geçiş uzun vadeli talebi etkileyebilir. Stratejik düşünün, bu metal bir geçiş döneminin parçası.",
-    platin: "Platin, hidrojen ekonomisinin potansiyel kazananlarından. Uzun vadeli enerji dönüşümü hikayesinin parçası. Sabırlı yatırımcılar için ilginç bir fırsat olabilir.",
-    petrol: "Enerji, modern ekonominin can damarı. Petrol fiyatları jeopolitik olaylardan, OPEC kararlarından ve küresel talepten etkileniyor. Enerji geçişi döneminde, petrol hala kritik bir rol oynuyor.",
-    doğalgaz: "Doğalgaz, kömürden yenilenebilire geçişte köprü yakıt olarak görülüyor. Avrupa'nın enerji güvenliği endişeleri bu piyasayı şekillendiriyor. Mevsimsellik ve jeopolitik faktörler önemli.",
+    // PRECIOUS METALS
+    altın: "Altın, insanlık tarihinin en eski değer saklama aracıdır. Belirsizlik dönemlerinde psikolojik bir güvenli liman işlevi görür. Merkez bankalarının altın alımları, küresel para sistemine olan güvensizliği yansıtır. Portföyünüzde altın bulundurmak, belirsizliğe karşı bir sigorta poliçesidir.",
+    gümüş: "Gümüş hem bir yatırım aracı hem de sanayi metalidir. Yeşil enerji dönüşümü, özellikle güneş panellerinde kullanımı nedeniyle sanayi talebini canlı tutar. Psikolojik olarak sert fiyat hareketlerine hazırlıklı olmalısınız; gümüş altından daha volatildir. Sabırlı yatırımcılar için uzun vadeli potansiyel taşır.",
+    paladyum: "Paladyum, otomotiv sektörünün dönüşümüyle ilginç bir kavşakta. Elektrikli araçlara geçiş uzun vadeli talebi etkileyebilir. Stratejik düşünün: Bu metal bir geçiş döneminin parçası. Jeopolitik faktörler (Rusya arz konsantrasyonu) fiyatı etkileyebilir.",
+    platin: "Platin, hidrojen ekonomisinin potansiyel kazananlarından biri. Uzun vadeli enerji dönüşümü hikayesinin parçası. Sabırlı yatırımcılar için ilginç bir fırsat olabilir. Ancak bu uzun vadeli bir tez; kısa vadeli dalgalanmalara hazırlıklı olun.",
     
-    // CRYPTO
-    kripto: "Kripto para dünyası heyecan verici ama aynı zamanda duygusal bir roller coaster. Önemli olan, piyasa dalgalanmalarının sizi yönlendirmesine izin vermemek. Uzun vadeli bir vizyon belirleyin ve o vizyona sadık kalın. Unutmayın, en iyi yatırımcılar sabırlı olanlardır.",
-    bitcoin: "Piyasalarda korku hakim. Bu düşüş, kaldıraçlı işlemlerin temizlenmesi olabilir. Projeye ve uzun vadeli vizyona inanıyorsanız, bu gürültü sizi etkilememeli. Bitcoin, dijital çağın altını olarak görülüyor.",
-    ethereum: "Ethereum, merkezi olmayan uygulamaların platformu. Web3 vizyonunun temel taşı. Teknolojik gelişmeler ve adoption metrikleri uzun vadeli değeri belirleyecek. Sabırla izleyin.",
-    altcoin: "Altcoin dünyası çok geniş ve riskli. Her proje bir hikaye anlatıyor, ancak her hikaye gerçek olmuyor. Temel araştırma yapın, FOMO'ya kapılmayın. Kaybetmeyi göze alabileceğiniz kadar yatırım yapın.",
-    defi: "DeFi, finansın demokratikleşmesi vizyonunu taşıyor. Geleneksel aracıları ortadan kaldırma potansiyeli var. Ancak bu yeni bir alan, riskler ve fırsatlar bir arada. Öğrenmeye devam edin.",
-    stablecoin: "Stablecoin'ler kripto dünyasının güvenli limanı gibi görünüyor. Ancak her stablecoin aynı değil. Arkasındaki mekanizmayı anlayın. Güven, şeffaflıkla inşa edilir.",
+    // CRYPTO ASSETS
+    kripto: "Kripto para dünyası heyecan verici ama aynı zamanda duygusal bir roller coaster. Önemli olan, piyasa dalgalanmalarının sizi yönlendirmesine izin vermemek. Uzun vadeli bir vizyon belirleyin ve o vizyona sadık kalın. FOMO ve FUD, yatırımcıların en büyük düşmanlarıdır.",
+    bitcoin: "Bitcoin, küresel likidite koşullarına en hızlı tepki veren varlıklardan biridir. Merkez bankalarının parasal genişleme dönemlerinde risk iştahı artar. Fiyata değil, blokzincirin benimsenme oranına ve teknolojinin değerine odaklanmalısınız. Halving döngüleri arz dinamiklerini belirler.",
+    ethereum: "Ethereum, merkezi olmayan uygulamaların platformu ve Web3 vizyonunun temel taşı. Teknolojik gelişmeler ve adoption metrikleri uzun vadeli değeri belirleyecek. Stake mekanizması pasif gelir sağlar ancak lock-up riskleri vardır. Sabırla izleyin ve temel hikayeye odaklanın.",
+    altcoin: "Altcoin dünyası çok geniş ve riskli. Her proje bir hikaye anlatıyor, ancak her hikaye gerçek olmuyor. Temel araştırma yapın, FOMO'ya kapılmayın. Kaybetmeyi göze alabileceğiniz kadar yatırım yapın. Çoğu altcoin uzun vadede değer kaybeder; seçici olun.",
+    defi: "DeFi, finansın demokratikleşmesi vizyonunu taşıyor. Geleneksel aracıları ortadan kaldırma potansiyeli var. Ancak bu yeni bir alan; riskler ve fırsatlar bir arada. Öğrenmeye devam edin, küçük miktarlarla başlayın. Yüksek APY vaatleri genellikle yüksek risk taşır.",
+    staking: "Staking, kripto varlıklarınızı çalıştırmanın bir yoludur. Pasif gelir sağlar ancak lock-up dönemleri likidite riskinizi artırır. Stake ettiğiniz protokolün güvenilirliğini araştırın. Yüksek APY her zaman iyi değildir; sürdürülebilirliği sorgulayın.",
+    halving: "Halving, Bitcoin'in programlanmış arz azaltma mekanizmasıdır. Tarihsel olarak halving sonrası dönemler ilginç fiyat hareketleri göstermiştir. Ancak geçmiş performans gelecek garantisi değildir. Uzun vadeli bir perspektifle yaklaşın.",
+    tokenomics: "Tokenomics, bir kripto projesinin ekonomik modelidir. Token dağılımı, enflasyon oranı ve kullanım alanları projenin sürdürülebilirliğini belirler. İyi tokenomics, uzun vadeli değer yaratır. Takımın ve erken yatırımcıların token payına dikkat edin.",
     
     // TRADITIONAL MARKETS
-    borsa: "Borsa, ekonominin nabzını tutar. Kısa vadeli dalgalanmalar sizi korkutmasın. Warren Buffett'ın dediği gibi, 'Borsa sabırsızlardan sabırlılara para transferi yapar.' Temel analiz yapın, şirketlerin hikayelerini anlayın.",
-    hisse: "Hisse senedi almak, bir şirketin ortağı olmaktır. Şirketin vizyonuna, yönetimine ve sektörüne inanıyor musunuz? Uzun vadeli düşünün, günlük fiyat hareketleri gürültüdür.",
-    nasdaq: "Teknoloji, geleceği şekillendiriyor. Nasdaq, bu dönüşümün barometresi. Kısa vadede volatil olabilir ama uzun vadede inovasyon kazanır. Sabırlı olun.",
-    sp500: "S&P 500, Amerikan ekonomisinin ve küresel kapitalizmin bir yansıması. Diversifiye bir portföy için temel yapı taşı olabilir. Uzun vadeli bileşik getiri gücünü unutmayın.",
-    etf: "ETF'ler, herkes için yatırımı demokratikleştirdi. Düşük maliyetle diversifikasyon sağlıyorlar. Basit tutun, karmaşık stratejiler genellikle basit olanları yenemez.",
+    borsa: "Borsa, ekonominin nabzını tutar. Kısa vadeli dalgalanmalar sizi korkutmasın. Warren Buffett'ın dediği gibi, 'Borsa sabırsızlardan sabırlılara para transferi yapar.' Temel analiz yapın, şirketlerin hikayelerini anlayın. Uzun vadeli düşünün.",
+    hisse: "Hisse senedi almak, bir şirketin ortağı olmaktır. Şirketin vizyonuna, yönetimine ve sektörüne inanıyor musunuz? Uzun vadeli düşünün, günlük fiyat hareketleri gürültüdür. Temettü ödeyen şirketler pasif gelir sağlar.",
+    nasdaq: "Teknoloji, geleceği şekillendiriyor. Nasdaq, bu dönüşümün barometresi. Kısa vadede volatil olabilir ama uzun vadede inovasyon kazanır. Faiz oranları yükseldiğinde teknoloji hisseleri baskı altına girebilir; bu dönemlerde sabırlı olun.",
+    sp500: "S&P 500, Amerikan ekonomisinin ve küresel kapitalizmin bir yansıması. Diversifiye bir portföy için temel yapı taşı olabilir. Uzun vadeli bileşik getiri gücünü unutmayın. Düzenli yatırım (DCA) psikolojik olarak daha kolay uygulanır.",
+    etf: "ETF'ler, herkes için yatırımı demokratikleştirdi. Düşük maliyetle diversifikasyon sağlıyorlar. Basit tutun; karmaşık stratejiler genellikle basit olanları yenemez. Pasif yatırım, çoğu aktif yöneticiden daha iyi performans gösterir.",
+    tahvil: "Tahviller, portföyünüzün dengeleyicisidir. Hisse senetleri düştüğünde genellikle tahviller yükselir. Yaşınız ilerledikçe tahvil ağırlığını artırmak geleneksel bir stratejidir. Faiz ortamı tahvil fiyatlarını etkiler; yükselen faizlerde tahvil fiyatları düşer.",
     
     // BANKING & FUNDS
-    fon: "Yatırım fonları, profesyonel yönetim ve çeşitlendirme sunar. Ancak her fon sizin için uygun değildir. Kendi risk profilinizi, yatırım ufkunuzu ve hedeflerinizi belirleyin. Doğru fon, sizin hikayenize uyan fondur.",
-    bes: "BES, geleceğinize yatırım yapmaktır. Devlet katkısı önemli bir avantaj. Emeklilik uzak görünebilir ama zaman hızla geçiyor. Bugünden başlamak, yarın için en büyük hediye.",
-    mevduat: "Mevduat, güvenli liman arayanlar için. Ancak enflasyon paranızın satın alma gücünü eritiyor. Finansal okuryazarlığınızı geliştirin, paranızı çalıştırmanın yollarını öğrenin.",
+    fon: "Yatırım fonları, profesyonel yönetim ve çeşitlendirme sunar. Ancak her fon sizin için uygun değildir. Kendi risk profilinizi, yatırım ufkunuzu ve hedeflerinizi belirleyin. Doğru fon, sizin hikayenize uyan fondur. Yönetim ücretlerine dikkat edin.",
+    tefas: "TEFAS, Türkiye'deki tüm yatırım fonlarını tek platformda sunar. Fonları karşılaştırırken sadece getiriye değil, riske de bakın. Geçmiş performans gelecek garantisi değildir. Kendi risk toleransınıza uygun fonları seçin.",
+    bes: "BES, geleceğinize yatırım yapmaktır. Devlet katkısı önemli bir avantaj. Emeklilik uzak görünebilir ama zaman hızla geçiyor. Bugünden başlamak, yarın için en büyük hediye. Bileşik getirinin gücünü hafife almayın.",
+    mevduat: "Mevduat, güvenli liman arayanlar için. Ancak yüksek enflasyon ortamında paranızın satın alma gücü erir. Finansal okuryazarlığınızı geliştirin, paranızı çalıştırmanın yollarını öğrenin. Mevduat tek başına yeterli olmayabilir.",
     
     // FOREX
-    dolar: "Döviz kurları makroekonomik dengelerin bir yansımasıdır. Dolar yükseldiğinde endişelenmek yerine, bu durumun size ne öğrettiğini düşünün. Çeşitlendirme, döviz riskine karşı en iyi korumadır.",
-    euro: "Euro, Avrupa'nın ortak para birimi ve küresel rezerv para statüsünde. Döviz çeşitlendirmesi için düşünülebilir. Ancak kur riski her zaman var, bunu unutmayın.",
+    dolar: "Döviz kurları makroekonomik dengelerin bir yansımasıdır. Dolar yükseldiğinde endişelenmek yerine, bu durumun size ne öğrettiğini düşünün. Çeşitlendirme, döviz riskine karşı en iyi korumadır. Tek para birimine bağımlı olmayın.",
+    euro: "Euro, Avrupa'nın ortak para birimi ve küresel rezerv para statüsünde. Döviz çeşitlendirmesi için düşünülebilir. Ancak kur riski her zaman var; bunu unutmayın. ECB politikaları Euro'nun değerini etkiler.",
+    kur: "Kur hareketleri, ülkeler arasındaki ekonomik dengeleri yansıtır. Enflasyon farkları, faiz farkları ve cari denge kur üzerinde etkilidir. Uzun vadede kurlar ekonomik temellere yakınsar. Kısa vadeli spekülasyon risklidir.",
     
     // MACRO DATA
-    enflasyon: "Enflasyon, paranızın satın alma gücünü eritir. Ancak bu, finansal okuryazarlığınızı geliştirmek için bir motivasyon olmalı. Enflasyonu yenmek için yatırım yapmak, geleceğinize yatırım yapmaktır.",
-    faiz: "Faiz oranları ekonominin termometresidir. Yükselen faizler, tasarruf sahipleri için fırsat, borçlular için maliyet demektir. Kendi finansal durumunuzu analiz edin ve faiz ortamına göre stratejinizi uyarlayın.",
-    fed: "Fed kararları tüm dünyayı etkiliyor. Küresel likidite koşullarını belirliyor. Büyük resmi görün, Fed ne yaparsa yapsın, uzun vadeli planınıza sadık kalın.",
-    tcmb: "Merkez Bankası kararları ekonominin yönünü belirliyor. Faiz, enflasyon, kur dengesi... Karmaşık görünebilir ama temel prensipler basit: Reel getiri pozitif mi?",
+    enflasyon: "Yüksek enflasyon ortamında nakit tutmak, satın alma gücü kaybını garanti eder. Emtia, gayrimenkul ve hisse senetleri tarihsel olarak enflasyona karşı koruma sağlamıştır. Finansal okuryazarlığınızı geliştirmek, enflasyonla mücadelenin ilk adımıdır.",
+    faiz: "Faiz oranları ekonominin termometresidir. Yükselen faizler, tasarruf sahipleri için fırsat, borçlular için maliyet demektir. Kendi finansal durumunuzu analiz edin ve faiz ortamına göre stratejinizi uyarlayın. Borçlarınızı yönetin.",
+    fed: "Fed kararları tüm dünyayı etkiliyor. Küresel likidite koşullarını belirliyor. Büyük resmi görün; Fed ne yaparsa yapsın, uzun vadeli planınıza sadık kalın. Panik kararları genellikle yanlış kararlardır.",
+    tcmb: "Merkez Bankası kararları ekonominin yönünü belirliyor. Faiz, enflasyon, kur dengesi... Karmaşık görünebilir ama temel prensipler basit: Reel getiri pozitif mi? Paranızın değeri korunuyor mu? Bu soruları sorun.",
     
     // BEHAVIORAL FINANCE
-    volatilite: "Volatilite, yatırımın doğal bir parçası. Korkmak yerine, bunu fırsat olarak görmeyi öğrenin. Volatilite, giriş fırsatları yaratır. Sabırlı ve disiplinli olun.",
-    rsi: "Teknik göstergeler araçtır, kehanet değil. RSI size piyasanın nabzını söyler ama karar sizin. Göstergeleri rehber olarak kullanın, körü körüne takip etmeyin.",
-    macd: "Trend sizin dostunuz. MACD trendi takip etmenize yardımcı olur. Ancak hiçbir gösterge mükemmel değil. Birden fazla kaynaktan bilgi toplayın.",
-    fibonacci: "Fibonacci seviyeleri, piyasa psikolojisinin bir yansıması. Herkes aynı seviyeleri izlediğinde, o seviyeler önem kazanır. Piyasalar sonuçta insan davranışının toplamı.",
+    volatilite: "Volatilite, yatırımın doğal bir parçası. Korkmak yerine, bunu fırsat olarak görmeyi öğrenin. Volatilite, giriş fırsatları yaratır. Sabırlı ve disiplinli olun. Piyasa düştüğünde panik yapmayın; bu dönemler uzun vadeli yatırımcılar için fırsattır.",
+    fomo: "FOMO (Fear of Missing Out), yatırımcıların en büyük düşmanlarından biri. Herkes alırken almak, kalabalığı takip etmektir. Kendi stratejinize sadık kalın. Kaçırdığınız fırsatlar için üzülmeyin; piyasalar her zaman yeni fırsatlar sunar.",
+    fud: "FUD (Fear, Uncertainty, Doubt), piyasaları manipüle etmek için kullanılan bir taktiktir. Korku anlarında soğukkanlı kalın. Temel tezinizi gözden geçirin: Değişen bir şey var mı? Yoksa sadece gürültü mü? Panik satışı genellikle dipte olur.",
+    psikoloji: "Yatırım psikolojisi, başarının anahtarıdır. Açgözlülük ve korku, yatırımcıların en büyük düşmanları. Duygusal kararlar yerine kurallara dayalı bir sistem oluşturun. Kayıpları kabul etmek, kazançları korumak kadar önemli.",
     
     // PANIC/HYPE REACTIONS
-    düşüyor: "Piyasalarda düşüş, panik anlamına gelmez. Volatilite, giriş bedelidir. Temel değere odaklanın, günlük ekrana değil. Bu da geçecek.",
-    yükseliyor: "Yükseliş heyecan verici ama FOMO tehlikeli. Herkes alırken almak, kalabalığı takip etmektir. Kendi stratejinize sadık kalın.",
-    almalı: "Al/sat kararı çok kişisel. Risk toleransınız, yatırım ufkunuz, finansal hedefleriniz... Bunları düşünün. Doğru cevap sizin içinizde.",
-    satmalı: "Satış kararı da bir strateji. Kar realizasyonu kötü bir şey değil. Ama panikle satmak genellikle pişmanlık getirir. Planınıza sadık kalın.",
+    düşüyor: "Piyasalarda düşüş, panik anlamına gelmez. Volatilite, giriş bedelidir. Temel değere odaklanın, günlük ekrana değil. 'Bu da geçecek' diye düşünün. Tarihsel olarak, piyasalar her krizden sonra toparlanmıştır.",
+    yükseliyor: "Yükseliş heyecan verici ama FOMO tehlikeli. Herkes alırken almak, kalabalığı takip etmektir. Kendi stratejinize sadık kalın. Yükselişte kar realizasyonu yapmak da bir stratejidir.",
+    almalı: "Al/sat kararı çok kişisel. Risk toleransınız, yatırım ufkunuz, finansal hedefleriniz... Bunları düşünün. Doğru cevap sizin içinizde. Başkalarının ne yaptığına değil, kendi durumunuza odaklanın.",
+    satmalı: "Satış kararı da bir strateji. Kar realizasyonu kötü bir şey değil. Ama panikle satmak genellikle pişmanlık getirir. Planınıza sadık kalın. Neden aldığınızı hatırlayın; o neden hala geçerli mi?",
+    ne_olur: "Geleceği kimse bilemez. Bunun yerine senaryolar düşünün: İyi senaryo, kötü senaryo, en olası senaryo. Her senaryoya hazırlıklı olun. Diversifikasyon, belirsizliğe karşı en iyi korumadır.",
+    
+    // DEFAULT
+    default: "Finansal yolculuğunuzda size yardımcı olmak isterim. Altın, kripto, borsa, döviz, fonlar, emeklilik planlaması, yatırımcı psikolojisi gibi konularda konuşabiliriz. Hangi konu sizi en çok ilgilendiriyor? Birlikte düşünelim."
   };
 
   const responses = persona.name === "Sarp" ? sarpResponses : veraResponses;
@@ -205,18 +236,18 @@ const getResponse = (input: string, persona: Persona): string => {
   }
 
   // Check for general financial questions
-  const generalKeywords = ["yatırım", "para", "finans", "portföy", "risk", "getiri", "kazanç", "kayıp"];
+  const generalKeywords = ["yatırım", "para", "finans", "portföy", "risk", "getiri", "kazanç", "kayıp", "nasıl", "nedir", "ne zaman"];
   const isFinancialQuestion = generalKeywords.some(k => lowerInput.includes(k));
 
   // Default responses based on persona
   if (persona.name === "Sarp") {
     if (isFinancialQuestion) {
-      return "Spesifik bir enstrüman veya metrik belirtin. Altın, Bitcoin, borsa, dolar, faiz, enflasyon, RSI, MACD gibi konularda teknik analiz yapabilirim. Genel sorulara genel cevaplar veririm, bu da size yardımcı olmaz.";
+      return responses.default;
     }
-    return "Bu konuda yeterli veri olmadan yorum yapmak spekülatif olur. Spesifik bir finansal enstrüman veya metrik sorarsanız, sayısal analiz yapabilirim. Volatilite, korelasyon, risk/ödül oranı gibi konularda size yardımcı olabilirim.";
+    return "Bu konuda metodoloji paylaşabilmem için daha spesifik olmanız gerekiyor. Hangi enstrümanı veya metriği analiz etmek istiyorsunuz? Altın, Bitcoin, borsa, RSI, MACD, Bollinger gibi konularda teknik analiz yapabilirim.";
   } else {
     if (isFinancialQuestion) {
-      return "Finansal yolculuğunuzda size yardımcı olmak isterim. Altın, kripto, borsa, döviz, fonlar veya emeklilik planlaması gibi konularda konuşabiliriz. Hangi konu sizi en çok ilgilendiriyor?";
+      return responses.default;
     }
     return "Bu ilginç bir soru. Finansal kararlar sadece rakamlarla değil, kişisel hedefleriniz ve değerlerinizle de ilgilidir. Size daha iyi yardımcı olabilmem için, hangi finansal hedefiniz veya endişeniz hakkında konuşmak istersiniz?";
   }
@@ -358,7 +389,7 @@ export default function DualPersonaWidget() {
     // Cancel any ongoing speech
     window.speechSynthesis.cancel();
     
-    // Create utterance (WITHOUT disclaimer - it's only in TTS, not in text)
+    // Create utterance (disclaimer added ONLY in TTS, not in text display)
     const utterance = new SpeechSynthesisUtterance(text + " Yatırım tavsiyesi değildir.");
     
     // Get voice and determine if pitch adjustment needed
@@ -460,10 +491,10 @@ export default function DualPersonaWidget() {
     setMessages(prev => [...prev, { role: "user", content: messageText }]);
     setInputText("");
     
-    // Get AI response
+    // Get AI response (without disclaimer in text - it's only in TTS)
     const response = getResponse(messageText, persona);
     
-    // Add assistant message (without disclaimer in text)
+    // Add assistant message
     setTimeout(() => {
       setMessages(prev => [...prev, { role: "assistant", content: response }]);
       speakText(response);
@@ -475,9 +506,12 @@ export default function DualPersonaWidget() {
     await unlockAudio();
     setIsOpen(true);
     
-    // Send intro message
+    // Send intro message based on persona
     if (messages.length === 0) {
-      const introMessage = `Merhaba, ben ${persona.name}. ${persona.motto}`;
+      const introMessage = persona.name === "Sarp" 
+        ? `Merhaba, ben Sarp. Teknik Analist ve Risk Yöneticisi. ${persona.motto} Size metodoloji ve formüller hakkında bilgi verebilirim. Hangi enstrümanı analiz etmek istiyorsunuz?`
+        : `Merhaba, ben Vera. Makro Stratejist ve Davranışsal Psikolog. ${persona.motto} Finansal yolculuğunuzda size rehberlik etmek istiyorum. Hangi konuda konuşmak istersiniz?`;
+      
       setMessages([{ role: "assistant", content: introMessage }]);
       
       // Delay TTS to ensure audio is unlocked
