@@ -61,8 +61,8 @@ declare global {
 // Avatar URL
 const SARP_AVATAR_URL = "/images/sarp-avatar.gif";
 
-// Knowledge Base
-const DISCLAIMER = "\n\nBunlar piyasa yorumudur, yatırım tavsiyesi değildir.";
+// Knowledge Base - Disclaimer is ONLY added programmatically in TTS, NOT in text responses
+// This prevents double disclaimer issue
 const VOICE_DISCLAIMER = "Yatırım tavsiyesi değildir.";
 const INTRO_MESSAGE = "Merhaba, ben Sarp. Finansın sarp yollarında, rotanız zirve. Size nasıl yardımcı olabilirim?";
 
@@ -77,7 +77,7 @@ const getFinancialResponse = (query: string): ResponseType => {
   // Kripto
   if (lowerQuery.includes("kripto") || lowerQuery.includes("bitcoin") || lowerQuery.includes("ethereum") || lowerQuery.includes("btc") || lowerQuery.includes("eth")) {
     return {
-      text: `Kripto paralar, blockchain teknolojisi üzerine kurulu dijital varlıklardır. Bitcoin piyasa hakimiyetiyle öncü konumunu korurken, Ethereum akıllı kontratlarıyla ekosistem lideridir. Yüksek volatilite nedeniyle portföyün küçük bir bölümünde tutulması önerilir.${DISCLAIMER}`,
+      text: `Kripto paralar, blockchain teknolojisi üzerine kurulu dijital varlıklardır. Bitcoin piyasa hakimiyetiyle öncü konumunu korurken, Ethereum akıllı kontratlarıyla ekosistem lideridir. Yüksek volatilite nedeniyle portföyün küçük bir bölümünde tutulması önerilir.`,
       isInvestmentRelated: true
     };
   }
@@ -85,7 +85,7 @@ const getFinancialResponse = (query: string): ResponseType => {
   // Altın
   if (lowerQuery.includes("altın") || lowerQuery.includes("gold") || lowerQuery.includes("ons")) {
     return {
-      text: `Altın, binlerce yıldır değer saklama aracı olarak kabul görmektedir. Enflasyona karşı koruma ve portföy çeşitlendirmesi için tercih edilir. Gram altın, çeyrek altın veya altın fonları arasında seçim yapabilirsiniz.${DISCLAIMER}`,
+      text: `Altın, binlerce yıldır değer saklama aracı olarak kabul görmektedir. Enflasyona karşı koruma ve portföy çeşitlendirmesi için tercih edilir. Gram altın, çeyrek altın veya altın fonları arasında seçim yapabilirsiniz.`,
       isInvestmentRelated: true
     };
   }
@@ -93,7 +93,7 @@ const getFinancialResponse = (query: string): ResponseType => {
   // Gümüş
   if (lowerQuery.includes("gümüş") || lowerQuery.includes("silver")) {
     return {
-      text: `Gümüş, hem değerli metal hem de endüstriyel metal özelliği taşır. Altına göre daha volatil olmakla birlikte, güneş panelleri ve elektronik sektöründeki talep değerini artırmaktadır.${DISCLAIMER}`,
+      text: `Gümüş, hem değerli metal hem de endüstriyel metal özelliği taşır. Altına göre daha volatil olmakla birlikte, güneş panelleri ve elektronik sektöründeki talep değerini artırmaktadır.`,
       isInvestmentRelated: true
     };
   }
@@ -101,7 +101,7 @@ const getFinancialResponse = (query: string): ResponseType => {
   // Borsa / Hisse
   if (lowerQuery.includes("borsa") || lowerQuery.includes("hisse") || lowerQuery.includes("bist") || lowerQuery.includes("endeks")) {
     return {
-      text: `Borsa yatırımı, şirketlere ortak olarak uzun vadeli değer artışından faydalanma imkanı sunar. BIST-100 endeksi Türkiye'nin en büyük 100 şirketini temsil eder. Temel ve teknik analizi birlikte kullanmak başarı için kritiktir.${DISCLAIMER}`,
+      text: `Borsa yatırımı, şirketlere ortak olarak uzun vadeli değer artışından faydalanma imkanı sunar. BIST-100 endeksi Türkiye'nin en büyük 100 şirketini temsil eder. Temel ve teknik analizi birlikte kullanmak başarı için kritiktir.`,
       isInvestmentRelated: true
     };
   }
@@ -109,7 +109,7 @@ const getFinancialResponse = (query: string): ResponseType => {
   // Fon
   if (lowerQuery.includes("fon") || lowerQuery.includes("yatırım fonu") || lowerQuery.includes("emeklilik")) {
     return {
-      text: `Yatırım fonları, profesyonel yönetim ve çeşitlendirme avantajı sunar. BES fonları vergi avantajı sağlarken, uzun vadeli birikim için idealdir. Fon seçiminde yönetim ücreti ve geçmiş performansı inceleyin.${DISCLAIMER}`,
+      text: `Yatırım fonları, profesyonel yönetim ve çeşitlendirme avantajı sunar. BES fonları vergi avantajı sağlarken, uzun vadeli birikim için idealdir. Fon seçiminde yönetim ücreti ve geçmiş performansı inceleyin.`,
       isInvestmentRelated: true
     };
   }
@@ -117,7 +117,7 @@ const getFinancialResponse = (query: string): ResponseType => {
   // Gayrimenkul
   if (lowerQuery.includes("gayrimenkul") || lowerQuery.includes("ev") || lowerQuery.includes("konut") || lowerQuery.includes("arsa")) {
     return {
-      text: `Gayrimenkul, somut bir varlık olarak enflasyona karşı koruma ve kira geliri potansiyeli sunar. GYO'lar düşük sermayeyle gayrimenkul sektörüne yatırım imkanı sağlar.${DISCLAIMER}`,
+      text: `Gayrimenkul, somut bir varlık olarak enflasyona karşı koruma ve kira geliri potansiyeli sunar. GYO'lar düşük sermayeyle gayrimenkul sektörüne yatırım imkanı sağlar.`,
       isInvestmentRelated: true
     };
   }
@@ -125,7 +125,7 @@ const getFinancialResponse = (query: string): ResponseType => {
   // Döviz / Forex
   if (lowerQuery.includes("dolar") || lowerQuery.includes("euro") || lowerQuery.includes("döviz") || lowerQuery.includes("forex") || lowerQuery.includes("kur")) {
     return {
-      text: `Döviz yatırımı, TL'nin değer kaybına karşı koruma sağlayabilir. Forex piyasası 24 saat açıktır ve kaldıraçlı işlem imkanı sunar, ancak yüksek risk içerir.${DISCLAIMER}`,
+      text: `Döviz yatırımı, TL'nin değer kaybına karşı koruma sağlayabilir. Forex piyasası 24 saat açıktır ve kaldıraçlı işlem imkanı sunar, ancak yüksek risk içerir.`,
       isInvestmentRelated: true
     };
   }
@@ -133,7 +133,7 @@ const getFinancialResponse = (query: string): ResponseType => {
   // Faiz / Mevduat
   if (lowerQuery.includes("faiz") || lowerQuery.includes("mevduat") || lowerQuery.includes("vadeli")) {
     return {
-      text: `Vadeli mevduat, düşük riskli sabit getiri sunar. Merkez Bankası politika faizi, mevduat faizlerini doğrudan etkiler. Enflasyonun üzerinde reel getiri için faiz oranlarını takip edin.${DISCLAIMER}`,
+      text: `Vadeli mevduat, düşük riskli sabit getiri sunar. Merkez Bankası politika faizi, mevduat faizlerini doğrudan etkiler. Enflasyonun üzerinde reel getiri için faiz oranlarını takip edin.`,
       isInvestmentRelated: true
     };
   }
@@ -141,7 +141,7 @@ const getFinancialResponse = (query: string): ResponseType => {
   // ABD Borsası
   if (lowerQuery.includes("abd") || lowerQuery.includes("nasdaq") || lowerQuery.includes("s&p") || lowerQuery.includes("amerika")) {
     return {
-      text: `ABD borsaları, dünyanın en büyük ve en likit piyasalarıdır. Kritik uyarı: Yurt dışı hisse gelirleri Türkiye'de beyana tabidir ve vergi yükümlülüğü doğurur.${DISCLAIMER}`,
+      text: `ABD borsaları, dünyanın en büyük ve en likit piyasalarıdır. Kritik uyarı: Yurt dışı hisse gelirleri Türkiye'de beyana tabidir ve vergi yükümlülüğü doğurur.`,
       isInvestmentRelated: true
     };
   }
@@ -149,7 +149,7 @@ const getFinancialResponse = (query: string): ResponseType => {
   // Enflasyon / Kriz
   if (lowerQuery.includes("enflasyon") || lowerQuery.includes("kriz") || lowerQuery.includes("ekonomi")) {
     return {
-      text: `Yüksek enflasyon dönemlerinde reel değer koruması kritiktir. Enflasyona endeksli tahviller, altın ve gayrimenkul koruma sağlayabilir. Panik satışlarından kaçının.${DISCLAIMER}`,
+      text: `Yüksek enflasyon dönemlerinde reel değer koruması kritiktir. Enflasyona endeksli tahviller, altın ve gayrimenkul koruma sağlayabilir. Panik satışlarından kaçının.`,
       isInvestmentRelated: true
     };
   }
@@ -172,7 +172,7 @@ const getFinancialResponse = (query: string): ResponseType => {
   
   // Default
   return {
-    text: `Finansal kararlar alırken risk toleransınızı, yatırım vadenizi ve likidite ihtiyacınızı değerlendirin. Çeşitlendirme her zaman akıllıca bir stratejidir. Kripto, altın, borsa, fon, gayrimenkul veya döviz hakkında detaylı bilgi verebilirim.${DISCLAIMER}`,
+    text: `Finansal kararlar alırken risk toleransınızı, yatırım vadenizi ve likidite ihtiyacınızı değerlendirin. Çeşitlendirme her zaman akıllıca bir stratejidir. Kripto, altın, borsa, fon, gayrimenkul veya döviz hakkında detaylı bilgi verebilirim.`,
     isInvestmentRelated: true
   };
 };
