@@ -1,10 +1,10 @@
 /*
   DESIGN: Cyber Finance Products Section - HORIZONTAL CAROUSEL
-  STRATEGY: pasted_content_13.txt - TASK 6
+  STRATEGY: Visual Overhaul - NO PRICES
   
   - Horizontal Scrollable Carousel (Swipeable Cards)
-  - Card Anatomy: Image (Top), Title (Bold), Price (Highlighted), "İncele" Button
-  - Users swipe left/right to see products
+  - Card Anatomy: Image/Icon (Top), Title (Bold), Description (2 lines), "İncele" Button
+  - NO PRICE TAGS - Focus on VALUE
   - Touch-friendly for mobile
 */
 
@@ -37,7 +37,6 @@ interface Product {
   link: string;
   badge?: string;
   badgeColor?: string;
-  price?: string;
 }
 
 const products: Product[] = [
@@ -49,7 +48,6 @@ const products: Product[] = [
     link: "https://www.hikie.space/finanskodu/file/3813040824b54db8bba17e4f4b2dd56f",
     badge: "En Popüler",
     badgeColor: "bg-primary",
-    price: "₺299",
   },
   {
     id: 2,
@@ -57,7 +55,6 @@ const products: Product[] = [
     description: "Finans profesyonelleri için özel olarak tasarlanmış yapay zeka prompt koleksiyonu.",
     icon: Brain,
     link: "https://www.hikie.space/finanskodu/file/6cf62b1f141d48d1af13cb5ca04a53ab",
-    price: "₺149",
   },
   {
     id: 3,
@@ -67,7 +64,6 @@ const products: Product[] = [
     link: "https://www.hikie.space/finanskodu/file/97301ecf159f43b29dbd4df27005e11c",
     badge: "Yeni",
     badgeColor: "bg-green-500",
-    price: "₺199",
   },
   {
     id: 4,
@@ -75,7 +71,6 @@ const products: Product[] = [
     description: "Tüm dijital ürünlerimizi içeren kapsamlı paket. Excel'den kurtulun, verimliliğe geçin.",
     icon: Package,
     link: "https://www.hikie.space/finanskodu/file/947c92609953489cb1d929b41546e309",
-    price: "₺499",
   },
   {
     id: 5,
@@ -83,7 +78,6 @@ const products: Product[] = [
     description: "Modern finansçının dijital dönüşüm yolculuğu için kapsamlı rehber.",
     icon: BookOpen,
     link: "https://www.hikie.space/finanskodu/file/cedbc017e960447ea07d4b6b11d48483",
-    price: "₺99",
   },
   {
     id: 6,
@@ -93,7 +87,6 @@ const products: Product[] = [
     link: "https://www.hikie.space/finanskodu/file/1b3adbf2aa454b63a0c3f9d0f3d5220f",
     badge: "Premium",
     badgeColor: "bg-amber-500",
-    price: "₺999",
   },
   {
     id: 7,
@@ -101,9 +94,8 @@ const products: Product[] = [
     description: "Finans profesyonelleri topluluğuna katılın, sorular sorun, deneyimlerinizi paylaşın.",
     icon: Users,
     link: "https://www.hikie.space/finanskodu/forum/a8adebd8f9ef4c3b8051a425eb18481a",
-    badge: "Ücretsiz",
+    badge: "Topluluk",
     badgeColor: "bg-blue-500",
-    price: "Ücretsiz",
   },
   {
     id: 8,
@@ -111,7 +103,6 @@ const products: Product[] = [
     description: "Kişiselleştirilmiş finansal analiz ve strateji danışmanlığı seansı.",
     icon: UserCheck,
     link: "https://www.hikie.space/finanskodu/file/f24c51cbdeb94149857af492db48f85e",
-    price: "₺599",
   },
   {
     id: 9,
@@ -119,7 +110,6 @@ const products: Product[] = [
     description: "Aylık algoritmik strateji analizleri ve piyasa içgörüleri.",
     icon: TrendingUp,
     link: "https://www.hikie.space/finanskodu/file/580f50a8894f4076aaca0b93ae255406",
-    price: "₺199",
   },
   {
     id: 10,
@@ -127,9 +117,8 @@ const products: Product[] = [
     description: "3 aylık algoritmik strateji paketi. Uzun vadeli analiz ve takip.",
     icon: Calendar,
     link: "https://www.hikie.space/finanskodu/file/0245fdcfe8ac429ba9fad3c5948ee04c",
-    badge: "Tasarruflu",
+    badge: "Avantajlı",
     badgeColor: "bg-emerald-500",
-    price: "₺449",
   },
 ];
 
@@ -296,30 +285,15 @@ export default function ProductsSection() {
                       {product.title}
                     </h3>
 
-                    {/* Description */}
+                    {/* Description (2 lines max) */}
                     <p 
-                      className="text-gray-400 text-sm mb-4 flex-grow line-clamp-3" 
+                      className="text-gray-400 text-sm mb-6 flex-grow line-clamp-2" 
                       itemProp="description"
                     >
                       {product.description}
                     </p>
 
-                    {/* Price (Highlighted) */}
-                    <div className="mb-4">
-                      <span 
-                        className="text-2xl font-bold"
-                        style={{ 
-                          background: "linear-gradient(135deg, #00D4FF, #A855F7)",
-                          WebkitBackgroundClip: "text",
-                          WebkitTextFillColor: "transparent",
-                        }}
-                        itemProp="price"
-                      >
-                        {product.price}
-                      </span>
-                    </div>
-
-                    {/* "İncele" Button */}
+                    {/* "İncele" / "Detaylı Bilgi" Button - NO PRICE */}
                     <Button
                       asChild
                       className="w-full font-semibold transition-all duration-300"
@@ -335,7 +309,7 @@ export default function ProductsSection() {
                         aria-label={`${product.title} ürününü incele`}
                         itemProp="url"
                       >
-                        İncele
+                        Detaylı Bilgi
                         <ExternalLink className="ml-2 w-4 h-4" aria-hidden="true" />
                       </a>
                     </Button>
@@ -364,7 +338,7 @@ export default function ProductsSection() {
           className="text-center mt-12"
         >
           <p className="text-gray-400 mb-4">
-            Tüm ürünleri Hikie mağazamızdan satın alabilirsiniz
+            Tüm ürünleri Hikie mağazamızdan inceleyebilirsiniz
           </p>
           <Button
             asChild

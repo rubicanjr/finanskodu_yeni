@@ -41,3 +41,12 @@
 - [x] AudioContext Logic
 - [x] Knowledge Base
 - [x] Voice Settings
+
+
+## Yeni Gereksinimler (Kullanıcı Talebi)
+
+### TASK 6 UPDATE: PRODUCT LISTING (NO PRICES)
+- [x] Ürün kartlarından TÜM fiyat etiketlerini kaldır (₺299, ₺199 vb.)
+- [x] Card Anatomy: Image/Icon (Top), Title (Bold), Description (2 satır), "İncele" Button
+- [x] Fiyat yerine değer odaklı içerik
+- [x] "Detaylı Bilgi" veya "İncele" butonları
