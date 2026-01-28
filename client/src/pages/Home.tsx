@@ -43,6 +43,7 @@ import BlogSection from "@/components/BlogSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import AboutSection from "@/components/AboutSection";
 import Footer from "@/components/Footer";
+import SocialProofStrip from "@/components/SocialProofStrip";
 
 export default function Home() {
   return (
@@ -61,6 +62,9 @@ export default function Home() {
       {/* Hero Section - Contains the main <header> with <h1> */}
       {/* CRO: Attention & Interest - First impression */}
       <HeroSection />
+
+      {/* Social Proof Strip - Trust Signals */}
+      <SocialProofStrip />
 
       {/* Main Content Area */}
       <main id="main-content" role="main">

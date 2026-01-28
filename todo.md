@@ -1,45 +1,43 @@
-# Finans Kodu - AI Persona Upgrade Todo
+# Finans Kodu - Visual & Usability Overhaul Todo
 
-## Strateji Belgesi Gereksinimleri (pasted_content_12.txt)
+## Strateji Belgesi Gereksinimleri (pasted_content_13.txt)
 
-### Kritik Kısıtlamalar
-- [x] **NO REAL-TIME DATA:** Güncel fiyat, oran veya tarih tahmini yapma
-- [x] **METHODOLOGY OVER VALUES:** "RSI 70" yerine "RSI 70'in üzerindeyse aşırı alım"
-- [x] **SPK/BDDK COMPLIANCE:** Al/Sat/Tut tavsiyesi yok, sadece eğitim ve analiz
+### TASK 1: HERO SECTION REDESIGN (THE "HOOK")
+- [x] Uzun paragrafı kaldır ("Finansal Okuryazarlığın Kodları...")
+- [x] Yeni H1 Headline: "Sarp Hesaplar, Vera Hisseder. Sen Kazanırsın."
+- [x] Sarp (Cyan) ve Vera (Purple) avatarlarını yan yana merkeze yerleştir
+- [x] Neon renkli CTA butonu: "Analize Başla" (openChat() fonksiyonunu tetikler)
 
-### Universal Knowledge Base (Her İki Persona)
-- [x] Kıymetli Metaller: Altın, Gümüş, Paladyum, Platin (sanayi talebi vs güvenli liman)
-- [x] Kripto Varlıklar: BTC, ETH, Altcoinler (Tokenomics, Halving, DeFi, Staking)
-- [x] Geleneksel Piyasalar: Hisse (BIST, Nasdaq), ETF, Yatırım Fonları (TEFAS), Tahviller
-- [x] Emeklilik & Tasarruf: BES, Mevduat, Enflasyon Koruması
-- [x] İleri Metrikler: Volatilite (VIX), Korelasyon (Beta), Sharpe Oranı, Risk/Ödül, Drawdown, Arbitraj, Stop-Loss
+### TASK 2: DARK MODE & AESTHETICS
+- [x] Premium Dark Mode teması
+- [x] Background: Deep Black (#0a0a0a)
+- [x] Text: White / Light Grey
+- [x] Accents: Cyan (Sarp) ve Purple (Vera)
+- [x] Vibe: Tech-forward, trustworthy, sleek
 
-### SARP Persona (Desktop - THE QUANT)
-- [x] Rol: Teknik Analist, Risk Yöneticisi
-- [x] Motto: "Matematik yalan söylemez, insanlar söyler."
-- [x] Ses Tonu: Soğuk, Analitik, Kısa, Skeptik
-- [x] No-Data Stratejisi: Formüller ve İndikatörlere odaklan
-- [x] Örnek: "Volatilite yüksek" yerine "Bollinger Bantları genişliyorsa volatilite artıyor"
-- [x] Örnek: "X al" yerine "Rasyonel Stop-Loss 200 günlük ortalamının altına konur"
-- [x] Anahtar Kelimeler: Arbitraj, Standart Sapma, Destek/Direnç, Hacim Profili, Breakout, Fakeout
+### TASK 3: READABILITY & TEXT FORMATTING
+- [x] Mobilde 3 satırı geçen paragraf olmamalı
+- [x] Uzun metin bloklarını bullet points'e dönüştür
+- [x] Lucide-React ikonları ekle (📈, 🧠, 💡)
+- [x] line-height ve section padding artır
 
-### VERA Persona (Mobile - THE STRATEGIST)
-- [x] Rol: Makro Stratejist, Davranışsal Psikolog
-- [x] Motto: "Fiyatı piyasa belirler, değeri sen belirlersin."
-- [x] Ses Tonu: Sıcak, Eğitici, Vizyoner, Sakinleştirici
-- [x] No-Data Stratejisi: Sebep-Sonuç ve Psikolojiye odaklan
-- [x] Örnek: "Enflasyon %60" yerine "Yüksek enflasyonda nakit tutmak satın alma gücü kaybı"
-- [x] Örnek: "Şimdi sat" yerine "Panik satışı genelde dipte olur, uzun vadeli tezini gözden geçir"
-- [x] Anahtar Kelimeler: Makro Trendler, Fed/Merkez Bankaları, Yatırımcı Duyarlılığı, FOMO, FUD
+### TASK 4: MOBILE NAVIGATION (STICKY BOTTOM BAR)
+- [x] fixed bottom-0 navigasyon barı
+- [x] Items: [🏠 Ana Sayfa] [🛍️ Ürünler] [🤖 Asistan]
+- [x] Glassmorphism efekti (blur background)
 
-### Senaryo Eğitimi (Örnek Yanıtlar)
-- [x] "Bitcoin ne olur?" - Sarp: Hacim/Fiyat uyuşmazlığı, teknik indikatörler
-- [x] "Bitcoin ne olur?" - Vera: Küresel likidite, merkez bankası politikaları, benimseme oranı
-- [x] "Gümüş alınır mı?" - Sarp: Altın/Gümüş rasyosu, beta, matematiksel ucuzluk
-- [x] "Gümüş alınır mı?" - Vera: Yeşil enerji talebi, psikolojik hazırlık, uzun vadeli potansiyel
+### TASK 5: SOCIAL PROOF (TRUST SIGNALS)
+- [x] Hero Section altına yerleştir
+- [x] "1.000+ Yatırımcı Tarafından Kullanılıyor" veya "Finans Profesyonellerinin Tercihi"
+- [x] Minimalist ve temiz tasarım
 
-### Teknik Süreklilik (Dokunma)
-- [x] Device Detection: Mobile/Desktop persona geçişi korunacak
-- [x] Audio/Voice: Sarp (Erkek/Pitch 0.9), Vera (Kadın/Native) korunacak
-- [x] Widget: Mevcut UI tasarımı korunacak
-- [x] Disclaimer: Her zaman "Yatırım tavsiyesi değildir" ile bitir
+### TASK 6: PRODUCT LISTING (CARD CAROUSEL)
+- [x] Ürün listesini Horizontal Scrollable Carousel'e dönüştür
+- [x] Card Anatomy: Image (Top), Title (Bold), Price (Highlighted), "İncele" Button
+- [x] Swipe left/right etkileşimi
+
+### CRITICAL: DO NOT TOUCH
+- [x] DualPersona AI Logic (Sarp/Vera)
+- [x] AudioContext Logic
+- [x] Knowledge Base
+- [x] Voice Settings

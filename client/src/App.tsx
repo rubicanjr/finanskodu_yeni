@@ -6,6 +6,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import DualPersonaWidget from "./components/DualPersonaWidget";
+import MobileBottomNav from "./components/MobileBottomNav";
 
 function Router() {
   return (
@@ -26,6 +27,8 @@ function App() {
           <Router />
           {/* Dual Persona Widget - Sarp (Desktop) / Vera (Mobile) */}
           <DualPersonaWidget />
+          {/* Mobile Bottom Navigation */}
+          <MobileBottomNav />
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>

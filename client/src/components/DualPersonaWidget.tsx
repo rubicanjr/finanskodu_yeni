@@ -529,6 +529,17 @@ export default function DualPersonaWidget() {
     setIsOpen(false);
   }, [stopPulseAnimation]);
 
+  // Listen for custom event to open widget (from Hero CTA button)
+  useEffect(() => {
+    const handleOpenEvent = () => {
+      handleOpenWidget();
+    };
+    window.addEventListener('openDualPersonaWidget', handleOpenEvent);
+    return () => {
+      window.removeEventListener('openDualPersonaWidget', handleOpenEvent);
+    };
+  }, [handleOpenWidget]);
+
   return (
     <>
       {/* Floating Avatar Button */}
