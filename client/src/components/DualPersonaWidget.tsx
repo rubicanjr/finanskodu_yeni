@@ -268,6 +268,7 @@ export default function DualPersonaWidget() {
   const [messages, setMessages] = useState<Array<{ role: "user" | "assistant"; content: string }>>([]);
   const [inputText, setInputText] = useState("");
   const [pulseScale, setPulseScale] = useState(1);
+  const [isTTSLoading, setIsTTSLoading] = useState(false);
   
   // Refs
   const audioContextRef = useRef<AudioContext | null>(null);
@@ -382,40 +383,95 @@ export default function DualPersonaWidget() {
     return { voice: fallbackVoice, isNativeMale: false };
   }, [persona]);
 
-  // Text-to-Speech with adaptive pitch for iOS
-  const speakText = useCallback((text: string) => {
+  // Azure Neural TTS - High-Fidelity Voice Synthesis
+  // Sarp: tr-TR-AhmetNeural (Male)
+  // Vera: tr-TR-EmelNeural (Female)
+  const speakText = useCallback(async (text: string) => {
     if (!isTTSEnabled) return;
     
-    // Cancel any ongoing speech
+    // Cancel any ongoing speech (for Web Speech API fallback)
     window.speechSynthesis.cancel();
     
-    // Create utterance (disclaimer added ONLY in TTS, not in text display)
+    // Determine voice based on persona
+    const voiceName = persona.name === "Sarp" 
+      ? "tr-TR-AhmetNeural"  // Male voice for Sarp
+      : "tr-TR-EmelNeural";  // Female voice for Vera
+    
+    // Add disclaimer to TTS text (not shown in UI)
+    const ttsText = text + " Yatırım tavsiyesi değildir.";
+    
+    try {
+      setIsTTSLoading(true);
+      
+      // Call backend TTS proxy
+      const response = await fetch("/api/tts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          text: ttsText,
+          voiceName: voiceName,
+        }),
+      });
+      
+      if (!response.ok) {
+        throw new Error(`TTS API error: ${response.status}`);
+      }
+      
+      // Get audio blob
+      const audioBlob = await response.blob();
+      const audioUrl = URL.createObjectURL(audioBlob);
+      
+      // Create audio element and play
+      const audio = new Audio(audioUrl);
+      
+      audio.onplay = () => {
+        setIsTTSLoading(false);
+        setIsSpeaking(true);
+        startPulseAnimation();
+      };
+      
+      audio.onended = () => {
+        setIsSpeaking(false);
+        stopPulseAnimation();
+        URL.revokeObjectURL(audioUrl); // Clean up
+      };
+      
+      audio.onerror = () => {
+        setIsTTSLoading(false);
+        setIsSpeaking(false);
+        stopPulseAnimation();
+        URL.revokeObjectURL(audioUrl);
+        console.error("[DualPersona] Audio playback error");
+      };
+      
+      // Play audio
+      await audio.play();
+      
+    } catch (error) {
+      console.error("[DualPersona] Azure TTS error:", error);
+      setIsTTSLoading(false);
+      
+      // Fallback to Web Speech API if Azure fails
+      console.log("[DualPersona] Falling back to Web Speech API");
+      fallbackWebSpeechTTS(text);
+    }
+  }, [isTTSEnabled, persona, startPulseAnimation, stopPulseAnimation]);
+  
+  // Fallback Web Speech API TTS (in case Azure fails)
+  const fallbackWebSpeechTTS = useCallback((text: string) => {
     const utterance = new SpeechSynthesisUtterance(text + " Yatırım tavsiyesi değildir.");
     
-    // Get voice and determine if pitch adjustment needed
-    const { voice, isNativeMale } = getVoice();
-    if (voice) {
-      utterance.voice = voice;
-    }
-    
-    // Apply pitch based on persona and voice type
-    if (persona.name === "Sarp") {
-      if (isNativeMale) {
-        // Native male voice: natural settings
-        utterance.pitch = 0.95;
-        utterance.rate = 0.92;
-      } else {
-        // Female voice on iOS: aggressive pitch shift to sound male
-        utterance.pitch = 0.55;
-        utterance.rate = 0.88;
-      }
-    } else {
-      // VERA: natural female voice
-      utterance.pitch = 1.0;
-      utterance.rate = 0.95;
+    const voices = window.speechSynthesis.getVoices();
+    const turkishVoice = voices.find(v => v.lang.startsWith("tr"));
+    if (turkishVoice) {
+      utterance.voice = turkishVoice;
     }
     
     utterance.lang = "tr-TR";
+    utterance.pitch = persona.name === "Sarp" ? 0.9 : 1.0;
+    utterance.rate = 0.92;
     
     utterance.onstart = () => {
       setIsSpeaking(true);
@@ -433,7 +489,7 @@ export default function DualPersonaWidget() {
     };
     
     window.speechSynthesis.speak(utterance);
-  }, [isTTSEnabled, persona, getVoice, startPulseAnimation, stopPulseAnimation]);
+  }, [persona, startPulseAnimation, stopPulseAnimation]);
 
   // Speech recognition
   const startListening = useCallback(() => {
@@ -615,7 +671,7 @@ export default function DualPersonaWidget() {
               <div className="flex-1">
                 <h3 className="font-semibold text-white">{persona.title}</h3>
                 <p className="text-xs text-gray-400">
-                  {isSpeaking ? "Konuşuyor..." : isListening ? "Dinliyor..." : "Çevrimiçi"}
+                  {isTTSLoading ? "Ses oluşturuluyor..." : isSpeaking ? "Konuşuyor..." : isListening ? "Dinliyor..." : "Çevrimiçi"}
                 </p>
               </div>
               

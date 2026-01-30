@@ -50,3 +50,26 @@
 - [x] Card Anatomy: Image/Icon (Top), Title (Bold), Description (2 satır), "İncele" Button
 - [x] Fiyat yerine değer odaklı içerik
 - [x] "Detaylı Bilgi" veya "İncele" butonları
+
+
+## Azure Speech Services (Neural TTS) Entegrasyonu
+
+### TASK 1: Backend Proxy Oluşturma
+- [x] Projeyi web-db-user özelliğine yükselt
+- [x] Azure API anahtarını Secrets'a ekle (AZURE_SPEECH_KEY, AZURE_SPEECH_REGION)
+- [x] /api/tts endpoint oluştur
+- [x] text ve voiceName parametrelerini al
+- [x] Azure REST API ile ses üret (audio-16khz-32kbitrate-mono-mp3)
+- [x] Audio binary döndür
+
+### TASK 2: Frontend Entegrasyonu
+- [x] Web Speech API'yi devre dışı bırak (fallback olarak korundu)
+- [x] /api/tts endpoint'ine fetch çağrısı yap
+- [x] Desktop (Sarp): tr-TR-AhmetNeural
+- [x] Mobile (Vera): tr-TR-EmelNeural
+- [x] Blob → URL.createObjectURL → Audio.play()
+
+### TASK 3: UX İyileştirmeleri
+- [x] "Ses oluşturuluyor..." loading state
+- [x] Click-to-Unlock audio context korunsun
+- [x] API Key frontend'de ASLA görünmesin

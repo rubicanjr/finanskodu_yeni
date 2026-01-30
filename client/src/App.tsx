@@ -7,8 +7,8 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import DualPersonaWidget from "./components/DualPersonaWidget";
 import MobileBottomNav from "./components/MobileBottomNav";
-
 function Router() {
+  // make sure to consider if you need authentication for certain routes
   return (
     <Switch>
       <Route path={"/"} component={Home} />

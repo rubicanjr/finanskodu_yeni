@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1769779233389,
+      "tag": "0000_flippant_jack_flag",
+      "breakpoints": true
+    }
+  ]
+}
