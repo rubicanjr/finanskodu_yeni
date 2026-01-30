@@ -275,6 +275,7 @@ export default function DualPersonaWidget() {
   const recognitionRef = useRef<any>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const pulseIntervalRef = useRef<number | null>(null);
+  const currentAudioRef = useRef<HTMLAudioElement | null>(null); // For mobile audio control
 
   // Device detection on mount
   useEffect(() => {
@@ -305,33 +306,55 @@ export default function DualPersonaWidget() {
     setPulseScale(1);
   }, []);
 
-  // Audio unlock (critical for mobile)
+  // ENHANCED Audio unlock (critical for mobile iOS/Android)
+  // This must be called IMMEDIATELY in a user gesture handler (touchstart/click)
   const unlockAudio = useCallback(async () => {
     if (isAudioUnlocked) return;
     
     try {
-      // Create AudioContext
+      console.log("[DualPersona] Starting audio unlock sequence...");
+      
+      // 1. Create and resume AudioContext
       const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
       if (!audioContextRef.current) {
         audioContextRef.current = new AudioContextClass();
+        console.log("[DualPersona] AudioContext created");
       }
       
-      // Resume if suspended
+      // Resume if suspended (critical for iOS)
       if (audioContextRef.current.state === "suspended") {
         await audioContextRef.current.resume();
+        console.log("[DualPersona] AudioContext resumed from suspended state");
       }
       
-      // Play silent buffer to unlock speakers
-      const buffer = audioContextRef.current.createBuffer(1, 1, 22050);
+      // 2. Play silent buffer through AudioContext
+      const buffer = audioContextRef.current.createBuffer(1, 22050, 22050); // 1 second of silence
       const source = audioContextRef.current.createBufferSource();
       source.buffer = buffer;
       source.connect(audioContextRef.current.destination);
       source.start(0);
+      console.log("[DualPersona] Silent buffer played through AudioContext");
+      
+      // 3. CRITICAL: Also create and play a silent HTML Audio element
+      // This is required for iOS Safari to allow future audio.play() calls
+      const silentAudio = new Audio();
+      silentAudio.src = "data:audio/mp3;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4Ljc2LjEwMAAAAAAAAAAAAAAA//tQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAABhgC7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7//////////////////////////////////////////////////////////////////8AAAAATGF2YzU4LjEzAAAAAAAAAAAAAAAAJAAAAAAAAAAAAYYoRwmHAAAAAAD/+1DEAAAGAAGn9AAAIgAANP8AAABM//tQxAAACAABp/QAACIAADTwAAAE";
+      silentAudio.volume = 0.01; // Nearly silent
+      silentAudio.muted = false;
+      
+      try {
+        await silentAudio.play();
+        console.log("[DualPersona] Silent HTML Audio played successfully");
+      } catch (e) {
+        console.log("[DualPersona] Silent HTML Audio play failed (expected on some browsers):", e);
+      }
       
       setIsAudioUnlocked(true);
-      console.log("[DualPersona] Audio unlocked successfully");
+      console.log("[DualPersona] Audio unlock sequence completed successfully");
     } catch (error) {
       console.error("[DualPersona] Audio unlock failed:", error);
+      // Still mark as unlocked to allow retry
+      setIsAudioUnlocked(true);
     }
   }, [isAudioUnlocked]);
 
@@ -383,83 +406,8 @@ export default function DualPersonaWidget() {
     return { voice: fallbackVoice, isNativeMale: false };
   }, [persona]);
 
-  // Azure Neural TTS - High-Fidelity Voice Synthesis
-  // Sarp: tr-TR-AhmetNeural (Male)
-  // Vera: tr-TR-EmelNeural (Female)
-  const speakText = useCallback(async (text: string) => {
-    if (!isTTSEnabled) return;
-    
-    // Cancel any ongoing speech (for Web Speech API fallback)
-    window.speechSynthesis.cancel();
-    
-    // Determine voice based on persona
-    const voiceName = persona.name === "Sarp" 
-      ? "tr-TR-AhmetNeural"  // Male voice for Sarp
-      : "tr-TR-EmelNeural";  // Female voice for Vera
-    
-    // Add disclaimer to TTS text (not shown in UI)
-    const ttsText = text + " Yatırım tavsiyesi değildir.";
-    
-    try {
-      setIsTTSLoading(true);
-      
-      // Call backend TTS proxy
-      const response = await fetch("/api/tts", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          text: ttsText,
-          voiceName: voiceName,
-        }),
-      });
-      
-      if (!response.ok) {
-        throw new Error(`TTS API error: ${response.status}`);
-      }
-      
-      // Get audio blob
-      const audioBlob = await response.blob();
-      const audioUrl = URL.createObjectURL(audioBlob);
-      
-      // Create audio element and play
-      const audio = new Audio(audioUrl);
-      
-      audio.onplay = () => {
-        setIsTTSLoading(false);
-        setIsSpeaking(true);
-        startPulseAnimation();
-      };
-      
-      audio.onended = () => {
-        setIsSpeaking(false);
-        stopPulseAnimation();
-        URL.revokeObjectURL(audioUrl); // Clean up
-      };
-      
-      audio.onerror = () => {
-        setIsTTSLoading(false);
-        setIsSpeaking(false);
-        stopPulseAnimation();
-        URL.revokeObjectURL(audioUrl);
-        console.error("[DualPersona] Audio playback error");
-      };
-      
-      // Play audio
-      await audio.play();
-      
-    } catch (error) {
-      console.error("[DualPersona] Azure TTS error:", error);
-      setIsTTSLoading(false);
-      
-      // Fallback to Web Speech API if Azure fails
-      console.log("[DualPersona] Falling back to Web Speech API");
-      fallbackWebSpeechTTS(text);
-    }
-  }, [isTTSEnabled, persona, startPulseAnimation, stopPulseAnimation]);
-  
   // Fallback Web Speech API TTS (in case Azure fails)
+  // MUST be defined before speakText to avoid hoisting issues
   const fallbackWebSpeechTTS = useCallback((text: string) => {
     const utterance = new SpeechSynthesisUtterance(text + " Yatırım tavsiyesi değildir.");
     
@@ -491,54 +439,126 @@ export default function DualPersonaWidget() {
     window.speechSynthesis.speak(utterance);
   }, [persona, startPulseAnimation, stopPulseAnimation]);
 
-  // Speech recognition
-  const startListening = useCallback(() => {
-    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-      console.warn("[DualPersona] Speech recognition not supported");
-      return;
-    }
+  // Azure Neural TTS - High-Fidelity Voice Synthesis
+  // Sarp: tr-TR-AhmetNeural (Male)
+  // Vera: tr-TR-EmelNeural (Female)
+  // ENHANCED for mobile iOS/Android compatibility
+  const speakText = useCallback(async (text: string) => {
+    if (!isTTSEnabled) return;
     
-    if (!recognitionRef.current) {
-      recognitionRef.current = new SpeechRecognition();
-      recognitionRef.current.lang = "tr-TR";
-      recognitionRef.current.continuous = false;
-      recognitionRef.current.interimResults = false;
+    // Cancel any ongoing audio
+    if (currentAudioRef.current) {
+      currentAudioRef.current.pause();
+      currentAudioRef.current = null;
+    }
+    window.speechSynthesis.cancel();
+    
+    // Determine voice based on persona
+    const voiceName = persona.name === "Sarp" 
+      ? "tr-TR-AhmetNeural"  // Male voice for Sarp
+      : "tr-TR-EmelNeural";  // Female voice for Vera
+    
+    // Add disclaimer to TTS text (not shown in UI)
+    const ttsText = text + " Yatırım tavsiyesi değildir.";
+    
+    try {
+      setIsTTSLoading(true);
+      console.log("[DualPersona] Fetching TTS audio for:", voiceName);
       
-      recognitionRef.current.onresult = (event: any) => {
-        const transcript = event.results[0][0].transcript;
-        setInputText(transcript);
-        handleSendMessage(transcript);
+      // Call backend TTS proxy
+      const response = await fetch("/api/tts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          text: ttsText,
+          voiceName: voiceName,
+        }),
+      });
+      
+      if (!response.ok) {
+        throw new Error(`TTS API error: ${response.status}`);
+      }
+      
+      // Get audio blob
+      const audioBlob = await response.blob();
+      const audioUrl = URL.createObjectURL(audioBlob);
+      console.log("[DualPersona] Audio blob received, size:", audioBlob.size);
+      
+      // Create audio element
+      const audio = new Audio();
+      currentAudioRef.current = audio;
+      
+      // Set properties before loading
+      audio.preload = "auto";
+      audio.volume = 1.0;
+      
+      // Event handlers
+      audio.oncanplaythrough = () => {
+        console.log("[DualPersona] Audio can play through");
       };
       
-      recognitionRef.current.onend = () => {
-        setIsListening(false);
+      audio.onplay = () => {
+        console.log("[DualPersona] Audio playback started");
+        setIsTTSLoading(false);
+        setIsSpeaking(true);
+        startPulseAnimation();
       };
       
-      recognitionRef.current.onerror = () => {
-        setIsListening(false);
+      audio.onended = () => {
+        console.log("[DualPersona] Audio playback ended");
+        setIsSpeaking(false);
+        stopPulseAnimation();
+        URL.revokeObjectURL(audioUrl);
+        currentAudioRef.current = null;
       };
+      
+      audio.onerror = (e) => {
+        console.error("[DualPersona] Audio playback error:", e);
+        setIsTTSLoading(false);
+        setIsSpeaking(false);
+        stopPulseAnimation();
+        URL.revokeObjectURL(audioUrl);
+        currentAudioRef.current = null;
+      };
+      
+      // Set source and load
+      audio.src = audioUrl;
+      audio.load();
+      
+      // Attempt to play with enhanced error handling for mobile
+      try {
+        console.log("[DualPersona] Attempting audio.play()...");
+        await audio.play();
+        console.log("[DualPersona] audio.play() succeeded");
+      } catch (playError: any) {
+        console.error("[DualPersona] audio.play() failed:", playError.name, playError.message);
+        setIsTTSLoading(false);
+        
+        // Check if it's an autoplay policy error
+        if (playError.name === "NotAllowedError") {
+          console.log("[DualPersona] Autoplay blocked - user interaction required");
+          // The audio is ready, it will play on next user interaction
+          // For now, fall back to Web Speech API
+          fallbackWebSpeechTTS(text);
+        } else {
+          // Other error, try fallback
+          fallbackWebSpeechTTS(text);
+        }
+      }
+      
+    } catch (error) {
+      console.error("[DualPersona] Azure TTS error:", error);
+      setIsTTSLoading(false);
+      
+      // Fallback to Web Speech API if Azure fails
+      console.log("[DualPersona] Falling back to Web Speech API");
+      fallbackWebSpeechTTS(text);
     }
-    
-    // Stop TTS if speaking
-    if (isSpeaking) {
-      window.speechSynthesis.cancel();
-      setIsSpeaking(false);
-      stopPulseAnimation();
-    }
-    
-    setIsListening(true);
-    recognitionRef.current.start();
-  }, [isSpeaking, stopPulseAnimation]);
+  }, [isTTSEnabled, persona, startPulseAnimation, stopPulseAnimation, fallbackWebSpeechTTS]);
 
-  const stopListening = useCallback(() => {
-    if (recognitionRef.current) {
-      recognitionRef.current.stop();
-    }
-    setIsListening(false);
-  }, []);
-
-  // Handle message sending
+  // Handle message sending - MUST be defined before startListening
   const handleSendMessage = useCallback((text?: string) => {
     const messageText = text || inputText.trim();
     if (!messageText) return;
@@ -556,6 +576,100 @@ export default function DualPersonaWidget() {
       speakText(response);
     }, 500);
   }, [inputText, persona, speakText]);
+
+  // ENHANCED Speech recognition for iOS/Android
+  // Uses webkitSpeechRecognition for iOS Safari compatibility
+  const startListening = useCallback(async () => {
+    console.log("[DualPersona] Starting speech recognition...");
+    
+    // CRITICAL: Unlock audio FIRST on user gesture
+    await unlockAudio();
+    
+    // Get the correct SpeechRecognition constructor (iOS uses webkit prefix)
+    const SpeechRecognition = (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition;
+    if (!SpeechRecognition) {
+      console.warn("[DualPersona] Speech recognition not supported on this device");
+      return;
+    }
+    
+    // Stop any ongoing audio playback
+    if (currentAudioRef.current) {
+      currentAudioRef.current.pause();
+      currentAudioRef.current = null;
+    }
+    if (isSpeaking) {
+      window.speechSynthesis.cancel();
+      setIsSpeaking(false);
+      stopPulseAnimation();
+    }
+    
+    // Create new recognition instance each time for mobile reliability
+    try {
+      // Abort previous instance if exists
+      if (recognitionRef.current) {
+        try {
+          recognitionRef.current.abort();
+        } catch (e) {
+          // Ignore abort errors
+        }
+      }
+      
+      recognitionRef.current = new SpeechRecognition();
+      recognitionRef.current.lang = "tr-TR";
+      recognitionRef.current.continuous = false; // CRITICAL for mobile - one-shot mode
+      recognitionRef.current.interimResults = false; // Only final results
+      recognitionRef.current.maxAlternatives = 1;
+      
+      recognitionRef.current.onstart = () => {
+        console.log("[DualPersona] Speech recognition started");
+        setIsListening(true);
+      };
+      
+      recognitionRef.current.onresult = (event: any) => {
+        console.log("[DualPersona] Speech recognition result received");
+        const transcript = event.results[0][0].transcript;
+        const confidence = event.results[0][0].confidence;
+        console.log(`[DualPersona] Transcript: "${transcript}" (confidence: ${confidence})`);
+        setInputText(transcript);
+        // Immediately trigger send after recognition ends
+      };
+      
+      recognitionRef.current.onend = () => {
+        console.log("[DualPersona] Speech recognition ended");
+        setIsListening(false);
+        // If we have input text, send the message
+        const currentInput = (document.querySelector('input[placeholder*="sorun"]') as HTMLInputElement)?.value;
+        if (currentInput && currentInput.trim()) {
+          handleSendMessage(currentInput);
+        }
+      };
+      
+      recognitionRef.current.onerror = (event: any) => {
+        console.error("[DualPersona] Speech recognition error:", event.error);
+        setIsListening(false);
+      };
+      
+      recognitionRef.current.onspeechend = () => {
+        console.log("[DualPersona] Speech ended, stopping recognition");
+        // Recognition will auto-stop due to continuous=false
+      };
+      
+      // Start recognition
+      recognitionRef.current.start();
+      setIsListening(true);
+      
+    } catch (error) {
+      console.error("[DualPersona] Failed to start speech recognition:", error);
+      setIsListening(false);
+    }
+  }, [isSpeaking, stopPulseAnimation, unlockAudio, handleSendMessage]);
+
+  const stopListening = useCallback(() => {
+    if (recognitionRef.current) {
+      recognitionRef.current.stop();
+    }
+    setIsListening(false);
+  }, []);
 
   // Handle widget open
   const handleOpenWidget = useCallback(async () => {

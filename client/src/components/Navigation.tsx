@@ -63,11 +63,10 @@ export default function Navigation() {
           aria-label="Finans Kodu - Ana sayfaya dön"
         >
           <img
-            src="/images/logo.jpg"
+            src="/images/fklogo.jpg"
             alt="Finans Kodu Logo"
-            className="w-10 h-10 rounded-full object-cover ring-2 ring-primary/30 group-hover:ring-primary/60 transition-all"
+            className="h-10 w-auto object-contain group-hover:scale-105 transition-transform"
             loading="lazy"
-            width="40"
             height="40"
           />
           <span className="font-display font-bold text-xl text-foreground group-hover:text-primary transition-colors">

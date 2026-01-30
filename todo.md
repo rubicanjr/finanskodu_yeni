@@ -73,3 +73,22 @@
 - [x] "Ses oluşturuluyor..." loading state
 - [x] Click-to-Unlock audio context korunsun
 - [x] API Key frontend'de ASLA görünmesin
+
+
+## Mobil Ses Çalma Düzeltmesi & Logo Güncellemesi
+
+### TASK 1: Mobil Audio Playback Düzeltmesi (iOS/Android Autoplay Politikaları)
+- [x] Silent Unlock stratejisi: İlk touchstart/click'te 0.1 saniyeliğ sessiz buffer çal
+- [x] AudioContext.resume() hemen click handler içinde çağrılsın
+- [x] Mikrofon butonuna onTouchStart event listener ekle
+- [x] audio.play() Promise rejection'ı yakala ve hata mesajı göster
+
+### TASK 2: Speech Recognition İyileştirmeleri
+- [x] iOS için webkitSpeechRecognition kullanımını doğrula
+- [x] Mobil için continuous = false ayarını kontrol et
+- [x] onend event'inde backend isteğini hemen tetikle
+
+### TASK 3: Logo Güncellemesi
+- [x] fklogo.jpg dosyasını public/images klasörüne kopyala
+- [x] Navbar'daki logo boyutunu 40px yüksekliğe ayarla
+- [x] object-fit: contain ile aspect ratio koru
