@@ -174,3 +174,12 @@
 
 ### Görsel 3: Navbar Logo
 - [x] Sol üstteki logo'yu kaldır
+
+
+## Footer & Widget Cleanup (Kullanıcı İsteği)
+
+### Footer Açıklama Metni
+- [x] "Endüstri Mühendisliği, Finansal Operasyonlar ve Yapay Zeka teknolojilerini birleştiren verimlilik platformu." metnini kaldır
+
+### Sağ Alt Avatar İsmi
+- [x] Footer'daki sağ alttaki "Rubi Can İçliyürek" yazısını kaldır

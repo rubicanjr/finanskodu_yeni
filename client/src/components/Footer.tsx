@@ -157,13 +157,7 @@ export default function Footer() {
               Rubi Can İçliyürek
               <ExternalLink className="w-4 h-4" aria-hidden="true" />
             </a>
-            {/* Address tag for contact info - GEO optimized */}
-            <address className="text-muted-foreground text-sm leading-relaxed not-italic mt-4">
-              <p>
-                Endüstri Mühendisliği, Finansal Operasyonlar ve Yapay Zeka teknolojilerini 
-                birleştiren verimlilik platformu.
-              </p>
-            </address>
+
           </motion.div>
 
           {/* Quick Links - Navigation */}
@@ -226,18 +220,7 @@ export default function Footer() {
           <p className="text-muted-foreground text-sm">
             <small>© {new Date().getFullYear()} Finans Kodu. Tüm hakları saklıdır.</small>
           </p>
-          <address className="flex items-center gap-4 text-sm text-muted-foreground not-italic">
-            <a
-              href="https://www.linkedin.com/in/rubi-can-icliyurek/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-primary transition-colors flex items-center gap-1"
-              aria-label="Rubi Can İçliyürek LinkedIn profili"
-            >
-              Rubi Can İçliyürek
-              <ExternalLink className="w-3 h-3" aria-hidden="true" />
-            </a>
-          </address>
+
         </motion.div>
       </div>
     </footer>
