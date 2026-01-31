@@ -31,8 +31,41 @@ interface BlogPost {
   tags: string[];
 }
 
-// 5 Blog Posts per strategy document
+// 8 Blog Posts - Updated with new content
 const blogPosts: BlogPost[] = [
+  // NEW: Altın ve ABD Reel Faizleri
+  {
+    id: "altin-abd-reel-faizleri",
+    title: "Altın'ın En Büyük Düşmanı ve Dostu: ABD Reel Faizleri",
+    excerpt: "Altın faizsiz bir varlıktır. Reel faizler yükseldiğinde nefesi kesilir. DXY ile ters korelasyonu ve Merkez Bankalarının sessiz alımlarını analiz ediyoruz.",
+    image: "/images/solution-section-bg.jpg",
+    date: "25 Ocak 2025",
+    readTime: "7 dk",
+    link: "https://www.hikie.space/finanskodu/forum/a8adebd8f9ef4c3b8051a425eb18481a",
+    tags: ["Altın", "Makro Analiz"]
+  },
+  // NEW: Gizli Raporlar
+  {
+    id: "finansal-ozgurluk-gizli-raporlar",
+    title: "Finansal Özgürlük İçin Okumanız Gereken 3 Gizli Rapor",
+    excerpt: "Herkesin bildiği haberler fiyatlanmıştır. Gerçek fırsatlar Fed Dot Plot grafiklerinde, 13F dosyalarında ve Faaliyet Raporlarının risk bölümlerinde gizlidir.",
+    image: "/images/blog-excel-escape.jpg",
+    date: "22 Ocak 2025",
+    readTime: "6 dk",
+    link: "https://www.hikie.space/finanskodu/forum/a8adebd8f9ef4c3b8051a425eb18481a",
+    tags: ["Araştırma", "Strateji"]
+  },
+  // NEW: Manuel Takip 7 İşaret
+  {
+    id: "manuel-takip-7-isaret",
+    title: "Manuel Takibi Bırakmanız Gerektiğini Gösteren 7 İşaret",
+    excerpt: "Ekran bağımlılığı, analiz felci ve 'kârdaydım zarar ettim' pişmanlığı... Yatırımcılığınızı 'Debug' etmenin ve otomasyona geçmenin vakti geldi.",
+    image: "/images/problem-section-bg.jpg",
+    date: "20 Ocak 2025",
+    readTime: "5 dk",
+    link: "https://www.hikie.space/finanskodu/forum/a8adebd8f9ef4c3b8051a425eb18481a",
+    tags: ["Otomasyon", "Psikoloji"]
+  },
   {
     id: "excel-den-algoritmik-finansa",
     title: "Excel'den Algoritmik Finansa Geçiş",

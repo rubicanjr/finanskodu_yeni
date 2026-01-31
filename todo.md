@@ -133,3 +133,18 @@
 - [x] "Blog & Analizler" başlıklı yeni section
 - [x] 5 blog kartı swipeable carousel formatında
 - [x] Her kart: Title + Excerpt + "Devamını Oku" butonu
+
+
+## UI Cleanup & Content Expansion (Yeni Strateji)
+
+### TASK 1: Navbar Cleanup
+- [x] "Finans Kodu" metnini navbar'dan kaldır (sadece logo kalsın) - zaten kaldırılmıştı
+- [x] "Hakkımızda" linkini navigasyon menüsünden kaldır
+
+### TASK 2: Social Proof Update
+- [x] "500+ Mutlu Kullanıcı" → "1000+ Mutlu Kullanıcı" olarak güncelle - zaten 1000+ olarak ayarlı
+
+### TASK 3: Blog Content Expansion
+- [x] Yeni makale 1: "Altın'ın En Büyük Düşmanı ve Dostu: ABD Reel Faizleri"
+- [x] Yeni makale 2: "Finansal Özgürlük İçin Okumanız Gereken 3 Gizli Rapor"
+- [x] Yeni makale 3: "Manuel Takibi Bırakmanız Gerektiğini Gösteren 7 İşaret"
