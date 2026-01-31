@@ -145,32 +145,23 @@ export default function Footer() {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.4, delay: 0.1 }}
           >
-            <div className="flex items-center gap-3 mb-4">
-              <img
-                src="/images/fklogo.jpg"
-                alt="Finans Kodu Logo"
-                className="w-10 h-10 rounded-full object-cover"
-                loading="lazy"
-                width="40"
-                height="40"
-              />
-              <span className="font-display font-bold text-xl">Finans Kodu</span>
-            </div>
+            <h4 className="font-display font-semibold text-lg mb-4">
+              Kurucu Stratejistimizle tanışın:
+            </h4>
+            <a 
+              href="https://www.linkedin.com/in/rubi-can-icliyurek/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-primary hover:underline font-display font-bold text-xl flex items-center gap-2"
+            >
+              Rubi Can İçliyürek
+              <ExternalLink className="w-4 h-4" aria-hidden="true" />
+            </a>
             {/* Address tag for contact info - GEO optimized */}
-            <address className="text-muted-foreground text-sm leading-relaxed not-italic">
+            <address className="text-muted-foreground text-sm leading-relaxed not-italic mt-4">
               <p>
                 Endüstri Mühendisliği, Finansal Operasyonlar ve Yapay Zeka teknolojilerini 
                 birleştiren verimlilik platformu.
-              </p>
-              <p className="mt-2">
-                Kurucu Stratejist: <a 
-                  href="https://www.linkedin.com/in/rubi-can-icliyurek/" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-primary hover:underline"
-                >
-                  Rubi Can İçliyürek
-                </a>
               </p>
             </address>
           </motion.div>

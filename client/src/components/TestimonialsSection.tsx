@@ -46,7 +46,7 @@ const testimonials = [
 ];
 
 const stats = [
-  { icon: Users, value: "500+", label: "Mutlu Kullanıcı" },
+  { icon: Users, value: "1000+", label: "Mutlu Kullanıcı" },
   { icon: Clock, value: "%80", label: "Zaman Tasarrufu" },
   { icon: TrendingUp, value: "10x", label: "Verimlilik Artışı" },
 ];

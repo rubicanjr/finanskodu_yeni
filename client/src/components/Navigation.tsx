@@ -51,7 +51,7 @@ export default function Navigation() {
       aria-label="Ana navigasyon"
     >
       <div className="container flex items-center justify-between">
-        {/* Logo - Home link */}
+        {/* Home link - Logo kaldırıldı */}
         <a
           href="#hero"
           onClick={(e) => {
@@ -61,13 +61,7 @@ export default function Navigation() {
           className="flex items-center gap-3 group"
           aria-label="Finans Kodu - Ana sayfaya dön"
         >
-          <img
-            src="/images/fklogo.jpg"
-            alt="Finans Kodu Logo"
-            className="h-10 w-auto object-contain group-hover:scale-105 transition-transform"
-            loading="lazy"
-            height="40"
-          />
+          {/* Logo kaldırıldı - kullanıcı isteği */}
         </a>
 
         {/* Desktop Navigation */}

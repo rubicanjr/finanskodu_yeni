@@ -160,3 +160,17 @@
 
 ### ACTION 2: Social Proof Sayacı
 - [x] "500+" → "1000+" olarak güncelle - zaten "1000+ Mutlu Kullanıcı" olarak ayarlı
+
+
+## UI Güncellemeleri (Kullanıcı İsteği)
+
+### Görsel 1: Stats Bölümü
+- [x] "500+ Mutlu Kullanıcı" → "1000+ Mutlu Kullanıcı" olarak güncelle
+
+### Görsel 2: Footer Güncellemesi
+- [x] Logo'yu kaldır
+- [x] "Finans Kodu" başlığı yerine "Kurucu Stratejistimizle tanışın: Rubi Can İçliyürek" yaz
+- [x] Rubi Can İçliyürek'in LinkedIn profiline bağlantı ekle
+
+### Görsel 3: Navbar Logo
+- [x] Sol üstteki logo'yu kaldır
