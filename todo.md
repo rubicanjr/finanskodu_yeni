@@ -148,3 +148,15 @@
 - [x] Yeni makale 1: "Altın'ın En Büyük Düşmanı ve Dostu: ABD Reel Faizleri"
 - [x] Yeni makale 2: "Finansal Özgürlük İçin Okumanız Gereken 3 Gizli Rapor"
 - [x] Yeni makale 3: "Manuel Takibi Bırakmanız Gerektiğini Gösteren 7 İşaret"
+
+
+## Content Data Update (Yeni Strateji)
+
+### ACTION 1: Dijital Ürün Kartı #3 Güncellemesi
+- [x] Title: "Pro - Algoritmik Strateji ve Analiz Bülteni (1 Aylık Erişim)"
+- [x] Link: https://www.hikie.space/finanskodu/algoritmik-strateji-ve-analiz
+- [x] Badge: "Pro" (amber renk)
+- [x] Description: Aylık bülten açıklaması
+
+### ACTION 2: Social Proof Sayacı
+- [x] "500+" → "1000+" olarak güncelle - zaten "1000+ Mutlu Kullanıcı" olarak ayarlı

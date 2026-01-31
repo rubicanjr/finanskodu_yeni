@@ -54,12 +54,12 @@ const products: Product[] = [
   },
   {
     id: 3,
-    title: "Finansal Kokpit (Dashboard)",
-    description: "Tüm finansal verilerinizi tek bir ekranda izleyin ve analiz edin.",
+    title: "Pro - Algoritmik Strateji ve Analiz Bülteni (1 Aylık Erişim)",
+    description: "Piyasa yönü, makro analizler ve algoritmik sinyaller içeren kapsamlı aylık bülten.",
     icon: LayoutDashboard,
-    link: "https://www.hikie.space/finanskodu/file/97301ecf159f43b29dbd4df27005e11c",
-    badge: "Yeni",
-    badgeColor: "bg-green-500",
+    link: "https://www.hikie.space/finanskodu/algoritmik-strateji-ve-analiz",
+    badge: "Pro",
+    badgeColor: "bg-amber-500",
   },
 ];
 
