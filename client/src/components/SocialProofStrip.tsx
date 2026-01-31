@@ -11,9 +11,9 @@ import { motion } from "framer-motion";
 import { Users, Award, TrendingUp, Shield } from "lucide-react";
 
 const trustSignals = [
-  { icon: Users, text: "1.000+ Yatırımcı" },
+  { icon: Users, text: "1000+ Mutlu Kullanıcı" },
   { icon: Award, text: "Finans Profesyonellerinin Tercihi" },
-  { icon: TrendingUp, text: "500+ Başarılı Analiz" },
+  { icon: TrendingUp, text: "Dijital Araçlar Bütünü" },
   { icon: Shield, text: "SPK/BDDK Uyumlu" },
 ];
 

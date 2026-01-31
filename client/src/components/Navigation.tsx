@@ -69,9 +69,6 @@ export default function Navigation() {
             loading="lazy"
             height="40"
           />
-          <span className="font-display font-bold text-xl text-foreground group-hover:text-primary transition-colors">
-            Finans Kodu
-          </span>
         </a>
 
         {/* Desktop Navigation */}

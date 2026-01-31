@@ -1,30 +1,32 @@
 /*
   DESIGN: Premium Dark Mode Hero Section
-  STRATEGY: pasted_content_13.txt - Visual & Usability Overhaul
+  STRATEGY: pasted_content_14.txt - Final Polish
   
   KEY CHANGES:
-  - New H1: "Sarp Hesaplar, Vera Hisseder. Sen Kazanırsın."
-  - Sarp (Cyan) and Vera (Purple) avatars side-by-side
-  - Neon CTA button: "Analize Başla" → triggers openChat()
-  - Premium Dark Mode aesthetic (#0a0a0a background)
-  - Tech-forward, trustworthy, sleek vibe
+  - H1: "Duygularınızı Değil, Sisteminizi Yönetin."
+  - H2: Finans Kodu tanımı - Debug, Prompt, Algoritma
+  - Central: Laptop image flanked by Sarp (Left) and Vera (Right)
+  - Note: "Bu karakterler ürün değil, asistanlar"
+  - Primary CTA: "Dijital Araçları Keşfet" → Products
+  - Secondary CTA: "Foruma Git" → hikie.space
 */
 
 import { motion } from "framer-motion";
-import { Play, Sparkles } from "lucide-react";
+import { ArrowRight, MessageSquare, Monitor } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function HeroSection() {
-  // Trigger the DualPersona widget to open
-  const openChat = () => {
-    // Find and click the floating widget button
-    const widgetButton = document.querySelector('[data-widget-trigger="true"]') as HTMLButtonElement;
-    if (widgetButton) {
-      widgetButton.click();
-    } else {
-      // Fallback: dispatch custom event
-      window.dispatchEvent(new CustomEvent('openDualPersonaWidget'));
+  // Scroll to products section
+  const scrollToProducts = () => {
+    const productsSection = document.getElementById("urunler");
+    if (productsSection) {
+      productsSection.scrollIntoView({ behavior: "smooth" });
     }
+  };
+
+  // Open forum link
+  const openForum = () => {
+    window.open("https://www.hikie.space/finanskodu/finans-kodu-forum", "_blank");
   };
 
   return (
@@ -67,25 +69,58 @@ export default function HeroSection() {
       <div className="container relative z-10 pt-24 pb-16">
         <div className="max-w-5xl mx-auto text-center">
           
-          {/* Sarp & Vera Avatars - Side by Side */}
+          {/* Main Heading - NEW H1 from Strategy Document */}
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="font-display font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight mb-6"
+          >
+            <span className="text-white">Duygularınızı Değil,</span>
+            <br />
+            <span style={{ 
+              background: 'linear-gradient(135deg, #00D4FF 0%, #A855F7 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text'
+            }}>
+              Sisteminizi Yönetin.
+            </span>
+          </motion.h1>
+
+          {/* Subheading - H2 from Strategy Document */}
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="text-base sm:text-lg text-gray-400 max-w-3xl mx-auto mb-12 leading-relaxed"
+          >
+            <span className="font-semibold text-white">Finans Kodu;</span> portföyünüzdeki hataları ayıklayan{" "}
+            <span style={{ color: '#00D4FF' }}>(Debug)</span>, yapay zekaya emretmenizi sağlayan{" "}
+            <span style={{ color: '#A855F7' }}>(Prompt)</span> ve piyasa yönünü tayin eden{" "}
+            <span className="text-white">(Algoritma)</span> dijital araçlar bütünüdür.{" "}
+            <span className="text-gray-300">Yatırımınızı şansa değil, matematiğe dayandırın.</span>
+          </motion.p>
+
+          {/* Visual Composition: Laptop + Sarp + Vera */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="flex items-center justify-center gap-6 sm:gap-12 mb-10"
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="flex items-center justify-center gap-4 sm:gap-8 mb-8"
           >
-            {/* Sarp Avatar (Cyan) */}
+            {/* Sarp Avatar (Left) */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
               className="relative group"
             >
               <div 
-                className="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 rounded-full overflow-hidden border-4 transition-all duration-300 group-hover:scale-105"
+                className="w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full overflow-hidden border-3 transition-all duration-300 group-hover:scale-105"
                 style={{ 
                   borderColor: '#00D4FF',
-                  boxShadow: '0 0 40px #00D4FF40, 0 0 80px #00D4FF20'
+                  boxShadow: '0 0 30px #00D4FF40'
                 }}
               >
                 <img 
@@ -94,41 +129,49 @@ export default function HeroSection() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <motion.div
-                animate={{ scale: [1, 1.1, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
-                className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-xs font-bold"
+              <div
+                className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-bold"
                 style={{ 
                   background: 'linear-gradient(135deg, #00D4FF 0%, #0891B2 100%)',
                   color: '#000'
                 }}
               >
                 SARP
-              </motion.div>
+              </div>
             </motion.div>
 
-            {/* VS Divider */}
+            {/* Central Laptop/Monitor Icon */}
             <motion.div
-              initial={{ opacity: 0, scale: 0 }}
+              initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.4, delay: 0.5 }}
-              className="text-2xl sm:text-3xl font-bold text-gray-500"
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="relative"
             >
-              &
+              <div 
+                className="w-32 h-24 sm:w-48 sm:h-36 md:w-56 md:h-40 rounded-xl border-2 flex items-center justify-center"
+                style={{ 
+                  background: 'linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%)',
+                  borderColor: 'rgba(255, 255, 255, 0.2)',
+                  boxShadow: '0 0 40px rgba(0, 212, 255, 0.2), 0 0 40px rgba(168, 85, 247, 0.2)'
+                }}
+              >
+                <Monitor className="w-12 h-12 sm:w-16 sm:h-16 text-gray-400" />
+              </div>
+              <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-16 sm:w-24 h-2 rounded-full bg-gray-700" />
             </motion.div>
 
-            {/* Vera Avatar (Purple) */}
+            {/* Vera Avatar (Right) */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
               className="relative group"
             >
               <div 
-                className="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 rounded-full overflow-hidden border-4 transition-all duration-300 group-hover:scale-105"
+                className="w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full overflow-hidden border-3 transition-all duration-300 group-hover:scale-105"
                 style={{ 
                   borderColor: '#A855F7',
-                  boxShadow: '0 0 40px #A855F740, 0 0 80px #A855F720'
+                  boxShadow: '0 0 30px #A855F740'
                 }}
               >
                 <img 
@@ -136,77 +179,59 @@ export default function HeroSection() {
                   alt="Vera - Makro Stratejist"
                   className="w-full h-full object-cover bg-gradient-to-br from-purple-900 to-purple-700"
                   onError={(e) => {
-                    // Fallback gradient if image not found
                     const target = e.target as HTMLImageElement;
                     target.style.display = 'none';
                     target.parentElement!.innerHTML = `
                       <div class="w-full h-full bg-gradient-to-br from-purple-600 to-purple-900 flex items-center justify-center">
-                        <span class="text-4xl sm:text-5xl">👩‍💼</span>
+                        <span class="text-3xl sm:text-4xl">👩‍💼</span>
                       </div>
                     `;
                   }}
                 />
               </div>
-              <motion.div
-                animate={{ scale: [1, 1.1, 1] }}
-                transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
-                className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-xs font-bold"
+              <div
+                className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-bold"
                 style={{ 
                   background: 'linear-gradient(135deg, #A855F7 0%, #7C3AED 100%)',
                   color: '#fff'
                 }}
               >
                 VERA
-              </motion.div>
+              </div>
             </motion.div>
           </motion.div>
 
-          {/* Main Heading - NEW H1 from Strategy Document */}
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="font-display font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-tight mb-6"
-          >
-            <span style={{ color: '#00D4FF' }}>Sarp Hesaplar,</span>{" "}
-            <span style={{ color: '#A855F7' }}>Vera Hisseder.</span>
-            <br />
-            <span className="text-white">Sen Kazanırsın.</span>
-          </motion.h1>
-
-          {/* Subheading - Short and punchy */}
+          {/* Caption/Note */}
           <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="text-base sm:text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.7 }}
+            className="text-xs sm:text-sm text-gray-500 italic mb-10"
           >
-            Yapay zeka destekli finansal asistanlarınız. 
-            <span className="text-white font-medium"> Teknik analiz mi, makro strateji mi?</span> 
-            {" "}İkisi de burada.
+            Bu karakterler ürün değil, bu sistemi kullanırken sana yardım eden asistanlar.
           </motion.p>
 
-          {/* CTA Button - Neon "Analize Başla" */}
+          {/* CTA Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
+            transition={{ duration: 0.6, delay: 0.8 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
+            {/* Primary Button: Dijital Araçları Keşfet */}
             <Button
               size="lg"
-              onClick={openChat}
-              className="relative overflow-hidden font-display font-bold text-lg sm:text-xl px-10 py-7 rounded-full group"
+              onClick={scrollToProducts}
+              className="relative overflow-hidden font-display font-bold text-base sm:text-lg px-8 py-6 rounded-full group"
               style={{ 
                 background: 'linear-gradient(135deg, #00D4FF 0%, #A855F7 100%)',
                 boxShadow: '0 0 30px #00D4FF50, 0 0 60px #A855F750'
               }}
-              aria-label="Yapay zeka asistanı ile analize başla"
+              aria-label="Dijital araçları keşfet"
             >
               <span className="relative z-10 flex items-center gap-2 text-black">
-                <Play className="w-5 h-5 fill-current" />
-                Analize Başla
-                <Sparkles className="w-5 h-5" />
+                Dijital Araçları Keşfet
+                <ArrowRight className="w-5 h-5" />
               </span>
               {/* Hover effect */}
               <div 
@@ -214,66 +239,22 @@ export default function HeroSection() {
                 style={{ background: 'linear-gradient(135deg, #A855F7 0%, #00D4FF 100%)' }}
               />
             </Button>
-          </motion.div>
 
-          {/* Persona Descriptions */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
-            className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto mt-16"
-          >
-            {/* Sarp Description */}
-            <div 
-              className="p-6 rounded-2xl border text-left"
+            {/* Secondary Button: Foruma Git */}
+            <Button
+              size="lg"
+              variant="outline"
+              onClick={openForum}
+              className="font-display font-semibold text-base sm:text-lg px-8 py-6 rounded-full border-2 hover:bg-white/5 transition-all"
               style={{ 
-                background: 'rgba(0, 212, 255, 0.05)',
-                borderColor: 'rgba(0, 212, 255, 0.2)'
+                borderColor: 'rgba(255, 255, 255, 0.3)',
+                color: '#fff'
               }}
+              aria-label="Finans Kodu forumuna git"
             >
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-full overflow-hidden border-2" style={{ borderColor: '#00D4FF' }}>
-                  <img src="/images/metaperson_mix_2.gif" alt="Sarp" className="w-full h-full object-cover" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-white">Sarp</h3>
-                  <p className="text-xs" style={{ color: '#00D4FF' }}>Teknik Analist</p>
-                </div>
-              </div>
-              <p className="text-sm text-gray-400 leading-relaxed">
-                📊 RSI, MACD, Bollinger Bantları
-                <br />
-                📈 Destek/Direnç seviyeleri
-                <br />
-                🧮 Risk/Ödül hesaplamaları
-              </p>
-            </div>
-
-            {/* Vera Description */}
-            <div 
-              className="p-6 rounded-2xl border text-left"
-              style={{ 
-                background: 'rgba(168, 85, 247, 0.05)',
-                borderColor: 'rgba(168, 85, 247, 0.2)'
-              }}
-            >
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-full overflow-hidden border-2 bg-gradient-to-br from-purple-600 to-purple-900 flex items-center justify-center" style={{ borderColor: '#A855F7' }}>
-                  <span className="text-lg">👩‍💼</span>
-                </div>
-                <div>
-                  <h3 className="font-bold text-white">Vera</h3>
-                  <p className="text-xs" style={{ color: '#A855F7' }}>Makro Stratejist</p>
-                </div>
-              </div>
-              <p className="text-sm text-gray-400 leading-relaxed">
-                🌍 Merkez bankası politikaları
-                <br />
-                🧠 Yatırımcı psikolojisi
-                <br />
-                💡 Uzun vadeli stratejiler
-              </p>
-            </div>
+              <MessageSquare className="w-5 h-5 mr-2" />
+              Foruma Git
+            </Button>
           </motion.div>
         </div>
       </div>

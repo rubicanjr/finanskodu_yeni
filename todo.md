@@ -92,3 +92,44 @@
 - [x] fklogo.jpg dosyasını public/images klasörüne kopyala
 - [x] Navbar'daki logo boyutunu 40px yüksekliğe ayarla
 - [x] object-fit: contain ile aspect ratio koru
+
+
+## Final Polish & Mobile Optimization (pasted_content_14.txt)
+
+### TASK 1: AudioManager.ts Oluşturma
+- [x] src/utils/AudioManager.ts dosyası oluştur
+- [x] AudioContext unlock stratejisi
+- [x] playAudioBlob fonksiyonu
+
+### TASK 2: VoiceWidget Güncelleme
+- [x] audioManager import et
+- [x] onTouchStart ve onMouseDown'da unlockAudio() çağır
+- [x] audioManager.playAudioBlob() kullan
+- [x] Navbar'dan "Finans Kodu" metnini kaldır, sadece logo göster
+
+### TASK 3: Hero Section Overhaul
+- [x] H1: "Duygularınızı Değil, Sisteminizi Yönetin."
+- [x] H2: Yeni açıklama metni
+- [x] Merkezi görsel: Laptop + Sarp (Sol) + Vera (Sağ)
+- [x] Not: "Bu karakterler ürün değil, asistanlar"
+- [x] Primary Button: "Dijital Araçları Keşfet" (Products'a scroll)
+- [x] Secondary Button: "Foruma Git" (hikie.space linki)
+
+### TASK 4: Persona Intro Mesajları
+- [x] Sarp intro: Teknik motor, veri işleme, optimizasyon
+- [x] Vera intro: Mimari ve psikoloji katmanı, Finansal Anayasa
+
+### TASK 5: Content Cleanup
+- [x] "Hakkımızda" bölümünü tamamen kaldır
+- [x] Social Proof: "1000+ Mutlu Kullanıcı"
+- [x] Footer'dan Hakkımızda linkini kaldırCan İçliyürek'le tanışın" + LinkedIn linki
+
+### TASK 6: Product Carousel (Sadece 3 Ürün)
+- [x] FİNANS KODU: Kaos İçinde Düzen
+- [x] AI Prompt Kütüphanesi
+- [x] Finansal Kokpit (Dashboard)
+
+### TASK 7: Blog Carousel (Yeni Bölüm)
+- [x] "Blog & Analizler" başlıklı yeni section
+- [x] 5 blog kartı swipeable carousel formatında
+- [x] Her kart: Title + Excerpt + "Devamını Oku" butonu

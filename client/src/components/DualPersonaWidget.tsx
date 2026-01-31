@@ -28,6 +28,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Mic, MicOff, Volume2, VolumeX, Send } from "lucide-react";
+import { audioManager } from "@/utils/AudioManager";
 
 // ============ PERSONA DEFINITIONS ============
 interface Persona {
@@ -306,51 +307,16 @@ export default function DualPersonaWidget() {
     setPulseScale(1);
   }, []);
 
-  // ENHANCED Audio unlock (critical for mobile iOS/Android)
+  // ENHANCED Audio unlock using AudioManager (critical for mobile iOS/Android)
   // This must be called IMMEDIATELY in a user gesture handler (touchstart/click)
   const unlockAudio = useCallback(async () => {
     if (isAudioUnlocked) return;
     
     try {
-      console.log("[DualPersona] Starting audio unlock sequence...");
-      
-      // 1. Create and resume AudioContext
-      const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
-      if (!audioContextRef.current) {
-        audioContextRef.current = new AudioContextClass();
-        console.log("[DualPersona] AudioContext created");
-      }
-      
-      // Resume if suspended (critical for iOS)
-      if (audioContextRef.current.state === "suspended") {
-        await audioContextRef.current.resume();
-        console.log("[DualPersona] AudioContext resumed from suspended state");
-      }
-      
-      // 2. Play silent buffer through AudioContext
-      const buffer = audioContextRef.current.createBuffer(1, 22050, 22050); // 1 second of silence
-      const source = audioContextRef.current.createBufferSource();
-      source.buffer = buffer;
-      source.connect(audioContextRef.current.destination);
-      source.start(0);
-      console.log("[DualPersona] Silent buffer played through AudioContext");
-      
-      // 3. CRITICAL: Also create and play a silent HTML Audio element
-      // This is required for iOS Safari to allow future audio.play() calls
-      const silentAudio = new Audio();
-      silentAudio.src = "data:audio/mp3;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4Ljc2LjEwMAAAAAAAAAAAAAAA//tQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAABhgC7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7u7//////////////////////////////////////////////////////////////////8AAAAATGF2YzU4LjEzAAAAAAAAAAAAAAAAJAAAAAAAAAAAAYYoRwmHAAAAAAD/+1DEAAAGAAGn9AAAIgAANP8AAABM//tQxAAACAABp/QAACIAADTwAAAE";
-      silentAudio.volume = 0.01; // Nearly silent
-      silentAudio.muted = false;
-      
-      try {
-        await silentAudio.play();
-        console.log("[DualPersona] Silent HTML Audio played successfully");
-      } catch (e) {
-        console.log("[DualPersona] Silent HTML Audio play failed (expected on some browsers):", e);
-      }
-      
+      console.log("[DualPersona] Starting audio unlock via AudioManager...");
+      await audioManager.unlockAudio();
       setIsAudioUnlocked(true);
-      console.log("[DualPersona] Audio unlock sequence completed successfully");
+      console.log("[DualPersona] Audio unlock completed successfully");
     } catch (error) {
       console.error("[DualPersona] Audio unlock failed:", error);
       // Still mark as unlocked to allow retry
@@ -483,69 +449,24 @@ export default function DualPersonaWidget() {
       
       // Get audio blob
       const audioBlob = await response.blob();
-      const audioUrl = URL.createObjectURL(audioBlob);
       console.log("[DualPersona] Audio blob received, size:", audioBlob.size);
       
-      // Create audio element
-      const audio = new Audio();
-      currentAudioRef.current = audio;
+      // Use AudioManager for better mobile compatibility
+      setIsTTSLoading(false);
+      setIsSpeaking(true);
+      startPulseAnimation();
       
-      // Set properties before loading
-      audio.preload = "auto";
-      audio.volume = 1.0;
-      
-      // Event handlers
-      audio.oncanplaythrough = () => {
-        console.log("[DualPersona] Audio can play through");
-      };
-      
-      audio.onplay = () => {
-        console.log("[DualPersona] Audio playback started");
-        setIsTTSLoading(false);
-        setIsSpeaking(true);
-        startPulseAnimation();
-      };
-      
-      audio.onended = () => {
-        console.log("[DualPersona] Audio playback ended");
-        setIsSpeaking(false);
-        stopPulseAnimation();
-        URL.revokeObjectURL(audioUrl);
-        currentAudioRef.current = null;
-      };
-      
-      audio.onerror = (e) => {
-        console.error("[DualPersona] Audio playback error:", e);
-        setIsTTSLoading(false);
-        setIsSpeaking(false);
-        stopPulseAnimation();
-        URL.revokeObjectURL(audioUrl);
-        currentAudioRef.current = null;
-      };
-      
-      // Set source and load
-      audio.src = audioUrl;
-      audio.load();
-      
-      // Attempt to play with enhanced error handling for mobile
       try {
-        console.log("[DualPersona] Attempting audio.play()...");
-        await audio.play();
-        console.log("[DualPersona] audio.play() succeeded");
+        console.log("[DualPersona] Playing audio via AudioManager...");
+        await audioManager.playAudioBlob(audioBlob);
+        console.log("[DualPersona] Audio playback completed");
       } catch (playError: any) {
-        console.error("[DualPersona] audio.play() failed:", playError.name, playError.message);
-        setIsTTSLoading(false);
-        
-        // Check if it's an autoplay policy error
-        if (playError.name === "NotAllowedError") {
-          console.log("[DualPersona] Autoplay blocked - user interaction required");
-          // The audio is ready, it will play on next user interaction
-          // For now, fall back to Web Speech API
-          fallbackWebSpeechTTS(text);
-        } else {
-          // Other error, try fallback
-          fallbackWebSpeechTTS(text);
-        }
+        console.error("[DualPersona] AudioManager playback failed:", playError);
+        // Fallback to Web Speech API
+        fallbackWebSpeechTTS(text);
+      } finally {
+        setIsSpeaking(false);
+        stopPulseAnimation();
       }
       
     } catch (error) {
@@ -679,8 +600,8 @@ export default function DualPersonaWidget() {
     // Send intro message based on persona
     if (messages.length === 0) {
       const introMessage = persona.name === "Sarp" 
-        ? `Merhaba, ben Sarp. Teknik Analist ve Risk Yöneticisi. ${persona.motto} Size metodoloji ve formüller hakkında bilgi verebilirim. Hangi enstrümanı analiz etmek istiyorsunuz?`
-        : `Merhaba, ben Vera. Makro Stratejist ve Davranışsal Psikolog. ${persona.motto} Finansal yolculuğunuzda size rehberlik etmek istiyorum. Hangi konuda konuşmak istersiniz?`;
+        ? `Merhaba, ben Sarp. Finans Kodu'nun teknik motoruyum. Veri işleme, optimizasyon ve analitik hesaplamalar benim işim. ${persona.motto} Hangi enstrümanı analiz etmek istiyorsunuz?`
+        : `Merhaba, ben Vera. Finans Kodu'nun mimari ve psikoloji katmanıyım. Sana Finansal Anayasa'nı oluşturmanda yardımcı olacağım. ${persona.motto} Hangi konuda konuşmak istersiniz?`;
       
       setMessages([{ role: "assistant", content: introMessage }]);
       
@@ -845,9 +766,16 @@ export default function DualPersonaWidget() {
             {/* Input Area */}
             <div className="p-4 border-t" style={{ borderColor: `${persona.accentColor}20` }}>
               <div className="flex items-center gap-2">
-                {/* Mic Button */}
+                {/* Mic Button - with touch/mouse handlers for audio unlock */}
                 <button
                   onClick={isListening ? stopListening : startListening}
+                  onTouchStart={async (e) => {
+                    e.preventDefault();
+                    await audioManager.unlockAudio();
+                  }}
+                  onMouseDown={async () => {
+                    await audioManager.unlockAudio();
+                  }}
                   className={`p-3 rounded-full transition-all ${
                     isListening 
                       ? "bg-red-500 animate-pulse" 

@@ -55,7 +55,7 @@ const socialLinks = [
 const quickLinks = [
   { label: "Manifesto", href: "#manifesto" },
   { label: "Ürünler", href: "#urunler" },
-  { label: "Hakkımızda", href: "#hakkimda" },
+  { label: "Blog", href: "#blog" },
 ];
 
 export default function Footer() {
@@ -147,7 +147,7 @@ export default function Footer() {
           >
             <div className="flex items-center gap-3 mb-4">
               <img
-                src="/images/logo.jpg"
+                src="/images/fklogo.jpg"
                 alt="Finans Kodu Logo"
                 className="w-10 h-10 rounded-full object-cover"
                 loading="lazy"

@@ -41,7 +41,7 @@ import ProductsSection from "@/components/ProductsSection";
 import ManifestoSection from "@/components/ManifestoSection";
 import BlogSection from "@/components/BlogSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
-import AboutSection from "@/components/AboutSection";
+// AboutSection removed per strategy document
 import Footer from "@/components/Footer";
 import SocialProofStrip from "@/components/SocialProofStrip";
 
@@ -84,9 +84,7 @@ export default function Home() {
         {/* CRO: Social Proof - Build trust through others */}
         <TestimonialsSection />
 
-        {/* About the Team - E-E-A-T optimized */}
-        {/* CRO: Trust & Credibility - Human connection */}
-        <AboutSection />
+        {/* About section removed per strategy document */}
       </main>
 
       {/* Footer & Contact - Contains <address> for contact info */}
