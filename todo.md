@@ -213,3 +213,18 @@
 - [x] #contact anchor bölümü
 - [x] #blog anchor bölümü
 - [x] #testimonials anchor bölümü
+
+
+## DevOps Fix: Static File Serving (URGENT)
+
+### ACTION 1: Force Overwrite robots.txt
+- [x] Navigate to public/ directory
+- [x] Force overwrite robots.txt with exact GPTBot/Google-Extended content
+
+### ACTION 2: Force Overwrite sitemap.xml
+- [x] Force overwrite sitemap.xml with anchor links (#products, #manifesto, #contact)
+- [x] Include changefreq and priority for each URL
+
+### ACTION 3: Verify Build Configuration
+- [x] Ensure Vite copies public folder to dist root (publicDir configured correctly)
+- [ ] Trigger new deployment (user must click Publish button)
