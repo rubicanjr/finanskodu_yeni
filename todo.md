@@ -183,3 +183,16 @@
 
 ### Sağ Alt Avatar İsmi
 - [x] Footer'daki sağ alttaki "Rubi Can İçliyürek" yazısını kaldır
+
+
+## SEO & AI Bot Erişimi (Yeni Görevler)
+
+### Robots.txt Güncellemesi
+- [x] GPTBot için User-agent ve Allow: / kuralı ekle
+- [x] Google-Extended için User-agent ve Allow: / kuralı ekle
+- [x] Mevcut User-agent: * kurallarını koru
+
+### Sitemap.xml Güncellemesi
+- [x] Projedeki tüm rotaları tespit et (App.tsx'den)
+- [x] Her rota için <url> etiketi ekle
+- [x] loc ve lastmod etiketlerini dahil et

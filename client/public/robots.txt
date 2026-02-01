@@ -1,0 +1,19 @@
+# Finans Kodu - Robots.txt
+# AI Botlarına özel izinler
+
+# GPTBot (OpenAI) - Tam erişim izni
+User-agent: GPTBot
+Allow: /
+
+# Google-Extended (Google AI/Bard) - Tam erişim izni
+User-agent: Google-Extended
+Allow: /
+
+# Tüm diğer botlar için genel kurallar
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_core/
+
+# Sitemap konumu
+Sitemap: https://finanskodu.com/sitemap.xml
