@@ -249,3 +249,8 @@
 
 ## Bing Webmaster Tools Doğrulaması
 - [x] index.html head kısmına msvalidate.01 meta etiketi ekle
+
+
+## SEO Düzeltmeleri (Ana Sayfa)
+- [x] Anahtar kelimeleri 10'dan 5 odaklanmış kelimeye indirildi
+- [x] Başlık uzunluğu 49 karaktere ayarlandı (30-60 arası)
