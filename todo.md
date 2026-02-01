@@ -245,3 +245,7 @@
 - [x] Add Express route for /sitemap.xml
 - [x] Include anchor links (#products, #manifesto, #contact)
 - [x] Set Content-Type: application/xml
+
+
+## Bing Webmaster Tools Doğrulaması
+- [x] index.html head kısmına msvalidate.01 meta etiketi ekle
