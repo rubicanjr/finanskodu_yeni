@@ -254,3 +254,7 @@
 ## SEO Düzeltmeleri (Ana Sayfa)
 - [x] Anahtar kelimeleri 10'dan 5 odaklanmış kelimeye indirildi
 - [x] Başlık uzunluğu 49 karaktere ayarlandı (30-60 arası)
+
+
+## SEO Başlık Güncellemesi
+- [x] Title tag'i "Finans Kodu | Yapay Zeka Destekli Borsa Analiz ve Portföy Yönetimi" olarak güncellendi (64 karakter)
