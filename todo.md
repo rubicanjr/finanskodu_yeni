@@ -196,3 +196,20 @@
 - [x] Projedeki tüm rotaları tespit et (App.tsx'den)
 - [x] Her rota için <url> etiketi ekle
 - [x] loc ve lastmod etiketlerini dahil et
+
+
+## Robots.txt & Sitemap.xml Düzeltmesi (Kullanıcı Talebi)
+
+### Robots.txt Yeniden Oluşturma
+- [x] GPTBot için Allow: / kuralı (tek satır)
+- [x] Google-Extended için Allow: / kuralı (tek satır)
+- [x] User-agent: * için Allow: / ve Disallow: /api/* kuralları
+- [x] Sitemap URL'sini ekle
+
+### Sitemap.xml Yeniden Oluşturma
+- [x] Ana sayfa URL'si
+- [x] #manifesto anchor bölümü
+- [x] #products anchor bölümü
+- [x] #contact anchor bölümü
+- [x] #blog anchor bölümü
+- [x] #testimonials anchor bölümü
