@@ -228,3 +228,20 @@
 ### ACTION 3: Verify Build Configuration
 - [x] Ensure Vite copies public folder to dist root (publicDir configured correctly)
 - [ ] Trigger new deployment (user must click Publish button)
+
+
+## Dynamic Route Implementation (Express Backend)
+
+### TASK 1: Cleanup Static Files
+- [x] Delete public/robots.txt
+- [x] Delete public/sitemap.xml
+
+### TASK 2: Implement Dynamic /robots.txt Route
+- [x] Add Express route for /robots.txt
+- [x] Include GPTBot, Google-Extended, and * user agents
+- [x] Set Content-Type: text/plain
+
+### TASK 3: Implement Dynamic /sitemap.xml Route
+- [x] Add Express route for /sitemap.xml
+- [x] Include anchor links (#products, #manifesto, #contact)
+- [x] Set Content-Type: application/xml
