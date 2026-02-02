@@ -278,3 +278,5 @@
 
 ## Siyah Ekran İmleci
 - [x] Sarp ve Vera arasındaki siyah ekrana yanıp sönen yeşil />_ imleci eklendi
+
+- [x] İmlece hover efekti eklendi (yeşilden cyan/mor gradient'e geçiş + scale efekti)

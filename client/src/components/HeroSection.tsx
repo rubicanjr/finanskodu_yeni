@@ -145,24 +145,39 @@ export default function HeroSection() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.6 }}
-              className="relative"
+              className="relative group"
             >
               <div 
-                className="w-32 h-24 sm:w-48 sm:h-36 md:w-56 md:h-40 rounded-xl border-2 flex items-center justify-center"
+                className="w-32 h-24 sm:w-48 sm:h-36 md:w-56 md:h-40 rounded-xl border-2 flex items-center justify-center cursor-pointer transition-all duration-300 group-hover:scale-105"
                 style={{ 
                   background: '#0a0a0a',
                   borderColor: 'rgba(255, 255, 255, 0.2)',
                   boxShadow: '0 0 40px rgba(0, 212, 255, 0.2), 0 0 40px rgba(168, 85, 247, 0.2)'
                 }}
               >
-                {/* Blinking Green Terminal Cursor />_ */}
+                {/* Blinking Terminal Cursor />_ with Hover Effect */}
                 <motion.span
                   animate={{ opacity: [1, 0, 1] }}
                   transition={{ duration: 1, repeat: Infinity, repeatType: "loop" }}
-                  className="font-mono text-xl sm:text-2xl md:text-3xl font-bold"
-                  style={{ color: '#00FF00', textShadow: '0 0 10px #00FF00, 0 0 20px #00FF00' }}
+                  className="font-mono text-xl sm:text-2xl md:text-3xl font-bold transition-all duration-300"
+                  style={{ 
+                    color: '#00FF00', 
+                    textShadow: '0 0 10px #00FF00, 0 0 20px #00FF00'
+                  }}
                 >
-                  /&gt;_
+                  <style>{`
+                    .group:hover motion-span {
+                      background: linear-gradient(135deg, #00D4FF 0%, #A855F7 100%);
+                      -webkit-background-clip: text;
+                      -webkit-text-fill-color: transparent;
+                      background-clip: text;
+                      text-shadow: none;
+                      filter: drop-shadow(0 0 10px #00D4FF) drop-shadow(0 0 20px #A855F7);
+                    }
+                  `}</style>
+                  <span className="group-hover:bg-gradient-to-r group-hover:from-cyan-400 group-hover:to-purple-500 group-hover:bg-clip-text group-hover:text-transparent">
+                    /&gt;_
+                  </span>
                 </motion.span>
               </div>
               <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-16 sm:w-24 h-2 rounded-full bg-gray-700" />
