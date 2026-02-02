@@ -154,6 +154,15 @@ const getResponse = (input: string, persona: Persona): string => {
     stoploss: "Stop-loss, risk yönetiminin temelidir. Rasyonel stop-loss seviyesi, teknik destek seviyelerinin altına veya ATR'nin katlarına göre belirlenir. Trailing stop, karı korumak için kullanılır. Stop-loss olmadan pozisyon taşımak, sınırsız risk almak demektir.",
     arbitraj: "Arbitraj, aynı varlığın farklı piyasalardaki fiyat farkından kar elde etmektir. Teoride risksiz kar sağlar ancak pratikte işlem maliyetleri, slippage ve execution riski vardır. Kripto piyasalarında exchange'ler arası arbitraj fırsatları olabilir.",
     
+    // PRODUCT KNOWLEDGE BASE
+    "finans kodu": "FİNANS KODU: Kaos İçinde Düzen - Teknik bir Excel eğitimi değil, finansal kararların 'Anayasası'dır. Endüstri Mühendisi ve CIO perspektifiyle yazılmıştır. Felsefe: Sisteminizi kurun, duygularınızı devreden çıkarın. Matematikte 'umarım' diye bir değişken yoktur. Özellikleri: Mühendislik Perspektifi (finansı girdi-çıktı optimizasyon problemi olarak görür), Duygu-Bozucu Algoritmalar, Risk/Getiri Mühendisliği, Sürdürülebilir Varlık Döngüsü, Karar Matrisleri, Gürültü Filtreleme.",
+    "kaos içinde düzen": "FİNANS KODU: Kaos İçinde Düzen - Finansal Özgürlük ve Sürdürülebilirlik İçin 'Sistemin Kaynak Kodları'. Teknik bir Excel eğitimi değil, finansal kararların 'Anayasası'dır. 10-20 yıllık bileşik getiri odaklı portföy mimarisi sunar. Yatırım kararları için sübjektif değil, objektif kriterler sağlar.",
+    "prompt kütüphanesi": "AI Prompt Kütüphanesi - 'Yapay zeka ile sohbet etmeyi bırakın, ona emretmeyi öğrenin.' Finansal analiz için optimize edilmiş, test edilmiş 100+ akıllı komut. Özellikleri: 100+ Profesyonel Komut (analiz, raporlama, strateji odaklı), Sanal Analist (AI'ı kıdemli analiste dönüştüren kurgular), Hız ve Verimlilik, Tam Kapsam (bilanço, Excel formülleri, risk analizi), Kopyala-Yapıştır hazır şablonlar, AI Okuryazarlığı.",
+    "ai prompt": "AI Prompt Kütüphanesi - Finansal analiz için optimize edilmiş 100+ akıllı komut. Saatler süren işleri saniyelere düşüren mühendislik promptları. Sıfır teknik bilgi gereksinimi, kopyala-yapıştır hazır şablonlar.",
+    "algoritmik bülten": "Pro - Algoritmik Strateji ve Analiz Bülteni - 'Veriyi sağlıyoruz, stratejinizi denetliyoruz. Hata şansını sıfıra indirin.' Hizmet: Algoritmik Veri Akışı (1 Ay) + Birebir Check-Up Seansı (45 dk). Felsefe: Duygu yok, tahmin yok. Sadece matematik var. Özellikleri: Altın Algoritması, Akıllı Fon Sepetleri, Haftalık Sesli Brifing, Kanıtlanmış Model (%30 büyüme), %99 teknik veri isabeti, 1:1 Finansal Check-Up, Kişisel Reçete, VIP İletişim Hattı.",
+    "pro bülten": "Pro - Algoritmik Strateji ve Analiz Bülteni - Altın Algoritması (Ons, Gram, Sertifika için trend ve yön analizi), Akıllı Fon Sepetleri (matematiksel modellerle seçilmiş TEFAS fon sepetleri), Haftalık Sesli Brifing, 1:1 Finansal Check-Up seansı dahil.",
+    "ürün": "Dijital ürünlerimiz: 1) FİNANS KODU: Kaos İçinde Düzen - Finansal kararların 'Anayasası'. 2) AI Prompt Kütüphanesi - 100+ finansal analiz promptu. 3) Pro - Algoritmik Strateji ve Analiz Bülteni - Veri akışı + birebir check-up. Hangi ürün hakkında detaylı bilgi istersiniz?",
+    
     // PANIC/HYPE REACTIONS
     düşüyor: "Fiyat düşüşü tek başına bilgi değildir. Hacim, momentum ve temel verilerle birlikte değerlendirilmelidir. Eğer fiyat düşerken hacim artıyorsa, satış baskısı güçlü demektir. RSI aşırı satım bölgesindeyse ve hacim azalıyorsa, satış baskısı tükenmiş olabilir.",
     yükseliyor: "Fiyat yükselişi tek başına alım sinyali değildir. Eğer fiyat yükselirken hacim düşüyorsa, bu negatif diverjans ve trendin zayıfladığı anlamına gelir. RSI aşırı alım bölgesindeyse düzeltme riski matematiksel olarak artar. FOMO ile alım yapmak istatistiksel olarak kötü sonuç verir.",
@@ -214,6 +223,15 @@ const getResponse = (input: string, persona: Persona): string => {
     fomo: "FOMO (Fear of Missing Out), yatırımcıların en büyük düşmanlarından biri. Herkes alırken almak, kalabalığı takip etmektir. Kendi stratejinize sadık kalın. Kaçırdığınız fırsatlar için üzülmeyin; piyasalar her zaman yeni fırsatlar sunar.",
     fud: "FUD (Fear, Uncertainty, Doubt), piyasaları manipüle etmek için kullanılan bir taktiktir. Korku anlarında soğukkanlı kalın. Temel tezinizi gözden geçirin: Değişen bir şey var mı? Yoksa sadece gürültü mü? Panik satışı genellikle dipte olur.",
     psikoloji: "Yatırım psikolojisi, başarının anahtarıdır. Açgözlülük ve korku, yatırımcıların en büyük düşmanları. Duygusal kararlar yerine kurallara dayalı bir sistem oluşturun. Kayıpları kabul etmek, kazançları korumak kadar önemli.",
+    
+    // PRODUCT KNOWLEDGE BASE
+    "finans kodu": "FİNANS KODU: Kaos İçinde Düzen - Finansal Özgürlük ve Sürdürülebilirlik İçin 'Sistemin Kaynak Kodları'. Teknik bir Excel eğitimi değil, finansal kararların 'Anayasası'dır. Duygularınızı değil, sisteminizi yönetmeyi öğretin. Uzun vadeli düşünmeyi, sabrı ve disiplini öğretiyor.",
+    "kaos içinde düzen": "FİNANS KODU: Kaos İçinde Düzen - 10-20 yıllık bileşik getiri odaklı portföy mimarisi. Finansal kararlarınızı duygudan arındırın. Yatırım bir maraton, sprint değil. Bu kitap size o maratonu nasıl koşacağınızı öğretiyor.",
+    "prompt kütüphanesi": "AI Prompt Kütüphanesi - Yapay zeka ile sohbet etmeyi bırakın, ona emretmeyi öğrenin. 100+ finansal analiz promptu. AI'ı kişisel finans asistanınıza dönüştürün. Zamanınızı değerli işlere ayırın.",
+    "ai prompt": "AI Prompt Kütüphanesi - Finansal analiz için optimize edilmiş 100+ akıllı komut. Saatler süren işleri saniyelere düşüren mühendislik promptları. Teknoloji korkusu yerine, teknolojiyi kendi lehinize kullanın.",
+    "algoritmik bülten": "Pro - Algoritmik Strateji ve Analiz Bülteni - Veriyi sağlıyoruz, stratejinizi denetliyoruz. 1 aylık algoritmik veri akışı + 45 dakikalık birebir check-up seansı. Yalnız değilsiniz; yanınızdayız.",
+    "pro bülten": "Pro - Algoritmik Strateji ve Analiz Bülteni - Altın Algoritması, Akıllı Fon Sepetleri, Haftalık Sesli Brifing ve 1:1 Finansal Check-Up. Kişisel bir finans koçu gibi düşünün.",
+    "ürün": "Dijital ürünlerimiz finansal yolculuğunuzda size rehberlik ediyor: 1) FİNANS KODU: Kaos İçinde Düzen - Finansal anayasanız. 2) AI Prompt Kütüphanesi - Yapay zekayı finans asistanınıza dönüştürün. 3) Pro Bülten - Kişisel finans koçunuz. Hangi ürün hakkında konuşmak istersiniz?",
     
     // PANIC/HYPE REACTIONS
     düşüyor: "Piyasalarda düşüş, panik anlamına gelmez. Volatilite, giriş bedelidir. Temel değere odaklanın, günlük ekrana değil. 'Bu da geçecek' diye düşünün. Tarihsel olarak, piyasalar her krizden sonra toparlanmıştır.",
@@ -600,8 +618,8 @@ export default function DualPersonaWidget() {
     // Send intro message based on persona
     if (messages.length === 0) {
       const introMessage = persona.name === "Sarp" 
-        ? `Merhaba, ben Sarp. Finans Kodu'nun teknik motoruyum. Veri işleme, optimizasyon ve analitik hesaplamalar benim işim. ${persona.motto} Hangi enstrümanı analiz etmek istiyorsunuz?`
-        : `Merhaba, ben Vera. Finans Kodu'nun mimari ve psikoloji katmanıyım. Sana Finansal Anayasa'nı oluşturmanda yardımcı olacağım. ${persona.motto} Hangi konuda konuşmak istersiniz?`;
+        ? `Merhaba, ben Sarp. Veri işleme, optimizasyon ve analitik hesaplamalar benim işim. FİNANS KODU: Kaos İçinde Düzen, AI Prompt Kütüphanesi ve Pro - Algoritmik Strateji ve Analiz Bülteni dijital ürünlerimize göz atmanızı öneririm. Bu dijital ürünler ile ilgili kafanızda soru işareti varsa cevaplayabilirim. Dilerseniz bir yatırım enstrümanını yorumlayabiliriz. Hangi konuda konuşmak istersiniz? Söyleyeceklerim yatırım tavsiyesi değildir.`
+        : `Merhaba, ben Vera. Yatırımda mimari ve psikoloji benim işim. FİNANS KODU: Kaos İçinde Düzen, AI Prompt Kütüphanesi ve Pro - Algoritmik Strateji ve Analiz Bülteni dijital ürünlerimize göz atmanızı öneririm. Bu dijital ürünler ile ilgili kafanızda soru işareti varsa cevaplayabilirim. Dilerseniz bir yatırım enstrümanını yorumlayabiliriz. Hangi konuda konuşmak istersiniz? Söyleyeceklerim yatırım tavsiyesi değildir.`;
       
       setMessages([{ role: "assistant", content: introMessage }]);
       

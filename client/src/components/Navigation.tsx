@@ -51,7 +51,7 @@ export default function Navigation() {
       aria-label="Ana navigasyon"
     >
       <div className="container flex items-center justify-between">
-        {/* Home link - Logo kaldırıldı */}
+        {/* Home link - Logo */}
         <a
           href="#hero"
           onClick={(e) => {
@@ -61,7 +61,12 @@ export default function Navigation() {
           className="flex items-center gap-3 group"
           aria-label="Finans Kodu - Ana sayfaya dön"
         >
-          {/* Logo kaldırıldı - kullanıcı isteği */}
+          <img
+            src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/WGsxutkmwbskNVpo.PNG"
+            alt="Finans Kodu Logo"
+            className="h-10 w-auto"
+            loading="lazy"
+          />
         </a>
 
         {/* Desktop Navigation */}
