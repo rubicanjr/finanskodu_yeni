@@ -274,3 +274,7 @@
 ### STEP 3: Knowledge Base Expansion
 - [x] AI System Prompt'a ürün bilgi tabanı eklendi (3 ürün detayı - Sarp ve Vera için)
 - [x] Ürün sorularına yanıt verebilme yeteneği eklendi
+
+
+## Siyah Ekran İmleci
+- [x] Sarp ve Vera arasındaki siyah ekrana yanıp sönen yeşil />_ imleci eklendi
