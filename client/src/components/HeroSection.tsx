@@ -14,8 +14,27 @@
 import { motion } from "framer-motion";
 import { ArrowRight, MessageSquare, Monitor } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useState, useEffect } from "react";
 
 export default function HeroSection() {
+  const [typedText, setTypedText] = useState("");
+  const fullText = "Sistem Hazır...";
+
+  // Typing animation effect
+  useEffect(() => {
+    let currentIndex = 0;
+    const typingInterval = setInterval(() => {
+      if (currentIndex <= fullText.length) {
+        setTypedText(fullText.slice(0, currentIndex));
+        currentIndex++;
+      } else {
+        clearInterval(typingInterval);
+      }
+    }, 150); // 150ms per character
+
+    return () => clearInterval(typingInterval);
+  }, []);
+
   // Scroll to products section
   const scrollToProducts = () => {
     const productsSection = document.getElementById("urunler");
@@ -155,30 +174,37 @@ export default function HeroSection() {
                   boxShadow: '0 0 40px rgba(0, 212, 255, 0.2), 0 0 40px rgba(168, 85, 247, 0.2)'
                 }}
               >
-                {/* Blinking Terminal Cursor />_ with Hover Effect */}
-                <motion.span
-                  animate={{ opacity: [1, 0, 1] }}
-                  transition={{ duration: 1, repeat: Infinity, repeatType: "loop" }}
-                  className="font-mono text-xl sm:text-2xl md:text-3xl font-bold transition-all duration-300"
-                  style={{ 
-                    color: '#00FF00', 
-                    textShadow: '0 0 10px #00FF00, 0 0 20px #00FF00'
-                  }}
-                >
-                  <style>{`
-                    .group:hover motion-span {
-                      background: linear-gradient(135deg, #00D4FF 0%, #A855F7 100%);
-                      -webkit-background-clip: text;
-                      -webkit-text-fill-color: transparent;
-                      background-clip: text;
-                      text-shadow: none;
-                      filter: drop-shadow(0 0 10px #00D4FF) drop-shadow(0 0 20px #A855F7);
-                    }
-                  `}</style>
-                  <span className="group-hover:bg-gradient-to-r group-hover:from-cyan-400 group-hover:to-purple-500 group-hover:bg-clip-text group-hover:text-transparent">
-                    /&gt;_
-                  </span>
-                </motion.span>
+                <div className="flex flex-col items-center justify-center gap-2">
+                  {/* Typing Text */}
+                  <div className="font-mono text-xs sm:text-sm text-gray-400 h-5">
+                    {typedText}
+                  </div>
+                  
+                  {/* Blinking Terminal Cursor />_ with Hover Effect */}
+                  <motion.span
+                    animate={{ opacity: [1, 0, 1] }}
+                    transition={{ duration: 1, repeat: Infinity, repeatType: "loop" }}
+                    className="font-mono text-xl sm:text-2xl md:text-3xl font-bold transition-all duration-300"
+                    style={{ 
+                      color: '#00FF00', 
+                      textShadow: '0 0 10px #00FF00, 0 0 20px #00FF00'
+                    }}
+                  >
+                    <style>{`
+                      .group:hover motion-span {
+                        background: linear-gradient(135deg, #00D4FF 0%, #A855F7 100%);
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                        background-clip: text;
+                        text-shadow: none;
+                        filter: drop-shadow(0 0 10px #00D4FF) drop-shadow(0 0 20px #A855F7);
+                      }
+                    `}</style>
+                    <span className="group-hover:bg-gradient-to-r group-hover:from-cyan-400 group-hover:to-purple-500 group-hover:bg-clip-text group-hover:text-transparent">
+                      /&gt;_
+                    </span>
+                  </motion.span>
+                </div>
               </div>
               <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-16 sm:w-24 h-2 rounded-full bg-gray-700" />
             </motion.div>

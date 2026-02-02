@@ -280,3 +280,5 @@
 - [x] Sarp ve Vera arasındaki siyah ekrana yanıp sönen yeşil />_ imleci eklendi
 
 - [x] İmlece hover efekti eklendi (yeşilden cyan/mor gradient'e geçiş + scale efekti)
+
+- [x] İmlecin yanına "Sistem Hazır..." typing animasyonu eklendi (150ms/karakter)
