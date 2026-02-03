@@ -20,19 +20,37 @@ export default function HeroSection() {
   const [typedText, setTypedText] = useState("");
   const fullText = "Sistem Hazır...";
 
-  // Typing animation effect
+  // Typing animation effect with infinite loop
   useEffect(() => {
     let currentIndex = 0;
-    const typingInterval = setInterval(() => {
-      if (currentIndex <= fullText.length) {
+    let isDeleting = false;
+    let timeoutId: NodeJS.Timeout;
+
+    const typeWriter = () => {
+      if (!isDeleting && currentIndex <= fullText.length) {
+        // Typing phase
         setTypedText(fullText.slice(0, currentIndex));
         currentIndex++;
-      } else {
-        clearInterval(typingInterval);
+        timeoutId = setTimeout(typeWriter, 150); // 150ms per character
+      } else if (!isDeleting && currentIndex > fullText.length) {
+        // Pause before deleting
+        isDeleting = true;
+        timeoutId = setTimeout(typeWriter, 2000); // Wait 2 seconds
+      } else if (isDeleting && currentIndex > 0) {
+        // Deleting phase
+        currentIndex--;
+        setTypedText(fullText.slice(0, currentIndex));
+        timeoutId = setTimeout(typeWriter, 100); // 100ms per character deletion
+      } else if (isDeleting && currentIndex === 0) {
+        // Reset and start over
+        isDeleting = false;
+        timeoutId = setTimeout(typeWriter, 500); // Wait 500ms before restarting
       }
-    }, 150); // 150ms per character
+    };
 
-    return () => clearInterval(typingInterval);
+    typeWriter();
+
+    return () => clearTimeout(timeoutId);
   }, []);
 
   // Scroll to products section

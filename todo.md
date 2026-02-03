@@ -282,3 +282,5 @@
 - [x] İmlece hover efekti eklendi (yeşilden cyan/mor gradient'e geçiş + scale efekti)
 
 - [x] İmlecin yanına "Sistem Hazır..." typing animasyonu eklendi (150ms/karakter)
+
+- [x] Typing animasyonunu sonsuz döngüye çevrildi (yaz - 2s bekle - sil - 0.5s bekle - tekrar başla)
