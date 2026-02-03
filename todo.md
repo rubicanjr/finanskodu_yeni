@@ -284,3 +284,5 @@
 - [x] İmlecin yanına "Sistem Hazır..." typing animasyonu eklendi (150ms/karakter)
 
 - [x] Typing animasyonunu sonsuz döngüye çevrildi (yaz - 2s bekle - sil - 0.5s bekle - tekrar başla)
+
+- [x] Animasyon ekranına onClick handler eklendi - DualPersonaWidget'ı açıyor

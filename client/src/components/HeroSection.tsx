@@ -66,6 +66,11 @@ export default function HeroSection() {
     window.open("https://www.hikie.space/finanskodu/finans-kodu-forum", "_blank");
   };
 
+  // Open DualPersonaWidget
+  const openPersonaWidget = () => {
+    window.dispatchEvent(new Event('openDualPersonaWidget'));
+  };
+
   return (
     <header 
       id="hero" 
@@ -185,6 +190,7 @@ export default function HeroSection() {
               className="relative group"
             >
               <div 
+                onClick={openPersonaWidget}
                 className="w-32 h-24 sm:w-48 sm:h-36 md:w-56 md:h-40 rounded-xl border-2 flex items-center justify-center cursor-pointer transition-all duration-300 group-hover:scale-105"
                 style={{ 
                   background: '#0a0a0a',
