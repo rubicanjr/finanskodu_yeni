@@ -18,32 +18,43 @@ import { useState, useEffect } from "react";
 
 export default function HeroSection() {
   const [typedText, setTypedText] = useState("");
-  const fullText = "Sistem Hazır...";
+  const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
+  
+  // Random message pool
+  const messages = [
+    "Sistem Hazır...",
+    "Analiz Başlıyor...",
+    "Veriler Yükleniyor...",
+    "Portföy Taranıyor...",
+    "Strateji Hesaplanıyor..."
+  ];
 
-  // Typing animation effect with infinite loop
+  // Typing animation effect with infinite loop and random messages
   useEffect(() => {
     let currentIndex = 0;
     let isDeleting = false;
     let timeoutId: NodeJS.Timeout;
+    const currentMessage = messages[currentMessageIndex];
 
     const typeWriter = () => {
-      if (!isDeleting && currentIndex <= fullText.length) {
+      if (!isDeleting && currentIndex <= currentMessage.length) {
         // Typing phase
-        setTypedText(fullText.slice(0, currentIndex));
+        setTypedText(currentMessage.slice(0, currentIndex));
         currentIndex++;
         timeoutId = setTimeout(typeWriter, 150); // 150ms per character
-      } else if (!isDeleting && currentIndex > fullText.length) {
+      } else if (!isDeleting && currentIndex > currentMessage.length) {
         // Pause before deleting
         isDeleting = true;
         timeoutId = setTimeout(typeWriter, 2000); // Wait 2 seconds
       } else if (isDeleting && currentIndex > 0) {
         // Deleting phase
         currentIndex--;
-        setTypedText(fullText.slice(0, currentIndex));
+        setTypedText(currentMessage.slice(0, currentIndex));
         timeoutId = setTimeout(typeWriter, 100); // 100ms per character deletion
       } else if (isDeleting && currentIndex === 0) {
-        // Reset and start over
+        // Pick next random message and restart
         isDeleting = false;
+        setCurrentMessageIndex((prev) => (prev + 1) % messages.length);
         timeoutId = setTimeout(typeWriter, 500); // Wait 500ms before restarting
       }
     };
@@ -51,7 +62,7 @@ export default function HeroSection() {
     typeWriter();
 
     return () => clearTimeout(timeoutId);
-  }, []);
+  }, [currentMessageIndex]);
 
   // Scroll to products section
   const scrollToProducts = () => {

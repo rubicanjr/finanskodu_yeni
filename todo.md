@@ -288,3 +288,5 @@
 - [x] Animasyon ekranına onClick handler eklendi - DualPersonaWidget'ı açıyor
 
 - [x] Animasyon ekranına tooltip eklendi - hover yapıldığında "Sarp ve Vera ile tanışmak için tıkla" gösteriliyor
+
+- [x] Typing animasyonuna rastgele mesaj döngüsü eklendi (5 farklı mesaj sıralı döngüde)
