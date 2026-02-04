@@ -189,6 +189,17 @@ export default function HeroSection() {
               transition={{ duration: 0.6, delay: 0.6 }}
               className="relative group"
             >
+              {/* Tooltip */}
+              <div className="absolute -top-12 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10">
+                <div className="bg-gray-900/95 backdrop-blur-sm px-4 py-2 rounded-lg border border-cyan-500/30 shadow-lg">
+                  <p className="text-sm text-cyan-400 whitespace-nowrap font-medium">
+                    Sarp ve Vera ile tanışmak için tıkla
+                  </p>
+                  {/* Arrow */}
+                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-900/95 border-r border-b border-cyan-500/30 rotate-45" />
+                </div>
+              </div>
+
               <div 
                 onClick={openPersonaWidget}
                 className="w-32 h-24 sm:w-48 sm:h-36 md:w-56 md:h-40 rounded-xl border-2 flex items-center justify-center cursor-pointer transition-all duration-300 group-hover:scale-105"

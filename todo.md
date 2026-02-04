@@ -286,3 +286,5 @@
 - [x] Typing animasyonunu sonsuz döngüye çevrildi (yaz - 2s bekle - sil - 0.5s bekle - tekrar başla)
 
 - [x] Animasyon ekranına onClick handler eklendi - DualPersonaWidget'ı açıyor
+
+- [x] Animasyon ekranına tooltip eklendi - hover yapıldığında "Sarp ve Vera ile tanışmak için tıkla" gösteriliyor
