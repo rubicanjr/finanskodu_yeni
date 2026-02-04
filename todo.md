@@ -290,3 +290,5 @@
 - [x] Animasyon ekranına tooltip eklendi - hover yapıldığında "Sarp ve Vera ile tanışmak için tıkla" gösteriliyor
 
 - [x] Typing animasyonuna rastgele mesaj döngüsü eklendi (5 farklı mesaj sıralı döngüde)
+
+- [x] Animasyon ekranına tıklandığında pulse ring efekti eklendi (cyan ve mor çift dalga)

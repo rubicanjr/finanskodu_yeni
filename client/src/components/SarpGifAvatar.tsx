@@ -61,16 +61,16 @@ declare global {
 
 // GIF Assets - Emotion-based states
 const SARP_GIFS = {
-  idle: "/images/metaperson_mix.gif",
-  talking: "/images/metaperson_mix_2.gif",
-  listening: "/images/metaperson_mix_3.gif",
-  thinking: "/images/metaperson_mix_4.gif",
-  glad: "/images/metaperson_glad.gif",
-  thumbsUp: "/images/metaperson_thumbs_up.gif",
-  surprised: "/images/metaperson_surprised.gif",
-  confused: "/images/metaperson_confused.gif",
-  ok: "/images/metaperson_ok.gif",
-  excited: "/images/metaperson_excited(1).gif",
+  idle: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/ufVTNxBxxgzbWyZW.gif",
+  talking: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/uLVsvkiAScpdbGTB.gif",
+  listening: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/mWGNDVwHExDumYQc.gif",
+  thinking: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/LfOwMShQKAZYYtXp.gif",
+  glad: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/BQbHbGagUuEEfrRx.gif",
+  thumbsUp: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/VYBCnLttKMoaVTpY.gif",
+  surprised: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/OZKdebZESvLNAEtw.gif",
+  confused: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/qjbYONPaTgWoNDbe.gif",
+  ok: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/mygbbpDKHMTHqHIa.gif",
+  excited: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/mZLSWrxusMVYnxZn.gif",
 };
 
 // Knowledge Base & Response Logic - Sarp Persona

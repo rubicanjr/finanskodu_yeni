@@ -19,6 +19,7 @@ import { useState, useEffect } from "react";
 export default function HeroSection() {
   const [typedText, setTypedText] = useState("");
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
+  const [showPulse, setShowPulse] = useState(false);
   
   // Random message pool
   const messages = [
@@ -77,8 +78,10 @@ export default function HeroSection() {
     window.open("https://www.hikie.space/finanskodu/finans-kodu-forum", "_blank");
   };
 
-  // Open DualPersonaWidget
+  // Open DualPersonaWidget with pulse effect
   const openPersonaWidget = () => {
+    setShowPulse(true);
+    setTimeout(() => setShowPulse(false), 1000); // Pulse duration
     window.dispatchEvent(new Event('openDualPersonaWidget'));
   };
 
@@ -177,7 +180,7 @@ export default function HeroSection() {
                 }}
               >
                 <img 
-                  src="/images/metaperson_mix_2.gif" 
+                  src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/uLVsvkiAScpdbGTB.gif" 
                   alt="Sarp - Teknik Analist"
                   className="w-full h-full object-cover"
                 />
@@ -200,6 +203,27 @@ export default function HeroSection() {
               transition={{ duration: 0.6, delay: 0.6 }}
               className="relative group"
             >
+              {/* Pulse Ring Effect on Click */}
+              {showPulse && (
+                <div className="absolute inset-0 pointer-events-none">
+                  <div 
+                    className="absolute inset-0 rounded-xl border-2 animate-ping"
+                    style={{
+                      borderColor: 'rgba(0, 212, 255, 0.6)',
+                      animationDuration: '1s'
+                    }}
+                  />
+                  <div 
+                    className="absolute inset-0 rounded-xl border-2 animate-ping"
+                    style={{
+                      borderColor: 'rgba(168, 85, 247, 0.6)',
+                      animationDuration: '1s',
+                      animationDelay: '0.15s'
+                    }}
+                  />
+                </div>
+              )}
+
               {/* Tooltip */}
               <div className="absolute -top-12 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10">
                 <div className="bg-gray-900/95 backdrop-blur-sm px-4 py-2 rounded-lg border border-cyan-500/30 shadow-lg">
@@ -270,7 +294,7 @@ export default function HeroSection() {
                 }}
               >
                 <img 
-                  src="/images/vera-avatar.png" 
+                  src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/QAkTTqxvtQZTDARB.png" 
                   alt="Vera - Makro Stratejist"
                   className="w-full h-full object-cover bg-gradient-to-br from-purple-900 to-purple-700"
                   onError={(e) => {

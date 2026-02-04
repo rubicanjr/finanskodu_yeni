@@ -57,7 +57,7 @@ const SARP: Persona = {
   title: "Teknik Analist Sarp",
   archetype: "Quantitative Analyst (Quant) - THE BRAKE",
   motto: "Matematik yalan söylemez, insanlar söyler.",
-  avatarUrl: "/images/metaperson_mix_2.gif",
+  avatarUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/uLVsvkiAScpdbGTB.gif",
   accentColor: "#00D4FF", // Cyan
   voiceSettings: {
     searchTerms: ["male", "erkek", "cem", "alper", "murat", "google"],
@@ -78,7 +78,7 @@ const VERA: Persona = {
   title: "Makro Stratejist Vera",
   archetype: "Macro Strategist & Behavioral Psychologist - THE STEERING WHEEL",
   motto: "Fiyatı piyasa belirler, değeri sen belirlersin.",
-  avatarUrl: "/images/vera-avatar.png",
+  avatarUrl: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/QAkTTqxvtQZTDARB.png",
   accentColor: "#A855F7", // Purple
   voiceSettings: {
     searchTerms: [], // Use native default

@@ -59,7 +59,7 @@ declare global {
 }
 
 // Avatar URL
-const SARP_AVATAR_URL = "/images/sarp-avatar.gif";
+const SARP_AVATAR_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/XuZyQrPcjhHOqlTE.gif";
 
 // Knowledge Base - Disclaimer is ONLY added programmatically in TTS, NOT in text responses
 // This prevents double disclaimer issue

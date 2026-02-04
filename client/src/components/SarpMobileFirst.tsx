@@ -59,7 +59,7 @@ declare global {
 }
 
 // Avatar GIF URL
-const SARP_AVATAR_URL = "/images/sarp-avatar.gif";
+const SARP_AVATAR_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/XuZyQrPcjhHOqlTE.gif";
 
 // Knowledge Base - Comprehensive (NO "I DON'T KNOW")
 const DISCLAIMER = "\n\nBunlar piyasa yorumudur, yatırım tavsiyesi değildir.";
