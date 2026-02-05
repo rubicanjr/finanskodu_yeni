@@ -29,6 +29,7 @@ interface BlogPost {
   readTime: string;
   link: string;
   tags: string[];
+  author: 'Sarp' | 'Vera';
 }
 
 // 8 Blog Posts - Updated with new content
@@ -37,12 +38,13 @@ const blogPosts: BlogPost[] = [
   {
     id: "altin-abd-reel-faizleri",
     title: "Altın'ın En Büyük Düşmanı ve Dostu: ABD Reel Faizleri",
-    excerpt: "Altın faizsiz bir varlıktır. Reel faizler yükseldiğinde nefesi kesilir. DXY ile ters korelasyonu ve Merkez Bankalarının sessiz alımlarını analiz ediyoruz.",
+    excerpt: "Altın faizsiz bir varlıktır. Reel faizler yükseldığinde nefesi kesilir. DXY ile ters korelasyonu ve Merkez Bankalarının sessiz alımlarını analiz ediyoruz.",
     image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/dLfzwcekwqlakvAq.jpg",
     date: "25 Ocak 2025",
     readTime: "7 dk",
     link: "https://www.hikie.space/finanskodu/forum/a8adebd8f9ef4c3b8051a425eb18481a",
-    tags: ["Altın", "Makro Analiz"]
+    tags: ["Altın", "Makro Analiz"],
+    author: 'Vera'
   },
   // NEW: Gizli Raporlar
   {
@@ -53,7 +55,8 @@ const blogPosts: BlogPost[] = [
     date: "22 Ocak 2025",
     readTime: "6 dk",
     link: "https://www.hikie.space/finanskodu/forum/a8adebd8f9ef4c3b8051a425eb18481a",
-    tags: ["Araştırma", "Strateji"]
+    tags: ["Araştırma", "Strateji"],
+    author: 'Sarp'
   },
   // NEW: Manuel Takip 7 İşaret
   {
@@ -64,7 +67,8 @@ const blogPosts: BlogPost[] = [
     date: "20 Ocak 2025",
     readTime: "5 dk",
     link: "https://www.hikie.space/finanskodu/forum/a8adebd8f9ef4c3b8051a425eb18481a",
-    tags: ["Otomasyon", "Psikoloji"]
+    tags: ["Otomasyon", "Psikoloji"],
+    author: 'Vera'
   },
   {
     id: "excel-den-algoritmik-finansa",
@@ -74,7 +78,8 @@ const blogPosts: BlogPost[] = [
     date: "15 Ocak 2025",
     readTime: "5 dk",
     link: "https://www.hikie.space/finanskodu/forum/a8adebd8f9ef4c3b8051a425eb18481a",
-    tags: ["Algoritmik Finans", "Excel"]
+    tags: ["Algoritmik Finans", "Excel"],
+    author: 'Sarp'
   },
   {
     id: "whatsapp-tuyolari-vs-veri",
@@ -84,7 +89,8 @@ const blogPosts: BlogPost[] = [
     date: "10 Ocak 2025",
     readTime: "4 dk",
     link: "https://www.hikie.space/finanskodu/forum/a8adebd8f9ef4c3b8051a425eb18481a",
-    tags: ["Veri İstihbaratı", "Strateji"]
+    tags: ["Veri İstihbaratı", "Strateji"],
+    author: 'Vera'
   },
   {
     id: "otomatik-strateji-takip",
@@ -94,7 +100,8 @@ const blogPosts: BlogPost[] = [
     date: "5 Ocak 2025",
     readTime: "4 dk",
     link: "https://www.hikie.space/finanskodu/forum/a8adebd8f9ef4c3b8051a425eb18481a",
-    tags: ["Otomasyon", "Yapay Zeka"]
+    tags: ["Otomasyon", "Yapay Zeka"],
+    author: 'Sarp'
   },
   {
     id: "finansal-anayasa",
@@ -104,7 +111,8 @@ const blogPosts: BlogPost[] = [
     date: "1 Ocak 2025",
     readTime: "6 dk",
     link: "https://www.hikie.space/finanskodu/forum/a8adebd8f9ef4c3b8051a425eb18481a",
-    tags: ["Strateji", "Psikoloji"]
+    tags: ["Strateji", "Psikoloji"],
+    author: 'Vera'
   },
   {
     id: "ai-finans-devrimi",
@@ -114,7 +122,8 @@ const blogPosts: BlogPost[] = [
     date: "28 Aralık 2024",
     readTime: "5 dk",
     link: "https://www.hikie.space/finanskodu/forum/a8adebd8f9ef4c3b8051a425eb18481a",
-    tags: ["AI", "Prompt"]
+    tags: ["AI", "Prompt"],
+    author: 'Sarp'
   }
 ];
 
@@ -237,6 +246,22 @@ export default function BlogSection() {
                 transition={{ duration: 0.4, delay: 0.1 + index * 0.05 }}
                 className="group flex-shrink-0 w-[280px] sm:w-[300px] snap-start"
               >
+                {/* Author Person Schema */}
+                <script type="application/ld+json">
+                  {JSON.stringify({
+                    "@context": "https://schema.org",
+                    "@type": "Person",
+                    "name": `${post.author} (Finans Kodu)`,
+                    "jobTitle": post.author === 'Sarp' 
+                      ? "Head of Data & Algorithmic Strategy" 
+                      : "Macro Strategist & Behavioral Finance Expert",
+                    "sameAs": [
+                      post.author === 'Sarp'
+                        ? "https://www.linkedin.com/in/sarp-finanskodu-placeholder"
+                        : "https://www.linkedin.com/in/vera-finanskodu-placeholder"
+                    ]
+                  })}
+                </script>
                 <div 
                   className="h-full rounded-2xl overflow-hidden flex flex-col transition-all duration-300 hover:scale-[1.02]"
                   style={{

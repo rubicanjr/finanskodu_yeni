@@ -292,3 +292,24 @@
 - [x] Typing animasyonuna rastgele mesaj döngüsü eklendi (5 farklı mesaj sıralı döngüde)
 
 - [x] Animasyon ekranına tıklandığında pulse ring efekti eklendi (cyan ve mor çift dalga)
+
+
+## Schema Markup & FAQ Section (pasted_content_3.txt)
+
+### ACTION 1: Global SoftwareApplication Schema
+- [x] index.html head kısmına SoftwareApplication JSON-LD schema eklendi
+- [x] name: "Finans Kodu AI Prompt Kütüphanesi"
+- [x] applicationCategory: "FinanceApplication"
+- [x] price: "0" TRY
+
+### ACTION 2: Author Entity Schema (Blog Posts)
+- [x] Blog post bileşenine Person schema eklendi
+- [x] Sarp için: "Head of Data & Algorithmic Strategy" + LinkedIn placeholder
+- [x] Vera için: "Macro Strategist & Behavioral Finance Expert" + LinkedIn placeholder
+
+### ACTION 3: FAQ Section
+- [x] Yeni "Sıkça Sorulan Sorular ve Uzman Görüşleri" bölümü oluşturuldu (FAQSection.tsx)
+- [x] Accordion style tasarım uygulandı
+- [x] 10 soru-cevap çifti eklendi (strateji belgesindeki tam metinlerle)
+- [x] FAQPage JSON-LD schema eklendi
+- [x] Footer öncesine yerleştirildi (Home.tsx'e import edildi)

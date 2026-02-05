@@ -41,6 +41,7 @@ import ProductsSection from "@/components/ProductsSection";
 import ManifestoSection from "@/components/ManifestoSection";
 import BlogSection from "@/components/BlogSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
+import FAQSection from "@/components/FAQSection";
 // AboutSection removed per strategy document
 import Footer from "@/components/Footer";
 import SocialProofStrip from "@/components/SocialProofStrip";
@@ -83,6 +84,10 @@ export default function Home() {
         {/* Testimonials / Social Proof - <figure> with <blockquote> */}
         {/* CRO: Social Proof - Build trust through others */}
         <TestimonialsSection />
+
+        {/* FAQ - Frequently Asked Questions with Expert Insights */}
+        {/* CRO: Address objections and build authority */}
+        <FAQSection />
 
         {/* About section removed per strategy document */}
       </main>
