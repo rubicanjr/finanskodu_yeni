@@ -161,6 +161,18 @@ export default function BlogSection() {
       className="relative py-24 overflow-hidden"
       aria-labelledby="blog-heading"
     >
+      {/* BreadcrumbList Schema for Blog Section */}
+      <script type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": "https://finanskodu.com/"},
+            {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://finanskodu.com/#blog"}
+          ]
+        })}
+      </script>
+      
       {/* Background */}
       <div 
         className="absolute inset-0"

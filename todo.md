@@ -313,3 +313,8 @@
 - [x] 10 soru-cevap çifti eklendi (strateji belgesindeki tam metinlerle)
 - [x] FAQPage JSON-LD schema eklendi
 - [x] Footer öncesine yerleştirildi (Home.tsx'e import edildi)
+
+
+## BreadcrumbList Schema
+- [x] Ana sayfa (index.html) için BreadcrumbList schema eklendi
+- [x] Blog post'ları için BreadcrumbList schema eklendi (BlogSection.tsx)
