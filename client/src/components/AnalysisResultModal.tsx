@@ -10,11 +10,18 @@ interface Visual {
   analysisText?: string;
 }
 
+interface GeminiDetails {
+  technical: string;
+  social: string;
+  fundamental: string;
+}
+
 interface AnalysisResultModalProps {
   isOpen: boolean;
   ticker: string;
   visuals?: Visual[];
   geminiAnalysis?: string;
+  geminiDetails?: GeminiDetails;
   currentPrice?: number;
   trend?: "POZİTİF" | "NEGATİF" | "NÖTR";
   isPro?: boolean;
@@ -28,6 +35,7 @@ export function AnalysisResultModal({
   ticker,
   visuals = [],
   geminiAnalysis = "",
+  geminiDetails,
   currentPrice = 0,
   trend = "NÖTR",
   isPro = false,
@@ -44,22 +52,20 @@ export function AnalysisResultModal({
 
   // Generate Pollinations URL based on trend
   const generatePollinationsUrl = (type: "technical" | "social" | "fundamental") => {
-    const trendColor = trend === "POZİTİF" ? "green neon lights" : trend === "NEGATİF" ? "red neon lights" : "blue neon lights";
-    
     let prompt = "";
     switch (type) {
       case "technical":
-        prompt = `futuristic stock market dashboard for ${ticker}, ${trendColor}, cyberpunk city background, high tech, candlestick charts, 8k render`;
+        prompt = "futuristic stock market chart abstract art, green and red neon lines, candlestick patterns, 8k resolution, high detail, professional, NO TEXT, NO LETTERS, NO NUMBERS, pure visual";
         break;
       case "social":
-        prompt = `social sentiment analytics for ${ticker}, ${trendColor}, flowing waves, twitter sentiment, modern design, 8k render`;
+        prompt = "digital network nodes connecting, social media abstract concept, blue cyan neon, flowing data streams, 8k resolution, high detail, NO TEXT, NO LETTERS, NO NUMBERS, pure visual";
         break;
       case "fundamental":
-        prompt = `fundamental analysis report for ${ticker}, ${trendColor}, geometric shapes, financial metrics, professional design, 8k render`;
+        prompt = "corporate finance abstract concept, golden coins digital vault, neon lights, high tech aesthetic, 8k resolution, high detail, NO TEXT, NO LETTERS, NO NUMBERS, pure visual";
         break;
     }
     
-    return `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=1280&height=720&nologo=true`;
+    return `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=1920&height=1080&nologo=true`;
   };
 
   const currentVisual = visuals.find((v) => v.type === activeTab);
@@ -169,8 +175,22 @@ export function AnalysisResultModal({
               />
             </div>
 
-            {/* Gemini Analysis Text */}
-            {geminiAnalysis && (
+            {/* Gemini Analysis Text - Tab Specific */}
+            {geminiDetails && (
+              <div className="bg-slate-800/50 border border-cyan-500/20 rounded-xl p-3">
+                <p className="text-slate-300 text-xs leading-relaxed font-semibold">
+                  {activeTab === "technical" && "📈 Teknik Analiz Yorumu"}
+                  {activeTab === "social" && "🐦 Sosyal Medya Analizi"}
+                  {activeTab === "fundamental" && "📊 Temel Analiz Yorumu"}
+                </p>
+                <p className="text-slate-300 text-xs leading-relaxed mt-2">
+                  {activeTab === "technical" && geminiDetails.technical}
+                  {activeTab === "social" && geminiDetails.social}
+                  {activeTab === "fundamental" && geminiDetails.fundamental}
+                </p>
+              </div>
+            )}
+            {geminiAnalysis && !geminiDetails && (
               <div className="bg-slate-800/50 border border-cyan-500/20 rounded-xl p-3">
                 <p className="text-slate-300 text-xs leading-relaxed font-semibold">
                   💡 Sarp'ın Yorumu:
@@ -185,7 +205,7 @@ export function AnalysisResultModal({
             <div className="bg-slate-800/50 border border-cyan-500/20 rounded-xl overflow-hidden">
               <div className="w-full h-[400px]">
                 <AdvancedRealTimeChart
-                  symbol={`BIST:${ticker}`}
+                  symbol={`BIST:${ticker.toUpperCase()}`}
                   theme="dark"
                   autosize
                   locale="tr"
