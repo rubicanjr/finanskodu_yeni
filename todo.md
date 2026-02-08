@@ -601,3 +601,12 @@
 - [x] Frontend: Modal başlıkları küçült (text-lg → text-base)
 - [x] Frontend: "Haftalık bülten" yazısını sil, e-posta input'unu temizle
 - [x] Test et: 25/25 passed ✓
+
+
+## PROJECT OVERHAUL: Real Data & Legal Compliance ✓
+- [x] getMarketTrend() fonksiyonu (server/_core/marketTrend.ts)
+- [x] Trend analizi: POZİTİF/NEGATİF/NÖTR, teknik seviye (1.15x / 0.90x)
+- [x] Wiro prompt: "NO TEXT, NO LABELS" kuralı (3 prompt updated)
+- [x] Frontend: 3 kutu metrikler (Anlık Veri, Teknik Seviye, Görünüm)
+- [x] Frontend: Yasal uyarı metni (footer, "Bu çalışma bir yatırım tavsiyesi değildir")
+- [x] Test et: 25/25 passed ✓

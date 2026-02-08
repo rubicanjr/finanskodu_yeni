@@ -151,6 +151,30 @@ export function AnalysisResultModal({
                   )}
                 </div>
 
+                {/* Metrics Grid (3 Columns) */}
+                <div className="grid grid-cols-3 gap-2">
+                  {/* Metric 1: Anlık Veri */}
+                  <div className="bg-slate-800/50 border border-cyan-500/20 rounded-lg p-2">
+                    <p className="text-slate-400 text-xs font-semibold mb-1">Anlık Veri</p>
+                    <p className="text-cyan-400 text-sm font-bold">₺ 50.00</p>
+                    <p className="text-slate-500 text-xs mt-1">Canlı BIST</p>
+                  </div>
+                  
+                  {/* Metric 2: Teknik Seviye */}
+                  <div className="bg-slate-800/50 border border-cyan-500/20 rounded-lg p-2">
+                    <p className="text-slate-400 text-xs font-semibold mb-1">Teknik Seviye</p>
+                    <p className="text-purple-400 text-sm font-bold">₺ 57.50</p>
+                    <p className="text-slate-500 text-xs mt-1">AI Projeksiyonu</p>
+                  </div>
+                  
+                  {/* Metric 3: Teknik Görünüm */}
+                  <div className="bg-slate-800/50 border border-cyan-500/20 rounded-lg p-2">
+                    <p className="text-slate-400 text-xs font-semibold mb-1">Görünüm</p>
+                    <p className="text-green-400 text-sm font-bold">POZİTİF</p>
+                    <p className="text-slate-500 text-xs mt-1">Trend</p>
+                  </div>
+                </div>
+
                 {/* Analysis Text */}
                 {currentVisual.analysisText && (
                   <div className="bg-slate-800/50 border border-cyan-500/20 rounded-xl p-3">
@@ -214,9 +238,14 @@ export function AnalysisResultModal({
                   ✓ Başarılı!
                 </p>
               )}
-
-
             </div>
+          </div>
+
+          {/* Legal Disclaimer */}
+          <div className="px-6 py-3 bg-slate-900/50 border-t border-cyan-500/20">
+            <p className="text-xs text-slate-500 leading-relaxed">
+              <strong>YASAL UYARI:</strong> Bu çalışma bir yatırım tavsiyesi değildir. Veriler ve grafikler yapay zeka tarafından eğitim ve simülasyon amaçlı üretilmiştir.
+            </p>
           </div>
         </div>
       </div>

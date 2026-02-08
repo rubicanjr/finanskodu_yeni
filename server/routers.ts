@@ -7,6 +7,7 @@ import { getOrCreateProfile, incrementUsageCount, getProfileByUserId, saveAnalys
 import { TRPCError } from "@trpc/server";
 import { generateImage } from "./_core/imageGeneration";
 import { getRealStockPrice, calculateTargetPrice } from "./_core/stockData";
+import { getMarketTrend } from "./_core/marketTrend";
 
 export const appRouter = router({
   system: systemRouter,
@@ -137,13 +138,13 @@ export const appRouter = router({
         const magicWords = "High fidelity UI dashboard, cyberpunk finance interface, detailed candlesticks, numeric y-axis, sidebar with news text, glowing neon data visualization, 4k render. Aspect ratio: 16:9 landscape.";
 
         // Prompt 1: Technical Dashboard (Turkish)
-        const technicalPrompt = `A professional Bloomberg Terminal style dashboard for stock ${ticker}. Show a SINGLE 6-Month Candlestick Chart. Overlay Text: 'ANLIK: ${currentPrice} TL', 'HEDEF: ${targetPrice} TL'. Trend: YUKSELIS (Bullish). Right panel shows HABER AKISI, Rating: AL. Dark mode, neon cyan. Strictly ONE single chart. Timeframe: 6 Months. MANDATORY: Use only these exact numbers - ${currentPrice} and ${targetPrice}. Do not hallucinate prices. ${turkishRule} ${magicWords}`;
+        const technicalPrompt = `Abstract cyberpunk stock market visualization for ${ticker}. NO TEXT, NO LABELS, NO NUMBERS inside image. ${turkishRule} ${magicWords}`;
 
         // Prompt 2: Social Sentiment (Turkish)
-        const socialPrompt = `A Social Media Analytics Dashboard for ${ticker}. Large center gauge showing Sosyal Medya Duygu Durumu: Pozitif/Yuksek. Lists of Trending Hashtags and Influencer Mentions. Glassmorphism style cards. ${turkishRule} ${magicWords}`;
+        const socialPrompt = `Abstract social sentiment visualization for ${ticker}. Flowing waves in neon colors. NO TEXT, NO NUMBERS, NO LABELS. Pure artistic representation. ${turkishRule} ${magicWords}`;
 
         // Prompt 3: Fundamental Report (Turkish)
-        const fundamentalPrompt = `A Financial Report Card for ${ticker}. Letter grade A+ in a glowing circle. Progress bars for Nakit Akisi, Karlilik, and Borc Orani. Clean, structured data visualization. ${turkishRule} ${magicWords}`;
+        const fundamentalPrompt = `Abstract fundamental analysis visualization for ${ticker}. Geometric shapes and gradients. NO TEXT, NO NUMBERS, NO LABELS. Pure graphic art. ${turkishRule} ${magicWords}`;
 
         // Note: prompts are used by Wiro API but not returned to frontend
 
