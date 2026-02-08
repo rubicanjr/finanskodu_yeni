@@ -610,3 +610,12 @@
 - [x] Frontend: 3 kutu metrikler (Anlık Veri, Teknik Seviye, Görünüm)
 - [x] Frontend: Yasal uyarı metni (footer, "Bu çalışma bir yatırım tavsiyesi değildir")
 - [x] Test et: 25/25 passed ✓
+
+
+## React 3-Kural Entegrasyonu ✓
+- [ ] Wiro prompt: "NO TEXT, NO NUMBERS, NO LABELS" kuralı
+- [ ] Backend: yfinance targetMeanPrice çekme
+- [ ] Backend: Fallback logic (currentPrice * 1.45)
+- [ ] Frontend: 3 kutu UI (Konsensüs, Getiri, AI Görüşü)
+- [ ] UI Türkçeleştirme (İngilizce terim yok)
+- [ ] Test et ve checkpoint kaydet

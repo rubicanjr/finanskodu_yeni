@@ -153,25 +153,25 @@ export function AnalysisResultModal({
 
                 {/* Metrics Grid (3 Columns) */}
                 <div className="grid grid-cols-3 gap-2">
-                  {/* Metric 1: Anlık Veri */}
+                  {/* Metric 1: Konsensüs Beklentisi */}
                   <div className="bg-slate-800/50 border border-cyan-500/20 rounded-lg p-2">
-                    <p className="text-slate-400 text-xs font-semibold mb-1">Anlık Veri</p>
-                    <p className="text-cyan-400 text-sm font-bold">₺ 50.00</p>
-                    <p className="text-slate-500 text-xs mt-1">Canlı BIST</p>
+                    <p className="text-slate-400 text-xs font-semibold mb-1">Konsensüs Beklentisi</p>
+                    <p className="text-cyan-400 text-sm font-bold">₺ 72.50</p>
+                    <p className="text-slate-500 text-xs mt-1">12 Aylık Analist</p>
                   </div>
                   
-                  {/* Metric 2: Teknik Seviye */}
+                  {/* Metric 2: Getiri Potansiyeli */}
                   <div className="bg-slate-800/50 border border-cyan-500/20 rounded-lg p-2">
-                    <p className="text-slate-400 text-xs font-semibold mb-1">Teknik Seviye</p>
-                    <p className="text-purple-400 text-sm font-bold">₺ 57.50</p>
-                    <p className="text-slate-500 text-xs mt-1">AI Projeksiyonu</p>
+                    <p className="text-slate-400 text-xs font-semibold mb-1">Getiri Potansiyeli</p>
+                    <p className="text-green-400 text-sm font-bold">+45%</p>
+                    <p className="text-slate-500 text-xs mt-1">Mevcut Fiyata Göre</p>
                   </div>
                   
-                  {/* Metric 3: Teknik Görünüm */}
+                  {/* Metric 3: Yapay Zeka Görüşü */}
                   <div className="bg-slate-800/50 border border-cyan-500/20 rounded-lg p-2">
-                    <p className="text-slate-400 text-xs font-semibold mb-1">Görünüm</p>
-                    <p className="text-green-400 text-sm font-bold">POZİTİF</p>
-                    <p className="text-slate-500 text-xs mt-1">Trend</p>
+                    <p className="text-slate-400 text-xs font-semibold mb-1">Yapay Zeka Görüşü</p>
+                    <p className="text-green-400 text-sm font-bold">GÜÇLÜ</p>
+                    <p className="text-slate-500 text-xs mt-1">Teknik İndikatör</p>
                   </div>
                 </div>
 

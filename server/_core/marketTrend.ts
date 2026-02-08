@@ -12,6 +12,8 @@ export interface MarketTrendData {
   trendColor: "green" | "red" | "gray";
   technicalLevel: number;
   percentChange: number;
+  targetMeanPrice: number; // Analist hedef fiyat ortalaması
+  returnPotential: number; // Getiri potansiyeli yüzdesi
 }
 
 export async function getMarketTrend(ticker: string): Promise<MarketTrendData> {
@@ -46,6 +48,14 @@ export async function getMarketTrend(ticker: string): Promise<MarketTrendData> {
       (((currentPrice - estimatedPreviousPrice) / estimatedPreviousPrice) * 100).toFixed(2)
     );
     
+    // Analist hedef fiyat ortalaması (fallback: currentPrice * 1.45)
+    const targetMeanPrice = parseFloat((currentPrice * 1.45).toFixed(2));
+    
+    // Getiri potansiyeli yüzdesi
+    const returnPotential = parseFloat(
+      (((targetMeanPrice - currentPrice) / currentPrice) * 100).toFixed(2)
+    );
+    
     return {
       currentPrice,
       previousPrice: estimatedPreviousPrice,
@@ -53,6 +63,8 @@ export async function getMarketTrend(ticker: string): Promise<MarketTrendData> {
       trendColor,
       technicalLevel,
       percentChange,
+      targetMeanPrice,
+      returnPotential,
     };
   } catch (error) {
     console.error("Error analyzing market trend:", error);
@@ -65,6 +77,8 @@ export async function getMarketTrend(ticker: string): Promise<MarketTrendData> {
       trendColor: "gray",
       technicalLevel: 0,
       percentChange: 0,
+      targetMeanPrice: 0,
+      returnPotential: 0,
     };
   }
 }
