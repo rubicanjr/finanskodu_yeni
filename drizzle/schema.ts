@@ -25,4 +25,34 @@ export const users = mysqlTable("users", {
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 
-// TODO: Add your tables here
+/**
+ * User profiles table for Finans Kodu Dedektifi
+ * Tracks subscription tier and daily usage quota
+ */
+export const profiles = mysqlTable("profiles", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().references(() => users.id, { onDelete: "cascade" }),
+  subscriptionTier: mysqlEnum("subscriptionTier", ["free", "pro"]).default("free").notNull(),
+  usageCount: int("usageCount").default(0).notNull(),
+  lastResetDate: timestamp("lastResetDate").defaultNow().notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Profile = typeof profiles.$inferSelect;
+export type InsertProfile = typeof profiles.$inferInsert;
+
+/**
+ * Analysis results table for storing completed analyses
+ */
+export const analysisResults = mysqlTable("analysisResults", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().references(() => users.id, { onDelete: "cascade" }),
+  ticker: varchar("ticker", { length: 10 }).notNull(),
+  resultImageUrl: text("resultImageUrl"),
+  analysisData: text("analysisData"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type AnalysisResult = typeof analysisResults.$inferSelect;
+export type InsertAnalysisResult = typeof analysisResults.$inferInsert;

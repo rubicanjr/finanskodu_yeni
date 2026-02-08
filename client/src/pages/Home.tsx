@@ -38,6 +38,7 @@
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
 import ComparisonSection from "@/components/ComparisonSection";
+import { AnalysisSection } from "@/components/AnalysisSection";
 import ProductsSection from "@/components/ProductsSection";
 import ManifestoSection from "@/components/ManifestoSection";
 import BlogSection from "@/components/BlogSection";
@@ -68,6 +69,10 @@ export default function Home() {
       {/* Comparison Section - Technology & Methodology */}
       {/* CRO: Immediate Value Proposition - Show comparison right after hero */}
       <ComparisonSection />
+
+      {/* Analysis Section - PHASE 1 of Hackathon MVP */}
+      {/* CRO: Engagement & Conversion - Interactive analysis feature */}
+      <AnalysisSection />
 
       {/* Social Proof Strip - Trust Signals */}
       <SocialProofStrip />

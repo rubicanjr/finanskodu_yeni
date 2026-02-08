@@ -1,6 +1,6 @@
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users } from "../drizzle/schema";
+import { InsertUser, users, profiles, analysisResults, Profile, InsertProfile, AnalysisResult, InsertAnalysisResult } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -87,6 +87,109 @@ export async function getUserByOpenId(openId: string) {
   const result = await db.select().from(users).where(eq(users.openId, openId)).limit(1);
 
   return result.length > 0 ? result[0] : undefined;
+}
+
+/**
+ * Get or create user profile
+ */
+export async function getOrCreateProfile(userId: number): Promise<Profile> {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  const existing = await db.select().from(profiles).where(eq(profiles.userId, userId)).limit(1);
+  
+  if (existing.length > 0) {
+    return existing[0];
+  }
+
+  // Create new profile with free tier
+  const newProfile: InsertProfile = {
+    userId,
+    subscriptionTier: "free",
+    usageCount: 0,
+    lastResetDate: new Date(),
+  };
+
+  await db.insert(profiles).values(newProfile);
+  const created = await db.select().from(profiles).where(eq(profiles.userId, userId)).limit(1);
+  return created[0];
+}
+
+/**
+ * Get user profile by userId
+ */
+export async function getProfileByUserId(userId: number): Promise<Profile | undefined> {
+  const db = await getDb();
+  if (!db) return undefined;
+
+  const result = await db.select().from(profiles).where(eq(profiles.userId, userId)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+/**
+ * Increment daily usage count and check if reset is needed
+ */
+export async function incrementUsageCount(userId: number): Promise<Profile> {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  const profile = await getOrCreateProfile(userId);
+  const now = new Date();
+  const lastReset = new Date(profile.lastResetDate);
+  
+  // Reset count if more than 24 hours have passed
+  const daysSinceReset = (now.getTime() - lastReset.getTime()) / (1000 * 60 * 60 * 24);
+  const shouldReset = daysSinceReset >= 1;
+
+  const newCount = shouldReset ? 1 : profile.usageCount + 1;
+  const newResetDate = shouldReset ? now : profile.lastResetDate;
+
+  await db.update(profiles)
+    .set({
+      usageCount: newCount,
+      lastResetDate: newResetDate,
+    })
+    .where(eq(profiles.userId, userId));
+
+  return getOrCreateProfile(userId);
+}
+
+/**
+ * Save analysis result
+ */
+export async function saveAnalysisResult(data: InsertAnalysisResult): Promise<AnalysisResult> {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  await db.insert(analysisResults).values(data);
+  // Get the most recent analysis result for this user and ticker
+  const saved = await db.select().from(analysisResults)
+    .where(and(eq(analysisResults.userId, data.userId), eq(analysisResults.ticker, data.ticker)))
+    .orderBy(analysisResults.createdAt)
+    .limit(1);
+  
+  if (saved.length === 0) {
+    throw new Error("Failed to save analysis result");
+  }
+  return saved[0];
+}
+
+/**
+ * Get analysis results by user and ticker
+ */
+export async function getAnalysisResults(userId: number, ticker: string): Promise<AnalysisResult[]> {
+  const db = await getDb();
+  if (!db) return [];
+
+  return db.select().from(analysisResults)
+    .where(and(eq(analysisResults.userId, userId), eq(analysisResults.ticker, ticker)))
+    .orderBy(analysisResults.createdAt);
 }
 
 // TODO: add feature queries here as your schema grows.

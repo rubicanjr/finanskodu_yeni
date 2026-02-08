@@ -352,3 +352,90 @@
 - [ ] Vera persona'yı güncelle (Strategist, Educator, Prompt Library focus)
 - [ ] Sarp opening: "Selam, ben Sarp. Buranın sayısal zekasıyım..."
 - [ ] Vera opening: "Merhaba, ben Vera. Sarp sana veriyi gösterir..."
+
+
+## Finans Kodu Dedektifi v4.0 - Frontend & Auth
+### PHASE 2: Supabase Auth
+- [ ] Supabase integration setup (email/password auth)
+- [ ] Login/Signup form (sidebar veya navbar)
+- [ ] st.session_state ile user session yönetimi
+- [ ] profiles table check (subscription_tier, usage_count)
+
+### PHASE 3: Loading State & Animation
+- [ ] "Analiz Et" butonu disabled state
+- [ ] Neon Cyan (#00F0FF) radar/progress animasyonu
+- [ ] Dynamic messaging (0-5sn, 5-10sn, 10-15sn, 15-20sn, 20-27sn)
+- [ ] 27 saniye simülasyonu
+
+### PHASE 4: Result Modal (Glassmorphism)
+- [ ] Glassmorphism modal component
+- [ ] Header: "{TICKER} - Finansal Röntgen Sonucu"
+- [ ] Wiro API görseli ortada
+- [ ] "Görseli İndir" butonu (PNG export)
+- [ ] "Detaylı Raporu İncele (Pro)" butonu (locked)
+- [ ] Close X ikonu
+
+### PHASE 5: Paywall Logic
+- [ ] Demo bypass (THYAO ve EREGL)
+- [ ] Auth kontrolü (giriş yapılmadıysa login form)
+- [ ] Quota kontrolü (free: 1 analiz/gün, pro: unlimited)
+- [ ] "Limit Aşıldı" popup
+
+### PHASE 6: Error Handling
+- [ ] API/Backend hata mesajı
+- [ ] Retry mekanizması
+
+
+## Finans Kodu Dedektifi V4.0 - Frontend & Auth (pasted_content_5.txt)
+
+### PHASE 2: Supabase Auth & Database ✓
+- [x] Database schema oluşturma (profiles, analysisResults tables)
+- [x] Database migration çalıştırma (pnpm db:push)
+- [x] Profile helper fonksiyonları (getOrCreateProfile, incrementUsageCount, saveAnalysisResult)
+- [x] tRPC routers oluşturma (profile.getProfile, analysis.checkQuota, analysis.startAnalysis)
+
+### PHASE 3: Loading State & Animation ✓
+- [x] AnalysisLoadingState bileşeni oluşturma (27 saniye, dinamik mesajlar)
+- [x] Radar tarama animasyonu (Neon Cyan, dönen çizgi)
+- [x] Progress bar (0-100%, 27 saniye)
+- [x] Dynamic messaging (5 farklı mesaj, zaman-tabanlı)
+
+### PHASE 4: Result Modal (Glassmorphism) ✓
+- [x] AnalysisResultModal bileşeni oluşturma
+- [x] Glassmorphism efekti (backdrop-blur, border)
+- [x] Header: "{TICKER} - Finansal Röntgen Sonucu"
+- [x] İndir butonu (PNG export)
+- [x] "Detaylı Raporu İncele (Pro)" butonu (locked)
+- [x] Close X ikonu
+
+### PHASE 5: Paywall Logic & Demo Mode ✓
+- [x] PaywallModal bileşeni oluşturma
+- [x] Demo mode bypass (THYAO, EREGL tickers)
+- [x] Free tier: 1 analiz/gün limiti
+- [x] Pro tier: unlimited analyses
+- [x] Quota check logic (tRPC router)
+- [x] AnalysisSection bileşeni (form, loading, modal entegrasyonu)
+- [x] Mock demo image generator (canvas-based)
+
+### PHASE 6: Chatbot Personas & Error Handling ✓
+- [x] Sarp persona güncellendi (Detective, Risk Hunter, Wiro focus)
+- [x] Vera persona güncellendi (Strategist, Educator, Prompt Library focus)
+- [x] Ürün bilgi tabanı entegrasyonu (FİNANS KODU, AI Prompt, Pro Bülten)
+- [x] ErrorBoundary bileşeni (mevcut, Finans Kodu temasına uyumlu)
+
+### PHASE 7: Integration & Testing ✓
+- [x] AnalysisSection'ı Home.tsx'e entegre etme
+- [x] tRPC routers test etme (16 test passed)
+- [x] Database schema test etme (3 test passed)
+- [x] Supabase integration test etme (3 test passed)
+- [x] Azure TTS test etme (2 test passed)
+
+### Remaining Tasks
+- [ ] Wiro API integration (real financial analysis)
+- [ ] Payment processing (Stripe integration)
+- [ ] Email notifications (analysis results)
+- [ ] Analytics tracking (user behavior)
+- [ ] Performance optimization (bundle size, lazy loading)
+- [ ] Security audit (auth, data validation)
+- [ ] Browser testing (Chrome, Firefox, Safari)
+- [ ] Mobile testing (iOS, Android)
