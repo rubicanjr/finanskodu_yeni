@@ -592,3 +592,12 @@
 - [x] Performans: Promise.all ile parallel execution (zaten implement)
 - [x] Türkçe Karakterler: High resolution + Turkish char kuralı (zaten implement)
 - [x] Test et: 25/25 passed ✓
+
+
+## Real Stock Data Integration ✓
+- [x] yfinance kütüphanesini projeye ekle (Yahoo Finance API helper)
+- [x] Backend: getRealStockPrice fonksiyonu (THYAO.IS formatı, fallback 50 TL)
+- [x] Backend: Wiro prompt'u F-String ile dinamik injection (guncel_fiyat, hedef_fiyat)
+- [x] Frontend: Modal başlıkları küçült (text-lg → text-base)
+- [x] Frontend: "Haftalık bülten" yazısını sil, e-posta input'unu temizle
+- [x] Test et: 25/25 passed ✓

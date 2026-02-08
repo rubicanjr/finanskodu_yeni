@@ -102,7 +102,7 @@ export function AnalysisResultModal({
           
           {/* Header - COMPACT */}
           <div className="px-6 pt-6 pb-3 border-b border-cyan-500/20">
-            <h2 className="text-lg font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent mb-1">
+            <h2 className="text-base font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent mb-1">
               {ticker} - Finansal Röntgen
             </h2>
             <p className="text-slate-400 text-xs">
@@ -215,11 +215,7 @@ export function AnalysisResultModal({
                 </p>
               )}
 
-              {!newsletterSuccess && (
-                <p className="text-xs text-slate-400 mt-1">
-                  Haftalık bülten
-                </p>
-              )}
+
             </div>
           </div>
         </div>

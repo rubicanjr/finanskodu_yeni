@@ -6,6 +6,7 @@ import { z } from "zod";
 import { getOrCreateProfile, incrementUsageCount, getProfileByUserId, saveAnalysisResult } from "./db";
 import { TRPCError } from "@trpc/server";
 import { generateImage } from "./_core/imageGeneration";
+import { getRealStockPrice, calculateTargetPrice } from "./_core/stockData";
 
 export const appRouter = router({
   system: systemRouter,
@@ -128,13 +129,15 @@ export const appRouter = router({
       .input(z.object({ ticker: z.string() }))
       .mutation(async ({ ctx, input }) => {
         const ticker = input.ticker.toUpperCase();
-        const currentPrice = 50;
-        const targetPrice = parseFloat((currentPrice * 1.45).toFixed(2));
+        
+        // Fetch real stock price from Yahoo Finance (BIST stocks)
+        const currentPrice = await getRealStockPrice(ticker);
+        const targetPrice = calculateTargetPrice(currentPrice);
         const turkishRule = "CRITICAL: RENDER TEXT IN HIGH RESOLUTION. The generated dashboard image must contain ONLY TURKISH text. Use labels: AL, SAT, HEDEF, ANALİZ. Do not use English words like Buy, Sell, Rating. Ensure correct Turkish output for characters: İ, Ş, Ğ, Ü, Ö, Ç. If rendering fails, replace difficult labels with uppercase standard font.";
         const magicWords = "High fidelity UI dashboard, cyberpunk finance interface, detailed candlesticks, numeric y-axis, sidebar with news text, glowing neon data visualization, 4k render. Aspect ratio: 16:9 landscape.";
 
         // Prompt 1: Technical Dashboard (Turkish)
-        const technicalPrompt = `A professional Bloomberg Terminal style dashboard for stock ${ticker}. Show a SINGLE 6-Month Candlestick Chart. Overlay Text: 'ANLIK: ${currentPrice} TL', 'HEDEF: ${targetPrice} TL'. Trend: Bullish. Right panel shows Haber Akisi, Rating: AL. Dark mode, neon cyan. Strictly ONE single chart. Timeframe: 6 Months. ${turkishRule} ${magicWords}`;
+        const technicalPrompt = `A professional Bloomberg Terminal style dashboard for stock ${ticker}. Show a SINGLE 6-Month Candlestick Chart. Overlay Text: 'ANLIK: ${currentPrice} TL', 'HEDEF: ${targetPrice} TL'. Trend: YUKSELIS (Bullish). Right panel shows HABER AKISI, Rating: AL. Dark mode, neon cyan. Strictly ONE single chart. Timeframe: 6 Months. MANDATORY: Use only these exact numbers - ${currentPrice} and ${targetPrice}. Do not hallucinate prices. ${turkishRule} ${magicWords}`;
 
         // Prompt 2: Social Sentiment (Turkish)
         const socialPrompt = `A Social Media Analytics Dashboard for ${ticker}. Large center gauge showing Sosyal Medya Duygu Durumu: Pozitif/Yuksek. Lists of Trending Hashtags and Influencer Mentions. Glassmorphism style cards. ${turkishRule} ${magicWords}`;
