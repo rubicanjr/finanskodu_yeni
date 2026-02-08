@@ -583,3 +583,12 @@
 - [x] Backend: Promise.all ile parallel execution (3 image generation)
 - [x] Test et: 25/25 passed ✓
 - [x] Checkpoint kaydet
+
+
+## CRITICAL REVISION (Logic Fixes & Performance) ✓
+- [x] Fiyat Anomalisi: Dynamic variable injection (currentPrice * 1.45)
+- [x] UI Sıkılaştırma: Başlıklar küçült (text-xl), footer input+button yan yana
+- [x] İndirme Butonu: target="_blank" ve rel="noopener noreferrer" (zaten implement)
+- [x] Performans: Promise.all ile parallel execution (zaten implement)
+- [x] Türkçe Karakterler: High resolution + Turkish char kuralı (zaten implement)
+- [x] Test et: 25/25 passed ✓

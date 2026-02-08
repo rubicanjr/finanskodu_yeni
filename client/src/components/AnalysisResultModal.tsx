@@ -102,7 +102,7 @@ export function AnalysisResultModal({
           
           {/* Header - COMPACT */}
           <div className="px-6 pt-6 pb-3 border-b border-cyan-500/20">
-            <h2 className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent mb-1">
+            <h2 className="text-lg font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent mb-1">
               {ticker} - Finansal Röntgen
             </h2>
             <p className="text-slate-400 text-xs">
@@ -190,19 +190,19 @@ export function AnalysisResultModal({
 
             {/* Newsletter Subscription (60% width) */}
             <div className="flex-1 basis-3/5 bg-slate-800/50 border border-cyan-500/20 rounded-lg p-3">
-              <div className="flex flex-col gap-1.5">
+              <div className="flex gap-2 items-center">
                 <input
                   type="email"
                   placeholder="E-posta"
                   value={newsletterEmail}
                   onChange={(e) => setNewsletterEmail(e.target.value)}
                   onKeyPress={(e) => e.key === "Enter" && handleNewsletterSubscribe()}
-                  className="px-3 py-1.5 bg-slate-900/50 border border-cyan-500/30 text-white placeholder-slate-500 rounded text-xs focus:outline-none focus:border-cyan-400 transition-colors"
+                  className="flex-1 px-2 py-1 bg-slate-900/50 border border-cyan-500/30 text-white placeholder-slate-500 rounded text-xs focus:outline-none focus:border-cyan-400 transition-colors"
                 />
                 <Button
                   onClick={handleNewsletterSubscribe}
                   disabled={!newsletterEmail.trim()}
-                  className="px-3 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-semibold rounded text-xs transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-1"
+                  className="px-2 py-1 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-semibold rounded text-xs transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-1 whitespace-nowrap"
                 >
                   <Mail className="w-3 h-3" />
                   Abone

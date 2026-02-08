@@ -129,12 +129,12 @@ export const appRouter = router({
       .mutation(async ({ ctx, input }) => {
         const ticker = input.ticker.toUpperCase();
         const currentPrice = 50;
-        const targetPrice = Math.round(currentPrice * 1.35 * 100) / 100;
-        const turkishRule = "CRITICAL: The generated dashboard image must contain ONLY TURKISH text. Use labels: AL, SAT, HEDEF, ANALİZ. Do not use English words like Buy, Sell, Rating. Ensure visual clarity for Turkish characters (Ç, Ğ, İ, Ş, Ü, Ö).";
+        const targetPrice = parseFloat((currentPrice * 1.45).toFixed(2));
+        const turkishRule = "CRITICAL: RENDER TEXT IN HIGH RESOLUTION. The generated dashboard image must contain ONLY TURKISH text. Use labels: AL, SAT, HEDEF, ANALİZ. Do not use English words like Buy, Sell, Rating. Ensure correct Turkish output for characters: İ, Ş, Ğ, Ü, Ö, Ç. If rendering fails, replace difficult labels with uppercase standard font.";
         const magicWords = "High fidelity UI dashboard, cyberpunk finance interface, detailed candlesticks, numeric y-axis, sidebar with news text, glowing neon data visualization, 4k render. Aspect ratio: 16:9 landscape.";
 
         // Prompt 1: Technical Dashboard (Turkish)
-        const technicalPrompt = `A professional Bloomberg Terminal style dashboard for stock ${ticker}. Split screen: Left shows candlestick chart with moving averages. Right shows Haber Akisi, Rating: AL, Target Price: ${targetPrice} TL. Dark mode, neon cyan. ${turkishRule} ${magicWords}`;
+        const technicalPrompt = `A professional Bloomberg Terminal style dashboard for stock ${ticker}. Show a SINGLE 6-Month Candlestick Chart. Overlay Text: 'ANLIK: ${currentPrice} TL', 'HEDEF: ${targetPrice} TL'. Trend: Bullish. Right panel shows Haber Akisi, Rating: AL. Dark mode, neon cyan. Strictly ONE single chart. Timeframe: 6 Months. ${turkishRule} ${magicWords}`;
 
         // Prompt 2: Social Sentiment (Turkish)
         const socialPrompt = `A Social Media Analytics Dashboard for ${ticker}. Large center gauge showing Sosyal Medya Duygu Durumu: Pozitif/Yuksek. Lists of Trending Hashtags and Influencer Mentions. Glassmorphism style cards. ${turkishRule} ${magicWords}`;
