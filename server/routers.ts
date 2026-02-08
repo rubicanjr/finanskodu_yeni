@@ -134,17 +134,17 @@ export const appRouter = router({
         // Fetch real stock price from Yahoo Finance (BIST stocks)
         const currentPrice = await getRealStockPrice(ticker);
         const targetPrice = calculateTargetPrice(currentPrice);
-        const turkishRule = "CRITICAL: RENDER TEXT IN HIGH RESOLUTION. The generated dashboard image must contain ONLY TURKISH text. Use labels: AL, SAT, HEDEF, ANALİZ. Do not use English words like Buy, Sell, Rating. Ensure correct Turkish output for characters: İ, Ş, Ğ, Ü, Ö, Ç. If rendering fails, replace difficult labels with uppercase standard font.";
+        const turkishRule = "CRITICAL: Output Text Language MUST BE TURKISH ONLY. No English terms allowed. Labels MUST be: AL (Buy), SAT (Sell), HEDEF (Target), ANALİZ (Analysis). FORBIDDEN: Buy, Sell, Hold, Rating, Bullish, Bearish, Target Price, Analysis. Character support: İ, Ş, Ğ, Ü, Ö, Ç must render correctly at high resolution. If rendering fails, use uppercase standard ASCII equivalents.";
         const magicWords = "High fidelity UI dashboard, cyberpunk finance interface, detailed candlesticks, numeric y-axis, sidebar with news text, glowing neon data visualization, 4k render. Aspect ratio: 16:9 landscape.";
 
         // Prompt 1: Technical Dashboard (Turkish)
-        const technicalPrompt = `Abstract cyberpunk stock market visualization for ${ticker}. Dashboard with neon green and cyan colors. Show Current Price: ${currentPrice} TL. Turkish labels: AL (Buy), SAT (Sell), HEDEF (Target), ANALİZ (Analysis). RENDER TEXT ACCURATELY IN TURKISH LANGUAGE. Handle characters 'İ, Ş, Ğ, Ü, Ö, Ç' correctly. Do not use English terminology. ${turkishRule} ${magicWords}`;
+        const technicalPrompt = `Cyberpunk stock market dashboard for ${ticker}. Neon green and cyan colors, professional fintech aesthetic. Current Price: ${currentPrice} TL (displayed in top-left corner). Turkish-only labels: AL, SAT, HEDEF, ANALİZ. ${turkishRule} NO TEXT IN ENGLISH. ${magicWords}. Render resolution: 4K. Style: Modern fintech dashboard with glowing elements.`;
 
         // Prompt 2: Social Sentiment (Turkish)
-        const socialPrompt = `Abstract social sentiment visualization for ${ticker}. Flowing waves in neon colors. Show Current Price: ${currentPrice} TL. Turkish labels: AL, SAT, HEDEF, ANALİZ. RENDER TEXT ACCURATELY IN TURKISH LANGUAGE. Handle characters 'İ, Ş, Ğ, Ü, Ö, Ç' correctly. Pure artistic representation. ${turkishRule} ${magicWords}`;
+        const socialPrompt = `Social sentiment analytics dashboard for ${ticker}. Flowing wave patterns in neon colors. Current Price: ${currentPrice} TL. Turkish-only labels: AL, SAT, HEDEF, ANALİZ. ${turkishRule} NO ENGLISH TEXT ALLOWED. ${magicWords}. Style: Modern social analytics with sentiment indicators.`;
 
         // Prompt 3: Fundamental Report (Turkish)
-        const fundamentalPrompt = `Abstract fundamental analysis visualization for ${ticker}. Geometric shapes and gradients. Show Current Price: ${currentPrice} TL. Turkish labels: AL, SAT, HEDEF, ANALİZ. RENDER TEXT ACCURATELY IN TURKISH LANGUAGE. Handle characters 'İ, Ş, Ğ, Ü, Ö, Ç' correctly. Pure graphic art. ${turkishRule} ${magicWords}`;
+        const fundamentalPrompt = `Fundamental analysis report visualization for ${ticker}. Geometric shapes and gradients in neon colors. Current Price: ${currentPrice} TL. Turkish-only labels: AL, SAT, HEDEF, ANALİZ. ${turkishRule} NO ENGLISH TEXT ALLOWED. ${magicWords}. Style: Professional financial report card with metrics.`;
 
         // Note: prompts are used by Wiro API but not returned to frontend
 
