@@ -131,11 +131,8 @@ export const appRouter = router({
       .mutation(async ({ ctx, input }) => {
         const ticker = input.ticker.toUpperCase();
         
-        // Fetch market trend data (includes jpMorganNote)
-        const { getMarketTrend } = await import("./_core/marketTrend");
-        const marketTrend = await getMarketTrend(ticker);
-        const currentPrice = marketTrend.currentPrice;
-        const jpMorganNote = marketTrend.jpMorganNote;
+        // Fetch real stock price from Yahoo Finance (BIST stocks)
+        const currentPrice = await getRealStockPrice(ticker);
         const targetPrice = calculateTargetPrice(currentPrice);
         const turkishRule = "CRITICAL: RENDER TEXT IN HIGH RESOLUTION. The generated dashboard image must contain ONLY TURKISH text. Use labels: AL, SAT, HEDEF, ANALİZ. Do not use English words like Buy, Sell, Rating. Ensure correct Turkish output for characters: İ, Ş, Ğ, Ü, Ö, Ç. If rendering fails, replace difficult labels with uppercase standard font.";
         const magicWords = "High fidelity UI dashboard, cyberpunk finance interface, detailed candlesticks, numeric y-axis, sidebar with news text, glowing neon data visualization, 4k render. Aspect ratio: 16:9 landscape.";
@@ -157,19 +154,19 @@ export const appRouter = router({
         let fundamentalImageUrl: string | undefined;
 
         const results = await Promise.all([
-          generateImage({ prompt: technicalPrompt }, ticker, jpMorganNote || undefined)
+          generateImage({ prompt: technicalPrompt })
             .then((r) => r.url)
             .catch((error) => {
               console.error("Failed to generate technical visual:", error);
               return undefined;
             }),
-          generateImage({ prompt: socialPrompt }, ticker, jpMorganNote)
+          generateImage({ prompt: socialPrompt })
             .then((r) => r.url)
             .catch((error) => {
               console.error("Failed to generate social visual:", error);
               return undefined;
             }),
-          generateImage({ prompt: fundamentalPrompt }, ticker, jpMorganNote)
+          generateImage({ prompt: fundamentalPrompt })
             .then((r) => r.url)
             .catch((error) => {
               console.error("Failed to generate fundamental visual:", error);
