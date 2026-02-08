@@ -1,6 +1,7 @@
-import { X, Download, Volume2, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useMemo } from "react";
+import { X, Download, Volume2, Mail } from "lucide-react";
+import { AdvancedRealTimeChart } from "react-ts-tradingview-widgets";
 
 interface Visual {
   type: "technical" | "social" | "fundamental";
@@ -13,6 +14,9 @@ interface AnalysisResultModalProps {
   isOpen: boolean;
   ticker: string;
   visuals?: Visual[];
+  geminiAnalysis?: string;
+  currentPrice?: number;
+  trend?: "POZİTİF" | "NEGATİF" | "NÖTR";
   isPro?: boolean;
   onClose: () => void;
   onDownload?: (type: string) => void;
@@ -23,6 +27,9 @@ export function AnalysisResultModal({
   isOpen,
   ticker,
   visuals = [],
+  geminiAnalysis = "",
+  currentPrice = 0,
+  trend = "NÖTR",
   isPro = false,
   onClose,
   onDownload,
@@ -35,13 +42,32 @@ export function AnalysisResultModal({
 
   if (!isOpen) return null;
 
+  // Generate Pollinations URL based on trend
+  const generatePollinationsUrl = (type: "technical" | "social" | "fundamental") => {
+    const trendColor = trend === "POZİTİF" ? "green neon lights" : trend === "NEGATİF" ? "red neon lights" : "blue neon lights";
+    
+    let prompt = "";
+    switch (type) {
+      case "technical":
+        prompt = `futuristic stock market dashboard for ${ticker}, ${trendColor}, cyberpunk city background, high tech, candlestick charts, 8k render`;
+        break;
+      case "social":
+        prompt = `social sentiment analytics for ${ticker}, ${trendColor}, flowing waves, twitter sentiment, modern design, 8k render`;
+        break;
+      case "fundamental":
+        prompt = `fundamental analysis report for ${ticker}, ${trendColor}, geometric shapes, financial metrics, professional design, 8k render`;
+        break;
+    }
+    
+    return `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=1280&height=720&nologo=true`;
+  };
+
   const currentVisual = visuals.find((v) => v.type === activeTab);
+  const pollinationsUrl = useMemo(() => generatePollinationsUrl(activeTab), [activeTab, trend]);
 
   const handleDownload = () => {
-    if (!currentVisual?.imageUrl) return;
-
     const link = document.createElement("a");
-    link.href = currentVisual.imageUrl;
+    link.href = pollinationsUrl;
     link.download = `${ticker}-${activeTab}-${new Date().toISOString().split("T")[0]}.png`;
     link.target = "_blank";
     link.rel = "noopener noreferrer";
@@ -62,7 +88,7 @@ export function AnalysisResultModal({
     }
 
     const tickerLetters = ticker.split("").join(" ");
-    const script = `${tickerLetters} için analiz tamamlandı. Sosyal Medya X duygu durumu yüksek, teknik indikatörler AL veriyor. JP Morgan hedef fiyatı güncelledi.`;
+    const script = `${tickerLetters} için analiz tamamlandı. ${geminiAnalysis || "Teknik analiz yapılıyor."}`;
 
     const utterance = new SpeechSynthesisUtterance(script);
     utterance.lang = "tr-TR";
@@ -87,7 +113,7 @@ export function AnalysisResultModal({
 
   return (
     <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="relative w-full max-w-3xl bg-gradient-to-br from-slate-900/90 to-slate-950/90 backdrop-blur-xl border border-cyan-500/30 rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      <div className="relative w-full max-w-4xl bg-gradient-to-br from-slate-900/90 to-slate-950/90 backdrop-blur-xl border border-cyan-500/30 rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[95vh]">
         
         <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-transparent to-purple-500/5 pointer-events-none" />
         
@@ -100,110 +126,86 @@ export function AnalysisResultModal({
 
         <div className="relative flex flex-col h-full overflow-hidden">
           
-          {/* Header - COMPACT */}
+          {/* Header */}
           <div className="px-6 pt-6 pb-3 border-b border-cyan-500/20">
             <h2 className="text-base font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent mb-1">
               {ticker} - Finansal Röntgen
             </h2>
             <p className="text-slate-400 text-xs">
-              Detaylı analiz raporu
+              Canlı fiyat: ₺{currentPrice.toFixed(2)} | Trend: {trend}
             </p>
           </div>
 
-          {/* Tab Navigation - COMPACT */}
+          {/* Tab Navigation */}
           <div className="px-6 pt-4 pb-3 border-b border-cyan-500/20 flex gap-2 overflow-x-auto">
-            {visuals.map((visual) => (
+            {["technical", "social", "fundamental"].map((tab) => (
               <button
-                key={visual.type}
-                onClick={() => setActiveTab(visual.type)}
+                key={tab}
+                onClick={() => setActiveTab(tab as any)}
                 className={`px-4 py-1.5 rounded-lg text-sm font-semibold transition-all whitespace-nowrap ${
-                  activeTab === visual.type
+                  activeTab === tab
                     ? "bg-gradient-to-r from-cyan-500 to-cyan-600 text-white"
                     : "bg-slate-800/50 text-slate-300 hover:bg-slate-700/50"
                 }`}
               >
-                {visual.title}
+                {tab === "technical" && "📈 Teknik Görünüm"}
+                {tab === "social" && "🐦 Sosyal Medya"}
+                {tab === "fundamental" && "📊 Temel Analiz"}
               </button>
             ))}
           </div>
 
-          {/* Tab Content - COMPACT */}
-          <div className="flex-1 overflow-y-auto px-6 py-4">
-            {currentVisual ? (
-              <div className="space-y-4">
-                {/* Image Container */}
-                <div className="bg-slate-800/50 border border-cyan-500/20 rounded-xl p-4 overflow-auto">
-                  {currentVisual.imageUrl ? (
-                    <img
-                      src={currentVisual.imageUrl}
-                      alt={`${ticker} ${currentVisual.type} Analysis`}
-                      className="w-full h-auto rounded-lg"
-                    />
-                  ) : (
-                    <div className="w-full h-48 flex items-center justify-center bg-slate-900/50 rounded-lg">
-                      <div className="text-center">
-                        <div className="w-10 h-10 bg-cyan-500/20 rounded-full mx-auto mb-3 flex items-center justify-center">
-                          <div className="w-6 h-6 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin" />
-                        </div>
-                        <p className="text-slate-400 text-xs">Görsel yükleniyor...</p>
-                      </div>
-                    </div>
-                  )}
-                </div>
+          {/* Content */}
+          <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
+            {/* Pollinations Image */}
+            <div className="bg-slate-800/50 border border-cyan-500/20 rounded-xl p-4 overflow-auto">
+              <img
+                src={pollinationsUrl}
+                alt={`${ticker} ${activeTab} Analysis`}
+                className="w-full h-auto rounded-lg"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1611974765270-ca1258634369?q=80&w=1920&auto=format&fit=crop";
+                }}
+              />
+            </div>
 
-                {/* Metrics Grid (3 Columns) */}
-                <div className="grid grid-cols-3 gap-2">
-                  {/* Metric 1: Konsensüs Beklentisi */}
-                  <div className="bg-slate-800/50 border border-cyan-500/20 rounded-lg p-2">
-                    <p className="text-slate-400 text-xs font-semibold mb-1">Konsensüs Beklentisi</p>
-                    <p className="text-cyan-400 text-sm font-bold">₺ 72.50</p>
-                    <p className="text-slate-500 text-xs mt-1">12 Aylık Analist</p>
-                  </div>
-                  
-                  {/* Metric 2: Getiri Potansiyeli */}
-                  <div className="bg-slate-800/50 border border-cyan-500/20 rounded-lg p-2">
-                    <p className="text-slate-400 text-xs font-semibold mb-1">Getiri Potansiyeli</p>
-                    <p className="text-green-400 text-sm font-bold">+45%</p>
-                    <p className="text-slate-500 text-xs mt-1">Mevcut Fiyata Göre</p>
-                  </div>
-                  
-                  {/* Metric 3: Yapay Zeka Görüşü */}
-                  <div className="bg-slate-800/50 border border-cyan-500/20 rounded-lg p-2">
-                    <p className="text-slate-400 text-xs font-semibold mb-1">Yapay Zeka Görüşü</p>
-                    <p className="text-green-400 text-sm font-bold">GÜÇLÜ</p>
-                    <p className="text-slate-500 text-xs mt-1">Teknik İndikatör</p>
-                  </div>
-                </div>
-
-                {/* Analysis Text */}
-                {currentVisual.analysisText && (
-                  <div className="bg-slate-800/50 border border-cyan-500/20 rounded-xl p-3">
-                    <p className="text-slate-300 text-xs leading-relaxed">
-                      {currentVisual.analysisText}
-                    </p>
-                  </div>
-                )}
-
-                {/* Download Button */}
-                <Button
-                  onClick={handleDownload}
-                  disabled={!currentVisual.imageUrl}
-                  className="w-full bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-white font-semibold py-2 rounded-lg text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                >
-                  <Download className="w-4 h-4" />
-                  İndir ⬇️
-                </Button>
-              </div>
-            ) : (
-              <div className="flex items-center justify-center h-48">
-                <p className="text-slate-400 text-sm">Sekme yüklenemedi</p>
+            {/* Gemini Analysis Text */}
+            {geminiAnalysis && (
+              <div className="bg-slate-800/50 border border-cyan-500/20 rounded-xl p-3">
+                <p className="text-slate-300 text-xs leading-relaxed font-semibold">
+                  💡 Sarp'ın Yorumu:
+                </p>
+                <p className="text-slate-300 text-xs leading-relaxed mt-2">
+                  {geminiAnalysis}
+                </p>
               </div>
             )}
+
+            {/* TradingView Widget */}
+            <div className="bg-slate-800/50 border border-cyan-500/20 rounded-xl overflow-hidden">
+              <div className="w-full h-[400px]">
+                <AdvancedRealTimeChart
+                  symbol={`BIST:${ticker}`}
+                  theme="dark"
+                  autosize
+                  locale="tr"
+                />
+              </div>
+            </div>
+
+            {/* Download Button */}
+            <Button
+              onClick={handleDownload}
+              className="w-full bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-white font-semibold py-2 rounded-lg text-sm transition-all flex items-center justify-center gap-2"
+            >
+              <Download className="w-4 h-4" />
+              İndir ⬇️
+            </Button>
           </div>
 
-          {/* Footer: TTS + Newsletter (FLEX ROW - COMPACT) */}
+          {/* Footer: TTS + Newsletter */}
           <div className="px-6 py-4 border-t border-cyan-500/20 flex gap-3">
-            {/* TTS Button (40% width) */}
+            {/* TTS Button */}
             <Button
               onClick={handleListenToSarp}
               className="flex-1 basis-2/5 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-semibold py-2 rounded-lg text-xs transition-all flex items-center justify-center gap-1"
@@ -212,7 +214,7 @@ export function AnalysisResultModal({
               {isSpeaking ? "Durdur" : "🔊 Dinle"}
             </Button>
 
-            {/* Newsletter Subscription (60% width) */}
+            {/* Newsletter */}
             <div className="flex-1 basis-3/5 bg-slate-800/50 border border-cyan-500/20 rounded-lg p-3">
               <div className="flex gap-2 items-center">
                 <input

@@ -627,3 +627,47 @@
 - [x] Türkçe karakter kuralı: İ, Ş, Ğ, Ü, Ö, Ç
 - [x] Anomali Kontrolü: current_price'ı prompt'a göm
 - [x] Test et ve checkpoint kaydet (25/25 passed)
+
+
+## PROJECT ARCHITECTURE SWAP: Gemini + Pollinations + TradingView
+
+### PHASE 1: Remove Wiro API & Clean Backend ✓
+- [x] server/_core/imageGeneration.ts dosyasını sil
+- [x] server/routers.ts'den generateVisuals mutation'ını sil
+- [x] Wiro API referanslarını kaldır
+- [x] Eski image generation testlerini sil
+
+### PHASE 2: Install Dependencies ✓
+- [x] npm package: @google/generative-ai ekle
+- [x] npm package: react-ts-tradingview-widgets ekle
+- [x] pnpm install çalıştır
+
+### PHASE 3: Implement Gemini API Backend ✓
+- [x] server/_core/gemini.ts oluştur (Gemini API wrapper)
+- [x] analyzeStock(ticker, currentPrice) fonksiyonu yaz
+- [x] Prompt: "Borsa spekülatörü ağzıyla esprili, iğneleyici, maksimum 2 cümle yorum"
+- [x] server/routers.ts'de analysis.analyzeStock mutation'ı ekle
+- [x] Gemini API key'i environment variable olarak ayarla
+
+### PHASE 4: Refactor Frontend - Pollinations ✓
+- [x] AnalysisResultModal.tsx'i yeniden tasarla
+- [x] Pollinations URL oluşturma mantığı ekle
+- [x] Trend-based color logic (POZITIF=green, NEGATİF=red)
+- [x] Görsel render: <img src={pollinations_url} />
+
+### PHASE 5: Integrate TradingView Widget ✓
+- [x] AdvancedRealTimeChart import et
+- [x] ResultModal'da grafik bölümü ekle
+- [x] Symbol format: BIST:${ticker}
+- [x] Dark theme, Turkish locale
+
+### PHASE 6: Testing & Verification ✓
+- [x] Gemini API çalışıyor mu test et
+- [x] Pollinations URL'ler doğru mu kontrol et
+- [x] TradingView widget yükleniyor mu test et
+- [x] 25/25 testler geçti mi kontrol et
+
+### PHASE 7: Deploy & Checkpoint
+- [ ] Tüm kodlar temiz, TypeScript hata yok
+- [ ] Dev server çalışıyor
+- [ ] Checkpoint kaydet

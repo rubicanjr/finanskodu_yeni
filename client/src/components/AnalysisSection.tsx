@@ -80,7 +80,7 @@ export function AnalysisSection() {
   );
   
   const startAnalysisMutation = trpc.analysis.startAnalysis.useMutation();
-  const generateVisualsMutation = trpc.analysis.generateVisuals.useMutation();
+  const analyzeStockMutation = trpc.analysis.analyzeStock.useMutation();
   const upgradeToProMutation = trpc.profile.upgradeToProTier.useMutation();
   const userProfile = trpc.profile.getProfile.useQuery(undefined, {
     enabled: isAuthenticated,
@@ -111,20 +111,10 @@ export function AnalysisSection() {
         // Simulate 27-second loading with fake progress
         await simulateDemoLoading();
 
-        // Try to generate visuals via Wiro API
+        // Use Pollinations for visuals (client-side)
         let visuals: Visual[] = DEMO_VISUALS; // Fallback to static visuals
-        try {
-          const visualsResult = await generateVisualsMutation.mutateAsync({ ticker: upperTicker });
-          if (visualsResult.visuals && visualsResult.visuals.length > 0) {
-            visuals = visualsResult.visuals;
-            console.log("Demo mode: Wiro API visuals generated successfully");
-          } else {
-            console.log("Demo mode: No visuals from API, using fallback");
-          }
-        } catch (apiError) {
-          console.error("Demo mode: Failed to generate visuals from Wiro API, using static fallback:", apiError);
-          // Keep using DEMO_VISUALS as fallback
-        }
+        // Pollinations URL will be generated in ResultModal component
+        // No need to call backend for image generation anymore
 
         // Set result data with API-generated or fallback visuals
         setResultData({
@@ -164,14 +154,8 @@ export function AnalysisSection() {
         console.log("Demo mode: Using fallback visuals");
         visuals = FALLBACK_VISUALS;
       } else {
-        // Try to generate visuals via API
-        try {
-          const visualsResult = await generateVisualsMutation.mutateAsync({ ticker: upperTicker });
-          visuals = visualsResult.visuals || FALLBACK_VISUALS;
-        } catch (apiError) {
-          console.error("Failed to generate visuals, using fallback:", apiError);
-          visuals = FALLBACK_VISUALS;
-        }
+        // Use Pollinations for visuals (client-side in ResultModal)
+        visuals = FALLBACK_VISUALS;
       }
 
       // Set result data and trigger modal
