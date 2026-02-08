@@ -459,3 +459,74 @@
 - [x] 25 test passed (Analysis, Supabase, DB, Auth, Azure TTS, TTS)
 - [x] Dev server sağlıklı (no TypeScript errors)
 - [x] HMR (Hot Module Reload) çalışıyor
+
+
+## Finans Kodu V5.0 (Final) - Advanced Visualization & Result Modal Overhaul
+
+### PHASE 1: Backend Wiro Prompt Mühendisliği
+- [ ] Wiro görsel oluşturma fonksiyonunu 3 farklı prompt için güncelleme
+- [ ] Teknik Görünüm (Technical Dashboard) prompt'ı
+- [ ] Sosyal Medya Nabzı (Social Sentiment) prompt'ı
+- [ ] Temel Analiz (Fundamental Report) prompt'ı
+- [ ] Her prompt'a Sihirli Kelimeleri ekleme
+
+### PHASE 2: Frontend Sekmeli Result Modal
+- [ ] AnalysisResultModal'ı 3 sekmeli yapıya dönüştürme
+- [ ] Sekme 1: 📈 Teknik Görünüm (Görsel 1 + İndir butonu)
+- [ ] Sekme 2: 🐦 Sosyal Medya (Görsel 2 + Analiz metni)
+- [ ] Sekme 3: 📊 Temel Analiz (Görsel 3)
+- [ ] Tab navigation UI oluşturma
+
+### PHASE 3: TTS (Sarp'ı Dinle) Butonu
+- [ ] Modal üstüne "🔊 Sarp'ı Dinle" butonu ekleme
+- [ ] Web Speech API (speechSynthesis) entegrasyonu
+- [ ] Dinamik metin script'i (TICKER parametresi)
+- [ ] Türkçe ses desteği
+
+### PHASE 4: Haftalık Bülten UI
+- [ ] Modal footer'ına email input alanı ekleme
+- [ ] "Haftalık Bültene Abone Ol" butonu
+- [ ] Success mesajı gösterimi
+- [ ] Form validation
+
+### PHASE 5: Test & Checkpoint
+- [ ] Tüm bileşenleri entegre etme
+- [ ] TypeScript hataları kontrol
+- [ ] Vitest testleri çalıştırma
+- [ ] Checkpoint kaydetme
+
+
+### PHASE 1: Backend Wiro Prompt Mühendisliği ✓
+- [x] Wiro görsel oluşturma fonksiyonunu 3 farklı prompt için güncelleme
+- [x] Teknik Görünüm (Technical Dashboard) prompt'ı
+- [x] Sosyal Medya Nabzı (Social Sentiment) prompt'ı
+- [x] Temel Analiz (Fundamental Report) prompt'ı
+- [x] Her prompt'a Sihirli Kelimeleri ekleme
+- [x] generateVisuals tRPC mutation'ı yazıldı
+
+### PHASE 2: Frontend Sekmeli Result Modal ✓
+- [x] AnalysisResultModal'ı 3 sekmeli yapıya dönüştürme
+- [x] Sekme 1: 📈 Teknik Görünüm (Görsel 1 + İndir butonu)
+- [x] Sekme 2: 🐦 Sosyal Medya (Görsel 2 + Analiz metni)
+- [x] Sekme 3: 📊 Temel Analiz (Görsel 3)
+- [x] Tab navigation UI oluşturma
+- [x] AnalysisSection'da generateVisuals mutation'ı entegre edildi
+
+### PHASE 3: TTS (Sarp'ı Dinle) Butonu ✓
+- [x] Modal üstüne "🔊 Sarp'ı Dinle" butonu ekleme
+- [x] Web Speech API (speechSynthesis) entegrasyonu
+- [x] Dinamik metin script'i (TICKER parametresi)
+- [x] Türkçe ses desteği
+- [x] Pause/Resume fonksiyonu
+
+### PHASE 4: Haftalık Bülten UI ✓
+- [x] Modal footer'ına email input alanı ekleme
+- [x] "Haftalık Bültene Abone Ol" butonu
+- [x] Success mesajı gösterimi
+- [x] Form validation (email gerekli)
+- [x] Auto-reset after 3 seconds
+
+### Test Results ✓
+- [x] 25 test passed (Analysis, DB, Supabase, Auth, Azure TTS, TTS)
+- [x] TypeScript: No errors
+- [x] Dev server: Running, HMR active

@@ -6,6 +6,13 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
 import { getLoginUrl } from "@/const";
 
+interface Visual {
+  type: "technical" | "social" | "fundamental";
+  title: string;
+  imageUrl?: string;
+  analysisText?: string;
+}
+
 export function AnalysisSection() {
   const { user, isAuthenticated } = useAuth();
   
@@ -15,7 +22,7 @@ export function AnalysisSection() {
   const [showPaywall, setShowPaywall] = useState(false);
   const [resultData, setResultData] = useState<{
     ticker: string;
-    imageUrl?: string;
+    visuals?: Visual[];
     isDemoMode: boolean;
   } | null>(null);
 
@@ -26,6 +33,7 @@ export function AnalysisSection() {
   );
   
   const startAnalysisMutation = trpc.analysis.startAnalysis.useMutation();
+  const generateVisualsMutation = trpc.analysis.generateVisuals.useMutation();
   const upgradeToProMutation = trpc.profile.upgradeToProTier.useMutation();
   const userProfile = trpc.profile.getProfile.useQuery(undefined, {
     enabled: isAuthenticated,
@@ -62,12 +70,12 @@ export function AnalysisSection() {
       // Simulate 27-second analysis
       await new Promise((resolve) => setTimeout(resolve, 27000));
 
-      // Generate mock result image (in real app, this would come from Wiro API)
-      const demoImageUrl = generateDemoImage(ticker);
+      // Generate visuals (3 different prompts via Wiro API)
+      const visualsResult = await generateVisualsMutation.mutateAsync({ ticker });
 
       setResultData({
         ticker: ticker.toUpperCase(),
-        imageUrl: demoImageUrl,
+        visuals: visualsResult.visuals,
         isDemoMode: result.isDemoMode,
       });
 
@@ -77,62 +85,6 @@ export function AnalysisSection() {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const generateDemoImage = (ticker: string): string => {
-    // Create a simple canvas-based demo image
-    const canvas = document.createElement("canvas");
-    canvas.width = 800;
-    canvas.height = 600;
-    const ctx = canvas.getContext("2d");
-
-    if (ctx) {
-      // Background
-      ctx.fillStyle = "#0f172a";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // Title
-      ctx.fillStyle = "#00f0ff";
-      ctx.font = "bold 32px Arial";
-      ctx.textAlign = "center";
-      ctx.fillText(`${ticker} - Finansal Analiz`, canvas.width / 2, 50);
-
-      // Grid background
-      ctx.strokeStyle = "#00f0ff20";
-      ctx.lineWidth = 1;
-      for (let i = 0; i < canvas.width; i += 50) {
-        ctx.beginPath();
-        ctx.moveTo(i, 0);
-        ctx.lineTo(i, canvas.height);
-        ctx.stroke();
-      }
-      for (let i = 0; i < canvas.height; i += 50) {
-        ctx.beginPath();
-        ctx.moveTo(0, i);
-        ctx.lineTo(canvas.width, i);
-        ctx.stroke();
-      }
-
-      // Sample chart
-      ctx.strokeStyle = "#00f0ff";
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(100, 400);
-      for (let i = 0; i < 700; i += 50) {
-        const y = 400 - Math.sin(i / 100) * 100 - Math.random() * 50;
-        ctx.lineTo(100 + i, y);
-      }
-      ctx.stroke();
-
-      // Stats
-      ctx.fillStyle = "#a8e6e6";
-      ctx.font = "16px Arial";
-      ctx.textAlign = "left";
-      ctx.fillText("Bilanço Sağlığı: %85", 50, 550);
-      ctx.fillText("Risk Skoru: Düşük", 400, 550);
-    }
-
-    return canvas.toDataURL("image/png");
   };
 
   const isPro = userProfile.data?.subscriptionTier === "pro";
@@ -216,22 +168,19 @@ export function AnalysisSection() {
         <AnalysisResultModal
           isOpen={showResult}
           ticker={resultData.ticker}
-          imageUrl={resultData.imageUrl}
+          visuals={resultData.visuals}
           isPro={isPro}
           onClose={() => {
             setShowResult(false);
             setResultData(null);
             setTicker("");
           }}
-          onDownload={() => {
-            console.log("Analiz raporu indirildi");
+          onDownload={(type) => {
+            console.log(`${type} analiz raporu indirildi`);
           }}
           onUpgradeClick={() => {
             setShowResult(false);
             setShowPaywall(true);
-          }}
-          onDetailedReportClick={() => {
-            console.log("Detaylı rapor sayfasına yönlendiriliyorsunuz");
           }}
         />
       )}
