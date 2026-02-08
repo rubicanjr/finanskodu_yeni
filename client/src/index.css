@@ -50,10 +50,17 @@
   --color-sidebar-ring: var(--sidebar-ring);
   
   /* Custom Finans Kodu Colors */
-  --color-neon-cyan: oklch(0.85 0.18 195); /* #00D4FF - Sarp */
-  --color-neon-purple: oklch(0.65 0.25 300); /* #A855F7 - Vera */
-  --color-deep-space: oklch(0.07 0.01 250); /* #0a0a0a */
-  --color-night-blue: oklch(0.12 0.02 250); /* #0d1117 */
+  --color-neon-cyan: oklch(0.85 0.18 195);
+  --color-neon-purple: oklch(0.65 0.25 300);
+  --color-deep-space: oklch(0.07 0.01 250);
+  --color-night-blue: oklch(0.12 0.02 250);
+  --color-detective-bg: oklch(0.03 0.01 250);
+  --color-detective-card: oklch(0.10 0.015 250);
+  --color-detective-cyan: oklch(0.85 0.18 195);
+  --color-detective-teal: oklch(0.75 0.15 180);
+  --color-detective-gold: oklch(0.95 0.15 60);
+  --color-detective-success: oklch(0.65 0.15 140);
+  --color-detective-danger: oklch(0.65 0.2 25);
   
   /* Typography */
   --font-display: 'Space Grotesk', sans-serif;

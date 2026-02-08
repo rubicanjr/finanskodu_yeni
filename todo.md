@@ -318,3 +318,37 @@
 ## BreadcrumbList Schema
 - [x] Ana sayfa (index.html) için BreadcrumbList schema eklendi
 - [x] Blog post'ları için BreadcrumbList schema eklendi (BlogSection.tsx)
+
+
+## Finans Kodu Dedektifi V3.0 - Hackathon MVP
+
+### PHASE 1: DESIGN SYSTEM
+- [x] Tailwind config'e yeni color palette eklendi (Deep Space, Neon Cyan, Saturn Gold)
+- [x] Hero section başlığı güncellendi: "Bilançoların MR'ını Çeken Yapay Zeka."
+- [x] Glassmorphism input field eklendi (border: #00F0FF, placeholder: "Hisse Kodu Girin")
+- [x] Action button eklendi: "Analiz Et (27sn)" - Saturn Gold (#FFD700) + loading animation
+- [x] Comparison section eklendi (Human vs GPT-4 vs Finans Kodu - Hackathon badge)
+
+### PHASE 2: SUPABASE AUTH & DB
+- [ ] Supabase integration setup
+- [ ] profiles table oluştur (subscription_tier, usage_count, last_reset_date)
+- [ ] Auth trigger: Yeni signup'da profiles'a free tier ile otomatik kayıt
+- [ ] "Giriş Yap / Kayıt Ol" butonunu header'a ekle
+- [ ] Auth state management (Pro badge vs Upgrade button)
+
+### PHASE 3: MONETIZATION & PAYWALL
+- [ ] Free tier: 1 analiz/gün limiti
+- [ ] Paywall modal: "Limit Aşıldı. Pro'ya geçin (199 TL/Ay)"
+- [ ] Mock payment: "Abone Ol" butonu subscription_tier'ı 'pro'ya güncelle
+- [ ] "Ödeme Başarılı" mesajı göster
+
+### PHASE 4: DEMO MODE
+- [ ] Input == "THYAO" için demo mode tetikle
+- [ ] Loading animation: "Veri Ayrıştırılıyor... Wiro Bağlanıyor... Görsel Oluşturuluyor..."
+- [ ] Pre-defined static analysis result göster (3 saniye sonra)
+
+### PHASE 5: CHATBOT PERSONAS UPDATE
+- [ ] Sarp persona'yı güncelle (Detective, Risk Hunter, Wiro infra focus)
+- [ ] Vera persona'yı güncelle (Strategist, Educator, Prompt Library focus)
+- [ ] Sarp opening: "Selam, ben Sarp. Buranın sayısal zekasıyım..."
+- [ ] Vera opening: "Merhaba, ben Vera. Sarp sana veriyi gösterir..."

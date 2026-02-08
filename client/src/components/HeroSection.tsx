@@ -15,6 +15,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, MessageSquare, Monitor } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
+import AnalysisInput from "./AnalysisInput";
 
 export default function HeroSection() {
   const [typedText, setTypedText] = useState("");
@@ -125,40 +126,39 @@ export default function HeroSection() {
       <div className="container relative z-10 pt-24 pb-16">
         <div className="max-w-5xl mx-auto text-center">
           
-          {/* Main Heading - NEW H1 from Strategy Document */}
+          {/* Main Heading - Finans Kodu Dedektifi V3.0 */}
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="font-display font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight mb-6"
           >
-            <span className="text-white">Duygularınızı Değil,</span>
+            <span className="text-white">Bilançoların</span>
             <br />
             <span style={{ 
-              background: 'linear-gradient(135deg, #00D4FF 0%, #A855F7 100%)',
+              background: 'linear-gradient(135deg, #00F0FF 0%, #2DD4BF 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text'
             }}>
-              Sisteminizi Yönetin.
+              MR'ını Çeken Yapay Zeka.
             </span>
           </motion.h1>
 
-          {/* Subheading - H2 from Strategy Document */}
+          {/* Subheading - Dedektifi V3.0 */}
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-base sm:text-lg text-gray-400 max-w-3xl mx-auto mb-12 leading-relaxed"
+            className="text-base sm:text-lg text-gray-400 max-w-3xl mx-auto mb-8 leading-relaxed"
           >
-            <span className="font-semibold text-white">Finans Kodu;</span> portföyünüzdeki hataları ayıklayan{" "}
-            <span style={{ color: '#00D4FF' }}>(Debug)</span>, yapay zekaya emretmenizi sağlayan{" "}
-            <span style={{ color: '#A855F7' }}>(Prompt)</span> ve piyasa yönünü tayin eden{" "}
-            <span className="text-white">(Algoritma)</span> dijital araçlar bütünüdür.{" "}
-            <span className="text-gray-300">Yatırımınızı şansa değil, matematiğe dayandırın.</span>
+            Yatırımcıların 5 saatte okuduğu raporları, Wiro destekli yerel modellerimizle 27 saniyede analiz ediyoruz.
           </motion.p>
+          
+          {/* Glassmorphism Analysis Input */}
+          <AnalysisInput />
 
-          {/* Visual Composition: Laptop + Sarp + Vera */}
+          {/* Visual Composition: Laptop + Sarp + Vera - Dedektifi Demo */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}

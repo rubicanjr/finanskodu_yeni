@@ -37,6 +37,7 @@
 
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
+import ComparisonSection from "@/components/ComparisonSection";
 import ProductsSection from "@/components/ProductsSection";
 import ManifestoSection from "@/components/ManifestoSection";
 import BlogSection from "@/components/BlogSection";
@@ -64,13 +65,17 @@ export default function Home() {
       {/* CRO: Attention & Interest - First impression */}
       <HeroSection />
 
+      {/* Comparison Section - Technology & Methodology */}
+      {/* CRO: Immediate Value Proposition - Show comparison right after hero */}
+      <ComparisonSection />
+
       {/* Social Proof Strip - Trust Signals */}
       <SocialProofStrip />
 
       {/* Main Content Area */}
       <main id="main-content" role="main">
         {/* Products Showcase - Each product in <article> */}
-        {/* CRO: Immediate Value Proposition - Show products right after hero */}
+        {/* CRO: Immediate Value Proposition - Show products */}
         <ProductsSection />
 
         {/* Manifesto - Problem & Solution with <dl> structure */}
