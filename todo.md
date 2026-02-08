@@ -560,3 +560,15 @@
 - [x] Error handling: API başarısız olursa Unsplash fallback'ine dön
 - [x] Loading state'i 27sn + API response time'a uyarla
 - [x] Test et ve checkpoint kaydet (25 test passed)
+
+
+## UX Refinements (React) ✓
+- [x] Backend: Wiro prompt'ı Landscape (16:9) olarak ayarla
+- [x] Backend: Prompt'a Türkçe text kuralı ekle (Hedef Fiyat, Al/Sat, ₺)
+- [x] Backend: Dinamik target price hesaplamas (Current * 1.35) JS'de
+- [x] Frontend: TTS harf harf okuma (THYAO -> T H Y A O)
+- [x] Frontend: TTS Türkçeleştirme (Sentiment -> Duygu Durumu, Twitter -> Sosyal Medya X)
+- [x] Frontend: localStorage caching (todayDate + ticker key)
+- [x] Frontend: Tekrar aynı ticker = instant load (cache'den)
+- [x] Frontend: Download button (HTML5 download attribute)
+- [x] Test et ve checkpoint kaydet (20/25 passed)

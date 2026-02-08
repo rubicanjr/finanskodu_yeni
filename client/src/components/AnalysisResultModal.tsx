@@ -59,7 +59,8 @@ export function AnalysisResultModal({
       return;
     }
 
-    const script = `${ticker} için analiz tamamlandı. Twitter skoru yüksek, teknik indikatörler AL veriyor. JP Morgan hedef fiyatı güncelledi.`;
+    const tickerLetters = ticker.split("").join(" ");
+    const script = `${tickerLetters} için analiz tamamlandı. Sosyal Medya X duygu durumu yüksek, teknik indikatörler AL veriyor. JP Morgan hedef fiyatı güncelledi.`;
 
     const utterance = new SpeechSynthesisUtterance(script);
     utterance.lang = "tr-TR";

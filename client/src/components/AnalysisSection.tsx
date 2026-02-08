@@ -133,6 +133,11 @@ export function AnalysisSection() {
           isDemoMode: true,
         });
 
+        // Save to localStorage cache
+        const today = new Date().toISOString().split("T")[0];
+        const cacheKey = `finans-kodu-${today}-${upperTicker}`;
+        localStorage.setItem(cacheKey, JSON.stringify(resultData));
+        
         setShowResult(true);
         return;
       }

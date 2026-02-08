@@ -128,10 +128,12 @@ export const appRouter = router({
       .input(z.object({ ticker: z.string() }))
       .mutation(async ({ ctx, input }) => {
         const ticker = input.ticker.toUpperCase();
+        const currentPrice = 50;
+        const targetPrice = Math.round(currentPrice * 1.35 * 100) / 100;
         const magicWords = "High fidelity UI dashboard, cyberpunk finance interface, detailed candlesticks, numeric y-axis, sidebar with news text, glowing neon data visualization, 4k render.";
 
         // Prompt 1: Technical Dashboard
-        const technicalPrompt = `A professional Bloomberg Terminal style dashboard for stock ${ticker}. Split screen: Left side shows a detailed candlestick chart with moving averages and random financial indicators. Right side shows a News Feed list, Analyst Rating: BUY, and Target Price boxes. Dark mode, neon cyan accents. ${magicWords}`;
+        const technicalPrompt = `A professional Bloomberg Terminal style dashboard for stock ${ticker}. Split screen: Left side shows a detailed candlestick chart with moving averages and random financial indicators. Right side shows a News Feed list, Analyst Rating: BUY, and Target Price:  TL boxes. Dark mode, neon cyan accents. ${magicWords}`;
 
         // Prompt 2: Social Sentiment
         const socialPrompt = `A Social Media Analytics Dashboard for ${ticker}. Large center gauge showing Twitter Sentiment Score: High/Positive. Lists of Trending Hashtags and Influencer Mentions. Glassmorphism style cards. ${magicWords}`;
