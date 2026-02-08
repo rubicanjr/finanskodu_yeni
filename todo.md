@@ -551,3 +551,12 @@
 - [x] JP Morgan Nötr analizi static text
 - [x] TTS button'ı window.speechSynthesis ile entegre et (AnalysisResultModal'da)
 - [x] Tüm özellikler test et (25 test passed)
+
+
+## Wiro API Entegrasyonu ✓
+- [x] Backend: generateVisuals mutation'ı Wiro API'ye bağla (routers.ts)
+- [x] Demo mode'da generateVisuals çağrısını aktif et
+- [x] Frontend: Demo mode'da static visuals yerine API sonuçlarını kullan
+- [x] Error handling: API başarısız olursa Unsplash fallback'ine dön
+- [x] Loading state'i 27sn + API response time'a uyarla
+- [x] Test et ve checkpoint kaydet (25 test passed)

@@ -106,15 +106,30 @@ export function AnalysisSection() {
     try {
       setIsLoading(true);
 
-      // Demo mode: Bypass all API calls and use hardcoded flow
+      // Demo mode: Use Wiro API to generate real visuals
       if (isDemoMode) {
         // Simulate 27-second loading with fake progress
         await simulateDemoLoading();
 
-        // Set result data with demo visuals
+        // Try to generate visuals via Wiro API
+        let visuals: Visual[] = DEMO_VISUALS; // Fallback to static visuals
+        try {
+          const visualsResult = await generateVisualsMutation.mutateAsync({ ticker: upperTicker });
+          if (visualsResult.visuals && visualsResult.visuals.length > 0) {
+            visuals = visualsResult.visuals;
+            console.log("Demo mode: Wiro API visuals generated successfully");
+          } else {
+            console.log("Demo mode: No visuals from API, using fallback");
+          }
+        } catch (apiError) {
+          console.error("Demo mode: Failed to generate visuals from Wiro API, using static fallback:", apiError);
+          // Keep using DEMO_VISUALS as fallback
+        }
+
+        // Set result data with API-generated or fallback visuals
         setResultData({
           ticker: upperTicker,
-          visuals: DEMO_VISUALS,
+          visuals: visuals,
           isDemoMode: true,
         });
 
