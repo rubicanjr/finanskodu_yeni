@@ -130,44 +130,49 @@ export const appRouter = router({
         const ticker = input.ticker.toUpperCase();
         const currentPrice = 50;
         const targetPrice = Math.round(currentPrice * 1.35 * 100) / 100;
-        const magicWords = "High fidelity UI dashboard, cyberpunk finance interface, detailed candlesticks, numeric y-axis, sidebar with news text, glowing neon data visualization, 4k render.";
+        const turkishRule = "CRITICAL: The generated dashboard image must contain ONLY TURKISH text. Use labels: AL, SAT, HEDEF, ANALİZ. Do not use English words like Buy, Sell, Rating. Ensure visual clarity for Turkish characters (Ç, Ğ, İ, Ş, Ü, Ö).";
+        const magicWords = "High fidelity UI dashboard, cyberpunk finance interface, detailed candlesticks, numeric y-axis, sidebar with news text, glowing neon data visualization, 4k render. Aspect ratio: 16:9 landscape.";
 
-        // Prompt 1: Technical Dashboard
-        const technicalPrompt = `A professional Bloomberg Terminal style dashboard for stock ${ticker}. Split screen: Left side shows a detailed candlestick chart with moving averages and random financial indicators. Right side shows a News Feed list, Analyst Rating: BUY, and Target Price:  TL boxes. Dark mode, neon cyan accents. ${magicWords}`;
+        // Prompt 1: Technical Dashboard (Turkish)
+        const technicalPrompt = `A professional Bloomberg Terminal style dashboard for stock ${ticker}. Split screen: Left shows candlestick chart with moving averages. Right shows Haber Akisi, Rating: AL, Target Price: ${targetPrice} TL. Dark mode, neon cyan. ${turkishRule} ${magicWords}`;
 
-        // Prompt 2: Social Sentiment
-        const socialPrompt = `A Social Media Analytics Dashboard for ${ticker}. Large center gauge showing Twitter Sentiment Score: High/Positive. Lists of Trending Hashtags and Influencer Mentions. Glassmorphism style cards. ${magicWords}`;
+        // Prompt 2: Social Sentiment (Turkish)
+        const socialPrompt = `A Social Media Analytics Dashboard for ${ticker}. Large center gauge showing Sosyal Medya Duygu Durumu: Pozitif/Yuksek. Lists of Trending Hashtags and Influencer Mentions. Glassmorphism style cards. ${turkishRule} ${magicWords}`;
 
-        // Prompt 3: Fundamental Report
-        const fundamentalPrompt = `A Financial Report Card for ${ticker}. Letter grade A+ in a glowing circle. Progress bars for Cash Flow, Profitability, and Debt Ratio. Clean, structured data visualization. ${magicWords}`;
+        // Prompt 3: Fundamental Report (Turkish)
+        const fundamentalPrompt = `A Financial Report Card for ${ticker}. Letter grade A+ in a glowing circle. Progress bars for Nakit Akisi, Karlilik, and Borc Orani. Clean, structured data visualization. ${turkishRule} ${magicWords}`;
 
         // Note: prompts are used by Wiro API but not returned to frontend
 
-        // Generate images using Wiro API
+        // Generate images using Wiro API in PARALLEL with Promise.all
         let technicalImageUrl: string | undefined;
         let socialImageUrl: string | undefined;
         let fundamentalImageUrl: string | undefined;
 
-        try {
-          const technicalResult = await generateImage({ prompt: technicalPrompt });
-          technicalImageUrl = technicalResult.url;
-        } catch (error) {
-          console.error("Failed to generate technical visual:", error);
-        }
+        const results = await Promise.all([
+          generateImage({ prompt: technicalPrompt })
+            .then((r) => r.url)
+            .catch((error) => {
+              console.error("Failed to generate technical visual:", error);
+              return undefined;
+            }),
+          generateImage({ prompt: socialPrompt })
+            .then((r) => r.url)
+            .catch((error) => {
+              console.error("Failed to generate social visual:", error);
+              return undefined;
+            }),
+          generateImage({ prompt: fundamentalPrompt })
+            .then((r) => r.url)
+            .catch((error) => {
+              console.error("Failed to generate fundamental visual:", error);
+              return undefined;
+            }),
+        ]);
 
-        try {
-          const socialResult = await generateImage({ prompt: socialPrompt });
-          socialImageUrl = socialResult.url;
-        } catch (error) {
-          console.error("Failed to generate social visual:", error);
-        }
-
-        try {
-          const fundamentalResult = await generateImage({ prompt: fundamentalPrompt });
-          fundamentalImageUrl = fundamentalResult.url;
-        } catch (error) {
-          console.error("Failed to generate fundamental visual:", error);
-        }
+        technicalImageUrl = results[0];
+        socialImageUrl = results[1];
+        fundamentalImageUrl = results[2];
 
         return {
           success: true,

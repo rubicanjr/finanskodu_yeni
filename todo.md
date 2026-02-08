@@ -572,3 +572,14 @@
 - [x] Frontend: Tekrar aynı ticker = instant load (cache'den)
 - [x] Frontend: Download button (HTML5 download attribute)
 - [x] Test et ve checkpoint kaydet (20/25 passed)
+
+
+## UI Compactness & Performance Optimization ✓
+- [x] Modal başlıkları text-2xl → text-lg/text-base (text-xl, text-xs)
+- [x] Padding/margin değerlerini azalt (~30% reduction)
+- [x] Footer: TTS + newsletter yan yana (flex row, 40% + 60%)
+- [x] Download: target="_blank" ve rel="noopener noreferrer" ekle
+- [x] Wiro prompt: Strict Turkish text kuralı (AL, SAT, HEDEF, ANALİZ)
+- [x] Backend: Promise.all ile parallel execution (3 image generation)
+- [x] Test et: 25/25 passed ✓
+- [x] Checkpoint kaydet
