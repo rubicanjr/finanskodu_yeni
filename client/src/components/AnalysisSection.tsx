@@ -4,6 +4,7 @@ import { AnalysisResultModal } from "./AnalysisResultModal";
 import { PaywallModal } from "./PaywallModal";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
+import { getLoginUrl } from "@/const";
 
 export function AnalysisSection() {
   const { user, isAuthenticated } = useAuth();
@@ -179,7 +180,14 @@ export function AnalysisSection() {
         {!isAuthenticated && (
           <div className="bg-slate-800/50 border border-cyan-500/20 rounded-lg p-4 text-center">
             <p className="text-slate-300">
-              Analiz için <span className="text-cyan-400 font-semibold">giriş yapmanız</span> gerekiyor.
+              Analiz için{" "}
+              <a
+                href={getLoginUrl()}
+                className="text-cyan-400 font-semibold underline cursor-pointer hover:text-cyan-300 transition-colors"
+              >
+                giriş yapmanız
+              </a>
+              {" "}gerekiyor.
             </p>
           </div>
         )}

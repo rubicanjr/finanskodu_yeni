@@ -439,3 +439,23 @@
 - [ ] Security audit (auth, data validation)
 - [ ] Browser testing (Chrome, Firefox, Safari)
 - [ ] Mobile testing (iOS, Android)
+
+
+## Frontend UX Refactoring (Cleanup & Login Integration)
+
+### PHASE 1: Eski Input Alanının Kaldırılması ✓
+- [x] AnalysisInput bileşenini HeroSection'dan kaldırma
+- [x] Eski "Bilanço MR'ını Çeken Yapay Zeka" input alanını tamamen silme
+- [x] HeroSection'ı sadeleştirme (Hero + Sarp/Vera + CTA butonları)
+
+### PHASE 2: Login Uyarısını Etkileşimli Hale Getirme ✓
+- [x] AnalysisSection'daki login uyarısını güncelleştirme
+- [x] "giriş yapmanız" metnini tıklanabilir link'e dönüştürme
+- [x] Neon Cyan (#00D4FF) renk ve underline stili ekleme
+- [x] getLoginUrl() fonksiyonunu entegre etme
+- [x] Hover efekti (text-cyan-300) ekleme
+
+### Test Results ✓
+- [x] 25 test passed (Analysis, Supabase, DB, Auth, Azure TTS, TTS)
+- [x] Dev server sağlıklı (no TypeScript errors)
+- [x] HMR (Hot Module Reload) çalışıyor

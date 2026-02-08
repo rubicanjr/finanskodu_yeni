@@ -15,7 +15,6 @@ import { motion } from "framer-motion";
 import { ArrowRight, MessageSquare, Monitor } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
-import AnalysisInput from "./AnalysisInput";
 
 export default function HeroSection() {
   const [typedText, setTypedText] = useState("");
@@ -154,9 +153,6 @@ export default function HeroSection() {
           >
             Yatırımcıların 5 saatte okuduğu raporları, Wiro destekli yerel modellerimizle 27 saniyede analiz ediyoruz.
           </motion.p>
-          
-          {/* Glassmorphism Analysis Input */}
-          <AnalysisInput />
 
           {/* Visual Composition: Laptop + Sarp + Vera - Dedektifi Demo */}
           <motion.div
