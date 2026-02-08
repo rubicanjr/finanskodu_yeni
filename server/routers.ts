@@ -138,13 +138,13 @@ export const appRouter = router({
         const magicWords = "High fidelity UI dashboard, cyberpunk finance interface, detailed candlesticks, numeric y-axis, sidebar with news text, glowing neon data visualization, 4k render. Aspect ratio: 16:9 landscape.";
 
         // Prompt 1: Technical Dashboard (Turkish)
-        const technicalPrompt = `Abstract cyberpunk stock market visualization for ${ticker}. NO TEXT, NO LABELS, NO NUMBERS inside image. ${turkishRule} ${magicWords}`;
+        const technicalPrompt = `Abstract cyberpunk stock market visualization for ${ticker}. Dashboard with neon green and cyan colors. Show Current Price: ${currentPrice} TL. Turkish labels: AL (Buy), SAT (Sell), HEDEF (Target), ANALİZ (Analysis). RENDER TEXT ACCURATELY IN TURKISH LANGUAGE. Handle characters 'İ, Ş, Ğ, Ü, Ö, Ç' correctly. Do not use English terminology. ${turkishRule} ${magicWords}`;
 
         // Prompt 2: Social Sentiment (Turkish)
-        const socialPrompt = `Abstract social sentiment visualization for ${ticker}. Flowing waves in neon colors. NO TEXT, NO NUMBERS, NO LABELS. Pure artistic representation. ${turkishRule} ${magicWords}`;
+        const socialPrompt = `Abstract social sentiment visualization for ${ticker}. Flowing waves in neon colors. Show Current Price: ${currentPrice} TL. Turkish labels: AL, SAT, HEDEF, ANALİZ. RENDER TEXT ACCURATELY IN TURKISH LANGUAGE. Handle characters 'İ, Ş, Ğ, Ü, Ö, Ç' correctly. Pure artistic representation. ${turkishRule} ${magicWords}`;
 
         // Prompt 3: Fundamental Report (Turkish)
-        const fundamentalPrompt = `Abstract fundamental analysis visualization for ${ticker}. Geometric shapes and gradients. NO TEXT, NO NUMBERS, NO LABELS. Pure graphic art. ${turkishRule} ${magicWords}`;
+        const fundamentalPrompt = `Abstract fundamental analysis visualization for ${ticker}. Geometric shapes and gradients. Show Current Price: ${currentPrice} TL. Turkish labels: AL, SAT, HEDEF, ANALİZ. RENDER TEXT ACCURATELY IN TURKISH LANGUAGE. Handle characters 'İ, Ş, Ğ, Ü, Ö, Ç' correctly. Pure graphic art. ${turkishRule} ${magicWords}`;
 
         // Note: prompts are used by Wiro API but not returned to frontend
 

@@ -14,6 +14,7 @@ export interface MarketTrendData {
   percentChange: number;
   targetMeanPrice: number; // Analist hedef fiyat ortalaması
   returnPotential: number; // Getiri potansiyeli yüzdesi
+  jpMorganNote: string; // JP Morgan tahmini (veri yoksa "Henüz bir fiyat tahmini yok")
 }
 
 export async function getMarketTrend(ticker: string): Promise<MarketTrendData> {
@@ -56,6 +57,10 @@ export async function getMarketTrend(ticker: string): Promise<MarketTrendData> {
       (((targetMeanPrice - currentPrice) / currentPrice) * 100).toFixed(2)
     );
     
+    // JP Morgan Logic: Veri yoksa dürüstçe "Henüz bir fiyat tahmini yok" yazısı
+    // Not: Gerçek JP Morgan API'si public'te yoktur, bu yüzden fallback metin kullanılır
+    const jpMorganNote = "JP Morgan'ın henüz bir fiyat tahmini yok.";
+    
     return {
       currentPrice,
       previousPrice: estimatedPreviousPrice,
@@ -65,6 +70,7 @@ export async function getMarketTrend(ticker: string): Promise<MarketTrendData> {
       percentChange,
       targetMeanPrice,
       returnPotential,
+      jpMorganNote,
     };
   } catch (error) {
     console.error("Error analyzing market trend:", error);
@@ -79,6 +85,7 @@ export async function getMarketTrend(ticker: string): Promise<MarketTrendData> {
       percentChange: 0,
       targetMeanPrice: 0,
       returnPotential: 0,
+      jpMorganNote: "Veri çekilemedi. Lütfen daha sonra tekrar deneyin.",
     };
   }
 }

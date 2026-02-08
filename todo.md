@@ -619,3 +619,11 @@
 - [ ] Frontend: 3 kutu UI (Konsensüs, Getiri, AI Görüşü)
 - [ ] UI Türkçeleştirme (İngilizce terim yok)
 - [ ] Test et ve checkpoint kaydet
+
+
+## STRICT REVISION: Hallucination Prevention & Turkish Visuals ✓
+- [x] JP Morgan Logic: Veri yoksa "Henüz bir fiyat tahmini yok" yazısı
+- [x] Görsel Türkçeleştirme: AL, SAT, HEDEF, ANALİZ labels
+- [x] Türkçe karakter kuralı: İ, Ş, Ğ, Ü, Ö, Ç
+- [x] Anomali Kontrolü: current_price'ı prompt'a göm
+- [x] Test et ve checkpoint kaydet (25/25 passed)
