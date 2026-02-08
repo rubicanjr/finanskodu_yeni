@@ -539,3 +539,15 @@
 - [x] Modal trigger logic'ini garantile (setShowResult(true))
 - [x] Loading state'i optimize et (isLoading && AnalysisLoadingState)
 - [x] 25 test passed, TypeScript clean
+
+
+## Hackathon Demo Mode (THYAO) ✓
+- [x] THYAO/EREGL input'ı detect et ve backend bypass et
+- [x] 27 saniye fake loading (setTimeout) ile simüle et
+- [x] Dynamic loading messages göster (5 farklı mesaj)
+- [x] Static demo data ile Result Modal'ı populate et
+- [x] Unsplash borsa grafiği görseli ekle
+- [x] Twitter Hype Score (87/100) static data
+- [x] JP Morgan Nötr analizi static text
+- [x] TTS button'ı window.speechSynthesis ile entegre et (AnalysisResultModal'da)
+- [x] Tüm özellikler test et (25 test passed)

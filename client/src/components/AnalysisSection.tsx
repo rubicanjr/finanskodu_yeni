@@ -13,7 +13,29 @@ interface Visual {
   analysisText?: string;
 }
 
-// Fallback visuals for demo mode or when API fails
+// Demo mode static visuals for THYAO/EREGL
+const DEMO_VISUALS: Visual[] = [
+  {
+    type: "technical",
+    title: "📈 Teknik Görünüm",
+    imageUrl: "https://images.unsplash.com/photo-1611974765270-ca1258634369?q=80&w=1920&auto=format&fit=crop",
+    analysisText: "Teknik analiz: Fiyat trend çizgisine yakın. RSI 65 seviyesinde. Destek: 45.50 TL",
+  },
+  {
+    type: "social",
+    title: "🐦 Sosyal Medya",
+    imageUrl: "https://images.unsplash.com/photo-1611974765270-ca1258634369?q=80&w=1920&auto=format&fit=crop",
+    analysisText: "Twitter Hype Score: 87/100 | Son 24 saatte sosyal medyada boğa piyasası beklentisi hakim.",
+  },
+  {
+    type: "fundamental",
+    title: "📊 Temel Analiz",
+    imageUrl: "https://images.unsplash.com/photo-1611974765270-ca1258634369?q=80&w=1920&auto=format&fit=crop",
+    analysisText: "JP Morgan: NÖTR | Şirket nakit akışında bozulma tespit edildi. P/E oranı sektör ortalamasının altında.",
+  },
+];
+
+// Fallback visuals for non-demo mode
 const FALLBACK_VISUALS: Visual[] = [
   {
     type: "technical",
@@ -34,6 +56,9 @@ const FALLBACK_VISUALS: Visual[] = [
     analysisText: "Temel analiz görseli yükleniyor...",
   },
 ];
+
+// Demo tickers that bypass API calls
+const DEMO_TICKERS = ["THYAO", "EREGL"];
 
 export function AnalysisSection() {
   const { user, isAuthenticated } = useAuth();
@@ -69,8 +94,11 @@ export function AnalysisSection() {
       return;
     }
 
-    // If not authenticated, show login prompt
-    if (!isAuthenticated) {
+    const upperTicker = ticker.toUpperCase();
+    const isDemoMode = DEMO_TICKERS.includes(upperTicker);
+
+    // If not authenticated and not demo mode, show login prompt
+    if (!isAuthenticated && !isDemoMode) {
       console.log("Analiz için lütfen giriş yapın veya ücretsiz kaydolun");
       return;
     }
@@ -78,6 +106,23 @@ export function AnalysisSection() {
     try {
       setIsLoading(true);
 
+      // Demo mode: Bypass all API calls and use hardcoded flow
+      if (isDemoMode) {
+        // Simulate 27-second loading with fake progress
+        await simulateDemoLoading();
+
+        // Set result data with demo visuals
+        setResultData({
+          ticker: upperTicker,
+          visuals: DEMO_VISUALS,
+          isDemoMode: true,
+        });
+
+        setShowResult(true);
+        return;
+      }
+
+      // Non-demo mode: Use normal flow
       // Check quota
       const quotaCheck = await checkQuotaMutation.refetch();
       if (!quotaCheck.data?.allowed && !quotaCheck.data?.isDemoMode) {
@@ -87,7 +132,7 @@ export function AnalysisSection() {
       }
 
       // Start analysis
-      const result = await startAnalysisMutation.mutateAsync({ ticker });
+      const result = await startAnalysisMutation.mutateAsync({ ticker: upperTicker });
 
       // Simulate 27-second analysis
       await new Promise((resolve) => setTimeout(resolve, 27000));
@@ -101,7 +146,7 @@ export function AnalysisSection() {
       } else {
         // Try to generate visuals via API
         try {
-          const visualsResult = await generateVisualsMutation.mutateAsync({ ticker });
+          const visualsResult = await generateVisualsMutation.mutateAsync({ ticker: upperTicker });
           visuals = visualsResult.visuals || FALLBACK_VISUALS;
         } catch (apiError) {
           console.error("Failed to generate visuals, using fallback:", apiError);
@@ -111,7 +156,7 @@ export function AnalysisSection() {
 
       // Set result data and trigger modal
       setResultData({
-        ticker: ticker.toUpperCase(),
+        ticker: upperTicker,
         visuals: visuals,
         isDemoMode: result.isDemoMode,
       });
@@ -122,13 +167,40 @@ export function AnalysisSection() {
       console.error("Analiz hatası:", error);
       // Even on error, show modal with fallback data
       setResultData({
-        ticker: ticker.toUpperCase(),
+        ticker: upperTicker,
         visuals: FALLBACK_VISUALS,
         isDemoMode: false,
       });
       setShowResult(true);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  // Simulate 27-second demo loading with dynamic messages
+  const simulateDemoLoading = async () => {
+    const messages = [
+      "📡 KAP verilerine bağlanılıyor... (BIST Veri Akışı)",
+      "📄 Bilanço kalemleri taranıyor... (Satır: 1402/2000)",
+      "🔍 Makyajlı veriler temizleniyor... (Dedektif Modu Aktif)",
+      "🎨 Wiro AI görseli çiziyor... (Nöral Ağ İşlemesi)",
+      "🚀 Analiz tamamlanıyor... Sonuçlar Yükleniyor.",
+    ];
+
+    const totalDuration = 27000; // 27 seconds
+    const messageIntervals = [0, 5000, 10000, 15000, 20000];
+
+    for (let i = 0; i < totalDuration; i += 100) {
+      // Find current message based on elapsed time
+      let currentMessage = messages[0];
+      for (let j = messageIntervals.length - 1; j >= 0; j--) {
+        if (i >= messageIntervals[j]) {
+          currentMessage = messages[j];
+          break;
+        }
+      }
+
+      await new Promise((resolve) => setTimeout(resolve, 100));
     }
   };
 
@@ -184,7 +256,7 @@ export function AnalysisSection() {
               >
                 giriş yapmanız
               </a>
-              {" "}gerekiyor.
+              {" "}gerekiyor. (Demo: THYAO yazıp deneyin)
             </p>
           </div>
         )}
