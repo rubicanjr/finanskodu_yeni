@@ -671,3 +671,51 @@
 - [ ] Tüm kodlar temiz, TypeScript hata yok
 - [ ] Dev server çalışıyor
 - [ ] Checkpoint kaydet
+
+
+## UI RESTRUCTURE: Auth Gate vs. Sponsorship Section (Yeni Görev)
+
+### PHASE 1: Update Todo & Plan Structure
+- [x] Todo.md'ye yeni görevleri ekle
+- [x] Proje yapısını gözden geçir
+
+### PHASE 2: Create Sponsorship Section Component
+- [x] SponsorshipSection.tsx bileşeni oluştur
+- [x] Başlık: "Sponsorlar" (Ortalanmış, şık font)
+- [x] İletişim metni: "Sponsorlukla ilgili detaylara **finanskodu@gmail.com** e-posta adresine mail atarak ulaşabilirsiniz."
+- [x] Grid yapısı (marka logoları placeholder'ları)
+- [x] Tasarım: Gri veya beyaz arka plan
+
+### PHASE 3: Create Feedback Section Component
+- [x] FeedbackSection.tsx bileşeni oluştur
+- [x] Arka plan: Açık gri (bg-gray-50)
+- [x] Metin: "Memnun kaldığınız noktaları veya iyileştirebileceğimiz alanları duymak isteriz. Fikirleriniz, daha iyi websitesi kullanımı deneyimi ve daha mutlu ziyaretçiler için bize yol gösteriyor."
+- [x] Footer'dan hemen önce yerleştirilecek
+
+### PHASE 4: Refactor HeroSection with Conditional Rendering
+- [x] HeroSection'da conditional rendering güncelle
+- [x] Durum A (Giriş Yok): E-posta Giriş Formu göster
+- [x] Durum B (Giriş Var): Analiz Et çubuğu göster
+- [x] Analiz aracı giriş yapılmadığında KESİNLİKLE GİZLİ olmalı
+
+### PHASE 5: Update Home.tsx Layout Structure
+- [x] Home.tsx'de bölüm sırasını güncelle:
+  * Hero (Conditional: Auth Gate veya Analysis Tool)
+  * Sponsorship Section (Herkes tarafından görünsün)
+  * Products Section (Mevcut)
+  * Blog Section (Mevcut)
+  * Manifesto Section (Mevcut)
+  * Feedback Section (Footer öncesi)
+  * Footer (Mevcut)
+- [x] Eski widget/grafik alanını kaldır
+
+### PHASE 6: Testing & Verification
+- [x] Tüm bileşenler entegre edildi mi kontrol et
+- [x] Conditional rendering çalışıyor mu test et
+- [x] TypeScript hataları kontrol et
+- [x] 25/25 testler geçiyor mu kontrol et
+
+### PHASE 7: Deploy & Checkpoint
+- [x] Tüm kodlar temiz, TypeScript hata yok
+- [x] Dev server çalışıyor
+- [x] Checkpoint kaydet

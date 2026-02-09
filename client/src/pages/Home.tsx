@@ -9,13 +9,15 @@
   - GEO uyumlu, mobil öncelikli, yüksek dönüşüm hedefli
   
   Section Order (CRO Optimized Sales Funnel):
-  1. Hero Section - Attention & Interest
-  2. Products - Immediate Value Proposition
-  3. Manifesto - Story & Vision
-  4. Blog - Content & Authority
-  5. Testimonials - Social Proof
-  6. About - Trust & Credibility
-  7. Footer - Contact & Conversion
+  1. Hero Section - Attention & Interest (Conditional: Auth Gate or Analysis Tool)
+  2. Sponsorship Section - Brand Partnerships (Always Visible)
+  3. Products - Immediate Value Proposition
+  4. Manifesto - Story & Vision
+  5. Blog - Content & Authority
+  6. Testimonials - Social Proof
+  7. FAQ - Address Objections
+  8. Feedback - User Input
+  9. Footer - Contact & Conversion
   
   Semantic Structure:
   - <header> for hero section (contains h1)
@@ -37,13 +39,13 @@
 
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
-import ComparisonSection from "@/components/ComparisonSection";
-import { AnalysisSection } from "@/components/AnalysisSection";
+import SponsorshipSection from "@/components/SponsorshipSection";
 import ProductsSection from "@/components/ProductsSection";
 import ManifestoSection from "@/components/ManifestoSection";
 import BlogSection from "@/components/BlogSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import FAQSection from "@/components/FAQSection";
+import FeedbackSection from "@/components/FeedbackSection";
 import Footer from "@/components/Footer";
 import SocialProofStrip from "@/components/SocialProofStrip";
 
@@ -61,17 +63,13 @@ export default function Home() {
       {/* Navigation - Sticky header */}
       <Navigation />
 
-      {/* Hero Section - Contains the main <header> with <h1> */}
+      {/* Hero Section - Conditional Rendering (Auth Gate or Analysis Tool) */}
       {/* CRO: Attention & Interest - First impression */}
       <HeroSection />
 
-      {/* Comparison Section - Technology & Methodology */}
-      {/* CRO: Immediate Value Proposition - Show comparison right after hero */}
-      <ComparisonSection />
-
-      {/* Analysis Section - PHASE 1 of Hackathon MVP */}
-      {/* CRO: Engagement & Conversion - Interactive analysis feature */}
-      <AnalysisSection />
+      {/* Sponsorship Section - Always Visible */}
+      {/* CRO: Brand Partnerships & Collaboration */}
+      <SponsorshipSection />
 
       {/* Social Proof Strip - Trust Signals */}
       <SocialProofStrip />
@@ -97,9 +95,11 @@ export default function Home() {
         {/* FAQ - Frequently Asked Questions with Expert Insights */}
         {/* CRO: Address objections and build authority */}
         <FAQSection />
-
-        {/* About section removed per strategy document */}
       </main>
+
+      {/* Feedback Section - User Input & Suggestions */}
+      {/* CRO: Engagement & Community Building */}
+      <FeedbackSection />
 
       {/* Footer & Contact - Contains <address> for contact info */}
       {/* CRO: Final Conversion Point */}

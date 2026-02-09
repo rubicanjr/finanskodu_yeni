@@ -3,6 +3,7 @@ import { ArrowRight, MessageSquare, Monitor } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { EmailGate } from "@/components/EmailGate";
+import { AnalysisSection } from "./AnalysisSection";
 
 export default function HeroSection() {
   const [typedText, setTypedText] = useState("");
@@ -324,6 +325,17 @@ export default function HeroSection() {
               className="mb-8"
             >
               <EmailGate onSubmit={() => setIsLoggedIn(true)} />
+            </motion.div>
+          )}
+
+          {isLoggedIn && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.8 }}
+              className="mb-8"
+            >
+              <AnalysisSection />
             </motion.div>
           )}
 
