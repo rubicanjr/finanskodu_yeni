@@ -141,7 +141,17 @@ export function AnalysisResultModal({
           <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
 
             {/* Social Tab: Sentiment Dashboard */}
-            {activeTab === "social" && <SentimentDashboard ticker={ticker} sentiment={87} trend={trend} />}
+            {activeTab === "social" && (
+              <div className="space-y-4">
+                <SentimentDashboard ticker={ticker} sentiment={87} trend={trend} />
+                {geminiDetails && (
+                  <div className="bg-slate-800/50 border border-cyan-500/20 rounded-xl p-4">
+                    <h4 className="text-slate-300 text-sm font-semibold mb-2">📊 Duygu Analizi Detayları</h4>
+                    <p className="text-slate-400 text-xs leading-relaxed">{geminiDetails.social}</p>
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* Fundamental Tab: Financial Grid */}
             {activeTab === "fundamental" && <FinancialGrid ticker={ticker} />}

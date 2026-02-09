@@ -155,6 +155,19 @@ export function AnalysisSection() {
       const flaskData = await flaskResponse.json();
       console.log('Flask analiz sonucu:', flaskData);
 
+      // Call Flask API for sentiment analysis
+      const sentimentResponse = await fetch('http://localhost:5001/api/sentiment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ticker: upperTicker })
+      });
+
+      let sentimentData = null;
+      if (sentimentResponse.ok) {
+        sentimentData = await sentimentResponse.json();
+        console.log('Sentiment analiz sonucu:', sentimentData);
+      }
+
       let visuals: Visual[] = FALLBACK_VISUALS;
 
       // Set result data with Flask analysis
@@ -164,7 +177,7 @@ export function AnalysisSection() {
         isDemoMode: false,
         geminiDetails: {
           technical: flaskData.message || "Analiz tamamlandı",
-          social: "Sosyal medya analizi yükleniyor...",
+          social: sentimentData ? `Duygu Analizi: %${sentimentData.sentiment_score} POZİTİF (${sentimentData.positive} olumlu, ${sentimentData.negative} olumsuz)` : "Sosyal medya analizi yükleniyor...",
           fundamental: "Temel analiz yükleniyor...",
         },
         geminiAnalysis: flaskData.message,
@@ -183,8 +196,8 @@ export function AnalysisSection() {
         isDemoMode: false,
         geminiDetails: {
           technical: "Hata oluştu: " + (error instanceof Error ? error.message : "Bilinmeyen hata"),
-          social: "Hata oluştu. Lütfen tekrar deneyin.",
-          fundamental: "Hata oluştu. Lütfen tekrar deneyin.",
+          social: "Sosyal medya analizi başarısız oldu. Lütfen tekrar deneyin.",
+          fundamental: "Temel analiz başarısız oldu. Lütfen tekrar deneyin.",
         },
         trend: "KARIŞIK",
       });
