@@ -3,6 +3,8 @@ import { useState, useMemo } from "react";
 import { X, Download, Volume2, Mail } from "lucide-react";
 import { AdvancedRealTimeChart } from "react-ts-tradingview-widgets";
 import { getTradingViewSymbol } from "@/lib/symbolHelper";
+import { SentimentDashboard } from "./SentimentDashboard";
+import { FinancialGrid } from "./FinancialGrid";
 
 interface Visual {
   type: "technical" | "social" | "fundamental";
@@ -138,6 +140,12 @@ export function AnalysisResultModal({
           {/* Content */}
           <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
 
+            {/* Social Tab: Sentiment Dashboard */}
+            {activeTab === "social" && <SentimentDashboard ticker={ticker} sentiment={87} trend={trend} />}
+
+            {/* Fundamental Tab: Financial Grid */}
+            {activeTab === "fundamental" && <FinancialGrid ticker={ticker} />}
+
             {/* Gemini Analysis Text - Tab Specific */}
             {geminiDetails && (
               <div className="bg-slate-800/50 border border-cyan-500/20 rounded-xl p-3">
@@ -167,12 +175,20 @@ export function AnalysisResultModal({
             {/* TradingView Widget - Main Visualization */}
             <div className="bg-slate-800/50 border border-cyan-500/20 rounded-xl overflow-hidden">
               <div className="w-full h-[500px]">
-                <AdvancedRealTimeChart
-                  symbol={getTradingViewSymbol(ticker)}
-                  theme="dark"
-                  autosize
-                  locale="tr"
-                />
+                {(() => {
+                  const symbolPrefix = ticker?.toUpperCase().endsWith('USDT') ? 'BINANCE:' : 'BIST:';
+                  const fullSymbol = `${symbolPrefix}${ticker?.toUpperCase() || 'THYAO'}`;
+                  return (
+                    <AdvancedRealTimeChart
+                      key={fullSymbol}
+                      symbol={fullSymbol}
+                      theme="dark"
+                      autosize
+                      locale="tr"
+                      hide_side_toolbar={false}
+                    />
+                  );
+                })()}
               </div>
             </div>
 
