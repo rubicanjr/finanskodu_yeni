@@ -71,6 +71,14 @@ export function AnalysisSection() {
     ticker: string;
     visuals?: Visual[];
     isDemoMode: boolean;
+    geminiDetails?: {
+      technical: string;
+      social: string;
+      fundamental: string;
+    };
+    geminiAnalysis?: string;
+    currentPrice?: number;
+    trend?: "POZİTİF" | "NEGATİF" | "KARIŞIK";
   } | null>(null);
 
   // tRPC queries and mutations
@@ -163,6 +171,14 @@ export function AnalysisSection() {
         ticker: upperTicker,
         visuals: visuals,
         isDemoMode: result.isDemoMode,
+        geminiDetails: {
+          technical: "Teknik analiz sonuçları yükleniyor...",
+          social: "Sosyal medya analizi yükleniyor...",
+          fundamental: "Temel analiz yükleniyor...",
+        },
+        geminiAnalysis: "Analiz sonuçları yükleniyor...",
+        currentPrice: 0,
+        trend: "KARIŞIK",
       });
 
       // Ensure modal is shown
@@ -174,6 +190,12 @@ export function AnalysisSection() {
         ticker: upperTicker,
         visuals: FALLBACK_VISUALS,
         isDemoMode: false,
+        geminiDetails: {
+          technical: "Hata oluştu. Lütfen tekrar deneyin.",
+          social: "Hata oluştu. Lütfen tekrar deneyin.",
+          fundamental: "Hata oluştu. Lütfen tekrar deneyin.",
+        },
+        trend: "KARIŞIK",
       });
       setShowResult(true);
     } finally {
@@ -291,19 +313,14 @@ export function AnalysisSection() {
         <AnalysisResultModal
           isOpen={showResult}
           ticker={resultData.ticker}
-          visuals={resultData.visuals}
-          isPro={isPro}
+          geminiDetails={resultData.geminiDetails}
+          geminiAnalysis={resultData.geminiAnalysis}
+          currentPrice={resultData.currentPrice}
+          trend={resultData.trend}
           onClose={() => {
             setShowResult(false);
             setResultData(null);
             setTicker("");
-          }}
-          onDownload={(type) => {
-            console.log(`${type} analiz raporu indirildi`);
-          }}
-          onUpgradeClick={() => {
-            setShowResult(false);
-            setShowPaywall(true);
           }}
         />
       )}

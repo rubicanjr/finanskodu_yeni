@@ -26,7 +26,7 @@ interface AnalysisResultModalProps {
   geminiAnalysis?: string;
   geminiDetails?: GeminiDetails;
   currentPrice?: number;
-  trend?: "POZİTİF" | "NEGATİF" | "NÖTR";
+  trend?: "POZİTİF" | "NEGATİF" | "NÖTR" | "KARIŞIK";
   isPro?: boolean;
   onClose: () => void;
   onDownload?: (type: string) => void;
@@ -69,8 +69,8 @@ export function AnalysisResultModal({
     }
 
     const tickerLetters = ticker.split("").join(" ");
-    const analysisText = geminiDetails?.technical || geminiAnalysis || "Teknik analiz yapılıyor.";
-    const script = `${tickerLetters} için analiz tamamlandı. ${analysisText}`;
+    const tabAnalysis = geminiDetails?.[activeTab] || geminiAnalysis || "Analiz sonuçları yükleniyor.";
+    const script = `${tickerLetters} için analiz tamamlandı. ${tabAnalysis}`;
 
     const utterance = new SpeechSynthesisUtterance(script);
     utterance.lang = "tr-TR";

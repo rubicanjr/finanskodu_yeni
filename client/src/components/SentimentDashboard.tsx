@@ -3,7 +3,7 @@ import { TrendingUp, Zap, BarChart3 } from "lucide-react";
 interface SentimentDashboardProps {
   ticker: string;
   sentiment?: number; // 0-100 (percentage)
-  trend?: "POZİTİF" | "NEGATİF" | "NÖTR";
+  trend?: "POZİTİF" | "NEGATİF" | "NÖTR" | "KARIŞIK";
 }
 
 export function SentimentDashboard({
