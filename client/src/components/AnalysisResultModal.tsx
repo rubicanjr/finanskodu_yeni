@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { useState, useMemo } from "react";
 import { X, Download, Volume2, Mail } from "lucide-react";
 import { AdvancedRealTimeChart } from "react-ts-tradingview-widgets";
+import { getTradingViewSymbol } from "@/lib/symbolHelper";
 
 interface Visual {
   type: "technical" | "social" | "fundamental";
@@ -50,37 +51,9 @@ export function AnalysisResultModal({
 
   if (!isOpen) return null;
 
-  // Generate Pollinations URL based on trend
-  const generatePollinationsUrl = (type: "technical" | "social" | "fundamental") => {
-    let prompt = "";
-    switch (type) {
-      case "technical":
-        prompt = "futuristic stock market chart abstract art, green and red neon lines, candlestick patterns, 8k resolution, high detail, professional, NO TEXT, NO LETTERS, NO NUMBERS, pure visual";
-        break;
-      case "social":
-        prompt = "digital network nodes connecting, social media abstract concept, blue cyan neon, flowing data streams, 8k resolution, high detail, NO TEXT, NO LETTERS, NO NUMBERS, pure visual";
-        break;
-      case "fundamental":
-        prompt = "corporate finance abstract concept, golden coins digital vault, neon lights, high tech aesthetic, 8k resolution, high detail, NO TEXT, NO LETTERS, NO NUMBERS, pure visual";
-        break;
-    }
-    
-    return `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=1920&height=1080&nologo=true`;
-  };
-
-  const currentVisual = visuals.find((v) => v.type === activeTab);
-  const pollinationsUrl = useMemo(() => generatePollinationsUrl(activeTab), [activeTab, trend]);
+  // No Pollinations code needed - using TradingView widget instead
 
   const handleDownload = () => {
-    const link = document.createElement("a");
-    link.href = pollinationsUrl;
-    link.download = `${ticker}-${activeTab}-${new Date().toISOString().split("T")[0]}.png`;
-    link.target = "_blank";
-    link.rel = "noopener noreferrer";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
     if (onDownload) {
       onDownload(activeTab);
     }
@@ -94,7 +67,8 @@ export function AnalysisResultModal({
     }
 
     const tickerLetters = ticker.split("").join(" ");
-    const script = `${tickerLetters} için analiz tamamlandı. ${geminiAnalysis || "Teknik analiz yapılıyor."}`;
+    const analysisText = geminiDetails?.technical || geminiAnalysis || "Teknik analiz yapılıyor.";
+    const script = `${tickerLetters} için analiz tamamlandı. ${analysisText}`;
 
     const utterance = new SpeechSynthesisUtterance(script);
     utterance.lang = "tr-TR";
@@ -163,17 +137,6 @@ export function AnalysisResultModal({
 
           {/* Content */}
           <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
-            {/* Pollinations Image */}
-            <div className="bg-slate-800/50 border border-cyan-500/20 rounded-xl p-4 overflow-auto">
-              <img
-                src={pollinationsUrl}
-                alt={`${ticker} ${activeTab} Analysis`}
-                className="w-full h-auto rounded-lg"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1611974765270-ca1258634369?q=80&w=1920&auto=format&fit=crop";
-                }}
-              />
-            </div>
 
             {/* Gemini Analysis Text - Tab Specific */}
             {geminiDetails && (
@@ -201,11 +164,11 @@ export function AnalysisResultModal({
               </div>
             )}
 
-            {/* TradingView Widget */}
+            {/* TradingView Widget - Main Visualization */}
             <div className="bg-slate-800/50 border border-cyan-500/20 rounded-xl overflow-hidden">
-              <div className="w-full h-[400px]">
+              <div className="w-full h-[500px]">
                 <AdvancedRealTimeChart
-                  symbol={`BIST:${ticker.toUpperCase()}`}
+                  symbol={getTradingViewSymbol(ticker)}
                   theme="dark"
                   autosize
                   locale="tr"
