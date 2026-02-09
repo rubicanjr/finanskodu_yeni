@@ -1,40 +1,4 @@
-/*
-  DESIGN PHILOSOPHY: Cyber Finance - Dijital Labirent Estetiği
-  GEO OPTIMIZED: Generative Engine Optimization Standards
-  CRO OPTIMIZED: Sales Funnel Section Ordering
-  
-  Finans Kodu web sitesi - One-pager mikro site
-  - Dark mode ağırlıklı, teknolojik ve premium his
-  - Logodaki labirent ve neon ışık motifini yansıtan tasarım
-  - GEO uyumlu, mobil öncelikli, yüksek dönüşüm hedefli
-  
-  Section Order (CRO Optimized Sales Funnel):
-  1. Hero Section - Attention & Interest
-  2. Products - Immediate Value Proposition
-  3. Manifesto - Story & Vision
-  4. Blog - Content & Authority
-  5. Testimonials - Social Proof
-  6. About - Trust & Credibility
-  7. Footer - Contact & Conversion
-  
-  Semantic Structure:
-  - <header> for hero section (contains h1)
-  - <main> for primary content
-  - <section> for each content block
-  - <article> for products, testimonials, and blog posts
-  - <footer> for contact and links
-  
-  Renk Paleti:
-  - Ana: Lacivert/koyu mavi (#0D1117)
-  - Vurgu: Neon cyan (#00D4FF)
-  - Metin: Beyaz/gri tonları
-  
-  Tipografi:
-  - Başlıklar: Space Grotesk
-  - Gövde: Inter
-  - Teknik: JetBrains Mono
-*/
-
+import { useState } from "react";
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
 import ComparisonSection from "@/components/ComparisonSection";
@@ -44,11 +8,31 @@ import ManifestoSection from "@/components/ManifestoSection";
 import BlogSection from "@/components/BlogSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import FAQSection from "@/components/FAQSection";
-// AboutSection removed per strategy document
 import Footer from "@/components/Footer";
 import SocialProofStrip from "@/components/SocialProofStrip";
+import { EmailGate } from "@/components/EmailGate";
 
 export default function Home() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
+
+  const handleEmailSubmit = (email: string) => {
+    setUserEmail(email);
+    setIsLoggedIn(true);
+  };
+
+  // If not logged in, show email gate only
+  if (!isLoggedIn) {
+    return (
+      <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+        <Navigation />
+        <EmailGate onSubmit={handleEmailSubmit} />
+        <Footer />
+      </div>
+    );
+  }
+
+  // If logged in, show full dashboard
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       {/* Skip to main content link for accessibility */}

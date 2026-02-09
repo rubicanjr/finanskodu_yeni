@@ -128,7 +128,9 @@ export default function ComparisonSection() {
             Bu analizi yapan 'Master Prompt'a sahip olmak ister misin?
           </p>
           <a
-            href="#prompt-library"
+            href="https://www.hikie.space/finanskodu/file/6cf62b1f141d48d1af13cb5ca04a53ab"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105"
             style={{
               background: "#FFD700",
