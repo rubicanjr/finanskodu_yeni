@@ -1,25 +1,14 @@
-/*
-  DESIGN: Premium Dark Mode Hero Section
-  STRATEGY: pasted_content_14.txt - Final Polish
-  
-  KEY CHANGES:
-  - H1: "Duygularınızı Değil, Sisteminizi Yönetin."
-  - H2: Finans Kodu tanımı - Debug, Prompt, Algoritma
-  - Central: Laptop image flanked by Sarp (Left) and Vera (Right)
-  - Note: "Bu karakterler ürün değil, asistanlar"
-  - Primary CTA: "Dijital Araçları Keşfet" → Products
-  - Secondary CTA: "Foruma Git" → hikie.space
-*/
-
 import { motion } from "framer-motion";
 import { ArrowRight, MessageSquare, Monitor } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
+import { EmailGate } from "@/components/EmailGate";
 
 export default function HeroSection() {
   const [typedText, setTypedText] = useState("");
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
   const [showPulse, setShowPulse] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   
   // Random message pool
   const messages = [
@@ -325,6 +314,18 @@ export default function HeroSection() {
           >
             Bu karakterler ürün değil, bu sistemi kullanırken sana yardım eden asistanlar.
           </motion.p>
+
+          {/* Auth Gate or Analysis Section */}
+          {!isLoggedIn && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.8 }}
+              className="mb-8"
+            >
+              <EmailGate onSubmit={() => setIsLoggedIn(true)} />
+            </motion.div>
+          )}
 
           {/* CTA Buttons */}
           <motion.div
