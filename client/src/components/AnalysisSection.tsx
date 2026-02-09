@@ -140,58 +140,49 @@ export function AnalysisSection() {
         return;
       }
 
-      // Non-demo mode: Use normal flow
-      // Check quota
-      const quotaCheck = await checkQuotaMutation.refetch();
-      if (!quotaCheck.data?.allowed && !quotaCheck.data?.isDemoMode) {
-        setShowPaywall(true);
-        setIsLoading(false);
-        return;
+      // Non-demo mode: Use Flask backend
+      // Call Flask API for technical analysis
+      const flaskResponse = await fetch('http://localhost:5001/api/analyze', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ticker: upperTicker })
+      });
+
+      if (!flaskResponse.ok) {
+        throw new Error('Flask API hatası');
       }
 
-      // Start analysis
-      const result = await startAnalysisMutation.mutateAsync({ ticker: upperTicker });
-
-      // Simulate 27-second analysis
-      await new Promise((resolve) => setTimeout(resolve, 27000));
+      const flaskData = await flaskResponse.json();
+      console.log('Flask analiz sonucu:', flaskData);
 
       let visuals: Visual[] = FALLBACK_VISUALS;
 
-      // For demo mode (THYAO, EREGL), skip API call and use fallback visuals
-      if (result.isDemoMode) {
-        console.log("Demo mode: Using fallback visuals");
-        visuals = FALLBACK_VISUALS;
-      } else {
-        // Use Pollinations for visuals (client-side in ResultModal)
-        visuals = FALLBACK_VISUALS;
-      }
-
-      // Set result data and trigger modal
+      // Set result data with Flask analysis
       setResultData({
         ticker: upperTicker,
         visuals: visuals,
-        isDemoMode: result.isDemoMode,
+        isDemoMode: false,
         geminiDetails: {
-          technical: "Teknik analiz sonuçları yükleniyor...",
+          technical: flaskData.message || "Analiz tamamlandı",
           social: "Sosyal medya analizi yükleniyor...",
           fundamental: "Temel analiz yükleniyor...",
         },
-        geminiAnalysis: "Analiz sonuçları yükleniyor...",
-        currentPrice: 0,
-        trend: "KARIŞIK",
+        geminiAnalysis: flaskData.message,
+        currentPrice: flaskData.indicators?.current_price || 0,
+        trend: flaskData.status as "POZİTİF" | "NEGATİF" | "KARIŞIK",
       });
 
       // Ensure modal is shown
       setShowResult(true);
     } catch (error: any) {
-      console.error("Analiz hatası:", error);
       // Even on error, show modal with fallback data
+      console.error('Analiz hatası:', error);
       setResultData({
         ticker: upperTicker,
         visuals: FALLBACK_VISUALS,
         isDemoMode: false,
         geminiDetails: {
-          technical: "Hata oluştu. Lütfen tekrar deneyin.",
+          technical: "Hata oluştu: " + (error instanceof Error ? error.message : "Bilinmeyen hata"),
           social: "Hata oluştu. Lütfen tekrar deneyin.",
           fundamental: "Hata oluştu. Lütfen tekrar deneyin.",
         },
