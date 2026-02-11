@@ -778,3 +778,25 @@
 - [ ] All code clean, TypeScript error-free
 - [ ] Dev server running
 - [ ] Checkpoint saved
+
+
+## DATA INTEGRITY & LOGIC FIX (pasted_content_4.txt)
+
+### ADIM 1: Real Data Fetching & Technical Calculation
+- [x] Install yahoo-finance2 package
+- [x] Install technicalindicators package
+- [x] Create stockData.ts helper with getRealStockData function
+- [x] Implement RSI calculation using technicalindicators
+- [x] Implement MA50 calculation
+- [x] Implement technical signal logic (NEGATİF/POZİTİF/NÖTR)
+- [x] Fetch real F/K and PD/DD from Yahoo Finance
+
+### ADIM 2: Cache Buster (AI Prompt Timestamp)
+- [x] Add timestamp to Gemini prompt in gemini.ts
+- [x] Add randomness/uniqueness to prevent cache hits
+
+### ADIM 3: Dynamic UI (Remove Hardcoded Values)
+- [x] Find and remove hardcoded F/K values in FinancialGrid
+- [x] Find and remove hardcoded RSI values in Technical tab
+- [x] Bind backend data to frontend components
+- [x] Ensure all metrics display "N/A" when data unavailable

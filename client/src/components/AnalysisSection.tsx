@@ -79,6 +79,14 @@ export function AnalysisSection() {
     geminiAnalysis?: string;
     currentPrice?: number;
     trend?: "POZİTİF" | "NEGATİF" | "KARIŞIK";
+    realData?: {
+      price: number;
+      rsi: number | string;
+      ma50: number | string;
+      fk: number | string;
+      pddd: number | string;
+      teknik_durum: "POZİTİF" | "NEGATİF" | "NÖTR" | "KARIŞIK";
+    };
   } | null>(null);
 
   // tRPC queries and mutations
@@ -170,11 +178,24 @@ export function AnalysisSection() {
 
       let visuals: Visual[] = FALLBACK_VISUALS;
 
+      // Fetch real stock data using utils
+      let realStockData = undefined;
+      try {
+        const utils = trpc.useUtils();
+        const realDataResult = await utils.analysis.getRealData.fetch({ ticker: upperTicker });
+        if (realDataResult.success && realDataResult.data) {
+          realStockData = realDataResult.data;
+        }
+      } catch (err) {
+        console.error('Real stock data fetch error:', err);
+      }
+
       // Set result data with Flask analysis
       setResultData({
         ticker: upperTicker,
         visuals: visuals,
         isDemoMode: false,
+        realData: realStockData,
         geminiDetails: {
           technical: flaskData.message || "Analiz tamamlandı",
           social: sentimentData ? `Duygu Analizi: %${sentimentData.sentiment_score} POZİTİF (${sentimentData.positive} olumlu, ${sentimentData.negative} olumsuz)` : "Sosyal medya analizi yükleniyor...",
@@ -321,6 +342,7 @@ export function AnalysisSection() {
           geminiAnalysis={resultData.geminiAnalysis}
           currentPrice={resultData.currentPrice}
           trend={resultData.trend}
+          realData={resultData.realData}
           onClose={() => {
             setShowResult(false);
             setResultData(null);

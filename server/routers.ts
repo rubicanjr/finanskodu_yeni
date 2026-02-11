@@ -9,6 +9,7 @@ import { TRPCError } from "@trpc/server";
 import { getRealStockPrice, calculateTargetPrice } from "./_core/stockData";
 import { getMarketTrend } from "./_core/marketTrend";
 import { analyzeStock } from "./_core/gemini";
+import { getRealStockData } from "./_core/realStockData";
 
 export const appRouter = router({
   system: systemRouter,
@@ -145,6 +146,25 @@ export const appRouter = router({
             analysis: "Analiz şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin.",
             ticker: input.ticker,
             currentPrice: input.currentPrice,
+          };
+        }
+      }),
+
+    getRealData: protectedProcedure
+      .input(z.object({ ticker: z.string() }))
+      .query(async ({ input }) => {
+        try {
+          const data = await getRealStockData(input.ticker);
+          return {
+            success: true,
+            data,
+          };
+        } catch (error) {
+          console.error("Real stock data error:", error);
+          return {
+            success: false,
+            data: null,
+            error: "Veri çekme hatası. Lütfen daha sonra tekrar deneyin.",
           };
         }
       }),

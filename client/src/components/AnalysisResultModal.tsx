@@ -18,6 +18,15 @@ interface GeminiDetails {
   fundamental: string;
 }
 
+interface RealStockData {
+  price: number;
+  rsi: number | string;
+  ma50: number | string;
+  fk: number | string;
+  pddd: number | string;
+  teknik_durum: "POZİTİF" | "NEGATİF" | "NÖTR" | "KARIŞIK";
+}
+
 interface AnalysisResultModalProps {
   isOpen: boolean;
   ticker: string;
@@ -27,6 +36,7 @@ interface AnalysisResultModalProps {
   currentPrice?: number;
   trend?: "POZİTİF" | "NEGATİF" | "NÖTR" | "KARIŞIK";
   isPro?: boolean;
+  realData?: RealStockData;
   onClose: () => void;
   onDownload?: (type: string) => void;
   onUpgradeClick?: () => void;
@@ -41,6 +51,7 @@ export function AnalysisResultModal({
   currentPrice = 0,
   trend = "NÖTR",
   isPro = false,
+  realData,
   onClose,
   onDownload,
   onUpgradeClick,
@@ -153,7 +164,7 @@ export function AnalysisResultModal({
             )}
 
             {/* Fundamental Tab: Financial Grid */}
-            {activeTab === "fundamental" && <FinancialGrid ticker={ticker} />}
+            {activeTab === "fundamental" && <FinancialGrid ticker={ticker} realData={realData} />}
 
             {/* Gemini Analysis Text - Tab Specific */}
             {geminiDetails && (
@@ -188,21 +199,31 @@ export function AnalysisResultModal({
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
                     <span className="text-slate-400 text-xs">RSI Durumu:</span>
-                    <span className="text-cyan-400 text-xs font-semibold">Hesaplanıyor...</span>
+                    <span className="text-cyan-400 text-xs font-semibold">
+                      {realData?.rsi !== undefined && realData.rsi !== 'Veri Yok' 
+                        ? (typeof realData.rsi === 'number' ? realData.rsi.toFixed(2) : realData.rsi)
+                        : 'N/A'}
+                    </span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-slate-400 text-xs">Hacim Trendi:</span>
-                    <span className="text-cyan-400 text-xs font-semibold">Hesaplanıyor...</span>
+                    <span className="text-slate-400 text-xs">MA50:</span>
+                    <span className="text-cyan-400 text-xs font-semibold">
+                      {realData?.ma50 !== undefined && realData.ma50 !== 'Veri Yok'
+                        ? (typeof realData.ma50 === 'number' ? `₺${realData.ma50.toFixed(2)}` : realData.ma50)
+                        : 'N/A'}
+                    </span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-slate-400 text-xs">Fiyat/MA Karşılaştırması:</span>
-                    <span className="text-cyan-400 text-xs font-semibold">Hesaplanıyor...</span>
+                    <span className="text-slate-400 text-xs">Fiyat:</span>
+                    <span className="text-cyan-400 text-xs font-semibold">
+                      {realData?.price ? `₺${realData.price.toFixed(2)}` : 'N/A'}
+                    </span>
                   </div>
                   <div className="mt-4 pt-4 border-t border-cyan-500/20">
                     <div className="flex items-center justify-between">
                       <span className="text-slate-300 text-sm font-bold">Genel Durum:</span>
                       <span className="text-lg font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
-                        KARIŞIK
+                        {realData?.teknik_durum || 'NÖTR'}
                       </span>
                     </div>
                   </div>

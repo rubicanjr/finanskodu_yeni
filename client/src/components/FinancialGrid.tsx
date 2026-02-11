@@ -10,21 +10,31 @@ interface FinancialMetric {
 interface FinancialGridProps {
   ticker: string;
   metrics?: FinancialMetric[];
+  realData?: {
+    fk: number | string;
+    pddd: number | string;
+  };
 }
 
-export function FinancialGrid({ ticker, metrics }: FinancialGridProps) {
-  // Default dummy data
+export function FinancialGrid({ ticker, metrics, realData }: FinancialGridProps) {
+  // Use real data if available, otherwise show "Veri Yok"
+  const fkValue = realData?.fk !== undefined && realData.fk !== 'Veri Yok' 
+    ? (typeof realData.fk === 'number' ? realData.fk.toFixed(2) : realData.fk)
+    : "N/A";
+  
+  const pdddValue = realData?.pddd !== undefined && realData.pddd !== 'Veri Yok'
+    ? (typeof realData.pddd === 'number' ? realData.pddd.toFixed(2) : realData.pddd)
+    : "N/A";
+
   const defaultMetrics: FinancialMetric[] = [
     {
       label: "F/K Oranı",
-      value: "4.52",
-      change: 2.3,
+      value: fkValue,
       icon: <PieChart className="w-5 h-5" />,
     },
     {
       label: "PD/DD",
-      value: "1.20",
-      change: -1.5,
+      value: pdddValue,
       icon: <DollarSign className="w-5 h-5" />,
     },
     {

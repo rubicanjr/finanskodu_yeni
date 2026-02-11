@@ -33,7 +33,14 @@ export async function analyzeStock(
   currentPrice: number
 ): Promise<StockAnalysisResult> {
   try {
-    const prompt = `${ticker} hissesi için aşağıdaki 3 bölümü AYRI AYRI ve KISA (her biri maksimum 3 cümle) yaz:
+    // Cache Buster: Add timestamp to prevent AI from returning cached responses
+    const now = new Date().toISOString();
+    const randomSeed = Math.floor(Math.random() * 10000);
+    
+    const prompt = `ANALİZ ZAMANI: ${now} (Bu tarih ve saatteki veriyi kullan, eski cache'i unut).
+RASTGELE SEED: ${randomSeed}
+
+${ticker} hissesi için aşağıdaki 3 bölümü AYRI AYRI ve KISA (her biri maksimum 3 cümle) yaz:
 
 1. TEKNIK GÖRÜNÜM: Teknik analiz açısından bu hissenin durumu nedir? (RSI, Hacim, Hareketli Ortalamalar)
 
