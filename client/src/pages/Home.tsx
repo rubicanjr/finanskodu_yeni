@@ -8,11 +8,11 @@
   - Logodaki labirent ve neon ışık motifini yansıtan tasarım
   - GEO uyumlu, mobil öncelikli, yüksek dönüşüm hedefli
   
-  Section Order (CRO Optimized Sales Funnel - Updated per pasted_content_3.txt):
+  Section Order (CRO Optimized Sales Funnel - Updated per user request):
   1. Header (Sarp & Vera Görselleri - Hero)
   2. Dijital Araçlar / Ürünler (Featured Section)
   3. "Kaos'tan Düzen'e" Bölümü (Comparison Section)
-  4. Finansal Analizi Başlat (Auth-controlled Input - in HeroSection)
+  4. Finansal Analizi Başlat (Auth Gate + Analysis - Separate Section)
   5. Manifesto
   6. Blog & Analizler
   7. Özellikler Bölümü (Testimonials)
@@ -42,6 +42,7 @@ import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
 import ProductsSection from "@/components/ProductsSection";
 import ComparisonSection from "@/components/ComparisonSection";
+import { AnalysisAuthGate } from "@/components/AnalysisAuthGate";
 import ManifestoSection from "@/components/ManifestoSection";
 import BlogSection from "@/components/BlogSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
@@ -78,7 +79,9 @@ export default function Home() {
         {/* CRO: Technology & Methodology Comparison */}
         <ComparisonSection />
 
-        {/* 4. Finansal Analizi Başlat - Already in HeroSection as conditional rendering */}
+        {/* 4. Finansal Analizi Başlat (Auth Gate + Analysis Section) */}
+        {/* CRO: Analysis Entry Point - Separate from Hero */}
+        <AnalysisAuthGate />
 
         {/* 5. Manifesto - Problem & Solution */}
         {/* CRO: Story & Vision - Build emotional connection */}

@@ -2,16 +2,14 @@ import { motion } from "framer-motion";
 import { ArrowRight, MessageSquare, Monitor } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
-import { EmailGate } from "@/components/EmailGate";
-import { AnalysisSection } from "./AnalysisSection";
+// Auth gate and analysis section moved to AnalysisAuthGate component
 
 export default function HeroSection() {
   const [typedText, setTypedText] = useState("");
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
   const [showPulse, setShowPulse] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   
-  // Random message pool
+  // Random message pool for terminal animation
   const messages = [
     "Sistem Hazır...",
     "Analiz Başlıyor...",
@@ -316,28 +314,7 @@ export default function HeroSection() {
             Bu karakterler ürün değil, bu sistemi kullanırken sana yardım eden asistanlar.
           </motion.p>
 
-          {/* Auth Gate or Analysis Section */}
-          {!isLoggedIn && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              className="mb-8"
-            >
-              <EmailGate onSubmit={() => setIsLoggedIn(true)} />
-            </motion.div>
-          )}
-
-          {isLoggedIn && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              className="mb-8"
-            >
-              <AnalysisSection />
-            </motion.div>
-          )}
+          {/* Auth Gate moved to AnalysisAuthGate component */}
 
           {/* CTA Buttons */}
           <motion.div
