@@ -10,8 +10,8 @@
   
   Section Order (CRO Optimized Sales Funnel - Updated per pasted_content_3.txt):
   1. Header (Sarp & Vera Görselleri - Hero)
-  2. "Kaos'tan Düzen'e" Bölümü (Comparison Section)
-  3. Dijital Araçlar / Ürünler (Featured Section)
+  2. Dijital Araçlar / Ürünler (Featured Section)
+  3. "Kaos'tan Düzen'e" Bölümü (Comparison Section)
   4. Finansal Analizi Başlat (Auth-controlled Input - in HeroSection)
   5. Manifesto
   6. Blog & Analizler
@@ -70,13 +70,13 @@ export default function Home() {
 
       {/* Main Content Area */}
       <main id="main-content" role="main">
-        {/* 2. "Kaos'tan Düzen'e" Bölümü (Comparison Section) */}
-        {/* CRO: Technology & Methodology Comparison */}
-        <ComparisonSection />
-
-        {/* 3. Dijital Araçlar / Ürünler (Featured Section) */}
+        {/* 2. Dijital Araçlar / Ürünler (Featured Section) */}
         {/* CRO: Immediate Value Proposition - Show products */}
         <ProductsSection />
+
+        {/* 3. "Kaos'tan Düzen'e" Bölümü (Comparison Section) */}
+        {/* CRO: Technology & Methodology Comparison */}
+        <ComparisonSection />
 
         {/* 4. Finansal Analizi Başlat - Already in HeroSection as conditional rendering */}
 
