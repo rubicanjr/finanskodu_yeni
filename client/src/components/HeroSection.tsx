@@ -115,14 +115,14 @@ export default function HeroSection() {
       <div className="container relative z-10 pt-24 pb-16">
         <div className="max-w-5xl mx-auto text-center">
           
-          {/* Main Heading - Finans Kodu Dedektifi V3.0 */}
+          {/* Main Heading - Updated per pasted_content_3.txt */}
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="font-display font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight mb-6"
           >
-            <span className="text-white">Bilançoların</span>
+            <span className="text-white">Kaos İçinde Düzen:</span>
             <br />
             <span style={{ 
               background: 'linear-gradient(135deg, #00F0FF 0%, #2DD4BF 100%)',
@@ -130,18 +130,18 @@ export default function HeroSection() {
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text'
             }}>
-              MR'ını Çeken Yapay Zeka.
+              Finansal Operasyonlarınızı Dönüştürün
             </span>
           </motion.h1>
 
-          {/* Subheading - Dedektifi V3.0 */}
+          {/* Subheading - Updated per pasted_content_3.txt */}
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
             className="text-base sm:text-lg text-gray-400 max-w-3xl mx-auto mb-8 leading-relaxed"
           >
-            Yatırımcıların 5 saatte okuduğu raporları, Wiro destekli yerel modellerimizle 27 saniyede analiz ediyoruz.
+            Verimliliğinizi artırmak için özenle hazırlanmış yapay zeka destekli dijital araç koleksiyonumuzu keşfedin. Kapsamlı metodolojilerden prompt kütüphanelerine kadar ihtiyacınız olan her şey burada.
           </motion.p>
 
           {/* Visual Composition: Laptop + Sarp + Vera - Dedektifi Demo */}

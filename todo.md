@@ -719,3 +719,62 @@
 - [x] Tüm kodlar temiz, TypeScript hata yok
 - [x] Dev server çalışıyor
 - [x] Checkpoint kaydet
+
+
+## MAJOR REFACTOR: Layout Reordering, Logic Update & UI Fixes (pasted_content_3.txt)
+
+### PHASE 1: LAYOUT & HEADER (App.js / Home.js)
+- [ ] Update Header text:
+  * Başlık: "Kaos İçinde Düzen: Finansal Operasyonlarınızı Dönüştürün"
+  * Alt Başlık: "Verimliliğinizi artırmak için özenle hazırlanmış yapay zeka destekli dijital araç koleksiyonumuzu keşfedin. Kapsamlı metodolojilerden prompt kütüphanelerine kadar ihtiyacınız olan her şey burada."
+- [ ] Reorder page sections (NEW FLOW):
+  1. Header (Sarp & Vera Görselleri - Hero)
+  2. Dijital Araçlar / Ürünler (Featured Section)
+  3. "Kaos'tan Düzen'e" Bölümü
+  4. Finansal Analizi Başlat (Auth-controlled Input)
+  5. Manifesto
+  6. Blog & Analizler (Remove symbol/icon visual, keep text/cards only)
+  7. Özellikler Bölümü (Features Section)
+  8. SSS (FAQ)
+  9. Sponsorlar
+  10. Footer (with Feedback area)
+
+### PHASE 2: ANALYSIS MODAL FIX (UI Bug)
+- [ ] Fix modal z-index issue (add z-index: 9999)
+- [ ] Add margin-top: 100px or padding-top to modal
+- [ ] Ensure modal opens cleanly below Navbar
+- [ ] Test close button functionality
+
+### PHASE 3: TRADINGVIEW CLEANUP & TECHNICAL LOGIC (Backend)
+- [ ] Remove ALL TradingViewWidget components from Technical, Social, Fundamental tabs
+- [ ] Implement Node.js analyze_technical function:
+  * Use technicalindicators package for RSI, Volume, MA20/50 calculations
+  * Implement negative signal logic (RSI divergence, Volume drop, Price < MA)
+  * Return status: NEGATİF / POZİTİF / KARIŞIK with reasons
+- [ ] Update frontend to show status card instead of chart
+
+### PHASE 4: SOCIAL MEDIA ANALYSIS (AI Prompt Update)
+- [ ] Update social media analysis system_prompt:
+  * Require specific recent news/events (last 1 week)
+  * Sector-specific keywords (aviation: tourism/oil, defense: orders/geopolitics)
+  * Output format: Twitter Nabzı, Forum Tartışmaları
+  * Ban generic statements
+
+### PHASE 5: FUNDAMENTAL ANALYSIS (AI Prompt Update)
+- [ ] Update fundamental analysis system_prompt:
+  * Require Yahoo Finance or KAP data
+  * Show actual F/K, PD/DD, Net Profit numbers (or "Veri çekilemedi")
+  * Sector-specific metrics (industry: orders, aviation: occupancy, banks: interest margin)
+  * Compare to sector average (cheap/expensive)
+
+### PHASE 6: Testing & Verification
+- [ ] Test new layout order
+- [ ] Test modal UI fix
+- [ ] Test technical analysis logic
+- [ ] Test AI prompt updates
+- [ ] Run all tests (25/25 passing)
+
+### PHASE 7: Deploy & Checkpoint
+- [ ] All code clean, TypeScript error-free
+- [ ] Dev server running
+- [ ] Checkpoint saved

@@ -8,16 +8,17 @@
   - Logodaki labirent ve neon ışık motifini yansıtan tasarım
   - GEO uyumlu, mobil öncelikli, yüksek dönüşüm hedefli
   
-  Section Order (CRO Optimized Sales Funnel):
-  1. Hero Section - Attention & Interest (Conditional: Auth Gate or Analysis Tool)
-  2. Sponsorship Section - Brand Partnerships (Always Visible)
-  3. Products - Immediate Value Proposition
-  4. Manifesto - Story & Vision
-  5. Blog - Content & Authority
-  6. Testimonials - Social Proof
-  7. FAQ - Address Objections
-  8. Feedback - User Input
-  9. Footer - Contact & Conversion
+  Section Order (CRO Optimized Sales Funnel - Updated per pasted_content_3.txt):
+  1. Header (Sarp & Vera Görselleri - Hero)
+  2. Dijital Araçlar / Ürünler (Featured Section)
+  3. "Kaos'tan Düzen'e" Bölümü (Comparison Section)
+  4. Finansal Analizi Başlat (Auth-controlled Input - in HeroSection)
+  5. Manifesto
+  6. Blog & Analizler
+  7. Özellikler Bölümü (Testimonials)
+  8. SSS (FAQ)
+  9. Sponsorlar
+  10. Footer (with Feedback area)
   
   Semantic Structure:
   - <header> for hero section (contains h1)
@@ -39,15 +40,15 @@
 
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
-import SponsorshipSection from "@/components/SponsorshipSection";
 import ProductsSection from "@/components/ProductsSection";
+import ComparisonSection from "@/components/ComparisonSection";
 import ManifestoSection from "@/components/ManifestoSection";
 import BlogSection from "@/components/BlogSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import FAQSection from "@/components/FAQSection";
+import SponsorshipSection from "@/components/SponsorshipSection";
 import FeedbackSection from "@/components/FeedbackSection";
 import Footer from "@/components/Footer";
-import SocialProofStrip from "@/components/SocialProofStrip";
 
 export default function Home() {
   return (
@@ -63,46 +64,46 @@ export default function Home() {
       {/* Navigation - Sticky header */}
       <Navigation />
 
-      {/* Hero Section - Conditional Rendering (Auth Gate or Analysis Tool) */}
+      {/* 1. Hero Section (Sarp & Vera Görselleri + Conditional Auth Gate/Analysis) */}
       {/* CRO: Attention & Interest - First impression */}
       <HeroSection />
 
-      {/* Sponsorship Section - Always Visible */}
-      {/* CRO: Brand Partnerships & Collaboration */}
-      <SponsorshipSection />
-
-      {/* Social Proof Strip - Trust Signals */}
-      <SocialProofStrip />
-
       {/* Main Content Area */}
       <main id="main-content" role="main">
-        {/* Products Showcase - Each product in <article> */}
+        {/* 2. Dijital Araçlar / Ürünler (Featured Section) */}
         {/* CRO: Immediate Value Proposition - Show products */}
         <ProductsSection />
 
-        {/* Manifesto - Problem & Solution with <dl> structure */}
+        {/* 3. "Kaos'tan Düzen'e" Bölümü (Comparison Section) */}
+        {/* CRO: Technology & Methodology Comparison */}
+        <ComparisonSection />
+
+        {/* 4. Finansal Analizi Başlat - Already in HeroSection as conditional rendering */}
+
+        {/* 5. Manifesto - Problem & Solution */}
         {/* CRO: Story & Vision - Build emotional connection */}
         <ManifestoSection />
 
-        {/* Blog - Articles and insights */}
+        {/* 6. Blog & Analizler - Articles and insights */}
         {/* CRO: Content & Authority - Demonstrate expertise */}
         <BlogSection />
 
-        {/* Testimonials / Social Proof - <figure> with <blockquote> */}
+        {/* 7. Özellikler Bölümü (Testimonials / Social Proof) */}
         {/* CRO: Social Proof - Build trust through others */}
         <TestimonialsSection />
 
-        {/* FAQ - Frequently Asked Questions with Expert Insights */}
+        {/* 8. SSS (FAQ) - Frequently Asked Questions */}
         {/* CRO: Address objections and build authority */}
         <FAQSection />
+
+        {/* 9. Sponsorlar */}
+        {/* CRO: Brand Partnerships & Collaboration */}
+        <SponsorshipSection />
       </main>
 
-      {/* Feedback Section - User Input & Suggestions */}
-      {/* CRO: Engagement & Community Building */}
+      {/* 10. Footer (with Feedback area) */}
+      {/* CRO: Engagement & Final Conversion Point */}
       <FeedbackSection />
-
-      {/* Footer & Contact - Contains <address> for contact info */}
-      {/* CRO: Final Conversion Point */}
       <Footer />
     </div>
   );

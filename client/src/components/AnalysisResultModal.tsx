@@ -1,8 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useState, useMemo } from "react";
 import { X, Download, Volume2, Mail } from "lucide-react";
-import { AdvancedRealTimeChart } from "react-ts-tradingview-widgets";
-import { getTradingViewSymbol } from "@/lib/symbolHelper";
+// TradingView widgets removed - using custom technical analysis instead
 import { SentimentDashboard } from "./SentimentDashboard";
 import { FinancialGrid } from "./FinancialGrid";
 
@@ -94,7 +93,7 @@ export function AnalysisResultModal({
   };
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4" style={{ zIndex: 9999, paddingTop: '100px' }}>
       <div className="relative w-full max-w-4xl bg-gradient-to-br from-slate-900/90 to-slate-950/90 backdrop-blur-xl border border-cyan-500/30 rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[95vh]">
         
         <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-transparent to-purple-500/5 pointer-events-none" />
@@ -182,25 +181,34 @@ export function AnalysisResultModal({
               </div>
             )}
 
-            {/* TradingView Widget - Main Visualization */}
-            <div className="bg-slate-800/50 border border-cyan-500/20 rounded-xl overflow-hidden">
-              <div className="w-full h-[500px]">
-                {(() => {
-                  const symbolPrefix = ticker?.toUpperCase().endsWith('USDT') ? 'BINANCE:' : 'BIST:';
-                  const fullSymbol = `${symbolPrefix}${ticker?.toUpperCase() || 'THYAO'}`;
-                  return (
-                    <AdvancedRealTimeChart
-                      key={fullSymbol}
-                      symbol={fullSymbol}
-                      theme="dark"
-                      autosize
-                      locale="tr"
-                      hide_side_toolbar={false}
-                    />
-                  );
-                })()}
+            {/* Technical Analysis Status Card - Replaces TradingView Widget */}
+            {activeTab === "technical" && (
+              <div className="bg-slate-800/50 border border-cyan-500/20 rounded-xl p-6">
+                <h4 className="text-slate-300 text-sm font-semibold mb-4">📈 Teknik Durum</h4>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-slate-400 text-xs">RSI Durumu:</span>
+                    <span className="text-cyan-400 text-xs font-semibold">Hesaplanıyor...</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-slate-400 text-xs">Hacim Trendi:</span>
+                    <span className="text-cyan-400 text-xs font-semibold">Hesaplanıyor...</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-slate-400 text-xs">Fiyat/MA Karşılaştırması:</span>
+                    <span className="text-cyan-400 text-xs font-semibold">Hesaplanıyor...</span>
+                  </div>
+                  <div className="mt-4 pt-4 border-t border-cyan-500/20">
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-300 text-sm font-bold">Genel Durum:</span>
+                      <span className="text-lg font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+                        KARIŞIK
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Download Button */}
             <Button

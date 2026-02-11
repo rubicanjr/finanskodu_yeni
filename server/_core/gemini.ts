@@ -33,11 +33,30 @@ export async function analyzeStock(
   currentPrice: number
 ): Promise<StockAnalysisResult> {
   try {
-    const prompt = `${ticker} hissesi şu an ${currentPrice} TL seviyesinde. Aşağıdaki 3 bölümü AYRI AYRI ve KISA (her biri maksimum 2 cümle) yaz:
+    const prompt = `${ticker} hissesi için aşağıdaki 3 bölümü AYRI AYRI ve KISA (her biri maksimum 3 cümle) yaz:
 
-1. TEKNIK GÖRÜNÜM: Teknik analiz açısından bu hissenin durumu nedir?
-2. SOSYAL MEDYA HYPE'I: Sosyal medyada bu hisse hakkında neler söyleniyor?
-3. TEMEL ANALIZ: Şirketin temel finansal durumu nasıl?
+1. TEKNIK GÖRÜNÜM: Teknik analiz açısından bu hissenin durumu nedir? (RSI, Hacim, Hareketli Ortalamalar)
+
+2. SOSYAL MEDYA ANALİZİ:
+GÖREV: ${ticker} için CANLI sosyal medya ve haber analizi yap.
+KURALLAR:
+- Genel ifadeler YASAKTIR. (Örn: "Yatırımcılar umutlu" deme.)
+- Mutlaka ${ticker} ile ilgili son 1 hafta içinde internette konuşulan özgün bir habere, ihaleye veya olaya atıfta bulun.
+- Eğer havayolu şirketi ise (örn: THYAO) "turizm sezonu, petrol fiyatları" gibi; Savunma sanayi ise (örn: ASELS) "yeni siparişler, jeopolitik riskler"den bahset.
+ÇIKTI FORMATI:
+Twitter Nabzı: [Spesifik konu]
+Forum Tartışmaları: [Spesifik tartışma]
+
+3. TEMEL ANALİZ:
+GÖREV: ${ticker} için gerçek zamanlı Temel Analiz yap.
+ZORUNLU: Yahoo Finance veya KAP verilerini baz al.
+KURALLAR:
+- ASLA UYDURMA: Güncel F/K, PD/DD ve Son Çeyrek Net Kâr rakamını net sayı olarak yaz. Bulamazsan "Veri çekilemedi" de.
+- SEKTÖREL:
+  * Sanayi/Savunma ise: Sipariş Bakiyesi, Teşvikler.
+  * Havayolu ise: Doluluk Oranları, Yakıt, Turizm.
+  * Banka ise: Faiz Marjı, Kredi/Mevduat.
+- SONUÇ: Sektör ortalamasına göre ucuz mu pahalı mı? Tek cümleyle özetle.
 
 Her bölümü açık bir şekilde başlığıyla birlikte yaz.`;
 
