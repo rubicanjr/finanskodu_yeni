@@ -1,18 +1,17 @@
 /*
   DESIGN: Cyber Finance Products Section - HORIZONTAL CAROUSEL
-  STRATEGY: pasted_content_14.txt - Only 3 Products
+  STRATEGY: FAZ 2 - Product Funnel with Journey Badges
   
-  - Horizontal Scrollable Carousel (Swipeable Cards)
-  - Card Anatomy: Image/Icon (Top), Title (Bold), Description (2 lines), "İncele" Button
-  - NO PRICE TAGS - Focus on VALUE
-  - Only 3 products: Finans Kodu, AI Prompt, Finansal Kokpit
+  - Reordered: AI Prompt → Finans Kodu → Pro Bülten
+  - Journey Badges: BAŞLA (green), DEVAM ET (blue), İLERLE (gray)
+  - Removed "↗" icons from buttons
+  - New subtitle: "100+ hazır AI prompt, finansal metodoloji ve aylık strateji bülteni"
 */
 
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { 
-  ExternalLink, 
   Layers, 
   Brain, 
   LayoutDashboard, 
@@ -28,38 +27,50 @@ interface Product {
   description: string;
   icon: LucideIcon;
   link: string;
-  badge?: string;
-  badgeColor?: string;
+  badge: string;
+  badgeColor: string;
+  journeyBadge: string;
+  journeyBadgeColor: string;
+  buttonText: string;
 }
 
-// Only 3 products per strategy document
+// FAZ 2: Reordered products with Journey Badges
 const products: Product[] = [
   {
     id: 1,
-    title: "FİNANS KODU: Kaos İçinde Düzen",
-    description: "Finansal operasyonlarınızı dönüştürecek kapsamlı metodoloji ve araç seti.",
-    icon: Layers,
-    link: "https://www.hikie.space/finanskodu/file/3813040824b54db8bba17e4f4b2dd56f",
-    badge: "En Popüler",
-    badgeColor: "bg-primary",
-  },
-  {
-    id: 2,
     title: "AI Prompt Kütüphanesi",
     description: "Finans profesyonelleri için özel olarak tasarlanmış yapay zeka prompt koleksiyonu.",
     icon: Brain,
     link: "https://www.hikie.space/finanskodu/file/6cf62b1f141d48d1af13cb5ca04a53ab",
-    badge: "AI Destekli",
+    badge: "⚡ Hemen Kullan",
     badgeColor: "bg-purple-500",
+    journeyBadge: "BAŞLA",
+    journeyBadgeColor: "bg-green-600 text-white text-lg px-4 py-1 rounded-full",
+    buttonText: "Prompt'ları Keşfet",
+  },
+  {
+    id: 2,
+    title: "FİNANS KODU: Kaos İçinde Düzen",
+    description: "Finansal operasyonlarınızı dönüştürecek kapsamlı metodoloji ve araç seti.",
+    icon: Layers,
+    link: "https://www.hikie.space/finanskodu/file/3813040824b54db8bba17e4f4b2dd56f",
+    badge: "🔥 Çok Satan",
+    badgeColor: "bg-primary",
+    journeyBadge: "DEVAM ET",
+    journeyBadgeColor: "bg-blue-600 text-white text-md px-3 py-1 rounded-full",
+    buttonText: "Sistemi İncele",
   },
   {
     id: 3,
-    title: "Pro - Algoritmik Strateji ve Analiz Bülteni (1 Aylık Erişim)",
+    title: "Pro - Algoritmik Strateji ve Analiz Bülteni",
     description: "Piyasa yönü, makro analizler ve algoritmik sinyaller içeren kapsamlı aylık bülten.",
     icon: LayoutDashboard,
     link: "https://www.hikie.space/finanskodu/algoritmik-strateji-ve-analiz",
-    badge: "Pro",
+    badge: "📈 Aylık Sinyal",
     badgeColor: "bg-amber-500",
+    journeyBadge: "İLERLE",
+    journeyBadgeColor: "bg-gray-600 text-white text-sm px-2 py-0.5 rounded-full",
+    buttonText: "Bültene Katıl",
   },
 ];
 
@@ -104,7 +115,7 @@ export default function ProductsSection() {
       />
 
       <div className="container relative z-10" ref={ref}>
-        {/* Section Header */}
+        {/* Section Header - FAZ 2 */}
         <motion.header
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -118,7 +129,7 @@ export default function ProductsSection() {
             Dijital <span className="gradient-text">Araçlar</span>
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            Finansal verimliliğinizi artıracak, özenle hazırlanmış dijital ürün koleksiyonumuz
+            100+ hazır AI prompt, finansal metodoloji ve aylık strateji bülteni
           </p>
         </motion.header>
 
@@ -156,7 +167,7 @@ export default function ProductsSection() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.4, delay: 0.1 + index * 0.1 }}
-                className="group"
+                className="group relative"
                 itemScope
                 itemType="https://schema.org/Product"
               >
@@ -168,8 +179,15 @@ export default function ProductsSection() {
                     boxShadow: "0 4px 20px rgba(0, 0, 0, 0.3)",
                   }}
                 >
+                  {/* Journey Badge - FAZ 2 (Top Left, Prominent) */}
+                  <div className="absolute -top-3 left-6 z-10">
+                    <span className={`font-bold ${product.journeyBadgeColor} shadow-lg`}>
+                      {product.journeyBadge}
+                    </span>
+                  </div>
+
                   {/* Top Section: Icon + Badge */}
-                  <div className="relative mb-4">
+                  <div className="relative mb-4 mt-2">
                     {/* Icon as "Image" placeholder */}
                     <div 
                       className="w-full h-32 rounded-xl flex items-center justify-center transition-all duration-300"
@@ -185,14 +203,12 @@ export default function ProductsSection() {
                       />
                     </div>
 
-                    {/* Badge */}
-                    {product.badge && (
-                      <span 
-                        className={`absolute top-3 right-3 ${product.badgeColor} text-white text-xs font-bold px-2.5 py-1 rounded-full`}
-                      >
-                        {product.badge}
-                      </span>
-                    )}
+                    {/* Badge (Top Right) */}
+                    <span 
+                      className={`absolute top-3 right-3 ${product.badgeColor} text-white text-xs font-bold px-2.5 py-1 rounded-full`}
+                    >
+                      {product.badge}
+                    </span>
                   </div>
 
                   {/* Title (Bold) */}
@@ -205,29 +221,26 @@ export default function ProductsSection() {
 
                   {/* Description (2 lines max) */}
                   <p 
-                    className="text-gray-400 text-sm mb-6 flex-grow line-clamp-2" 
+                    className="text-gray-400 text-sm mb-4 flex-grow line-clamp-2" 
                     itemProp="description"
                   >
                     {product.description}
                   </p>
 
-                  {/* "Detaylı Bilgi" Button - NO PRICE */}
+                  {/* CTA Button - FAZ 2: No "↗" icon */}
                   <Button
                     asChild
-                    className="w-full font-semibold transition-all duration-300"
-                    style={{
-                      background: "linear-gradient(135deg, #00D4FF, #A855F7)",
-                      color: "#000",
-                    }}
+                    variant="outline"
+                    className="w-full border-primary text-primary hover:bg-primary hover:text-white transition-all duration-300"
                   >
-                    <a
-                      href={product.link}
-                      target="_blank"
+                    <a 
+                      href={product.link} 
+                      target="_blank" 
                       rel="noopener noreferrer"
-                      aria-label={`${product.title} hakkında detaylı bilgi`}
+                      itemProp="url"
+                      aria-label={`${product.title} sayfasına git`}
                     >
-                      Detaylı Bilgi
-                      <ExternalLink className="ml-2 w-4 h-4" aria-hidden="true" />
+                      {product.buttonText}
                     </a>
                   </Button>
                 </div>
@@ -235,24 +248,6 @@ export default function ProductsSection() {
             );
           })}
         </div>
-
-        {/* View All Link */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.4, delay: 0.5 }}
-          className="text-center mt-10"
-        >
-          <a
-            href="https://www.hikie.space/finanskodu"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-gray-400 hover:text-primary transition-colors text-sm"
-          >
-            Tüm ürünleri görüntüle
-            <ExternalLink className="w-4 h-4" />
-          </a>
-        </motion.div>
       </div>
     </section>
   );

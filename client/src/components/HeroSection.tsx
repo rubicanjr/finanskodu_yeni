@@ -113,33 +113,41 @@ export default function HeroSection() {
       <div className="container relative z-10 pt-24 pb-16">
         <div className="max-w-5xl mx-auto text-center">
           
-          {/* Main Heading - Updated per pasted_content_3.txt */}
+          {/* Eyebrow Text - FAZ 1 */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-xs sm:text-sm font-mono text-cyan-400 mb-4 tracking-wider"
+          >
+            // FİNANSAL VERİMLİLİK İÇİN
+          </motion.div>
+
+          {/* Main Heading - FAZ 1: "Hazır Çözümler" */}
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="font-display font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight mb-6"
+            className="font-display font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight mb-6"
           >
-            <span className="text-white">Kaos İçinde Düzen:</span>
-            <br />
             <span style={{ 
               background: 'linear-gradient(135deg, #00F0FF 0%, #2DD4BF 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text'
             }}>
-              Finansal Operasyonlarınızı Dönüştürün
+              Hazır Çözümler
             </span>
           </motion.h1>
 
-          {/* Subheading - Updated per pasted_content_3.txt */}
+          {/* Subheading - FAZ 1 */}
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
             className="text-base sm:text-lg text-gray-400 max-w-3xl mx-auto mb-8 leading-relaxed"
           >
-            Verimliliğinizi artırmak için özenle hazırlanmış yapay zeka destekli dijital araç koleksiyonumuzu keşfedin. Kapsamlı metodolojilerden prompt kütüphanelerine kadar ihtiyacınız olan her şey burada.
+            Saatler süren finansal işlemlerinizi dakikalara indiren, test edilmiş dijital ürünler
           </motion.p>
 
           {/* Visual Composition: Laptop + Sarp + Vera - Dedektifi Demo */}

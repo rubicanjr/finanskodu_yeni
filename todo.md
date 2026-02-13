@@ -800,3 +800,41 @@
 - [x] Find and remove hardcoded RSI values in Technical tab
 - [x] Bind backend data to frontend components
 - [x] Ensure all metrics display "N/A" when data unavailable
+
+
+## CONTENT & UI REVISION: Header, Product Funnel, Blog Injection
+
+### FAZ 1: HEADER / HERO METİNLERİ
+- [x] Üst Başlık (Eyebrow): "// FİNANSAL VERİMLİLİK İÇİN"
+- [x] Ana Başlık (H1): "Hazır Çözümler"
+- [x] Alt Metin (Subtitle): "Saatler süren finansal işlemlerinizi dakikalara indiren, test edilmiş dijital ürünler"
+
+### FAZ 2: ÜRÜN KARTLARI (YENİ HUNİ YAPISI)
+- [x] Bölüm Alt Başlığı: "100+ hazır AI prompt, finansal metodoloji ve aylık strateji bülteni"
+- [x] Tüm butonlardan "↗" (dışarı çıkış) ikonunu kaldır
+- [x] KART 1 (En Başa): AI Prompt Kütüphanesi
+  * Üst Rozet: "⚡ Hemen Kullan"
+  * Yolculuk Etiketi: "BAŞLA" (bg-green-600 text-white text-lg px-4 py-1 rounded-full)
+  * Buton: "Prompt'ları Keşfet"
+- [x] KART 2 (Ortaya): FİNANS KODU (Kaos İçinde Düzen)
+  * Üst Rozet: "🔥 Çok Satan"
+  * Yolculuk Etiketi: "DEVAM ET" (bg-blue-600 text-white text-md px-3 py-1 rounded-full)
+  * Buton: "Sistemi İncele"
+- [x] KART 3 (Sona): PRO BÜLTEN
+  * Üst Rozet: "📈 Aylık Sinyal"
+  * Yolculuk Etiketi: "İLERLE" (bg-gray-600 text-white text-sm px-2 py-0.5 rounded-full)
+  * Buton: "Bültene Katıl"
+
+### FAZ 3: BLOG İÇERİK ENTEGRASYONU
+- [x] Blog 1: "Finans Raporu Otomasyonu: Veri Girişinden Stratejik Liderliğe Geçiş"
+  * SEO Başlığı, Meta Açıklaması, Anahtar Kelimeler ekle
+  * Tarih: Bugünün tarihi
+  * İçerik: pasted_content_5.txt
+- [x] Blog 2: "Yeni Yılda Finançıların Kullanması Gereken 10 AI Aracı"
+  * SEO Başlığı, Meta Açıklaması, Anahtar Kelimeler ekle
+  * Tarih: Bugünün tarihi
+  * İçerik: pasted_content_6.txt
+- [x] Blog 3: "Excel'de AI Devrimi: Finançılar İçin Yapay Zeka Kullanma Rehberi"
+  * SEO Başlığı, Meta Açıklaması, Anahtar Kelimeler ekle
+  * Tarih: Bugünün tarihi
+  * İçerik: pasted_content_7.txt

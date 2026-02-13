@@ -32,8 +32,44 @@ interface BlogPost {
   author: 'Sarp' | 'Vera';
 }
 
-// 8 Blog Posts - Updated with new content
+// 11 Blog Posts - Updated with FAZ 3 new content
 const blogPosts: BlogPost[] = [
+  // FAZ 3: NEW BLOG 1 - Finans Raporu Otomasyonu
+  {
+    id: "finans-raporu-otomasyonu",
+    title: "Finans Raporu Otomasyonu: Veri Girişinden Stratejik Liderliğe Geçiş",
+    excerpt: "Manuel veri girişinden kurtulun. Finans raporu otomasyonu ile bilançoları saniyeler içinde analiz edin, hataları sıfıra indirin ve stratejik kararlara odaklanın.",
+    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/jojKojKpcfLpRHCc.jpg",
+    date: "13 Şubat 2026",
+    readTime: "8 dk",
+    link: "https://www.hikie.space/finanskodu/forum/a8adebd8f9ef4c3b8051a425eb18481a",
+    tags: ["Otomasyon", "CFO"],
+    author: 'Sarp'
+  },
+  // FAZ 3: NEW BLOG 2 - 10 AI Aracı
+  {
+    id: "yeni-yilda-finanscilarin-10-ai-araci",
+    title: "Yeni Yılda Finançıların Kullanması Gereken 10 AI Aracı",
+    excerpt: "Yapay zeka, finans dünyasını yeniden yazıyor. Veri analizi, risk yönetimi ve raporlama süreçlerinizi dönüştürecek 10 AI aracını keşfedin.",
+    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/dLfzwcekwqlakvAq.jpg",
+    date: "13 Şubat 2026",
+    readTime: "10 dk",
+    link: "https://www.hikie.space/finanskodu/forum/a8adebd8f9ef4c3b8051a425eb18481a",
+    tags: ["AI", "Araçlar"],
+    author: 'Vera'
+  },
+  // FAZ 3: NEW BLOG 3 - Excel'de AI Devrimi
+  {
+    id: "excelde-ai-devrimi-finanscilar-icin-rehber",
+    title: "Excel'de AI Devrimi: Finançılar İçin Yapay Zeka Kullanma Rehberi",
+    excerpt: "Excel artık sadece tablo değil. Yapay zeka entegrasyonlarıyla finansal analizlerinizi otomatikleştirin, tahmin modellerinizi güçlendirin.",
+    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/FkKeQxdluHuLVcpf.jpg",
+    date: "13 Şubat 2026",
+    readTime: "7 dk",
+    link: "https://www.hikie.space/finanskodu/forum/a8adebd8f9ef4c3b8051a425eb18481a",
+    tags: ["Excel", "AI"],
+    author: 'Sarp'
+  },
   // NEW: Altın ve ABD Reel Faizleri
   {
     id: "altin-abd-reel-faizleri",
