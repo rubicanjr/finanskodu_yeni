@@ -1158,3 +1158,34 @@
 - [x] Statik sayfalar (/, /analiz, /blog) + Dinamik sayfalar (https://finanskodu.com/blog/[slug])
 - [x] Geçerli bir XML oluştur ve public/sitemap.xml'e kaydet
 - [x] Script çalıştığında konsola "X adet blog yazısı eklendi" yazdır
+
+
+## GOOGLE ANALYTICS 4 ENTEGRASYONU
+
+### Phase 1: GA4 Script & Environment Setup
+- [x] VITE_GA4_MEASUREMENT_ID environment variable ekle
+- [x] client/index.html'e GA4 gtag script ekle
+- [x] Environment variable ile dynamic measurement ID yapılandırması
+
+### Phase 2: Core Tracking Infrastructure
+- [x] client/src/lib/analytics.ts utility dosyası oluştur
+- [x] pageview tracking fonksiyonu
+- [x] event tracking fonksiyonu
+- [x] TypeScript type definitions
+
+### Phase 3: Automatic Pageview Tracking
+- [x] React Router ile route değişimlerini izle
+- [x] useEffect ile otomatik pageview tracking
+- [x] App.tsx veya main.tsx'e entegre et
+
+### Phase 4: Custom Event Tracking
+- [x] CTA buton tıklamaları (Hero, Products, Chat Widget)
+- [x] Blog okuma event'leri (BlogDetailPage)
+- [x] Chat widget açma/kapama
+- [ ] TTS kullanım istatistikleri (opsiyonel - gelecek iterasyon)
+- [x] Kategori filtreleme kul### Phase 5: Testing & Documentation
+- [x] Browser console'da GA4 event'lerini doğrula
+- [x] Test senaryoları çalıştır
+- [ ] Checkpoint kaydet
+- [ ] Kullanıcıya dokümantasyon sun
+- [ ] Checkpoint kaydet

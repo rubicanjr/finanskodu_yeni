@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import StatsColumn from "@/components/StatsColumn";
 import TestimonialsColumn from "@/components/TestimonialsColumn";
+import { trackCTAClick, trackChatWidget } from "@/lib/analytics";
 // Auth gate and analysis section moved to AnalysisAuthGate component
 
 export default function HeroSection() {
@@ -57,6 +58,7 @@ export default function HeroSection() {
 
   // Scroll to products section
   const scrollToProducts = () => {
+    trackCTAClick('hero_products_cta', '#urunler');
     const productsSection = document.getElementById("urunler");
     if (productsSection) {
       productsSection.scrollIntoView({ behavior: "smooth" });
@@ -65,11 +67,13 @@ export default function HeroSection() {
 
   // Open forum link
   const openForum = () => {
+    trackCTAClick('hero_forum_cta', 'https://www.hikie.space/finanskodu/finans-kodu-forum');
     window.open("https://www.hikie.space/finanskodu/finans-kodu-forum", "_blank");
   };
 
   // Open DualPersonaWidget with pulse effect
   const openPersonaWidget = () => {
+    trackChatWidget('open', 'hero_terminal_click');
     setShowPulse(true);
     setTimeout(() => setShowPulse(false), 1000); // Pulse duration
     window.dispatchEvent(new Event('openDualPersonaWidget'));

@@ -15,6 +15,8 @@ import { ArrowLeft, Calendar, Clock, User } from "lucide-react";
 import { motion } from "framer-motion";
 import { blogContents } from "@/data/blogContent";
 import { Streamdown } from "streamdown";
+import { useEffect } from "react";
+import { trackBlogView } from "@/lib/analytics";
 
 // Import blog metadata from BlogSection
 const blogPosts = [
@@ -137,6 +139,13 @@ export default function BlogDetailPage() {
   // Find blog post metadata and content
   const post = blogPosts.find(p => p.id === slug);
   const blogContent = blogContents.find(b => b.id === slug);
+
+  // Track blog view
+  useEffect(() => {
+    if (post) {
+      trackBlogView(slug, post.title, post.tags[0]);
+    }
+  }, [slug, post]);
 
   if (!post || !blogContent) {
     return (

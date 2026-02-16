@@ -1,7 +1,7 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
-import { Route, Switch } from "wouter";
+import { Route, Switch, useLocation } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
@@ -10,7 +10,16 @@ import BlogListPage from "./pages/BlogListPage";
 import BlogDetailPage from "./pages/BlogDetailPage";
 import DualPersonaWidget from "./components/DualPersonaWidget";
 import MobileBottomNav from "./components/MobileBottomNav";
+import { useEffect } from "react";
+import { trackPageView } from "@/lib/analytics";
 function Router() {
+  const [location] = useLocation();
+
+  // Automatic pageview tracking on route change
+  useEffect(() => {
+    trackPageView(location);
+  }, [location]);
+
   // make sure to consider if you need authentication for certain routes
   return (
     <Switch>

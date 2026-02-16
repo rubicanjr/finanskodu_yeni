@@ -15,6 +15,7 @@ import Footer from "@/components/Footer";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState, useMemo } from "react";
+import { trackCategoryFilter } from "@/lib/analytics";
 
 // Blog posts metadata
 const blogPosts = [
@@ -210,7 +211,10 @@ export default function BlogListPage() {
             {allCategories.map((category) => (
               <button
                 key={category}
-                onClick={() => setSelectedCategory(category)}
+                onClick={() => {
+                  setSelectedCategory(category);
+                  trackCategoryFilter(category);
+                }}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                   selectedCategory === category
                     ? "bg-primary text-primary-foreground border-2 border-primary shadow-lg shadow-primary/30"

@@ -29,6 +29,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Mic, MicOff, Volume2, VolumeX, Send } from "lucide-react";
 import { audioManager } from "@/utils/AudioManager";
+import { trackChatWidget, trackTTSUsage } from "@/lib/analytics";
 
 // ============ PERSONA DEFINITIONS ============
 interface Persona {
@@ -700,6 +701,7 @@ export default function DualPersonaWidget() {
   const handleOpenWidget = useCallback(async () => {
     await unlockAudio();
     setIsOpen(true);
+    trackChatWidget('open', persona.name.toLowerCase());
     
     // Send intro message based on persona
     if (messages.length === 0) {
@@ -722,7 +724,8 @@ export default function DualPersonaWidget() {
     setIsSpeaking(false);
     stopPulseAnimation();
     setIsOpen(false);
-  }, [stopPulseAnimation]);
+    trackChatWidget('close', persona.name.toLowerCase());
+  }, [stopPulseAnimation, persona.name]);
 
   // Listen for custom event to open widget (from Hero CTA button)
   useEffect(() => {

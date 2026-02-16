@@ -29,6 +29,17 @@
     <!-- Bing Webmaster Tools Verification -->
     <meta name="msvalidate.01" content="DDF667ECAA6E5E2F19F2CFF898AC9BAC" />
     
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=%VITE_GA4_MEASUREMENT_ID%"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '%VITE_GA4_MEASUREMENT_ID%', {
+        send_page_view: false // We'll handle pageviews manually in React Router
+      });
+    </script>
+    
     <!-- Microsoft Clarity -->
     <script type="text/javascript">
         (function(c,l,a,r,i,t,y){
