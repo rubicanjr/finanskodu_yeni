@@ -1100,3 +1100,61 @@
 - [x] Generate URLs for all blog posts (https://finanskodu.com/blog/[slug])
 - [x] Include both static pages and dynamic blog URLs in sitemap.xml
 - [x] Test sitemap generation script
+
+
+## FINAL REVISION: Audio, Routing, UI, Sitemap
+
+### FAZ 1: SESLENDİRME (Audio Autoplay & Device Detection)
+- [ ] Cihaz tespiti: Desktop -> Sarp, Mobile -> Vera
+- [ ] Autoplay çözümü: Sayfa yüklendiğinde sesi çalmayı dene
+- [ ] Autoplay blocked ise global click listener ekle
+- [ ] Kullanıcı ilk tıklamada asistan konuşmaya başlasın
+- [ ] Listener'ı kaldır (tek seferlik)
+
+### FAZ 2: BLOG ROUTING & 404 HATASI
+- [ ] App.tsx'de /blog/:slug rotasının tanımlı olduğunu doğrula
+- [ ] BlogDetailPage'de useParams ile slug'ı al
+- [ ] blogData'dan ilgili içeriği bulup ekrana bas
+- [ ] Blog kartlarındaki Link to="/blog/slug" formatını doğrula
+
+### FAZ 3: UI TEMİZLİĞİ & GÖRSEL GÜNCELLEME
+- [ ] Anasayfadaki mükerrer "Son Blog Yazıları" bölümünü SİL
+- [ ] Sadece ana Slider/Grid yapısındaki blog alanı kalsın
+- [ ] Ürün görselleri: 3 yeni görseli (pasted_file_*) ürün kartlarına ata
+
+### FAZ 4: TAM KAPSAMLI SITEMAP SCRIPTİ
+- [ ] generate-sitemap.js'i regex ile dosya okuma mantığıyla yeniden yaz
+- [ ] src/data/blogData.ts'yi fs ile metin olarak oku
+- [ ] Regex ile tüm slug'ları çek
+- [ ] Statik + dinamik sayfaları içeren XML oluştur
+- [ ] public/sitemap.xml'e kaydet
+- [ ] Konsola "X adet blog yazısı eklendi" yazdır
+
+
+## FINAL REVISION: Audio, Routing, UI & Sitemap (COMPLETED)
+
+### FAZ 1: SESLENDİRME (Audio Autoplay Policy & Device Detection)
+- [x] Cihaz tespiti: Masaüstü -> Sadece SARP, Mobil -> Sadece VERA
+- [x] Autoplay çözümü: Session Interaction mantığı ekle
+- [x] Sayfa yüklenğinde sesi çalmayı dene (play())
+- [x] Hata verirse global window.addEventListener('click', ...) oluştur
+- [x] Kullanıcı ilk tıklamada asistan konuşmaya başlasın ve listener'ı kaldır
+
+### FAZ 2: BLOG ROUTING & 404 HATASI
+- [x] App.tsx'de /blog/:slug rotasını tanımla
+- [x] BlogDetailPage'de useParams hook'unu kullanarak slug'ı al
+- [x] blogData dosyasından ilgili içeriği bulup ekrana bas
+- [x] Blog kartlarındaki Link to="..." yapısını /blog/yazi-slug-degeri formatında yap
+
+### FAZ 3: UI TEMİZLİĞİ & GÖRSEL GÜNCELLEME
+- [x] Anasayfadaki mükerrer "Son Blog Yazıları" bölümünü SIL
+- [x] Sadece ana Slider/Grid yapısındaki blog alanı kalsın
+- [x] Ürün görsellerini güncelle: 3 yeni görseli ürün kartlarına ata (S3 CDN)
+
+### FAZ 4: TAM KAPSAMLI SITEMAP SCRIPTİ
+- [x] generate-sitemap.js'i Regex ile Dosya Okuma mantığıyla yeniden yaz
+- [x] src/data/blogData.ts dosyasını fs modülü ile metin olarak oku
+- [x] Dosyadaki tüm slug'ları Regex ile çek
+- [x] Statik sayfalar (/, /analiz, /blog) + Dinamik sayfalar (https://finanskodu.com/blog/[slug])
+- [x] Geçerli bir XML oluştur ve public/sitemap.xml'e kaydet
+- [x] Script çalıştığında konsola "X adet blog yazısı eklendi" yazdır

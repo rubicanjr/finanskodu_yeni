@@ -46,7 +46,7 @@ import ComparisonSection from "@/components/ComparisonSection";
 import ManifestoSection from "@/components/ManifestoSection";
 import BlogSection from "@/components/BlogSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
-import RecentBlogPosts from "@/components/RecentBlogPosts";
+
 import FAQSection from "@/components/FAQSection";
 import SponsorshipSection from "@/components/SponsorshipSection";
 import FeedbackSection from "@/components/FeedbackSection";
@@ -94,8 +94,7 @@ export default function Home() {
         {/* CRO: Social Proof - Build trust through others */}
         <TestimonialsSection />
 
-        {/* 7.5. Son Blog Yazıları - Recent Blog Posts */}
-        <RecentBlogPosts />
+
 
         {/* 8. SSS (FAQ) - Frequently Asked Questions */}
         {/* CRO: Address objections and build authority */}

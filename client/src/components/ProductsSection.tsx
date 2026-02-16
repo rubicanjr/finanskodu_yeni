@@ -26,6 +26,7 @@ interface Product {
   title: string;
   description: string;
   icon: LucideIcon;
+  image: string; // Product image URL
   link: string;
   badge: string;
   badgeColor: string;
@@ -41,6 +42,7 @@ const products: Product[] = [
     title: "AI Prompt Kütüphanesi",
     description: "Finans profesyonelleri için özel olarak tasarlanmış yapay zeka prompt koleksiyonu.",
     icon: Brain,
+    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/eExAEklLAjIAZkEK.png",
     link: "https://www.hikie.space/finanskodu/file/6cf62b1f141d48d1af13cb5ca04a53ab",
     badge: "⚡ Hemen Kullan",
     badgeColor: "bg-purple-500",
@@ -53,6 +55,7 @@ const products: Product[] = [
     title: "FİNANS KODU: Kaos İçinde Düzen",
     description: "Finansal operasyonlarınızı dönüştürecek kapsamlı metodoloji ve araç seti.",
     icon: Layers,
+    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/tipqmgRCXZXEvHBH.png",
     link: "https://www.hikie.space/finanskodu/file/3813040824b54db8bba17e4f4b2dd56f",
     badge: "🔥 Çok Satan",
     badgeColor: "bg-primary",
@@ -65,6 +68,7 @@ const products: Product[] = [
     title: "Pro - Algoritmik Strateji ve Analiz Bülteni",
     description: "Piyasa yönü, makro analizler ve algoritmik sinyaller içeren kapsamlı aylık bülten.",
     icon: LayoutDashboard,
+    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/KzrqHllOnTCvKWzx.png",
     link: "https://www.hikie.space/finanskodu/algoritmik-strateji-ve-analiz",
     badge: "📈 Aylık Sinyal",
     badgeColor: "bg-amber-500",
@@ -186,20 +190,14 @@ export default function ProductsSection() {
                     </span>
                   </div>
 
-                  {/* Top Section: Icon + Badge */}
+                  {/* Top Section: Product Image + Badge */}
                   <div className="relative mb-4 mt-2">
-                    {/* Icon as "Image" placeholder */}
-                    <div 
-                      className="w-full h-32 rounded-xl flex items-center justify-center transition-all duration-300"
-                      style={{
-                        background: "linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(168, 85, 247, 0.1))",
-                        border: "1px solid rgba(0, 212, 255, 0.2)",
-                      }}
-                    >
-                      <IconComponent 
-                        className="w-12 h-12 transition-transform duration-300 group-hover:scale-110" 
-                        style={{ color: "#00D4FF" }}
-                        aria-hidden="true" 
+                    {/* Product Image */}
+                    <div className="w-full h-48 rounded-xl overflow-hidden">
+                      <img
+                        src={product.image}
+                        alt={product.title}
+                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                       />
                     </div>
 
