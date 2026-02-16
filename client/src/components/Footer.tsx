@@ -55,7 +55,7 @@ const socialLinks = [
 const quickLinks = [
   { label: "Manifesto", href: "#manifesto" },
   { label: "Ürünler", href: "#urunler" },
-  { label: "Blog", href: "#blog" },
+  { label: "Blog", href: "/blog", isRoute: true },
 ];
 
 export default function Footer() {
@@ -171,13 +171,23 @@ export default function Footer() {
             <ul className="space-y-3" role="list">
               {quickLinks.map((link) => (
                 <li key={link.href}>
-                  <button
-                    onClick={() => scrollToSection(link.href)}
-                    className="text-muted-foreground hover:text-primary transition-colors text-sm"
-                    aria-label={`${link.label} bölümüne git`}
-                  >
-                    {link.label}
-                  </button>
+                  {link.isRoute ? (
+                    <a
+                      href={link.href}
+                      className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                      aria-label={`${link.label} sayfasına git`}
+                    >
+                      {link.label}
+                    </a>
+                  ) : (
+                    <button
+                      onClick={() => scrollToSection(link.href)}
+                      className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                      aria-label={`${link.label} bölümüne git`}
+                    >
+                      {link.label}
+                    </button>
+                  )}
                 </li>
               ))}
             </ul>

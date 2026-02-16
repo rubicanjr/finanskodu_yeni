@@ -6,6 +6,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import AnalysisPage from "./pages/AnalysisPage";
+import BlogListPage from "./pages/BlogListPage";
 import BlogDetailPage from "./pages/BlogDetailPage";
 import DualPersonaWidget from "./components/DualPersonaWidget";
 import MobileBottomNav from "./components/MobileBottomNav";
@@ -15,6 +16,7 @@ function Router() {
     <Switch>
       <Route path={"/"} component={Home} />
       <Route path={"/analiz"} component={AnalysisPage} />
+      <Route path={"/blog"} component={BlogListPage} />
       <Route path={"/blog/:slug"} component={BlogDetailPage} />
       <Route path={"/404"} component={NotFound} />
       <Route component={NotFound} />

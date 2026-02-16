@@ -997,3 +997,78 @@
 - [x] Statik sayfalar (/, /analiz) + dinamik blog linklerini birleştir
 - [x] public/sitemap.xml dosyasına yaz
 - [x] Konsola "Sitemap oluşturuldu! Bulunan blog sayısı: X" yazdır
+
+
+## SEO & BLOG GELİŞTİRME (5 Madde)
+
+### Madde 1: SİTEMAP.XML OTOMASYONU (Build-Time Script)
+- [ ] generate-sitemap.js scriptini package.json build komutuna entegre et
+- [ ] "prebuild": "node generate-sitemap.js" ekle
+- [ ] robots.txt'e "Sitemap: https://finanskodu.com/sitemap.xml" satırını ekle
+- [ ] Build sonrası sitemap.xml'in public klasöründe olduğunu doğrula
+
+### Madde 2: BLOG SAYFASI META & SEO (Helmet/Head Yönetimi)
+- [ ] react-helmet-async kütüphanesini kur
+- [ ] Her blog yazısı için dinamik <head> yönetimi ekle
+- [ ] Title: "[Yazı Başlığı] - Finans Kodu"
+- [ ] Meta Description: Yazının ilk 160 karakteri veya özet alanı
+- [ ] Canonical URL: https://finanskodu.com/blog/[slug]
+- [ ] Open Graph (OG) Tags: og:image, og:title, og:description
+- [ ] Structured Data: Schema.org Article JSON-LD yapısı
+- [ ] "index, follow" meta tag ekle (noindex kaldır)
+
+### Madde 3: BLOG LİSTELEME SAYFASI (/blog)
+- [ ] /blog rotası oluştur
+- [ ] Tüm yazıları grid yapısında listele
+- [ ] Her kartta: Kapak resmi, Başlık, Kısa Özet, Tarih, "Devamını Oku" butonu
+- [ ] (Opsiyonel) Sayfalama (Pagination) ekle
+
+### Madde 4: ANA SAYFA GÜNCELLEMESİ
+- [ ] Anasayfaya "Son Blog Yazıları" bloğu ekle (Sarp/Vera bölümünün altına)
+- [ ] Tarihe göre en yeni 3 yazıyı listele
+- [ ] Son 7 gün içinde eklenenlere "YENİ" rozeti ekle
+- [ ] "Tümünü Gör" butonu ile /blog sayfasına yönlendir
+
+### Madde 5: NAVİGASYON VE FOOTER
+- [ ] Header (Menü) alanına "Blog" linkini ekle
+- [ ] Footer alanına "Blog" linkini ekle
+- [ ] (Opsiyonel) Footer'a blog kategorilerini listele
+
+
+## SEO & BLOG GELİŞTİRME (5 Madde) ✅
+
+### Madde 1: SITEMAP.XML OTOMASYONU
+- [x] Build-time script (generate-sitemap.js) yaz
+- [x] Blog verilerini tara ve slug'ları al
+- [x] https://finanskodu.com/blog/[slug] formatında URL'ler oluştur
+- [x] public/sitemap.xml'e kaydet
+- [x] package.json build komutuna entegre et
+- [x] robots.txt'e "Sitemap: https://finanskodu.com/sitemap.xml" ekle
+
+### Madde 2: BLOG SAYFASI META & SEO
+- [x] react-helmet-async kur ve HelmetProvider ekle
+- [x] Her blog yazısı için dinamik <head> yönetimi
+- [x] Title: "[Yazı Başlığı] - Finans Kodu"
+- [x] Meta Description: İlk 160 karakter veya özet
+- [x] Canonical URL: https://finanskodu.com/blog/[slug]
+- [x] Open Graph (OG) Tags: og:image, og:title, og:description
+- [x] Structured Data: Schema.org Article JSON-LD
+- [x] "index, follow" meta tag (noindex kaldır)
+
+### Madde 3: BLOG LİSTELEME SAYFASI (/blog)
+- [x] /blog rotası oluştur
+- [x] Tüm yazıları grid (3 sütun) yapısında listele
+- [x] Her kartta: Kapak resmi, Başlık, Kısa Özet, Tarih, "Devamını Oku" butonu
+- [x] SEO meta tags ekle
+- [x] Hover animasyonları ve geçişler
+
+### Madde 4: ANA SAYFA GÜNCELLEMESİ
+- [x] Anasayfada "Son Blog Yazıları" bloğu ekle
+- [x] Tarihe göre en yeni 3 yazıyı çek
+- [x] Son 7 gün içinde eklenenlere "YENİ" rozeti ekle
+- [x] "Tümünü Gör" butonu ile /blog sayfasına yönlendir
+
+### Madde 5: NAVİGASYON VE FOOTER
+- [x] Header (Menü) ve Footer alanlarına "Blog" linkini ekle
+- [x] Navigation: /blog route'a güncellendi
+- [x] Footer: /blog route'a güncellendi
