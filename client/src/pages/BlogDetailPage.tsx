@@ -12,52 +12,120 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ArrowLeft, Calendar, Clock, User } from "lucide-react";
 import { motion } from "framer-motion";
+import { blogContents } from "@/data/blogContent";
 
-// Import blog data (same as BlogSection)
-// TODO: Move to shared data file
+// Import blog metadata from BlogSection
 const blogPosts = [
   {
     id: "finans-raporu-otomasyonu",
     title: "Finans Raporu Otomasyonu: Veri Girişinden Stratejik Liderliğe Geçiş",
-    excerpt: "Manuel veri girişinden kurtulun. Finans raporu otomasyonu ile bilançoları saniyeler içinde analiz edin, hataları sıfıra indirin ve stratejik kararlara odaklanın.",
     image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/jojKojKpcfLpRHCc.jpg",
     date: "13 Şubat 2026",
     readTime: "8 dk",
     tags: ["Otomasyon", "CFO"],
-    author: 'Sarp',
-    content: `
-# Finans Raporu Otomasyonu: Veri Girişinden Stratejik Liderliğe Geçiş
-
-Manuel veri girişi, finansal raporlama süreçlerinin en büyük zaman hırsızıdır. Finans ekipleri, saatlerini Excel tablolarına veri girmek, formülleri kontrol etmek ve hataları düzeltmekle geçiriyor. Bu yazıda, finans raporu otomasyonunun nasıl stratejik liderliğe geçiş sağladığını inceleyeceğiz.
-
-## Manuel Süreçlerin Maliyeti
-
-Ortalama bir finans ekibi, aylık kapanış sürecinde 40-60 saat manuel veri girişi yapıyor. Bu süre, stratejik analizler, tahminleme ve karar destek faaliyetlerinden çalınıyor.
-
-## Otomasyon Çözümleri
-
-Modern finans otomasyon araçları, ERP sistemlerinden otomatik veri çekimi, API entegrasyonları ve AI destekli veri doğrulama sunuyor. Bu araçlar sayesinde:
-
-- **Hata oranı %95 azalıyor**
-- **Raporlama süresi %80 kısalıyor**
-- **Stratejik analize ayrılan zaman 3 kat artıyor**
-
-## Sonuç
-
-Finans raporu otomasyonu, sadece zaman tasarrufu değil, aynı zamanda stratejik değer yaratma fırsatıdır.
-    `
+    author: 'Sarp' as const
   },
-  // Add more blog posts here...
+  {
+    id: "yeni-yilda-finanscilarin-10-ai-araci",
+    title: "Yeni Yılda Finançıların Kullanması Gereken 10 AI Aracı",
+    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/dLfzwcekwqlakvAq.jpg",
+    date: "13 Şubat 2026",
+    readTime: "10 dk",
+    tags: ["AI", "Araçlar"],
+    author: 'Vera' as const
+  },
+  {
+    id: "excelde-ai-devrimi-finanscilar-icin-rehber",
+    title: "Excel'de AI Devrimi: Finançılar İçin Yapay Zeka Kullanma Rehberi",
+    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/FkKeQxdluHuLVcpf.jpg",
+    date: "13 Şubat 2026",
+    readTime: "7 dk",
+    tags: ["Excel", "AI"],
+    author: 'Sarp' as const
+  },
+  {
+    id: "altin-abd-reel-faizleri",
+    title: "Altın'ın En Büyük Düşmanı ve Dostu: ABD Reel Faizleri",
+    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/dLfzwcekwqlakvAq.jpg",
+    date: "25 Ocak 2025",
+    readTime: "7 dk",
+    tags: ["Altın", "Makro Analiz"],
+    author: 'Vera' as const
+  },
+  {
+    id: "finansal-ozgurluk-gizli-raporlar",
+    title: "Finansal Özgürlük İçin Okumanız Gereken 3 Gizli Rapor",
+    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/jojKojKpcfLpRHCc.jpg",
+    date: "22 Ocak 2025",
+    readTime: "6 dk",
+    tags: ["Araştırma", "Strateji"],
+    author: 'Sarp' as const
+  },
+  {
+    id: "manuel-takip-7-isaret",
+    title: "Manuel Takibi Bırakmanız Gerektiğini Gösteren 7 İşaret",
+    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/FkKeQxdluHuLVcpf.jpg",
+    date: "20 Ocak 2025",
+    readTime: "5 dk",
+    tags: ["Otomasyon", "Verimlilik"],
+    author: 'Vera' as const
+  },
+  {
+    id: "finansal-okuryazarlik-neden-onemli",
+    title: "Finansal Okuryazarlık Neden Önemli?",
+    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/jojKojKpcfLpRHCc.jpg",
+    date: "15 Ocak 2025",
+    readTime: "6 dk",
+    tags: ["Eğitim", "Temel Bilgiler"],
+    author: 'Sarp' as const
+  },
+  {
+    id: "yatirim-stratejileri-temel-analiz",
+    title: "Yatırım Stratejileri: Temel Analiz",
+    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/dLfzwcekwqlakvAq.jpg",
+    date: "12 Ocak 2025",
+    readTime: "8 dk",
+    tags: ["Yatırım", "Analiz"],
+    author: 'Vera' as const
+  },
+  {
+    id: "teknik-analiz-gostergeleri-rehberi",
+    title: "Teknik Analiz Göstergeleri Rehberi",
+    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/FkKeQxdluHuLVcpf.jpg",
+    date: "10 Ocak 2025",
+    readTime: "9 dk",
+    tags: ["Teknik Analiz", "Borsa"],
+    author: 'Sarp' as const
+  },
+  {
+    id: "portfoy-yonetimi-ipuclari",
+    title: "Portföy Yönetimi İpuçları",
+    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/jojKojKpcfLpRHCc.jpg",
+    date: "8 Ocak 2025",
+    readTime: "7 dk",
+    tags: ["Portföy", "Risk Yönetimi"],
+    author: 'Vera' as const
+  },
+  {
+    id: "kripto-para-blockchain-temelleri",
+    title: "Kripto Para ve Blockchain Temelleri",
+    image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/dLfzwcekwqlakvAq.jpg",
+    date: "5 Ocak 2025",
+    readTime: "10 dk",
+    tags: ["Kripto", "Blockchain"],
+    author: 'Sarp' as const
+  }
 ];
 
 export default function BlogDetailPage() {
   const params = useParams();
   const slug = params.slug as string;
 
-  // Find blog post by slug
+  // Find blog post metadata and content
   const post = blogPosts.find(p => p.id === slug);
+  const blogContent = blogContents.find(b => b.id === slug);
 
-  if (!post) {
+  if (!post || !blogContent) {
     return (
       <div className="min-h-screen bg-background text-foreground">
         <Navigation />
@@ -154,7 +222,7 @@ export default function BlogDetailPage() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="prose prose-invert prose-lg max-w-none"
         >
-          <div dangerouslySetInnerHTML={{ __html: post.content }} />
+          <div className="whitespace-pre-wrap">{blogContent.content}</div>
         </motion.div>
       </main>
 
