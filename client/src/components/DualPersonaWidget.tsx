@@ -309,19 +309,42 @@ export default function DualPersonaWidget() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // FAZ 2: Greeting messages when widget opens (without TTS to avoid dependency issues)
+  // FAZ 2 & 3: Greeting messages with auto-TTS when widget opens
   useEffect(() => {
     if (isOpen && messages.length === 0) {
       // Add Sarp's greeting after 500ms
       const sarpTimeout = setTimeout(() => {
-        const sarpGreeting = "Hoş geldin! Ben Sarp, veri analitiği tarafındayım. Finansal verilerinde kaybolmuş gibi hissediyorsan doğru yerdesin.";
+        const sarpGreeting = "Hoş geldin! Ben Sarp, finansın matematiksel tarafındayım. Eğer saatlerini alan operasyonel yüklerden kurtulmak istiyorsan, Dijital Araçlar (AI Prompt Kütüphanesi & Finans Kodu Sistemi) koleksiyonumuz tam sana göre. İşlerini dakikalara indirmek için buradayız.";
         setMessages(prev => [...prev, { role: "assistant", content: sarpGreeting }]);
+        
+        // FAZ 3: Auto-TTS for Sarp's greeting (try-catch for browser autoplay policy)
+        try {
+          // Use setTimeout to ensure message is rendered first
+          setTimeout(() => {
+            speakText(sarpGreeting).catch(err => {
+              console.warn("[DualPersona] Auto-TTS blocked by browser:", err);
+            });
+          }, 100);
+        } catch (err) {
+          console.warn("[DualPersona] Auto-TTS error:", err);
+        }
       }, 500);
 
       // Add Vera's greeting after 3000ms (after Sarp finishes)
       const veraTimeout = setTimeout(() => {
-        const veraGreeting = "Merhaba, ben de Vera. Sarp işin matematiğine bakar, ben strateji ve psikoloji tarafındayım. Bugün nasıl yardımcı olabiliriz?";
+        const veraGreeting = "Merhaba, ben de Vera. Strateji ve piyasa öngörüleri benden sorulur. Pro Bülten ile piyasanın her zaman bir adım önünde olabilirsin. Ürünlerimizle veya finansal hedeflerinle ilgili aklına takılan her şeyi bize sorabilirsin, hemen cevaplayalım.";
         setMessages(prev => [...prev, { role: "assistant", content: veraGreeting }]);
+        
+        // FAZ 3: Auto-TTS for Vera's greeting (try-catch for browser autoplay policy)
+        try {
+          setTimeout(() => {
+            speakText(veraGreeting).catch(err => {
+              console.warn("[DualPersona] Auto-TTS blocked by browser:", err);
+            });
+          }, 100);
+        } catch (err) {
+          console.warn("[DualPersona] Auto-TTS error:", err);
+        }
       }, 3000);
 
       return () => {
@@ -329,7 +352,7 @@ export default function DualPersonaWidget() {
         clearTimeout(veraTimeout);
       };
     }
-  }, [isOpen, messages.length]);
+  }, [isOpen, messages.length]); // speakText is stable, no need in deps
 
   // Pulse animation
   const startPulseAnimation = useCallback(() => {

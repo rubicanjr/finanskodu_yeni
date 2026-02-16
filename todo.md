@@ -917,3 +917,25 @@
 - [x] Öncelikli 3 makale: Tam metinleri eksiksiz işle (pasted_content_5/6/7.txt)
 - [x] Diğer 8 makale: AI ile 300-500 kelimelik özgün ve doyurucu içerik oluştur
 - [x] Tüm makaleler SEO uyumlu, başlık (H2/H3) ve madde işaretleri içersin
+
+
+## REVISION: Sitemap Logic, Chat Sales Copy & Auto-TTS
+
+### FAZ 1: DATA-DRIVEN SITEMAP (Dinamik URL Düzeltmesi)
+- [x] generate-sitemap.js scriptini blogData.ts'den veri okuyacak şekilde güncelle
+- [x] Script çalışırken blog verilerini OKUMALI (require/import)
+- [x] Her blog slug'ı için https://finanskodu.com/blog/[slug] formatında URL üret
+- [x] Dinamik blog listesini statik sayfalarla birleştir ve public/sitemap.xml'e kaydet
+- [x] Script çalıştıktan sonra konsola "X adet blog yazısı sitemap'e eklendi" yaz
+
+#### FAZ 2: SARP & VERA DİYALOGLAR (Satış & Soru Motive Edici)
+- [x] ChatWidget.tsx'deki açılış konuşmalarını satış odaklı güncelle
+- [x] MESAJ 1 (SARP): Dijital Araçlar koleksiyonunu tanıt, operasyonel yükten kurtulma vurgusu
+- [x] MESAJ 2 (VERA): Pro Bülten'i tanıt, strateji ve piyasa öngörüleri vurgusu
+- [x] Her iki mesaj da kullanıcıyı soru sormaya teşvik etsin
+
+### FAZ 3: OTOMATİK SESLİLENDİRME (Auto-TTS Logic)
+- [x] Chat widget ilk kez açıldığında (mount) TTS otomatik tetiklensin
+- [x] speakMessage fonksiyonunu useEffect içinde çağır
+- [x] Önce Sarp konuşsun, bitince Vera konuşsun (onEnd event veya timeout)
+- [x] Browser autoplay policy engelini try-catch ile yönet (konsola uyarı yaz)
