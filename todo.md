@@ -493,7 +493,7 @@
 - [ ] Tüm bileşenleri entegre etme
 - [ ] TypeScript hataları kontrol
 - [ ] Vitest testleri çalıştırma
-- [ ] Checkpoint kaydetme
+- [x] Checkpoint kaydetme
 
 
 ### PHASE 1: Backend Wiro Prompt Mühendisliği ✓
@@ -670,7 +670,7 @@
 ### PHASE 7: Deploy & Checkpoint
 - [ ] Tüm kodlar temiz, TypeScript hata yok
 - [ ] Dev server çalışıyor
-- [ ] Checkpoint kaydet
+- [x] Checkpoint kaydet
 
 
 ## UI RESTRUCTURE: Auth Gate vs. Sponsorship Section (Yeni Görev)
@@ -1186,6 +1186,37 @@
 - [x] Kategori filtreleme kul### Phase 5: Testing & Documentation
 - [x] Browser console'da GA4 event'lerini doğrula
 - [x] Test senaryoları çalıştır
+- [x] Checkpoint kaydet
+- [x] Kullanıcıya dokümantasyon sun
+- [x] Checkpoint kaydet
+
+
+## CRITICAL HOTFIX: BLOG LİNKLERİ CRASH & YENİ SEKME DAVRANIŞI
+
+### Faz 1: Sorun Analizi
+- [x] BlogSection, BlogListPage ve BlogDetailPage komponentlerini incele
+- [x] Blog linklerinin mevcut yapısını ve route tanımlarını kontrol et
+- [x] Crash hatasının kaynağını tespit et (veri eşleşmesi, undefined erişim)
+
+### Faz 2: Blog Linklerini Yeni Sekmede Açılacak Şekilde Güncelle
+- [x] BlogSection.tsx içindeki blog linklerine target="_blank" rel="noopener noreferrer" ekle
+- [x] BlogListPage.tsx içindeki blog linklerine target="_blank" rel="noopener noreferrer" ekle
+- [x] Link URL formatının /blog/[slug] şeklinde doğru olduğunu doğrula
+
+### Faz 3: BlogDetailPage Crash Fix
+- [x] useParams ile gelen slug değerini güvenli şekilde kontrol et
+- [x] Blog verisi bulunamazsa "Yazı bulunamadı" fallback UI göster
+- [x] Optional chaining (blog?.title) kullanarak undefined erişim hatalarını önle
+- [x] Loading state ekle
+- [x] Türkçe tarih formatını ("13 Şubat 2026") ISO 8601'e güvenli parse et
+
+### Faz 4: Routing Kontrolü & Test
+- [x] App.tsx içinde /blog/:slug route tanımını kontrol et
+- [x] BlogDetailPage'in bağımsız URL olarak çalıştığını test et
+- [x] Browser'da blog linklerine tıklayarak yeni sekme davranışını doğrula
+- [x] Crash senaryolarını test et (geçersiz slug, veri yok)
+
+### Faz 5: Checkpoint & Dokümantasyon
+- [x] Tüm değişiklikleri test et
 - [ ] Checkpoint kaydet
-- [ ] Kullanıcıya dokümantasyon sun
-- [ ] Checkpoint kaydet
+- [ ] Kullanıcıya hotfix raporu sun

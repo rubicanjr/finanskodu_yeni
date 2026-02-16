@@ -244,19 +244,22 @@ export default function BlogListPage() {
               className="group bg-gray-900/50 rounded-xl overflow-hidden border border-gray-800 hover:border-primary/50 transition-all duration-300"
             >
               {/* Cover Image */}
-              <Link href={`/blog/${post.id}`}>
-                <a className="block relative overflow-hidden aspect-video">
-                  <img
-                    src={post.image}
-                    alt={post.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  {/* Author Badge */}
-                  <div className="absolute top-4 right-4 px-3 py-1 bg-black/70 backdrop-blur-sm rounded-full text-sm">
-                    {post.author}
-                  </div>
-                </a>
-              </Link>
+              <a 
+                href={`/blog/${post.id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block relative overflow-hidden aspect-video"
+              >
+                <img
+                  src={post.image}
+                  alt={post.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                {/* Author Badge */}
+                <div className="absolute top-4 right-4 px-3 py-1 bg-black/70 backdrop-blur-sm rounded-full text-sm">
+                  {post.author}
+                </div>
+              </a>
 
               {/* Card Content */}
               <div className="p-6">
@@ -295,12 +298,15 @@ export default function BlogListPage() {
                 </div>
 
                 {/* Read More Button */}
-                <Link href={`/blog/${post.id}`}>
-                  <a className="inline-flex items-center gap-2 text-primary hover:gap-3 transition-all duration-300">
-                    Devamını Oku
-                    <ArrowRight className="w-4 h-4" />
-                  </a>
-                </Link>
+                <a 
+                  href={`/blog/${post.id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-primary hover:gap-3 transition-all duration-300"
+                >
+                  Devamını Oku
+                  <ArrowRight className="w-4 h-4" />
+                </a>
               </div>
             </motion.article>
           ))}

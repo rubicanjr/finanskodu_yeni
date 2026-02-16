@@ -15,7 +15,7 @@ import { ArrowLeft, Calendar, Clock, User } from "lucide-react";
 import { motion } from "framer-motion";
 import { blogContents } from "@/data/blogContent";
 import { Streamdown } from "streamdown";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { trackBlogView } from "@/lib/analytics";
 
 // Import blog metadata from BlogSection
@@ -147,6 +147,24 @@ export default function BlogDetailPage() {
     }
   }, [slug, post]);
 
+  // Loading state - give time for data to load
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 100);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background text-foreground flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-gray-400">Yükleniyor...</p>
+        </div>
+      </div>
+    );
+  }
+
   if (!post || !blogContent) {
     return (
       <div className="min-h-screen bg-background text-foreground">
@@ -156,10 +174,17 @@ export default function BlogDetailPage() {
         </Helmet>
         <Navigation />
         <main className="container mx-auto px-4 py-24">
-          <h1 className="text-4xl font-bold mb-4">Blog yazısı bulunamadı</h1>
-          <Link href="/">
-            <a className="text-primary hover:underline">Anasayfaya dön</a>
-          </Link>
+          <div className="max-w-2xl mx-auto text-center">
+            <h1 className="text-4xl font-bold mb-4">Blog yazısı bulunamadı</h1>
+            <p className="text-gray-400 mb-6">Aradığınız blog yazısı mevcut değil veya kaldırılmış olabilir.</p>
+            <a 
+              href="/blog"
+              className="inline-flex items-center gap-2 text-primary hover:underline"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Blog listesine dön
+            </a>
+          </div>
         </main>
         <Footer />
       </div>
@@ -169,7 +194,30 @@ export default function BlogDetailPage() {
   // Generate meta description (first 160 characters of content or excerpt)
   const metaDescription = post.excerpt || blogContent.content.substring(0, 160).replace(/[#*\n]/g, ' ').trim() + '...';
   const canonicalUrl = `https://finanskodu.com/blog/${slug}`;
-  const publishedDate = new Date(post.date).toISOString();
+  
+  // Parse Turkish date format safely (e.g., "13 Şubat 2026")
+  const parseTurkishDate = (dateStr: string): string => {
+    const monthMap: Record<string, string> = {
+      'Ocak': '01', 'Şubat': '02', 'Mart': '03', 'Nisan': '04',
+      'Mayıs': '05', 'Haziran': '06', 'Temmuz': '07', 'Ağustos': '08',
+      'Eylül': '09', 'Ekim': '10', 'Kasım': '11', 'Aralık': '12'
+    };
+    
+    const parts = dateStr.split(' ');
+    if (parts.length === 3) {
+      const day = parts[0].padStart(2, '0');
+      const month = monthMap[parts[1]];
+      const year = parts[2];
+      if (month) {
+        return `${year}-${month}-${day}T12:00:00.000Z`;
+      }
+    }
+    
+    // Fallback to current date if parsing fails
+    return new Date().toISOString();
+  };
+  
+  const publishedDate = parseTurkishDate(post.date);
 
   // Schema.org Article structured data
   const structuredData = {
@@ -240,12 +288,13 @@ export default function BlogDetailPage() {
 
       <main className="container mx-auto px-4 py-24 max-w-4xl">
         {/* Back Link */}
-        <Link href="/">
-          <a className="inline-flex items-center gap-2 text-gray-400 hover:text-primary transition-colors mb-8">
-            <ArrowLeft className="w-4 h-4" />
-            Blog listesine dön
-          </a>
-        </Link>
+        <a 
+          href="/blog"
+          className="inline-flex items-center gap-2 text-gray-400 hover:text-primary transition-colors mb-8"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Blog listesine dön
+        </a>
 
         {/* Hero Image */}
         <motion.div

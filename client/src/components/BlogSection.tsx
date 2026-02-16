@@ -365,13 +365,16 @@ export default function BlogSection() {
                       {post.excerpt}
                     </p>
 
-                    {/* Read More Link - Internal Routing */}
-                    <Link href={`/blog/${post.id}`}>
-                      <a className="inline-flex items-center gap-2 text-primary font-medium text-sm hover:text-primary/80 transition-colors group/btn">
-                        <span>Devamını Oku</span>
-                        <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
-                      </a>
-                    </Link>
+                    {/* Read More Link - Opens in New Tab */}
+                    <a 
+                      href={`/blog/${post.id}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-primary font-medium text-sm hover:text-primary/80 transition-colors group/btn"
+                    >
+                      <span>Devamını Oku</span>
+                      <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
+                    </a>
                   </div>
                 </div>
               </motion.article>
@@ -386,12 +389,13 @@ export default function BlogSection() {
           transition={{ duration: 0.4, delay: 0.5 }}
           className="text-center mt-10"
         >
-          <Link href="/">
-            <a className="inline-flex items-center gap-2 text-gray-400 hover:text-primary transition-colors text-sm">
-              Tüm yazıları görüntüle
-              <ArrowRight className="w-4 h-4" />
-            </a>
-          </Link>
+          <a 
+            href="/blog"
+            className="inline-flex items-center gap-2 text-gray-400 hover:text-primary transition-colors text-sm"
+          >
+            Tüm yazıları görüntüle
+            <ArrowRight className="w-4 h-4" />
+          </a>
         </motion.div>
       </div>
     </section>
