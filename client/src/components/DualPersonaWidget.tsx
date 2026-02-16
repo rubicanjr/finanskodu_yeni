@@ -288,6 +288,7 @@ export default function DualPersonaWidget() {
   const [inputText, setInputText] = useState("");
   const [pulseScale, setPulseScale] = useState(1);
   const [isTTSLoading, setIsTTSLoading] = useState(false);
+  const [ttsFallbackPending, setTtsFallbackPending] = useState<string | null>(null); // FAZ 3: Pending TTS text
   
   // Refs
   const audioContextRef = useRef<AudioContext | null>(null);
@@ -309,50 +310,68 @@ export default function DualPersonaWidget() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // FAZ 2 & 3: Greeting messages with auto-TTS when widget opens
+  // FAZ 2 & 3: Device-based greeting message with auto-TTS
   useEffect(() => {
     if (isOpen && messages.length === 0) {
-      // Add Sarp's greeting after 500ms
-      const sarpTimeout = setTimeout(() => {
-        const sarpGreeting = "Hoş geldin! Ben Sarp, finansın matematiksel tarafındayım. Eğer saatlerini alan operasyonel yüklerden kurtulmak istiyorsan, Dijital Araçlar (AI Prompt Kütüphanesi & Finans Kodu Sistemi) koleksiyonumuz tam sana göre. İşlerini dakikalara indirmek için buradayız.";
-        setMessages(prev => [...prev, { role: "assistant", content: sarpGreeting }]);
+      // Determine greeting based on active persona (device-based)
+      const greetingTimeout = setTimeout(() => {
+        let greeting = "";
         
-        // FAZ 3: Auto-TTS for Sarp's greeting (try-catch for browser autoplay policy)
-        try {
-          // Use setTimeout to ensure message is rendered first
-          setTimeout(() => {
-            speakText(sarpGreeting).catch(err => {
-              console.warn("[DualPersona] Auto-TTS blocked by browser:", err);
-            });
-          }, 100);
-        } catch (err) {
-          console.warn("[DualPersona] Auto-TTS error:", err);
+        if (persona.name === "Sarp") {
+          // Desktop: Sarp's greeting
+          greeting = "Hoş geldin! Ben Sarp, finansın matematiksel tarafındayım. Eğer saatlerini alan operasyonel yüklerden kurtulmak istiyorsan, Dijital Araçlar (AI Prompt Kütüphanesi & Finans Kodu Sistemi) koleksiyonumuz tam sana göre. İşlerini dakikalara indirmek için buradayız.";
+        } else {
+          // Mobile: Vera's greeting
+          greeting = "Merhaba, ben Vera. Strateji ve piyasa öngörüleri benden sorulur. Telefonda analiz yapmak zor olabilir ama Pro Bülten ile piyasanın her zaman bir adım önünde olabilirsin. Aklına takılanları bana sorabilirsin.";
         }
+        
+        setMessages([{ role: "assistant", content: greeting }]);
+        
+        // FAZ 3: Auto-TTS with 1 second delay and fallback
+        setTimeout(() => {
+          try {
+            speakText(greeting).catch(err => {
+              console.warn("[DualPersona] Auto-TTS blocked by browser (autoplay policy):", err);
+              console.log("[DualPersona] TTS will be triggered on first user interaction");
+              // Set fallback pending state
+              setTtsFallbackPending(greeting);
+            });
+          } catch (err) {
+            console.warn("[DualPersona] Auto-TTS error:", err);
+            // Set fallback pending state
+            setTtsFallbackPending(greeting);
+          }
+        }, 1000); // 1 second delay to avoid autoplay block
       }, 500);
 
-      // Add Vera's greeting after 3000ms (after Sarp finishes)
-      const veraTimeout = setTimeout(() => {
-        const veraGreeting = "Merhaba, ben de Vera. Strateji ve piyasa öngörüleri benden sorulur. Pro Bülten ile piyasanın her zaman bir adım önünde olabilirsin. Ürünlerimizle veya finansal hedeflerinle ilgili aklına takılan her şeyi bize sorabilirsin, hemen cevaplayalım.";
-        setMessages(prev => [...prev, { role: "assistant", content: veraGreeting }]);
-        
-        // FAZ 3: Auto-TTS for Vera's greeting (try-catch for browser autoplay policy)
-        try {
-          setTimeout(() => {
-            speakText(veraGreeting).catch(err => {
-              console.warn("[DualPersona] Auto-TTS blocked by browser:", err);
-            });
-          }, 100);
-        } catch (err) {
-          console.warn("[DualPersona] Auto-TTS error:", err);
-        }
-      }, 3000);
-
       return () => {
-        clearTimeout(sarpTimeout);
-        clearTimeout(veraTimeout);
+        clearTimeout(greetingTimeout);
       };
     }
-  }, [isOpen, messages.length]); // speakText is stable, no need in deps
+  }, [isOpen, messages.length, persona]); // persona added to deps
+
+  // FAZ 3: Fallback TTS on first user click
+  useEffect(() => {
+    const handleFirstClick = () => {
+      if (ttsFallbackPending) {
+        console.log("[DualPersona] First user interaction detected, triggering fallback TTS");
+        speakText(ttsFallbackPending).catch(err => {
+          console.warn("[DualPersona] Fallback TTS also failed:", err);
+        });
+        setTtsFallbackPending(null); // Clear pending state
+        // Remove listener after first click
+        document.removeEventListener('click', handleFirstClick);
+      }
+    };
+
+    if (ttsFallbackPending) {
+      document.addEventListener('click', handleFirstClick);
+    }
+
+    return () => {
+      document.removeEventListener('click', handleFirstClick);
+    };
+  }, [ttsFallbackPending]);
 
   // Pulse animation
   const startPulseAnimation = useCallback(() => {

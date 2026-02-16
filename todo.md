@@ -956,3 +956,24 @@
 - [x] window.location.href yerine smooth scroll kullan
 - [x] Widget kapandıktan sonra yumuşak geçiş animasyonu
 - [x] #urunler bölümüne smooth scroll
+
+
+## MAJOR BUG FIX: Sitemap, Assistant Logic, TTS
+
+### FAZ 1: KESİN SITEMAP ÇÖZÜMÜ
+- [x] generate-sitemap.js'i fs modülü ile doğrudan dosya okuyacak şekilde güncelle
+- [x] Regex veya JSON parse ile slug/id değerlerini çek
+- [x] Her slug için https://finanskodu.com/blog/[slug] linkini oluştur
+- [x] Statik sayfalarla birleştir ve public/sitemap.xml'e yaz
+- [x] Script sonunda "X adet blog yazısı eklendi: [Örnek URL]" logunu bas
+
+### FAZ 2: CİHAZ BAZLI ASİSTAN SEÇİMİ
+- [x] useEffect ile window.innerWidth kontrolü ekle
+- [x] Desktop (>768px): Sadece SARP aktif, sadece Sarp mesajı ve sesi
+- [x] Mobile (<=768px): Sadece VERA aktif, sadece Vera mesajı ve sesi
+- [x] İki asistan aynı anda konuşmasın (çakışma önleme)
+### FAZ 3: OTOMATİK SES (TTS) & AUTOPLAY FIX
+- [x] Bileşen mount olduktan 1 saniye sonra TTS başlat
+- [x] window.speechSynthesis.speak() fonksiyonunu try-catch bloğuna al
+- [x] NotAllowedError durumunda konsola uyarı yaz
+- [x] Fallback: Kullanıcı ilk tıklamada yarım kalan konuşmayı başlat
