@@ -897,3 +897,23 @@
 - [ ] Update BlogDetailPage.tsx to handle all blog slugs
 - [ ] Ensure SEO meta tags (title, description, keywords) for each blog
 - [ ] Test all blog links to verify no "bulunamadı" errors
+
+
+## FIX & REFACTOR: Sitemap Logic, Chat Personality, Blog Content
+
+### FAZ 1: SITEMAP SCRIPT GÜNCELLEMESİ (Dinamik URL)
+- [x] generate-sitemap.js scriptini blogContent.ts'den veri alacak şekilde güncelle
+- [x] Blog verilerini import et ve her slug için dinamik URL oluştur
+- [x] Sitemap.xml'e hem statik sayfalar hem de tüm blog yazıları eklensin
+
+### FAZ 2: SARP & VERA KONUŞMALARI (Chat Widget)
+- [x] Chat widget açıldığında Sarp ve Vera karşılama mesajları otomatik tetiklensin
+- [x] useEffect ile isOpen true olduğunda konuşma akışı başlasın
+- [x] Mesaj 1 (Sarp): "Hoş geldin! Ben Sarp, veri analitiği tarafındayım..."
+- [x] Mesaj 2 (Vera): "Merhaba, ben de Vera. Sarp işin matematiğine bakar..."
+
+### FAZ 3: BLOG İÇERİKLERİNİ DOLDURMA (Content Injection)
+- [x] blogContent.ts'deki "İçerik güncelleniyor..." placeholder'larını kaldır
+- [x] Öncelikli 3 makale: Tam metinleri eksiksiz işle (pasted_content_5/6/7.txt)
+- [x] Diğer 8 makale: AI ile 300-500 kelimelik özgün ve doyurucu içerik oluştur
+- [x] Tüm makaleler SEO uyumlu, başlık (H2/H3) ve madde işaretleri içersin

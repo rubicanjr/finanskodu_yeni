@@ -309,6 +309,28 @@ export default function DualPersonaWidget() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  // FAZ 2: Greeting messages when widget opens (without TTS to avoid dependency issues)
+  useEffect(() => {
+    if (isOpen && messages.length === 0) {
+      // Add Sarp's greeting after 500ms
+      const sarpTimeout = setTimeout(() => {
+        const sarpGreeting = "Hoş geldin! Ben Sarp, veri analitiği tarafındayım. Finansal verilerinde kaybolmuş gibi hissediyorsan doğru yerdesin.";
+        setMessages(prev => [...prev, { role: "assistant", content: sarpGreeting }]);
+      }, 500);
+
+      // Add Vera's greeting after 3000ms (after Sarp finishes)
+      const veraTimeout = setTimeout(() => {
+        const veraGreeting = "Merhaba, ben de Vera. Sarp işin matematiğine bakar, ben strateji ve psikoloji tarafındayım. Bugün nasıl yardımcı olabiliriz?";
+        setMessages(prev => [...prev, { role: "assistant", content: veraGreeting }]);
+      }, 3000);
+
+      return () => {
+        clearTimeout(sarpTimeout);
+        clearTimeout(veraTimeout);
+      };
+    }
+  }, [isOpen, messages.length]);
+
   // Pulse animation
   const startPulseAnimation = useCallback(() => {
     if (pulseIntervalRef.current) return;

@@ -3,7 +3,7 @@
  * 
  * Generates sitemap.xml with:
  * - Static routes (/, /analiz, etc.)
- * - Dynamic blog routes (/blog/[slug])
+ * - Dynamic blog routes (/blog/[slug]) from blogContent.ts
  * 
  * Run: node generate-sitemap.js
  * Output: client/public/sitemap.xml
@@ -24,24 +24,27 @@ const staticRoutes = [
   { path: '/analiz', priority: '0.8', changefreq: 'weekly' },
 ];
 
-// Blog posts (sync with BlogSection.tsx)
-const blogPosts = [
-  { id: 'finans-raporu-otomasyonu', date: '2026-02-13' },
-  { id: 'yeni-yilda-finanscilarin-10-ai-araci', date: '2026-02-13' },
-  { id: 'excelde-ai-devrimi-finanscilar-icin-rehber', date: '2026-02-13' },
-  { id: 'altin-abd-reel-faizleri', date: '2025-01-25' },
-  { id: 'finansal-ozgurluk-gizli-raporlar', date: '2025-01-22' },
-  { id: 'manuel-takip-7-isaret', date: '2025-01-20' },
-  { id: 'hisse-analizi-ai-prompts', date: '2025-01-18' },
-  { id: 'finansal-analiz-excel-ai', date: '2025-01-15' },
-  { id: 'borsa-psikolojisi-davranis-finans', date: '2025-01-12' },
-  { id: 'portfoy-yonetimi-risk-analizi', date: '2025-01-10' },
-  { id: 'teknik-analiz-gostergeler', date: '2025-01-08' },
-];
+// Import blog data from blogContent.ts
+// Since we can't directly import TS in Node.js, we'll read and parse the file
+function getBlogSlugs() {
+  const blogContentPath = path.join(__dirname, 'client', 'src', 'data', 'blogContent.ts');
+  const content = fs.readFileSync(blogContentPath, 'utf8');
+  
+  // Extract all id fields using regex
+  const idMatches = content.matchAll(/id:\s*["']([^"']+)["']/g);
+  const slugs = [];
+  
+  for (const match of idMatches) {
+    slugs.push(match[1]);
+  }
+  
+  return slugs;
+}
 
 // Generate XML
 function generateSitemap() {
   const now = new Date().toISOString().split('T')[0];
+  const blogSlugs = getBlogSlugs();
 
   let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
   xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
@@ -56,11 +59,11 @@ function generateSitemap() {
     xml += '  </url>\n';
   });
 
-  // Add blog routes
-  blogPosts.forEach(post => {
+  // Add blog routes (dynamically from blogContent.ts)
+  blogSlugs.forEach(slug => {
     xml += '  <url>\n';
-    xml += `    <loc>${DOMAIN}/blog/${post.id}</loc>\n`;
-    xml += `    <lastmod>${post.date}</lastmod>\n`;
+    xml += `    <loc>${DOMAIN}/blog/${slug}</loc>\n`;
+    xml += `    <lastmod>${now}</lastmod>\n`;
     xml += `    <changefreq>monthly</changefreq>\n`;
     xml += `    <priority>0.7</priority>\n`;
     xml += '  </url>\n';
@@ -77,8 +80,12 @@ function writeSitemap() {
   const outputPath = path.join(__dirname, 'client', 'public', 'sitemap.xml');
 
   fs.writeFileSync(outputPath, xml, 'utf8');
+  
+  const blogCount = getBlogSlugs().length;
   console.log(`✅ Sitemap generated: ${outputPath}`);
-  console.log(`📊 Total URLs: ${staticRoutes.length + blogPosts.length}`);
+  console.log(`📊 Total URLs: ${staticRoutes.length + blogCount}`);
+  console.log(`   - Static routes: ${staticRoutes.length}`);
+  console.log(`   - Blog posts: ${blogCount}`);
 }
 
 // Run
