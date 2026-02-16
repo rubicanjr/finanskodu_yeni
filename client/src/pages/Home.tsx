@@ -42,7 +42,7 @@ import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
 import ProductsSection from "@/components/ProductsSection";
 import ComparisonSection from "@/components/ComparisonSection";
-import { AnalysisAuthGate } from "@/components/AnalysisAuthGate";
+
 import ManifestoSection from "@/components/ManifestoSection";
 import BlogSection from "@/components/BlogSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
@@ -79,9 +79,7 @@ export default function Home() {
         {/* CRO: Technology & Methodology Comparison */}
         <ComparisonSection />
 
-        {/* 4. Finansal Analizi Başlat (Auth Gate + Analysis Section) */}
-        {/* CRO: Analysis Entry Point - Separate from Hero */}
-        <AnalysisAuthGate />
+        {/* 4. Finansal Analizi Başlat - MOVED TO /analiz PAGE */}
 
         {/* 5. Manifesto - Problem & Solution */}
         {/* CRO: Story & Vision - Build emotional connection */}

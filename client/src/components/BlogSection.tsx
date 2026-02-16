@@ -15,9 +15,9 @@ import {
   Clock, 
   ArrowRight, 
   ChevronLeft, 
-  ChevronRight,
-  ExternalLink
+  ChevronRight
 } from "lucide-react";
+import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 
 interface BlogPost {
@@ -365,16 +365,13 @@ export default function BlogSection() {
                       {post.excerpt}
                     </p>
 
-                    {/* Read More Link */}
-                    <a
-                      href={post.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-primary font-medium text-sm hover:text-primary/80 transition-colors group/btn"
-                    >
-                      <span>Devamını Oku</span>
-                      <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
-                    </a>
+                    {/* Read More Link - Internal Routing */}
+                    <Link href={`/blog/${post.id}`}>
+                      <a className="inline-flex items-center gap-2 text-primary font-medium text-sm hover:text-primary/80 transition-colors group/btn">
+                        <span>Devamını Oku</span>
+                        <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
+                      </a>
+                    </Link>
                   </div>
                 </div>
               </motion.article>
@@ -389,15 +386,12 @@ export default function BlogSection() {
           transition={{ duration: 0.4, delay: 0.5 }}
           className="text-center mt-10"
         >
-          <a
-            href="https://www.hikie.space/finanskodu/forum/a8adebd8f9ef4c3b8051a425eb18481a"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-gray-400 hover:text-primary transition-colors text-sm"
-          >
-            Tüm yazıları görüntüle
-            <ExternalLink className="w-4 h-4" />
-          </a>
+          <Link href="/">
+            <a className="inline-flex items-center gap-2 text-gray-400 hover:text-primary transition-colors text-sm">
+              Tüm yazıları görüntüle
+              <ArrowRight className="w-4 h-4" />
+            </a>
+          </Link>
         </motion.div>
       </div>
     </section>

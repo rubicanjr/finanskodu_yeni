@@ -2,6 +2,8 @@ import { motion } from "framer-motion";
 import { ArrowRight, MessageSquare, Monitor } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
+import StatsColumn from "@/components/StatsColumn";
+import TestimonialsColumn from "@/components/TestimonialsColumn";
 // Auth gate and analysis section moved to AnalysisAuthGate component
 
 export default function HeroSection() {
@@ -111,7 +113,15 @@ export default function HeroSection() {
 
       {/* Content */}
       <div className="container relative z-10 pt-24 pb-16">
-        <div className="max-w-5xl mx-auto text-center">
+        {/* 3-Column Grid Layout (Desktop) / Column (Mobile) */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr_1fr] gap-8 lg:gap-12 items-start">
+          {/* Left Column: Stats */}
+          <div className="hidden lg:block">
+            <StatsColumn />
+          </div>
+
+          {/* Center Column: Main Hero Content */}
+          <div className="text-center">
           
           {/* Eyebrow Text - FAZ 1 */}
           <motion.div
@@ -369,7 +379,15 @@ export default function HeroSection() {
               Foruma Git
             </Button>
           </motion.div>
+          </div>
+          {/* End Center Column */}
+
+          {/* Right Column: Testimonials */}
+          <div className="hidden lg:block">
+            <TestimonialsColumn />
+          </div>
         </div>
+        {/* End 3-Column Grid */}
       </div>
 
       {/* Scroll Indicator - Hidden on mobile to prevent overlap with Foruma Git button */}

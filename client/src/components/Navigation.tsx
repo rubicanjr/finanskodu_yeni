@@ -17,6 +17,7 @@ const navLinks = [
   { href: "#urunler", label: "Ürünler" },
   { href: "#manifesto", label: "Manifesto" },
   { href: "#blog", label: "Blog" },
+  { href: "/analiz", label: "Finansal Analiz", isRoute: true },
   { href: "#iletisim", label: "İletişim" },
 ];
 
@@ -51,7 +52,34 @@ export default function Navigation() {
       aria-label="Ana navigasyon"
     >
       <div className="container flex items-center justify-between">
-        {/* Home link - Logo */}
+        {/* Desktop Navigation - MOVED TO LEFT */}
+        <div className="hidden md:flex items-center gap-8" role="menubar">
+          {navLinks.map((link) => (
+            link.isRoute ? (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-muted-foreground hover:text-primary transition-colors font-medium text-sm tracking-wide"
+                role="menuitem"
+                aria-label={`${link.label} sayfasına git`}
+              >
+                {link.label}
+              </a>
+            ) : (
+              <button
+                key={link.href}
+                onClick={() => scrollToSection(link.href)}
+                className="text-muted-foreground hover:text-primary transition-colors font-medium text-sm tracking-wide"
+                role="menuitem"
+                aria-label={`${link.label} bölümüne git`}
+              >
+                {link.label}
+              </button>
+            )
+          ))}
+        </div>
+
+        {/* Home link - Logo - MOVED TO RIGHT */}
         <a
           href="#hero"
           onClick={(e) => {
@@ -68,28 +96,6 @@ export default function Navigation() {
             loading="lazy"
           />
         </a>
-
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8" role="menubar">
-          {navLinks.map((link) => (
-            <button
-              key={link.href}
-              onClick={() => scrollToSection(link.href)}
-              className="text-muted-foreground hover:text-primary transition-colors font-medium text-sm tracking-wide"
-              role="menuitem"
-              aria-label={`${link.label} bölümüne git`}
-            >
-              {link.label}
-            </button>
-          ))}
-          <Button
-            onClick={() => scrollToSection("#urunler")}
-            className="bg-primary text-primary-foreground hover:bg-primary/90 neon-glow font-display font-semibold"
-            aria-label="Dijital ürünleri keşfet"
-          >
-            Dijital Ürünleri Keşfet
-          </Button>
-        </div>
 
         {/* Mobile Menu Button */}
         <button

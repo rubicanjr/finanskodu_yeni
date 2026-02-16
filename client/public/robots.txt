@@ -1,0 +1,10 @@
+# Finans Kodu - robots.txt
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://finanskodu.com/sitemap.xml
+
+# Disallow admin/private routes (if any)
+# Disallow: /admin/

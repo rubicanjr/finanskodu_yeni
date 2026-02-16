@@ -838,3 +838,37 @@
   * SEO Başlığı, Meta Açıklaması, Anahtar Kelimeler ekle
   * Tarih: Bugünün tarihi
   * İçerik: pasted_content_7.txt
+
+
+## MAJOR REFACTOR: UI, Navigation, SEO & Integrations
+
+### FAZ 1: HEADER & MENÜ YAPISI
+- [x] Flex yapısını değiştir: Menü Linklerini SOLA, Logoyu SAĞA
+- [x] Menüye "Finansal Analiz" linki ekle
+- [x] Link yönlendirmesi: `/analiz` rotasına git
+
+### FAZ 2: ANASAYFA & ANALİZ SAYFASI
+- [x] Anasayfadan "Finansal Analizi Başlat" bölümünü KALDIR
+- [x] Yeni `/analiz` sayfası oluştur (AnalysisPage.js)
+- [ ] "Finansal Analizi Başlat" bölümünü yeni sayfaya taşı
+- [x] Hero bölümünü 3 sütunlu yapıya çevir:
+  * Sol: "Bu Ay Rakamlar" (1200+ Analiz, 500+ Kullanıcı)
+  * Orta: Sarp & Vera görseli + başlıklar
+  * Sağ: Dönen Kullanıcı Yorumları (Testimonial)
+
+### FAZ 3: BLOG & ASİSTAN DAVRANIŞI
+- [ ] Blog kartlarını harici link yerine dahili routing'e çevir: `/blog/[slug]`
+- [ ] Blog başlıklarını slugify et
+- [x] Sarp & Vera asistan widget'ını varsayılan AÇIK (Expanded) yap
+
+### FAZ 4: SEO & META TEMİZLİĞİ
+- [x] Tüm sayfalardan `meta keywords` ve `meta title` etiketlerini SİL
+- [x] Clarity script'ini index.html <head>'e ekle (vi6tuxtune)
+
+### FAZ 5: DINAMIK SITEMAP OLUŞTURUCU
+- [x] `generate-sitemap.js` script'i oluştur
+- [x] Statik rotaları ekle (/, /hakkimizda, /analiz)
+- [ ] Blog verilerini oku ve dinamik rotalar oluştur (/blog/[slug])
+- [x] Sitemap'i public/sitemap.xml'e yaz
+- [x] package.json build komutuna script ekle
+- [ ] robots.txt'de sitemap URL'sini doğrula

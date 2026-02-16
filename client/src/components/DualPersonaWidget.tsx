@@ -279,7 +279,7 @@ export default function DualPersonaWidget() {
   const [persona, setPersona] = useState<Persona>(SARP);
   
   // Widget state
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true); // FAZ 3: Default OPEN (Expanded)
   const [isAudioUnlocked, setIsAudioUnlocked] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [isListening, setIsListening] = useState(false);
