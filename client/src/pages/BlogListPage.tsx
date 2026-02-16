@@ -2,6 +2,7 @@
   BLOG LIST PAGE: All blog posts listing
   
   - Grid layout with all blog posts
+  - Category filtering
   - Each card: Cover image, Title, Excerpt, Date, "Read More" button
   - SEO meta tags
   - Optional: Pagination (if many posts)
@@ -13,6 +14,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { useState, useMemo } from "react";
 
 // Blog posts metadata
 const blogPosts = [
@@ -129,6 +131,34 @@ const blogPosts = [
 ];
 
 export default function BlogListPage() {
+  const [selectedCategory, setSelectedCategory] = useState<string>("Tümü");
+
+  // Extract all unique categories from blog posts
+  const allCategories = useMemo(() => {
+    const categories = new Set<string>();
+    blogPosts.forEach(post => {
+      post.tags.forEach(tag => categories.add(tag));
+    });
+    return ["Tümü", ...Array.from(categories).sort()];
+  }, []);
+
+  // Count posts per category
+  const categoryCounts = useMemo(() => {
+    const counts: Record<string, number> = { "Tümü": blogPosts.length };
+    blogPosts.forEach(post => {
+      post.tags.forEach(tag => {
+        counts[tag] = (counts[tag] || 0) + 1;
+      });
+    });
+    return counts;
+  }, []);
+
+  // Filter blog posts by selected category
+  const filteredPosts = useMemo(() => {
+    if (selectedCategory === "Tümü") return blogPosts;
+    return blogPosts.filter(post => post.tags.includes(selectedCategory));
+  }, [selectedCategory]);
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* SEO Meta Tags */}
@@ -159,7 +189,7 @@ export default function BlogListPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
           <h1 className="text-4xl md:text-6xl font-bold mb-4">
             Blog
@@ -169,9 +199,39 @@ export default function BlogListPage() {
           </p>
         </motion.div>
 
+        {/* Category Filter */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="mb-12"
+        >
+          <div className="flex flex-wrap justify-center gap-3">
+            {allCategories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                  selectedCategory === category
+                    ? "bg-primary text-primary-foreground border-2 border-primary shadow-lg shadow-primary/30"
+                    : "bg-gray-900/50 text-gray-400 border border-gray-800 hover:border-primary/50 hover:text-primary"
+                }`}
+              >
+                {category} ({categoryCounts[category] || 0})
+              </button>
+            ))}
+          </div>
+        </motion.div>
+
         {/* Blog Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {blogPosts.map((post, index) => (
+        <motion.div
+          key={selectedCategory}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.4 }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
+          {filteredPosts.map((post, index) => (
             <motion.article
               key={post.id}
               initial={{ opacity: 0, y: 20 }}
@@ -209,13 +269,9 @@ export default function BlogListPage() {
                 </div>
 
                 {/* Title */}
-                <Link href={`/blog/${post.id}`}>
-                  <a className="block">
-                    <h2 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors line-clamp-2">
-                      {post.title}
-                    </h2>
-                  </a>
-                </Link>
+                <h2 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors line-clamp-2">
+                  {post.title}
+                </h2>
 
                 {/* Excerpt */}
                 <p className="text-gray-400 mb-4 line-clamp-3">
@@ -224,19 +280,19 @@ export default function BlogListPage() {
 
                 {/* Tags */}
                 <div className="flex flex-wrap gap-2 mb-4">
-                  {post.tags.slice(0, 2).map((tag) => (
+                  {post.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-2 py-1 bg-gray-800 text-gray-400 rounded text-xs"
+                      className="px-2 py-1 bg-gray-800/50 text-gray-400 text-xs rounded-full"
                     >
-                      #{tag}
+                      {tag}
                     </span>
                   ))}
                 </div>
 
                 {/* Read More Button */}
                 <Link href={`/blog/${post.id}`}>
-                  <a className="inline-flex items-center gap-2 text-primary hover:gap-3 transition-all">
+                  <a className="inline-flex items-center gap-2 text-primary hover:gap-3 transition-all duration-300">
                     Devamını Oku
                     <ArrowRight className="w-4 h-4" />
                   </a>
@@ -244,7 +300,20 @@ export default function BlogListPage() {
               </div>
             </motion.article>
           ))}
-        </div>
+        </motion.div>
+
+        {/* No Results Message */}
+        {filteredPosts.length === 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center py-16"
+          >
+            <p className="text-xl text-gray-400">
+              Bu kategoride henüz içerik bulunmuyor.
+            </p>
+          </motion.div>
+        )}
       </main>
 
       <Footer />

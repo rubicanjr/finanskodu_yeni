@@ -1072,3 +1072,15 @@
 - [x] Header (Menü) ve Footer alanlarına "Blog" linkini ekle
 - [x] Navigation: /blog route'a güncellendi
 - [x] Footer: /blog route'a güncellendi
+
+
+## BLOG CATEGORY FILTERING
+
+### Category Filtering Feature
+- [x] Extract all unique categories from blog posts
+- [x] Add category filter buttons above blog grid
+- [x] Implement "Tümü" (All) button to reset filter
+- [x] Add active category highlight (border + background)
+- [x] Filter blog posts by selected category
+- [x] Show post count for each category
+- [x] Smooth transition animation when filtering
