@@ -826,8 +826,13 @@ export default function DualPersonaWidget() {
                 <button
                   onClick={() => {
                     handleCloseWidget();
-                    // Scroll to products section on home page
-                    window.location.href = "/#urunler";
+                    // Smooth scroll to products section
+                    setTimeout(() => {
+                      const productsSection = document.getElementById("urunler");
+                      if (productsSection) {
+                        productsSection.scrollIntoView({ behavior: "smooth", block: "start" });
+                      }
+                    }, 300); // Wait for widget close animation
                   }}
                   className="w-full px-4 py-2.5 rounded-lg text-sm font-medium transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center justify-between group"
                   style={{ 
@@ -846,8 +851,13 @@ export default function DualPersonaWidget() {
                 <button
                   onClick={() => {
                     handleCloseWidget();
-                    // Scroll to products section on home page
-                    window.location.href = "/#urunler";
+                    // Smooth scroll to products section
+                    setTimeout(() => {
+                      const productsSection = document.getElementById("urunler");
+                      if (productsSection) {
+                        productsSection.scrollIntoView({ behavior: "smooth", block: "start" });
+                      }
+                    }, 300); // Wait for widget close animation
                   }}
                   className="w-full px-4 py-2.5 rounded-lg text-sm font-medium transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center justify-between group"
                   style={{ 

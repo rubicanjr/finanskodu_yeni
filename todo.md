@@ -948,3 +948,11 @@
 - [x] "Pro Bülten'i İncele" butonu → Ürün sayfasına yönlendir
 - [x] Butonlar görsel olarak dikkat çekici olmalı (gradient, icon)
 - [x] Butonlar chat mesajlarının altında veya üstünde sabit konumda
+
+
+## ENHANCEMENT: Smooth Scroll for CTA Buttons
+
+### CTA Butonları Smooth Scroll
+- [x] window.location.href yerine smooth scroll kullan
+- [x] Widget kapandıktan sonra yumuşak geçiş animasyonu
+- [x] #urunler bölümüne smooth scroll
