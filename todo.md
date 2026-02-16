@@ -939,3 +939,12 @@
 - [x] speakMessage fonksiyonunu useEffect içinde çağır
 - [x] Önce Sarp konuşsun, bitince Vera konuşsun (onEnd event veya timeout)
 - [x] Browser autoplay policy engelini try-catch ile yönet (konsola uyarı yaz)
+
+## FEATURE: Chat Widget Product CTA Buttons
+
+### Chat Widget CTA Butonları
+- [x] DualPersonaWidget.tsx'e 2 ürün CTA butonu ekle
+- [x] "Dijital Araçları Keşfet" butonu → Ürün sayfasına yönlendir
+- [x] "Pro Bülten'i İncele" butonu → Ürün sayfasına yönlendir
+- [x] Butonlar görsel olarak dikkat çekici olmalı (gradient, icon)
+- [x] Butonlar chat mesajlarının altında veya üstünde sabit konumda

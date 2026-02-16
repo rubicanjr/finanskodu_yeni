@@ -819,6 +819,51 @@ export default function DualPersonaWidget() {
               <div ref={messagesEndRef} />
             </div>
 
+            {/* Product CTA Buttons */}
+            <div className="px-4 py-3 border-t border-b" style={{ borderColor: `${persona.accentColor}20` }}>
+              <div className="flex flex-col gap-2">
+                {/* Dijital Araçlar CTA */}
+                <button
+                  onClick={() => {
+                    handleCloseWidget();
+                    // Scroll to products section on home page
+                    window.location.href = "/#urunler";
+                  }}
+                  className="w-full px-4 py-2.5 rounded-lg text-sm font-medium transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center justify-between group"
+                  style={{ 
+                    background: `linear-gradient(135deg, ${persona.accentColor}30, ${persona.accentColor}10)`,
+                    border: `1px solid ${persona.accentColor}40`
+                  }}
+                >
+                  <span className="flex items-center gap-2 text-white">
+                    <span className="text-lg">🛠️</span>
+                    <span>Dijital Araçları Keşfet</span>
+                  </span>
+                  <span className="text-gray-400 group-hover:text-white transition-colors">→</span>
+                </button>
+
+                {/* Pro Bülten CTA */}
+                <button
+                  onClick={() => {
+                    handleCloseWidget();
+                    // Scroll to products section on home page
+                    window.location.href = "/#urunler";
+                  }}
+                  className="w-full px-4 py-2.5 rounded-lg text-sm font-medium transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center justify-between group"
+                  style={{ 
+                    background: `linear-gradient(135deg, ${persona.accentColor}30, ${persona.accentColor}10)`,
+                    border: `1px solid ${persona.accentColor}40`
+                  }}
+                >
+                  <span className="flex items-center gap-2 text-white">
+                    <span className="text-lg">📰</span>
+                    <span>Pro Bülten'i İncele</span>
+                  </span>
+                  <span className="text-gray-400 group-hover:text-white transition-colors">→</span>
+                </button>
+              </div>
+            </div>
+
             {/* Disclaimer */}
             <div className="px-4 py-2 text-center">
               <p className="text-[10px] text-gray-500">
