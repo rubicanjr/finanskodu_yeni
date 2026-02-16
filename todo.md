@@ -1084,3 +1084,19 @@
 - [x] Filter blog posts by selected category
 - [x] Show post count for each category
 - [x] Smooth transition animation when filtering
+
+
+## CRITICAL FIX: Dynamic Routing & Recursive Sitemap
+
+### FAZ 1: REACT ROUTING & DETAIL PAGE
+- [x] Add /blog/:slug route to App.tsx
+- [x] Ensure BlogDetailPage uses useParams to get slug from URL
+- [x] Verify blog list links use /blog/${post.slug} format
+- [x] Test navigation from blog list to detail page
+
+### FAZ 2: DERİNLEMESİNE SITEMAP
+- [x] Update generate-sitemap.js to read blog data file with fs.readFileSync
+- [x] Use regex to extract all slugs from blog data file
+- [x] Generate URLs for all blog posts (https://finanskodu.com/blog/[slug])
+- [x] Include both static pages and dynamic blog URLs in sitemap.xml
+- [x] Test sitemap generation script

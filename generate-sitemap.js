@@ -22,6 +22,7 @@ const DOMAIN = 'https://finanskodu.com';
 const staticRoutes = [
   { path: '/', priority: '1.0', changefreq: 'daily' },
   { path: '/analiz', priority: '0.8', changefreq: 'weekly' },
+  { path: '/blog', priority: '0.9', changefreq: 'weekly' },
 ];
 
 // Import blog data from blogContent.ts
