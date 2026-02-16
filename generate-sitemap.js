@@ -81,11 +81,16 @@ function writeSitemap() {
 
   fs.writeFileSync(outputPath, xml, 'utf8');
   
-  const blogCount = getBlogSlugs().length;
-  console.log(`✅ Sitemap generated: ${outputPath}`);
-  console.log(`📊 Total URLs: ${staticRoutes.length + blogCount}`);
+  const blogSlugs = getBlogSlugs();
+  console.log(`✅ Sitemap oluşturuldu! Bulunan blog sayısı: ${blogSlugs.length}`);
+  console.log(`📊 Total URLs: ${staticRoutes.length + blogSlugs.length}`);
   console.log(`   - Static routes: ${staticRoutes.length}`);
-  console.log(`   - Blog posts: ${blogCount}`);
+  console.log(`   - Blog posts: ${blogSlugs.length}`);
+  console.log(`\n📝 Example blog URLs:`);
+  blogSlugs.slice(0, 3).forEach(slug => {
+    console.log(`   - ${DOMAIN}/blog/${slug}`);
+  });
+  console.log(`\n📍 Sitemap location: ${outputPath}`);
 }
 
 // Run

@@ -977,3 +977,23 @@
 - [x] window.speechSynthesis.speak() fonksiyonunu try-catch bloğuna al
 - [x] NotAllowedError durumunda konsola uyarı yaz
 - [x] Fallback: Kullanıcı ilk tıklamada yarım kalan konuşmayı başlat
+
+
+## CRITICAL FIX: TTS Autoplay Policy & Data-Driven Sitemap
+
+### FAZ 1: SESLİLENDİRME & AUTOPLAY ÇÖZÜMÜ
+- [x] Otomatik başlatma denemesi (sayfa yüklenğinde)
+- [x] Tarayıcı engeli yönetimi: Ses çıkmıyorsa "Beklemede" durumu
+- [x] Window'a tek seferlik click listener ekle
+- [x] Kullanıcı herhangi bir yere tıkladığında kuyruktaki konuşmayı başlat
+- [x] Görsel senkronizasyon: "Konuşuyor" animasyonu SADECE ses çalarken aktif
+- [x] Türkçe ses seçimi (lang: 'tr-TR') doğrulaması
+
+### FAZ 2: SITEMAP SCRIPTİ (Regex ile Veri Okuma)
+- [x] generate-sitemap.js dosyasını tamamen sil ve yeniden yaz
+- [x] Blog verisi dosyasını fs modülü ile düz metin (utf-8) olarak oku
+- [x] Regex ile slug'ları yakala (/slug:\s*["']([^"']+)["']/g)
+- [x] Her slug için https://finanskodu.com/blog/[slug] URL'i oluştur
+- [x] Statik sayfalar (/, /analiz) + dinamik blog linklerini birleştir
+- [x] public/sitemap.xml dosyasına yaz
+- [x] Konsola "Sitemap oluşturuldu! Bulunan blog sayısı: X" yazdır

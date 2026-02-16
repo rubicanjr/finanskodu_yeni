@@ -350,15 +350,27 @@ export default function DualPersonaWidget() {
     }
   }, [isOpen, messages.length, persona]); // persona added to deps
 
-  // FAZ 3: Fallback TTS on first user click
+  // FAZ 3: Fallback TTS on first user click (CRITICAL: Unlock audio first)
   useEffect(() => {
-    const handleFirstClick = () => {
+    const handleFirstClick = async () => {
       if (ttsFallbackPending) {
-        console.log("[DualPersona] First user interaction detected, triggering fallback TTS");
+        console.log("[DualPersona] First user interaction detected, unlocking audio...");
+        
+        // CRITICAL: Unlock audio context first
+        try {
+          await audioManager.unlockAudio();
+          console.log("[DualPersona] Audio unlocked, triggering fallback TTS");
+        } catch (err) {
+          console.warn("[DualPersona] Audio unlock failed:", err);
+        }
+        
+        // Now trigger TTS
         speakText(ttsFallbackPending).catch(err => {
           console.warn("[DualPersona] Fallback TTS also failed:", err);
         });
+        
         setTtsFallbackPending(null); // Clear pending state
+        setIsAudioUnlocked(true); // Mark as unlocked
         // Remove listener after first click
         document.removeEventListener('click', handleFirstClick);
       }
@@ -535,17 +547,27 @@ export default function DualPersonaWidget() {
       
       // Use AudioManager for better mobile compatibility
       setIsTTSLoading(false);
-      setIsSpeaking(true);
-      startPulseAnimation();
       
       try {
         console.log("[DualPersona] Playing audio via AudioManager...");
+        
+        // CRITICAL: Only start animation when audio actually starts playing
+        setIsSpeaking(true);
+        startPulseAnimation();
+        
         await audioManager.playAudioBlob(audioBlob);
         console.log("[DualPersona] Audio playback completed");
       } catch (playError: any) {
         console.error("[DualPersona] AudioManager playback failed:", playError);
-        // Fallback to Web Speech API
-        fallbackWebSpeechTTS(text);
+        
+        // If autoplay is blocked, set fallback pending
+        if (playError.name === 'NotAllowedError' || playError.message?.includes('play')) {
+          console.warn("[DualPersona] Audio blocked by autoplay policy, waiting for user interaction");
+          setTtsFallbackPending(text);
+        } else {
+          // Fallback to Web Speech API for other errors
+          fallbackWebSpeechTTS(text);
+        }
       } finally {
         setIsSpeaking(false);
         stopPulseAnimation();
