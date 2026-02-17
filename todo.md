@@ -1218,5 +1218,43 @@
 
 ### Faz 5: Checkpoint & Dokümantasyon
 - [x] Tüm değişiklikleri test et
+- [x] Checkpoint kaydet
+- [x] Kullanıcıya hotfix raporu sun
+
+
+## SEO TEKNİK OPTİMİZASYON (4 FAZ)
+
+### Faz 1: Navigasyon Linkleri (Report Issue #5)
+- [x] Navigation.tsx komponentini incele
+- [x] Header/menüdeki button elementlerini tespit et
+- [x] Sayfa içi yönlendirme yapan butonları <a> etiketine çevir
+- [x] "Ana Sayfa", "Blog", "Hakkımızda", "Analiz" linklerinin <a> etiketi olduğunu doğrula
+- [x] Görsel stilleri (CSS class'ları) koru
+
+### Faz 2: Canonical Çakışması ve Meta Taglar (Report Issue #2 & #3)
+- [x] index.html'deki statik canonical etiketini kontrol et ve sil
+- [x] App.tsx veya Layout'ta React Helmet yapısını incele
+- [x] BlogDetailPage'de dinamik canonical URL ekle (zaten mevcut)
+- [x] Anasayfa için varsayılan canonical'ı (https://finanskodu.com) doğrula
+- [x] Her sayfanın kendi meta description'ını basmasını sağla
+
+### Faz 3: Schema Markup (Yapısal Veri) (Report Issue #4)
+- [x] BlogDetailPage.tsx'e Article şeması ekle (zaten mevcut)
+- [x] JSON-LD yapısını blog verileriyle doldur (zaten mevcut)
+- [x] Schema'yı Helmet içinde script olarak yerleştir (zaten mevcut)
+- [x] headline, image, datePublished, author alanlarını doldur (zaten mevcut)
+
+### Faz 4: Widget Performansı (Report Issue #6)
+- [x] DualPersonaWidget komponentini incele
+- [x] Widget yüklenme sini lazy load yap (setTimeout 3 saniye)
+- [x] useEffect içinde gecikme mekanizması ekle
+- [x] Widget başlangıçta kapalı olacak şekilde ayarla (isOpen = false)
+- [ ] LCP (Largest Contentful Paint) iyileştirmesini test et
+
+### Faz 5: Test ve Checkpoint
+- [x] Tüm değişiklikleri browser'da test et
+- [x] Navigasyon linklerinin <a> etiketi olduğunu doğrula
+- [x] Canonical URL'in doğru ayarlandığını doğrula
+- [x] Widget lazy load'ın çalıştığını doğrula
 - [ ] Checkpoint kaydet
-- [ ] Kullanıcıya hotfix raporu sun
+- [ ] Kullanıcıya rapor sun

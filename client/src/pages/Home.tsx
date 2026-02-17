@@ -38,6 +38,7 @@
   - Teknik: JetBrains Mono
 */
 
+import { Helmet } from "react-helmet-async";
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
 import ProductsSection from "@/components/ProductsSection";
@@ -55,6 +56,26 @@ import Footer from "@/components/Footer";
 export default function Home() {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      {/* SEO Meta Tags */}
+      <Helmet>
+        <title>Finans Kodu | Yapay Zeka Destekli Borsa Analiz ve Portföy Yönetimi</title>
+        <meta name="description" content="Yapay zeka destekli finansal mühendislik, algoritmik ticaret ve Excel otomasyon çözümleri sunan finansal teknoloji platformu." />
+        <link rel="canonical" href="https://finanskodu.com/" />
+        <meta name="robots" content="index, follow" />
+        
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Finans Kodu - AI Driven Financial Efficiency" />
+        <meta property="og:description" content="Yapay zeka destekli finansal mühendislik, algoritmik ticaret ve Excel otomasyon çözümleri sunan finansal teknoloji platformu." />
+        <meta property="og:url" content="https://finanskodu.com/" />
+        <meta property="og:image" content="https://finanskodu.com/logo.png" />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Finans Kodu - AI Driven Financial Efficiency" />
+        <meta name="twitter:description" content="Yapay zeka destekli finansal mühendislik, algoritmik ticaret ve Excel otomasyon çözümleri sunan finansal teknoloji platformu." />
+      </Helmet>
+
       {/* Skip to main content link for accessibility */}
       <a 
         href="#main-content" 

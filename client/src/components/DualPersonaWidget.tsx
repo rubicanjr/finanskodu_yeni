@@ -280,7 +280,8 @@ export default function DualPersonaWidget() {
   const [persona, setPersona] = useState<Persona>(SARP);
   
   // Widget state
-  const [isOpen, setIsOpen] = useState(true); // FAZ 3: Default OPEN (Expanded)
+  const [isOpen, setIsOpen] = useState(false); // SEO OPTIMIZATION: Start closed for better LCP
+  const [isWidgetReady, setIsWidgetReady] = useState(false); // Lazy load flag
   const [isAudioUnlocked, setIsAudioUnlocked] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [isListening, setIsListening] = useState(false);
@@ -311,9 +312,18 @@ export default function DualPersonaWidget() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  // SEO OPTIMIZATION: Lazy load widget after 3 seconds to improve LCP
+  useEffect(() => {
+    const lazyLoadTimer = setTimeout(() => {
+      setIsWidgetReady(true);
+    }, 3000); // 3 second delay
+    
+    return () => clearTimeout(lazyLoadTimer);
+  }, []);
+  
   // FAZ 2 & 3: Device-based greeting message with auto-TTS
   useEffect(() => {
-    if (isOpen && messages.length === 0) {
+    if (isOpen && messages.length === 0 && isWidgetReady) {
       // Determine greeting based on active persona (device-based)
       const greetingTimeout = setTimeout(() => {
         let greeting = "";
@@ -738,6 +748,11 @@ export default function DualPersonaWidget() {
     };
   }, [handleOpenWidget]);
 
+  // Don't render widget until lazy load timer completes (SEO optimization)
+  if (!isWidgetReady) {
+    return null;
+  }
+  
   return (
     <>
       {/* Floating Avatar Button */}

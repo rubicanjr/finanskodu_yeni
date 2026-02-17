@@ -66,15 +66,19 @@ export default function Navigation() {
                 {link.label}
               </a>
             ) : (
-              <button
+              <a
                 key={link.href}
-                onClick={() => scrollToSection(link.href)}
+                href={link.href}
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection(link.href);
+                }}
                 className="text-muted-foreground hover:text-primary transition-colors font-medium text-sm tracking-wide"
                 role="menuitem"
                 aria-label={`${link.label} bölümüne git`}
               >
                 {link.label}
-              </button>
+              </a>
             )
           ))}
         </div>
@@ -119,15 +123,31 @@ export default function Navigation() {
         >
           <div className="flex flex-col gap-4">
             {navLinks.map((link) => (
-              <button
-                key={link.href}
-                onClick={() => scrollToSection(link.href)}
-                className="text-muted-foreground hover:text-primary transition-colors font-medium text-left py-2"
-                role="menuitem"
-                aria-label={`${link.label} bölümüne git`}
-              >
-                {link.label}
-              </button>
+              link.isRoute ? (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="text-muted-foreground hover:text-primary transition-colors font-medium text-left py-2"
+                  role="menuitem"
+                  aria-label={`${link.label} sayfasına git`}
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToSection(link.href);
+                  }}
+                  className="text-muted-foreground hover:text-primary transition-colors font-medium text-left py-2"
+                  role="menuitem"
+                  aria-label={`${link.label} bölümüne git`}
+                >
+                  {link.label}
+                </a>
+              )
             ))}
             {/* CTA Button - Positioned for thumb reach on mobile */}
             <Button
