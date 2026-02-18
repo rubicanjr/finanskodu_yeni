@@ -53,9 +53,9 @@ export default function HeroSection() {
     }
   };
 
-  const openForum = () => {
-    trackCTAClick('hero_forum_cta', 'https://www.hikie.space/finanskodu/finans-kodu-forum');
-    window.open("https://www.hikie.space/finanskodu/finans-kodu-forum", "_blank");
+  const openKodOdasi = () => {
+    trackCTAClick('hero_kod_odasi_cta', '/kod-odasi');
+    window.location.href = '/kod-odasi';
   };
 
   return (
@@ -187,16 +187,16 @@ export default function HeroSection() {
             <Button
               size="lg"
               variant="outline"
-              onClick={openForum}
+              onClick={openKodOdasi}
               className="font-display font-semibold text-base sm:text-lg px-8 py-6 rounded-lg border hover:bg-white/5 transition-all"
               style={{ 
                 borderColor: '#1E2D3D',
                 color: '#C8D6E5'
               }}
-              aria-label="Finans Kodu forumuna git"
+              aria-label="Kod Odası'na git"
             >
               <MessageSquare className="w-5 h-5 mr-2" />
-              Foruma Git
+              Kod Odası'na Git
             </Button>
           </motion.div>
         </div>

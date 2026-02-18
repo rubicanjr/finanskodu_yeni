@@ -1302,5 +1302,32 @@
 
 ### Test ve Checkpoint
 - [x] Tüm değişiklikleri browser'da test et
+- [x] Checkpoint kaydet
+- [x] Kullanıcıya rapor sun
+
+
+## HOTFIX: ENV VARIABLES & BROKEN LINKS
+
+#### 1. Supabase Bağlantısı Güncelleme
+- [x] Mevcut Supabase environment variables'ı kontrol et
+- [x] VITE_SUPABASE_URL güncelle (webdev_request_secrets ile)
+- [x] VITE_SUPABASE_ANON_KEY güncelle (webdev_request_secrets ile)
+- [x] Environment variables Manus sistemi tarafından otomatik inject ediliyor
+
+### 2. Forum → Kod Odası Link Düzeltmesi
+- [x] "Foruma Git" butonunu/linkini bul (HeroSection.tsx)
+- [x] Metni "Kod Odası'na Git" olarak değiştir
+- [x] Linki /kod-odasi rotasına yönlendir
+- [x] openForum fonksiyonunu openKodOdasi olarak güncelle
+
+### 3. SalaryInsights Sponsor Link Düzeltmesi
+- [x] SponsorshipSection'daki SalaryInsights link'ini bul
+- [x] Link URL'ini https://salaryinsights.com.tr/ olarak güncelle (2 yerde)
+- [x] target="_blank" özelliği zaten mevcut
+
+### Test ve Checkpoint
+- [x] Tüm değişiklikleri browser'da test et
+- [x] "Kod Odası'na Git" butonunun /kod-odasi'na yönlendirdiğini doğrula
+- [x] SalaryInsights link'inin https://salaryinsights.com.tr/ olduğunu doğrula
 - [ ] Checkpoint kaydet
 - [ ] Kullanıcıya rapor sun

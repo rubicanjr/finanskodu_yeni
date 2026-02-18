@@ -40,7 +40,7 @@ export default function SponsorshipSection() {
               {/* Logo */}
               <div className="flex-shrink-0">
                 <a 
-                  href="https://salaryinsights.com" 
+                  href="https://salaryinsights.com.tr/" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="block hover:opacity-90 transition-opacity"
@@ -60,7 +60,7 @@ export default function SponsorshipSection() {
                     SalaryInsights
                   </h3>
                   <a 
-                    href="https://salaryinsights.com" 
+                    href="https://salaryinsights.com.tr/" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="text-[#0EA5E9] hover:text-[#38BDF8] transition-colors"
