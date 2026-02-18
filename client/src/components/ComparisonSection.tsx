@@ -1,120 +1,155 @@
 import { motion } from "framer-motion";
-import { Check } from "lucide-react";
+import { AlertTriangle, CheckCircle, ArrowRight, TrendingDown, TrendingUp, Brain, Zap, Shield, BarChart3 } from "lucide-react";
+
+const chaosItems = [
+  { icon: TrendingDown, text: "Haberlere göre alım-satım" },
+  { icon: AlertTriangle, text: "Duygusal kararlar" },
+  { icon: TrendingDown, text: "Sürü psikolojisi" },
+  { icon: AlertTriangle, text: "Bilgi kirliliği" },
+  { icon: TrendingDown, text: "Zamansız giriş-çıkış" },
+];
+
+const orderItems = [
+  { icon: Brain, text: "AI destekli veri analizi" },
+  { icon: Shield, text: "Risk yönetimi algoritmaları" },
+  { icon: Zap, text: "Otomatik sinyal üretimi" },
+  { icon: BarChart3, text: "Teknik + Temel analiz" },
+  { icon: TrendingUp, text: "Disiplinli strateji" },
+];
 
 export default function ComparisonSection() {
-  const comparisons = [
-    {
-      title: "İnsan Analisti",
-      time: "5 Saat",
-      accuracy: "Değişken",
-      quality: "Yüksek Maliyet",
-      icon: "👤",
-      highlight: false,
-    },
-    {
-      title: "Standart AI (GPT-4)",
-      time: "1 Dakika",
-      accuracy: "67% Başarı",
-      quality: "Yüzeysel Analiz",
-      icon: "🤖",
-      highlight: false,
-    },
-    {
-      title: "Finans Kodu (Biz)",
-      time: "27 Saniye",
-      accuracy: "80% Başarı",
-      quality: "Derin İçgörü",
-      icon: "🔍",
-      highlight: true,
-      badge: "🏆 Hackathon Kazananı",
-    },
-  ];
-
   return (
-    <section className="relative py-20 overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, #0F172A 0%, #0a0a0a 100%)" }} />
-
+    <section className="relative py-20 overflow-hidden" style={{ background: '#050810' }}>
       {/* Content */}
       <div className="container relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          viewport={{ once: true }}
+          className="text-center mb-14"
         >
-          <h2 className="font-display font-bold text-3xl md:text-4xl text-white mb-4">
-            Teknoloji & Metodoloji Karşılaştırması
+          <span className="text-xs font-mono tracking-[0.15em] mb-4 block" style={{ color: '#0EA5E9' }}>
+            // KAOS vs DÜZEN
+          </span>
+          <h2 className="font-display font-bold text-3xl md:text-4xl mb-4" style={{ color: '#F0F4F8' }}>
+            Piyasa Gürültüsünden <span style={{ color: '#10B981' }}>Stratejiye</span>
           </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">
-            Finans Kodu, Wiro AI altyapısı ile pazardaki en hızlı ve en doğru analizi sunuyor.
+          <p className="max-w-2xl mx-auto" style={{ color: '#8899AA' }}>
+            Çoğu yatırımcı kaosta kaybolur. Finans Kodu, gürültüyü filtreleyerek sana net bir yol haritası sunar.
           </p>
         </motion.div>
 
-        {/* Comparison Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {comparisons.map((item, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className={`relative p-8 rounded-2xl transition-all duration-300 ${
-                item.highlight ? "scale-105 md:scale-110" : ""
-              }`}
-              style={{
-                background: item.highlight
-                  ? "linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(0, 240, 255, 0.05) 100%)"
-                  : "rgba(15, 23, 42, 0.6)",
-                border: item.highlight
-                  ? "2px solid #10B981"
-                  : "1px solid rgba(255, 255, 255, 0.1)",
-                boxShadow: item.highlight
-                  ? "0 0 40px rgba(16, 185, 129, 0.3), 0 0 80px rgba(0, 240, 255, 0.1)"
-                  : "0 4px 20px rgba(0, 0, 0, 0.3)",
-              }}
-            >
-              {/* Badge */}
-              {item.badge && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-green-500/20 border border-green-500/50 text-green-400 text-xs font-bold whitespace-nowrap">
-                  {item.badge}
-                </div>
-              )}
-
-              {/* Icon */}
-              <div className="text-4xl mb-4">{item.icon}</div>
-
-              {/* Title */}
-              <h3 className="font-display font-bold text-xl text-white mb-6">{item.title}</h3>
-
-              {/* Metrics */}
-              <div className="space-y-4">
-                <div className="flex items-start gap-3">
-                  <Check className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="text-gray-400 text-sm">Analiz Süresi</p>
-                    <p className="text-white font-semibold">{item.time}</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <Check className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="text-gray-400 text-sm">Doğruluk Oranı</p>
-                    <p className="text-white font-semibold">{item.accuracy}</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <Check className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="text-gray-400 text-sm">Kalite</p>
-                    <p className="text-white font-semibold">{item.quality}</p>
-                  </div>
-                </div>
+        {/* Two Column Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          {/* CHAOS Column - Left */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            viewport={{ once: true }}
+            whileHover={{ x: -4 }}
+            className="rounded-xl p-8 transition-all duration-300 group"
+            style={{
+              background: '#0D1117',
+              border: '1px solid #EF444430',
+            }}
+          >
+            {/* Header */}
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ background: '#EF444415' }}>
+                <AlertTriangle size={20} style={{ color: '#EF4444' }} />
               </div>
-            </motion.div>
-          ))}
+              <div>
+                <h3 className="font-display font-bold text-lg" style={{ color: '#EF4444' }}>KAOS</h3>
+                <p className="text-xs font-mono" style={{ color: '#8899AA' }}>Geleneksel Yaklaşım</p>
+              </div>
+            </div>
+
+            {/* Items */}
+            <div className="space-y-4">
+              {chaosItems.map((item, i) => (
+                <motion.div
+                  key={i}
+                  className="flex items-center gap-3 group/item"
+                  whileHover={{ x: -2 }}
+                  transition={{ duration: 0.15 }}
+                >
+                  <item.icon size={16} style={{ color: '#EF4444' }} className="flex-shrink-0 opacity-60" />
+                  <span className="text-sm" style={{ color: '#C8D6E5' }}>{item.text}</span>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Result */}
+            <div className="mt-6 pt-5" style={{ borderTop: '1px solid #1E2D3D' }}>
+              <div className="flex items-center gap-2">
+                <TrendingDown size={16} style={{ color: '#EF4444' }} />
+                <span className="text-sm font-mono font-semibold" style={{ color: '#EF4444' }}>
+                  Sonuç: Kayıp & Stres
+                </span>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* ORDER Column - Right */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true }}
+            whileHover={{ scale: 1.01 }}
+            className="rounded-xl p-8 transition-all duration-300 group relative"
+            style={{
+              background: '#0D1117',
+              border: '1px solid #10B98130',
+              boxShadow: '0 0 30px #10B98108',
+            }}
+          >
+            {/* Badge */}
+            <div 
+              className="absolute -top-3 right-6 px-3 py-1 rounded-full text-xs font-mono font-semibold"
+              style={{ background: '#10B98120', color: '#10B981', border: '1px solid #10B98140' }}
+            >
+              Finans Kodu
+            </div>
+
+            {/* Header */}
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ background: '#10B98115' }}>
+                <CheckCircle size={20} style={{ color: '#10B981' }} />
+              </div>
+              <div>
+                <h3 className="font-display font-bold text-lg" style={{ color: '#10B981' }}>DÜZEN</h3>
+                <p className="text-xs font-mono" style={{ color: '#8899AA' }}>AI Destekli Yaklaşım</p>
+              </div>
+            </div>
+
+            {/* Items */}
+            <div className="space-y-4">
+              {orderItems.map((item, i) => (
+                <motion.div
+                  key={i}
+                  className="flex items-center gap-3"
+                  whileHover={{ x: 2 }}
+                  transition={{ duration: 0.15 }}
+                >
+                  <item.icon size={16} style={{ color: '#10B981' }} className="flex-shrink-0 opacity-80" />
+                  <span className="text-sm" style={{ color: '#C8D6E5' }}>{item.text}</span>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Result */}
+            <div className="mt-6 pt-5" style={{ borderTop: '1px solid #1E2D3D' }}>
+              <div className="flex items-center gap-2">
+                <TrendingUp size={16} style={{ color: '#10B981' }} />
+                <span className="text-sm font-mono font-semibold" style={{ color: '#10B981' }}>
+                  Sonuç: Disiplin & Kazanç
+                </span>
+              </div>
+            </div>
+          </motion.div>
         </div>
 
         {/* CTA */}
@@ -122,23 +157,20 @@ export default function ComparisonSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-center mt-16"
+          viewport={{ once: true }}
+          className="text-center mt-12"
         >
-          <p className="text-gray-400 mb-4">
-            Bu analizi yapan 'Master Prompt'a sahip olmak ister misin?
-          </p>
           <a
-            href="https://www.hikie.space/finanskodu/file/6cf62b1f141d48d1af13cb5ca04a53ab"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105"
+            href="/analiz"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-sm transition-all duration-300 hover:scale-105"
             style={{
-              background: "#FFD700",
-              color: "#000",
-              boxShadow: "0 0 30px rgba(255, 215, 0, 0.3)",
+              background: '#0EA5E9',
+              color: '#fff',
+              boxShadow: '0 0 20px #0EA5E920',
             }}
           >
-            👉 AI Prompt Kütüphanesini İncele
+            Düzene Geç
+            <ArrowRight size={16} />
           </a>
         </motion.div>
       </div>

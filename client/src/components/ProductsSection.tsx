@@ -1,53 +1,33 @@
-/*
-  DESIGN: Cyber Finance Products Section - HORIZONTAL CAROUSEL
-  STRATEGY: FAZ 2 - Product Funnel with Journey Badges
-  
-  - Reordered: AI Prompt → Finans Kodu → Pro Bülten
-  - Journey Badges: BAŞLA (green), DEVAM ET (blue), İLERLE (gray)
-  - Removed "↗" icons from buttons
-  - New subtitle: "100+ hazır AI prompt, finansal metodoloji ve aylık strateji bülteni"
-*/
-
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef, useState } from "react";
-import { 
-  Layers, 
-  Brain, 
-  LayoutDashboard, 
-  ChevronLeft,
-  ChevronRight,
-  LucideIcon
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
+import { Brain, Layers, LayoutDashboard, ArrowRight, type LucideIcon } from "lucide-react";
 
 interface Product {
   id: number;
   title: string;
   description: string;
   icon: LucideIcon;
-  image: string; // Product image URL
+  image: string;
   link: string;
   badge: string;
   badgeColor: string;
   journeyBadge: string;
-  journeyBadgeColor: string;
+  journeyColor: string;
   buttonText: string;
 }
 
-// FAZ 2: Reordered products with Journey Badges
 const products: Product[] = [
   {
     id: 1,
     title: "AI Prompt Kütüphanesi",
-    description: "Finans profesyonelleri için özel olarak tasarlanmış yapay zeka prompt koleksiyonu.",
+    description: "Finans profesyonelleri için özel olarak tasarlanmış 100+ yapay zeka prompt koleksiyonu.",
     icon: Brain,
     image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/eExAEklLAjIAZkEK.png",
     link: "https://www.hikie.space/finanskodu/file/6cf62b1f141d48d1af13cb5ca04a53ab",
-    badge: "⚡ Hemen Kullan",
-    badgeColor: "bg-purple-500",
+    badge: "Hemen Kullan",
+    badgeColor: "#8B5CF6",
     journeyBadge: "BAŞLA",
-    journeyBadgeColor: "bg-green-600 text-white text-lg px-4 py-1 rounded-full",
+    journeyColor: "#10B981",
     buttonText: "Prompt'ları Keşfet",
   },
   {
@@ -57,10 +37,10 @@ const products: Product[] = [
     icon: Layers,
     image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/tipqmgRCXZXEvHBH.png",
     link: "https://www.hikie.space/finanskodu/file/3813040824b54db8bba17e4f4b2dd56f",
-    badge: "🔥 Çok Satan",
-    badgeColor: "bg-primary",
+    badge: "Çok Satan",
+    badgeColor: "#0EA5E9",
     journeyBadge: "DEVAM ET",
-    journeyBadgeColor: "bg-blue-600 text-white text-md px-3 py-1 rounded-full",
+    journeyColor: "#0EA5E9",
     buttonText: "Sistemi İncele",
   },
   {
@@ -70,181 +50,130 @@ const products: Product[] = [
     icon: LayoutDashboard,
     image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/KzrqHllOnTCvKWzx.png",
     link: "https://www.hikie.space/finanskodu/algoritmik-strateji-ve-analiz",
-    badge: "📈 Aylık Sinyal",
-    badgeColor: "bg-amber-500",
+    badge: "Aylık Sinyal",
+    badgeColor: "#D4A853",
     journeyBadge: "İLERLE",
-    journeyBadgeColor: "bg-gray-600 text-white text-sm px-2 py-0.5 rounded-full",
+    journeyColor: "#8899AA",
     buttonText: "Bültene Katıl",
   },
 ];
 
+function ProductCard({ product, index, isInView }: { product: Product; index: number; isInView: boolean }) {
+  const IconComponent = product.icon;
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 30 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5, delay: 0.1 + index * 0.12 }}
+      className="group relative"
+      itemScope
+      itemType="https://schema.org/Product"
+    >
+      <div
+        className="h-full rounded-xl overflow-hidden flex flex-col transition-all duration-300 hover:translate-y-[-2px]"
+        style={{
+          background: "#0D1117",
+          border: "1px solid #1E2D3D",
+        }}
+      >
+        {/* Image */}
+        <div className="relative overflow-hidden h-48">
+          <img
+            src={product.image}
+            alt={product.title}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            loading="lazy"
+          />
+          {/* Gradient overlay */}
+          <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, transparent 40%, #0D1117 100%)" }} />
+          
+          {/* Journey Badge */}
+          <span
+            className="absolute top-3 left-3 font-mono text-[10px] font-bold tracking-[0.1em] px-2.5 py-1 rounded"
+            style={{ background: product.journeyColor + "20", color: product.journeyColor, border: `1px solid ${product.journeyColor}40` }}
+          >
+            {product.journeyBadge}
+          </span>
+
+          {/* Badge */}
+          <span
+            className="absolute top-3 right-3 text-[11px] font-semibold px-2.5 py-1 rounded"
+            style={{ background: product.badgeColor + "20", color: product.badgeColor }}
+          >
+            {product.badge}
+          </span>
+        </div>
+
+        {/* Content */}
+        <div className="p-5 flex flex-col flex-1">
+          {/* Icon + Title */}
+          <div className="flex items-start gap-3 mb-3">
+            <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "#141B24" }}>
+              <IconComponent size={18} style={{ color: "#0EA5E9" }} />
+            </div>
+            <h3 className="font-bold text-[15px] leading-tight" style={{ color: "#F0F4F8" }} itemProp="name">
+              {product.title}
+            </h3>
+          </div>
+
+          {/* Description */}
+          <p className="text-sm leading-relaxed mb-5 flex-1 line-clamp-2" style={{ color: "#8899AA" }} itemProp="description">
+            {product.description}
+          </p>
+
+          {/* CTA */}
+          <a
+            href={product.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            itemProp="url"
+            className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 hover:scale-[1.02]"
+            style={{
+              background: "#0EA5E910",
+              color: "#0EA5E9",
+              border: "1px solid #0EA5E930",
+            }}
+            aria-label={`${product.title} sayfasına git`}
+          >
+            {product.buttonText}
+            <ArrowRight size={14} />
+          </a>
+        </div>
+      </div>
+    </motion.article>
+  );
+}
+
 export default function ProductsSection() {
   const ref = useRef(null);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
-
-  const checkScrollButtons = () => {
-    if (scrollContainerRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
-      setCanScrollLeft(scrollLeft > 0);
-      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
-    }
-  };
-
-  const scroll = (direction: "left" | "right") => {
-    if (scrollContainerRef.current) {
-      const scrollAmount = 320; // Card width + gap
-      const newScrollLeft = scrollContainerRef.current.scrollLeft + 
-        (direction === "left" ? -scrollAmount : scrollAmount);
-      scrollContainerRef.current.scrollTo({
-        left: newScrollLeft,
-        behavior: "smooth",
-      });
-      setTimeout(checkScrollButtons, 300);
-    }
-  };
 
   return (
-    <section 
-      id="urunler" 
-      className="relative py-24 overflow-hidden"
-      aria-labelledby="products-heading"
-    >
-      {/* Background */}
-      <div 
-        className="absolute inset-0"
-        style={{ background: "linear-gradient(180deg, #0a0a0a 0%, #0d1117 50%, #0a0a0a 100%)" }}
-      />
-
+    <section id="urunler" className="relative py-20 overflow-hidden" aria-labelledby="products-heading" style={{ background: "#050810" }}>
       <div className="container relative z-10" ref={ref}>
-        {/* Section Header - FAZ 2 */}
+        {/* Header */}
         <motion.header
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <span className="text-primary font-mono text-sm tracking-wider mb-4 block">
+          <span className="font-mono text-xs tracking-[0.15em] mb-3 block" style={{ color: "#0EA5E9" }}>
             // DİJİTAL VİTRİN
           </span>
-          <h2 id="products-heading" className="font-display font-bold text-3xl sm:text-4xl md:text-5xl mb-6">
-            Dijital <span className="gradient-text">Araçlar</span>
+          <h2 id="products-heading" className="font-display font-bold text-3xl sm:text-4xl mb-4" style={{ color: "#F0F4F8" }}>
+            Dijital <span style={{ color: "#10B981" }}>Araçlar</span>
           </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">
+          <p className="max-w-xl mx-auto" style={{ color: "#8899AA" }}>
             100+ hazır AI prompt, finansal metodoloji ve aylık strateji bülteni
           </p>
         </motion.header>
 
-        {/* Carousel Navigation Buttons (Desktop) */}
-        <div className="hidden md:flex items-center justify-end gap-2 mb-6">
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => scroll("left")}
-            disabled={!canScrollLeft}
-            className="w-10 h-10 rounded-full border-gray-700 hover:border-primary hover:text-primary disabled:opacity-30 bg-transparent"
-            aria-label="Önceki ürünler"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => scroll("right")}
-            disabled={!canScrollRight}
-            className="w-10 h-10 rounded-full border-gray-700 hover:border-primary hover:text-primary disabled:opacity-30 bg-transparent"
-            aria-label="Sonraki ürünler"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </Button>
-        </div>
-
-        {/* Product Cards - Grid for 3 items */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {products.map((product, index) => {
-            const IconComponent = product.icon;
-            return (
-              <motion.article
-                key={product.id}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.4, delay: 0.1 + index * 0.1 }}
-                className="group relative"
-                itemScope
-                itemType="https://schema.org/Product"
-              >
-                <div 
-                  className="h-full rounded-2xl p-6 flex flex-col transition-all duration-300 hover:scale-[1.02]"
-                  style={{
-                    background: "linear-gradient(145deg, rgba(20, 20, 25, 0.9), rgba(15, 15, 20, 0.95))",
-                    border: "1px solid rgba(255, 255, 255, 0.08)",
-                    boxShadow: "0 4px 20px rgba(0, 0, 0, 0.3)",
-                  }}
-                >
-                  {/* Journey Badge - FAZ 2 (Top Left, Prominent) */}
-                  <div className="absolute -top-3 left-6 z-10">
-                    <span className={`font-bold ${product.journeyBadgeColor} shadow-lg`}>
-                      {product.journeyBadge}
-                    </span>
-                  </div>
-
-                  {/* Top Section: Product Image + Badge */}
-                  <div className="relative mb-4 mt-2">
-                    {/* Product Image */}
-                    <div className="w-full h-48 rounded-xl overflow-hidden">
-                      <img
-                        src={product.image}
-                        alt={product.title}
-                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                      />
-                    </div>
-
-                    {/* Badge (Top Right) */}
-                    <span 
-                      className={`absolute top-3 right-3 ${product.badgeColor} text-white text-xs font-bold px-2.5 py-1 rounded-full`}
-                    >
-                      {product.badge}
-                    </span>
-                  </div>
-
-                  {/* Title (Bold) */}
-                  <h3 
-                    className="font-display font-bold text-lg text-white mb-2 line-clamp-2" 
-                    itemProp="name"
-                  >
-                    {product.title}
-                  </h3>
-
-                  {/* Description (2 lines max) */}
-                  <p 
-                    className="text-gray-400 text-sm mb-4 flex-grow line-clamp-2" 
-                    itemProp="description"
-                  >
-                    {product.description}
-                  </p>
-
-                  {/* CTA Button - FAZ 2: No "↗" icon */}
-                  <Button
-                    asChild
-                    variant="outline"
-                    className="w-full border-primary text-primary hover:bg-primary hover:text-white transition-all duration-300"
-                  >
-                    <a 
-                      href={product.link} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      itemProp="url"
-                      aria-label={`${product.title} sayfasına git`}
-                    >
-                      {product.buttonText}
-                    </a>
-                  </Button>
-                </div>
-              </motion.article>
-            );
-          })}
+        {/* Product Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl mx-auto">
+          {products.map((product, index) => (
+            <ProductCard key={product.id} product={product} index={index} isInView={isInView} />
+          ))}
         </div>
       </div>
     </section>

@@ -1,89 +1,98 @@
 import { motion } from "framer-motion";
-import { Mail } from "lucide-react";
+import { Mail, ExternalLink } from "lucide-react";
 
 export default function SponsorshipSection() {
   return (
     <section 
       id="sponsorship" 
-      className="py-16 sm:py-20 md:py-24 bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800"
+      className="py-16 sm:py-20 md:py-24"
+      style={{ background: "#050810" }}
       aria-label="Sponsorluk bölümü"
     >
       <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-4xl mx-auto">
           {/* Section Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="mb-12"
+            className="text-center mb-12"
           >
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-slate-900 dark:text-white">
-              Sponsorlar
+            <span className="text-xs font-mono tracking-[0.2em] text-[#0EA5E9] mb-4 block">
+              // TRUSTED BY
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-bold text-white">
+              Sponsorumuz
             </h2>
-            <div className="w-16 h-1 bg-gradient-to-r from-cyan-500 to-purple-500 mx-auto rounded-full" />
           </motion.div>
 
-          {/* Contact Information */}
+          {/* SalaryInsights Sponsor Card */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             viewport={{ once: true }}
-            className="mb-12"
+            className="rounded-xl border border-[#1E2D3D] p-8 sm:p-10 md:p-12"
+            style={{ background: "#0D1117" }}
           >
-            <p className="text-lg sm:text-xl text-slate-700 dark:text-slate-300 leading-relaxed mb-6">
-              Sponsorlukla ilgili detaylara{" "}
-              <a
-                href="mailto:finanskodu@gmail.com"
-                className="font-semibold text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300 transition-colors inline-flex items-center gap-1"
-              >
-                <Mail className="w-4 h-4" />
-                finanskodu@gmail.com
-              </a>
-              {" "}e-posta adresine mail atarak ulaşabilirsiniz.
-            </p>
+            <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+              {/* Logo */}
+              <div className="flex-shrink-0">
+                <a 
+                  href="https://salaryinsights.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="block hover:opacity-90 transition-opacity"
+                >
+                  <img 
+                    src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/eWIpFzMiHsfytxtR.jfif"
+                    alt="SalaryInsights Logo"
+                    className="w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-xl object-cover"
+                  />
+                </a>
+              </div>
+
+              {/* Description */}
+              <div className="flex-1 text-center md:text-left">
+                <div className="flex items-center gap-3 justify-center md:justify-start mb-4">
+                  <h3 className="text-2xl sm:text-3xl font-bold text-white font-sans">
+                    SalaryInsights
+                  </h3>
+                  <a 
+                    href="https://salaryinsights.com" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-[#0EA5E9] hover:text-[#38BDF8] transition-colors"
+                  >
+                    <ExternalLink className="w-5 h-5" />
+                  </a>
+                </div>
+                <blockquote className="text-[#C8D6E5] text-base sm:text-lg leading-relaxed font-sans italic border-l-2 border-[#0EA5E9] pl-4 md:pl-6">
+                  "SalaryInsights, Finans Kodu topluluğuna sponsor oldu çünkü ikimiz de aynı şeye inanıyoruz: finansal kararlar veri ile verilir, tahminle değil. Onlar maaş şeffaflığı sağlıyor, biz yatırım şeffaflığı. Farklı sorular, aynı felsefe."
+                </blockquote>
+              </div>
+            </div>
           </motion.div>
 
-          {/* Sponsor Logos Grid - Placeholder */}
+          {/* Become a Sponsor CTA */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
+            className="mt-8 text-center"
           >
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6">
-              {/* Placeholder Cards */}
-              {[1, 2, 3, 4, 5, 6, 7, 8].map((index) => (
-                <div
-                  key={index}
-                  className="aspect-square rounded-lg border-2 border-dashed border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 flex items-center justify-center hover:border-cyan-400 dark:hover:border-cyan-400 transition-colors"
-                >
-                  <div className="text-center">
-                    <div className="text-4xl font-bold text-slate-300 dark:text-slate-600 mb-2">
-                      {index}
-                    </div>
-                    <p className="text-xs text-slate-400 dark:text-slate-500">
-                      Marka Logosu
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Call to Action */}
-            <div className="mt-12 p-6 sm:p-8 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-              <p className="text-slate-700 dark:text-slate-300 text-sm sm:text-base">
-                Finans Kodu'nun büyüyen topluluğunun bir parçası olmak ve markanızı milyonlarca finansal karar verici ile tanıştırmak istiyorsanız,{" "}
-                <a
-                  href="mailto:finanskodu@gmail.com"
-                  className="font-semibold text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300 transition-colors"
-                >
-                  bizimle iletişime geçin
-                </a>
-                .
-              </p>
-            </div>
+            <p className="text-[#8899AA] text-sm font-mono">
+              Sponsor olmak ister misiniz?{" "}
+              <a
+                href="mailto:info@finanskodu.com"
+                className="text-[#0EA5E9] hover:text-[#38BDF8] transition-colors inline-flex items-center gap-1"
+              >
+                <Mail className="w-3.5 h-3.5" />
+                info@finanskodu.com
+              </a>
+            </p>
           </motion.div>
         </div>
       </div>

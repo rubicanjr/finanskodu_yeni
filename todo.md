@@ -1256,5 +1256,51 @@
 - [x] Navigasyon linklerinin <a> etiketi olduğunu doğrula
 - [x] Canonical URL'in doğru ayarlandığını doğrula
 - [x] Widget lazy load'ın çalıştığını doğrula
+- [x] Checkpoint kaydet
+- [x] Kullanıcıya rapor sun
+
+
+## FİNANS KODU 2.0 - KAPSAMLI REBRANDİNG
+
+### Faz 1: Güven ve Temizlik (Clean Up)
+- [x] SalaryInsights logosunu S3'e yükle
+- [x] SponsorshipSection: 8 boş kutuyu kaldır, tek SalaryInsights logosu + açıklama metni ekle
+- [x] Header/Hero'dan Sarp & Vera görsel avatarlarını kaldır (sadece Chat Widget'ta kalsın)
+- [x] Email adresleri info@finanskodu.com olarak güncellendi (SponsorshipSection)
+
+### Faz 2: Yeni Renk ve Tipografi Sistemi (Design Tokens)
+- [x] Zemin renkleri: #050810 (en koyu), #0D1117 (kartlar), #141B24 (hover)
+- [x] Action (butonlar): #0EA5E9 (Electric Blue)
+- [x] Pozitif: #10B981 (Finans Yeşili)
+- [x] Negatif: #EF4444 (Kırmızı)
+- [x] Premium: #D4A853 (Altın)
+- [x] Cyan rengini azalt, sadece marka vurgularında kullan
+- [x] index.css'deki CSS değişkenlerini güncelle
+- [x] IBM Plex Sans + IBM Plex Mono fontları eklendi
+
+### Faz 3: Yeni Hero ve Layout (Structure)
+- [x] Üstündeki yatay menüyü kaldır, sol tarafta sabit dikey Sidebar Menü tasarla
+- [x] Hero başlık: "Kaos Senin İşin Değil. Karar Senin, Gürültüyü Biz Filtreleriz."
+- [x] Hero alt başlık güncelle
+- [x] Hero'dan StatsColumn ve TestimonialsColumn kaldırıldı (temiz, tek sütun)
+- [x] Kaos vs Düzen bölümünü iki sütuna ayır (Kırmızı kaos / Yeşil çözüm)
+- [x] Hover efektleri: sol titresin (x:-4), sağ parlasın (scale:1.01)
+
+### Faz 4: Kod Odası (Community Feature)
+- [x] /kod-odasi route'u ekle (App.tsx)
+- [x] KodOdasi.tsx sayfasını oluştur (kod-odasi.jsx referansıyla)
+- [x] Manus Auth entegrasyonu (giriş yapanlar yazabilir, yapmayanlar okuyabilir)
+- [x] Giriş yapmayanlar okuyabilir, giriş yapanlar yazabilir
+- [x] Ticker band, kategori filtreleme, post paylaşma, reaction sistemi
+- [x] Sidebar'a Kod Odası linkini ekle
+
+### Faz 5: Görsel Dil (Aesthetic)
+- [x] Blog, Ürün ve Manifesto kartlarını standart Card Component yapısına getir
+- [x] Tüm kartlar: #0D1117 zemin, #1E2D3D border, hover:translate-y-[-2px]
+- [x] Blog kartları: font-mono etiketler, #0EA5E9 vurgu rengi
+- [x] Ürün kartları: journey badge + icon + CTA standartlaştırıldı
+
+### Test ve Checkpoint
+- [x] Tüm değişiklikleri browser'da test et
 - [ ] Checkpoint kaydet
 - [ ] Kullanıcıya rapor sun

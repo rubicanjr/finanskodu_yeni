@@ -1,18 +1,13 @@
-import { motion } from "framer-motion";
-import { ArrowRight, MessageSquare, Monitor } from "lucide-react";
+import { ArrowRight, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
-import StatsColumn from "@/components/StatsColumn";
-import TestimonialsColumn from "@/components/TestimonialsColumn";
-import { trackCTAClick, trackChatWidget } from "@/lib/analytics";
-// Auth gate and analysis section moved to AnalysisAuthGate component
+import { motion } from "framer-motion";
+import { trackCTAClick } from "@/lib/analytics";
 
 export default function HeroSection() {
   const [typedText, setTypedText] = useState("");
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
-  const [showPulse, setShowPulse] = useState(false);
   
-  // Random message pool for terminal animation
   const messages = [
     "Sistem Hazır...",
     "Analiz Başlıyor...",
@@ -21,7 +16,6 @@ export default function HeroSection() {
     "Strateji Hesaplanıyor..."
   ];
 
-  // Typing animation effect with infinite loop and random messages
   useEffect(() => {
     let currentIndex = 0;
     let isDeleting = false;
@@ -30,33 +24,27 @@ export default function HeroSection() {
 
     const typeWriter = () => {
       if (!isDeleting && currentIndex <= currentMessage.length) {
-        // Typing phase
         setTypedText(currentMessage.slice(0, currentIndex));
         currentIndex++;
-        timeoutId = setTimeout(typeWriter, 150); // 150ms per character
+        timeoutId = setTimeout(typeWriter, 150);
       } else if (!isDeleting && currentIndex > currentMessage.length) {
-        // Pause before deleting
         isDeleting = true;
-        timeoutId = setTimeout(typeWriter, 2000); // Wait 2 seconds
+        timeoutId = setTimeout(typeWriter, 2000);
       } else if (isDeleting && currentIndex > 0) {
-        // Deleting phase
         currentIndex--;
         setTypedText(currentMessage.slice(0, currentIndex));
-        timeoutId = setTimeout(typeWriter, 100); // 100ms per character deletion
+        timeoutId = setTimeout(typeWriter, 100);
       } else if (isDeleting && currentIndex === 0) {
-        // Pick next random message and restart
         isDeleting = false;
         setCurrentMessageIndex((prev) => (prev + 1) % messages.length);
-        timeoutId = setTimeout(typeWriter, 500); // Wait 500ms before restarting
+        timeoutId = setTimeout(typeWriter, 500);
       }
     };
 
     typeWriter();
-
     return () => clearTimeout(timeoutId);
   }, [currentMessageIndex]);
 
-  // Scroll to products section
   const scrollToProducts = () => {
     trackCTAClick('hero_products_cta', '#urunler');
     const productsSection = document.getElementById("urunler");
@@ -65,317 +53,145 @@ export default function HeroSection() {
     }
   };
 
-  // Open forum link
   const openForum = () => {
     trackCTAClick('hero_forum_cta', 'https://www.hikie.space/finanskodu/finans-kodu-forum');
     window.open("https://www.hikie.space/finanskodu/finans-kodu-forum", "_blank");
-  };
-
-  // Open DualPersonaWidget with pulse effect
-  const openPersonaWidget = () => {
-    trackChatWidget('open', 'hero_terminal_click');
-    setShowPulse(true);
-    setTimeout(() => setShowPulse(false), 1000); // Pulse duration
-    window.dispatchEvent(new Event('openDualPersonaWidget'));
   };
 
   return (
     <header 
       id="hero" 
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
-      style={{ background: 'linear-gradient(180deg, #0a0a0a 0%, #0d1117 50%, #0a0a0a 100%)' }}
+      style={{ background: '#050810' }}
       role="banner"
       aria-label="Ana başlık bölümü"
     >
-      {/* Animated Grid Pattern */}
-      <div className="absolute inset-0 opacity-10" aria-hidden="true">
+      {/* Subtle Grid Pattern */}
+      <div className="absolute inset-0 opacity-[0.04]" aria-hidden="true">
         <div
           className="absolute inset-0"
           style={{
             backgroundImage: `
-              linear-gradient(to right, #00D4FF10 1px, transparent 1px),
-              linear-gradient(to bottom, #A855F710 1px, transparent 1px)
+              linear-gradient(to right, #0EA5E9 1px, transparent 1px),
+              linear-gradient(to bottom, #0EA5E9 1px, transparent 1px)
             `,
             backgroundSize: "80px 80px",
           }}
         />
       </div>
 
-      {/* Radial Glow Effects */}
+      {/* Radial Glow - Subtle */}
       <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
-        {/* Cyan glow for Sarp */}
         <div 
-          className="absolute top-1/2 left-1/4 w-[600px] h-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-20 blur-[120px]"
-          style={{ background: 'radial-gradient(circle, #00D4FF 0%, transparent 70%)' }}
-        />
-        {/* Purple glow for Vera */}
-        <div 
-          className="absolute top-1/2 right-1/4 w-[600px] h-[600px] translate-x-1/2 -translate-y-1/2 rounded-full opacity-20 blur-[120px]"
-          style={{ background: 'radial-gradient(circle, #A855F7 0%, transparent 70%)' }}
+          className="absolute top-1/3 left-1/2 w-[800px] h-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-10 blur-[150px]"
+          style={{ background: 'radial-gradient(circle, #0EA5E9 0%, transparent 70%)' }}
         />
       </div>
 
       {/* Content */}
       <div className="container relative z-10 pt-24 pb-16">
-        {/* 3-Column Grid Layout (Desktop) / Column (Mobile) */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr_1fr] gap-8 lg:gap-12 items-start">
-          {/* Left Column: Stats */}
-          <div className="hidden lg:block">
-            <StatsColumn />
-          </div>
-
-          {/* Center Column: Main Hero Content */}
-          <div className="text-center">
+        <div className="max-w-4xl mx-auto text-center">
           
-          {/* Eyebrow Text - FAZ 1 */}
+          {/* Eyebrow Text */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-xs sm:text-sm font-mono text-cyan-400 mb-4 tracking-wider"
+            className="text-xs sm:text-sm font-mono tracking-[0.15em] mb-6"
+            style={{ color: '#0EA5E9' }}
           >
             // FİNANSAL VERİMLİLİK İÇİN
           </motion.div>
 
-          {/* Main Heading - FAZ 1: "Hazır Çözümler" */}
+          {/* Main Heading - Updated for 2.0 */}
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="font-display font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight mb-6"
+            className="font-display font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight mb-6 text-white"
           >
-            <span style={{ 
-              background: 'linear-gradient(135deg, #00F0FF 0%, #2DD4BF 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text'
-            }}>
-              Hazır Çözümler
-            </span>
+            Kaos Senin İşin Değil.{" "}
+            <br className="hidden sm:block" />
+            <span style={{ color: '#0EA5E9' }}>
+              Karar Senin,
+            </span>{" "}
+            Gürültüyü Biz Filtreleriz.
           </motion.h1>
 
-          {/* Subheading - FAZ 1 */}
+          {/* Subheading - Updated for 2.0 */}
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-base sm:text-lg text-gray-400 max-w-3xl mx-auto mb-8 leading-relaxed"
+            className="text-base sm:text-lg max-w-2xl mx-auto mb-10 leading-relaxed"
+            style={{ color: '#8899AA' }}
           >
-            Saatler süren finansal işlemlerinizi dakikalara indiren, test edilmiş dijital ürünler
+            100+ test edilmiş AI aracı, finansal metodoloji ve algoritmik analiz. 
+            Sen pilotun; navigasyonu biz üstleniyoruz.
           </motion.p>
 
-          {/* Visual Composition: Laptop + Sarp + Vera - Dedektifi Demo */}
+          {/* Terminal Animation - Clean, no avatars */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="flex items-center justify-center gap-4 sm:gap-8 mb-8"
+            className="flex justify-center mb-10"
           >
-            {/* Sarp Avatar (Left) */}
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="relative group"
+            <div 
+              className="w-64 h-20 sm:w-80 sm:h-24 rounded-xl border flex items-center justify-center"
+              style={{ 
+                background: '#0D1117',
+                borderColor: '#1E2D3D',
+              }}
             >
-              <div 
-                className="w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full overflow-hidden border-3 transition-all duration-300 group-hover:scale-105"
-                style={{ 
-                  borderColor: '#00D4FF',
-                  boxShadow: '0 0 30px #00D4FF40'
-                }}
-              >
-                <img 
-                  src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/uLVsvkiAScpdbGTB.gif" 
-                  alt="Sarp - Teknik Analist"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div
-                className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-bold"
-                style={{ 
-                  background: 'linear-gradient(135deg, #00D4FF 0%, #0891B2 100%)',
-                  color: '#000'
-                }}
-              >
-                SARP
-              </div>
-            </motion.div>
-
-            {/* Central Laptop/Monitor Icon */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="relative group"
-            >
-              {/* Pulse Ring Effect on Click */}
-              {showPulse && (
-                <div className="absolute inset-0 pointer-events-none">
-                  <div 
-                    className="absolute inset-0 rounded-xl border-2 animate-ping"
-                    style={{
-                      borderColor: 'rgba(0, 212, 255, 0.6)',
-                      animationDuration: '1s'
-                    }}
-                  />
-                  <div 
-                    className="absolute inset-0 rounded-xl border-2 animate-ping"
-                    style={{
-                      borderColor: 'rgba(168, 85, 247, 0.6)',
-                      animationDuration: '1s',
-                      animationDelay: '0.15s'
-                    }}
-                  />
+              <div className="flex flex-col items-center justify-center gap-1">
+                <div className="font-mono text-xs sm:text-sm h-5" style={{ color: '#8899AA' }}>
+                  {typedText}
                 </div>
-              )}
-
-              {/* Tooltip */}
-              <div className="absolute -top-12 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10">
-                <div className="bg-gray-900/95 backdrop-blur-sm px-4 py-2 rounded-lg border border-cyan-500/30 shadow-lg">
-                  <p className="text-sm text-cyan-400 whitespace-nowrap font-medium">
-                    Sarp ve Vera ile tanışmak için tıkla
-                  </p>
-                  {/* Arrow */}
-                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-900/95 border-r border-b border-cyan-500/30 rotate-45" />
-                </div>
+                <motion.span
+                  animate={{ opacity: [1, 0, 1] }}
+                  transition={{ duration: 1, repeat: Infinity, repeatType: "loop" }}
+                  className="font-mono text-xl sm:text-2xl font-bold"
+                  style={{ color: '#10B981', textShadow: '0 0 10px #10B98140' }}
+                >
+                  /&gt;_
+                </motion.span>
               </div>
-
-              <div 
-                onClick={openPersonaWidget}
-                className="w-32 h-24 sm:w-48 sm:h-36 md:w-56 md:h-40 rounded-xl border-2 flex items-center justify-center cursor-pointer transition-all duration-300 group-hover:scale-105"
-                style={{ 
-                  background: '#0a0a0a',
-                  borderColor: 'rgba(255, 255, 255, 0.2)',
-                  boxShadow: '0 0 40px rgba(0, 212, 255, 0.2), 0 0 40px rgba(168, 85, 247, 0.2)'
-                }}
-              >
-                <div className="flex flex-col items-center justify-center gap-2">
-                  {/* Typing Text */}
-                  <div className="font-mono text-xs sm:text-sm text-gray-400 h-5">
-                    {typedText}
-                  </div>
-                  
-                  {/* Blinking Terminal Cursor />_ with Hover Effect */}
-                  <motion.span
-                    animate={{ opacity: [1, 0, 1] }}
-                    transition={{ duration: 1, repeat: Infinity, repeatType: "loop" }}
-                    className="font-mono text-xl sm:text-2xl md:text-3xl font-bold transition-all duration-300"
-                    style={{ 
-                      color: '#00FF00', 
-                      textShadow: '0 0 10px #00FF00, 0 0 20px #00FF00'
-                    }}
-                  >
-                    <style>{`
-                      .group:hover motion-span {
-                        background: linear-gradient(135deg, #00D4FF 0%, #A855F7 100%);
-                        -webkit-background-clip: text;
-                        -webkit-text-fill-color: transparent;
-                        background-clip: text;
-                        text-shadow: none;
-                        filter: drop-shadow(0 0 10px #00D4FF) drop-shadow(0 0 20px #A855F7);
-                      }
-                    `}</style>
-                    <span className="group-hover:bg-gradient-to-r group-hover:from-cyan-400 group-hover:to-purple-500 group-hover:bg-clip-text group-hover:text-transparent">
-                      /&gt;_
-                    </span>
-                  </motion.span>
-                </div>
-              </div>
-              <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-16 sm:w-24 h-2 rounded-full bg-gray-700" />
-            </motion.div>
-
-            {/* Vera Avatar (Right) */}
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="relative group"
-            >
-              <div 
-                className="w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full overflow-hidden border-3 transition-all duration-300 group-hover:scale-105"
-                style={{ 
-                  borderColor: '#A855F7',
-                  boxShadow: '0 0 30px #A855F740'
-                }}
-              >
-                <img 
-                  src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/QAkTTqxvtQZTDARB.png" 
-                  alt="Vera - Makro Stratejist"
-                  className="w-full h-full object-cover bg-gradient-to-br from-purple-900 to-purple-700"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                    target.parentElement!.innerHTML = `
-                      <div class="w-full h-full bg-gradient-to-br from-purple-600 to-purple-900 flex items-center justify-center">
-                        <span class="text-3xl sm:text-4xl">👩‍💼</span>
-                      </div>
-                    `;
-                  }}
-                />
-              </div>
-              <div
-                className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-bold"
-                style={{ 
-                  background: 'linear-gradient(135deg, #A855F7 0%, #7C3AED 100%)',
-                  color: '#fff'
-                }}
-              >
-                VERA
-              </div>
-            </motion.div>
+            </div>
           </motion.div>
-
-          {/* Caption/Note */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.7 }}
-            className="text-xs sm:text-sm text-gray-500 italic mb-10"
-          >
-            Bu karakterler ürün değil, bu sistemi kullanırken sana yardım eden asistanlar.
-          </motion.p>
-
-          {/* Auth Gate moved to AnalysisAuthGate component */}
 
           {/* CTA Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
-            {/* Primary Button: Dijital Araçları Keşfet */}
             <Button
               size="lg"
               onClick={scrollToProducts}
-              className="relative overflow-hidden font-display font-bold text-base sm:text-lg px-8 py-6 rounded-full group"
+              className="relative overflow-hidden font-display font-bold text-base sm:text-lg px-8 py-6 rounded-lg group"
               style={{ 
-                background: 'linear-gradient(135deg, #00D4FF 0%, #A855F7 100%)',
-                boxShadow: '0 0 30px #00D4FF50, 0 0 60px #A855F750'
+                background: '#0EA5E9',
+                color: '#fff',
+                boxShadow: '0 0 20px #0EA5E930'
               }}
               aria-label="Dijital araçları keşfet"
             >
-              <span className="relative z-10 flex items-center gap-2 text-black">
+              <span className="relative z-10 flex items-center gap-2">
                 Dijital Araçları Keşfet
                 <ArrowRight className="w-5 h-5" />
               </span>
-              {/* Hover effect */}
-              <div 
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                style={{ background: 'linear-gradient(135deg, #A855F7 0%, #00D4FF 100%)' }}
-              />
             </Button>
 
-            {/* Secondary Button: Foruma Git */}
             <Button
               size="lg"
               variant="outline"
               onClick={openForum}
-              className="font-display font-semibold text-base sm:text-lg px-8 py-6 rounded-full border-2 hover:bg-white/5 transition-all"
+              className="font-display font-semibold text-base sm:text-lg px-8 py-6 rounded-lg border hover:bg-white/5 transition-all"
               style={{ 
-                borderColor: 'rgba(255, 255, 255, 0.3)',
-                color: '#fff'
+                borderColor: '#1E2D3D',
+                color: '#C8D6E5'
               }}
               aria-label="Finans Kodu forumuna git"
             >
@@ -383,18 +199,10 @@ export default function HeroSection() {
               Foruma Git
             </Button>
           </motion.div>
-          </div>
-          {/* End Center Column */}
-
-          {/* Right Column: Testimonials */}
-          <div className="hidden lg:block">
-            <TestimonialsColumn />
-          </div>
         </div>
-        {/* End 3-Column Grid */}
       </div>
 
-      {/* Scroll Indicator - Hidden on mobile to prevent overlap with Foruma Git button */}
+      {/* Scroll Indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -402,12 +210,12 @@ export default function HeroSection() {
         className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:block"
         aria-hidden="true"
       >
-        <div className="w-6 h-10 rounded-full border-2 border-gray-600 flex items-start justify-center p-2">
+        <div className="w-6 h-10 rounded-full border-2 flex items-start justify-center p-2" style={{ borderColor: '#1E2D3D' }}>
           <motion.div
             animate={{ y: [0, 12, 0] }}
             transition={{ duration: 1.5, repeat: Infinity }}
             className="w-1.5 h-1.5 rounded-full"
-            style={{ background: 'linear-gradient(135deg, #00D4FF, #A855F7)' }}
+            style={{ background: '#0EA5E9' }}
           />
         </div>
       </motion.div>

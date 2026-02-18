@@ -212,7 +212,7 @@ export default function BlogSection() {
       {/* Background */}
       <div 
         className="absolute inset-0"
-        style={{ background: "linear-gradient(180deg, #0d1117 0%, #0a0a0a 50%, #0d1117 100%)" }}
+        style={{ background: "#050810" }}
       />
 
       <div className="container relative z-10" ref={ref}>
@@ -223,16 +223,17 @@ export default function BlogSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <span className="text-primary font-mono text-sm tracking-wider mb-4 block">
+          <span className="font-mono text-xs tracking-[0.15em] mb-3 block" style={{ color: '#0EA5E9' }}>
             // İÇGÖRÜLER
           </span>
           <h2 
             id="blog-heading"
-            className="font-display font-bold text-3xl sm:text-4xl md:text-5xl mb-6"
+            className="font-display font-bold text-3xl sm:text-4xl mb-4"
+            style={{ color: '#F0F4F8' }}
           >
-            Blog & <span className="gradient-text">Analizler</span>
+            Blog & <span style={{ color: '#10B981' }}>Analizler</span>
           </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">
+          <p className="max-w-xl mx-auto" style={{ color: '#8899AA' }}>
             Algoritmik finans, yapay zeka ve verimlilik stratejileri hakkında derinlemesine içerikler
           </p>
         </motion.header>
@@ -311,11 +312,10 @@ export default function BlogSection() {
                   })}
                 </script>
                 <div 
-                  className="h-full rounded-2xl overflow-hidden flex flex-col transition-all duration-300 hover:scale-[1.02]"
+                  className="h-full rounded-xl overflow-hidden flex flex-col transition-all duration-300 hover:translate-y-[-2px]"
                   style={{
-                    background: "linear-gradient(145deg, rgba(20, 20, 25, 0.9), rgba(15, 15, 20, 0.95))",
-                    border: "1px solid rgba(255, 255, 255, 0.08)",
-                    boxShadow: "0 4px 20px rgba(0, 0, 0, 0.3)",
+                    background: '#0D1117',
+                    border: '1px solid #1E2D3D',
                   }}
                 >
                   {/* Featured Image */}
@@ -326,14 +326,15 @@ export default function BlogSection() {
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent" />
+                    <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, transparent 40%, #0D1117 100%)' }} />
                     
                     {/* Tags */}
                     <div className="absolute top-3 left-3 flex flex-wrap gap-1">
                       {post.tags.slice(0, 1).map((tag) => (
                         <span
                           key={tag}
-                          className="px-2 py-0.5 bg-primary/20 backdrop-blur-sm text-primary text-xs font-medium rounded-full"
+                          className="px-2 py-0.5 text-xs font-mono font-medium rounded"
+                          style={{ background: '#0EA5E920', color: '#0EA5E9' }}
                         >
                           {tag}
                         </span>
@@ -344,7 +345,7 @@ export default function BlogSection() {
                   {/* Content */}
                   <div className="p-5 flex flex-col flex-grow">
                     {/* Meta Info */}
-                    <div className="flex items-center gap-3 text-gray-500 text-xs mb-3">
+                    <div className="flex items-center gap-3 text-xs mb-3" style={{ color: '#4A5568' }}>
                       <div className="flex items-center gap-1">
                         <Calendar className="w-3 h-3" />
                         <span>{post.date}</span>
@@ -356,12 +357,12 @@ export default function BlogSection() {
                     </div>
 
                     {/* Title */}
-                    <h3 className="font-display font-bold text-white mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+                    <h3 className="font-display font-bold mb-2 line-clamp-2 transition-colors" style={{ color: '#F0F4F8' }}>
                       {post.title}
                     </h3>
 
                     {/* Excerpt */}
-                    <p className="text-gray-400 text-sm mb-4 flex-grow line-clamp-3">
+                    <p className="text-sm mb-4 flex-grow line-clamp-3" style={{ color: '#8899AA' }}>
                       {post.excerpt}
                     </p>
 
@@ -370,7 +371,8 @@ export default function BlogSection() {
                       href={`/blog/${post.id}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-primary font-medium text-sm hover:text-primary/80 transition-colors group/btn"
+                      className="inline-flex items-center gap-2 font-medium text-sm transition-colors group/btn"
+                      style={{ color: '#0EA5E9' }}
                     >
                       <span>Devamını Oku</span>
                       <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />

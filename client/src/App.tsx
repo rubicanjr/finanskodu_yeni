@@ -8,10 +8,12 @@ import Home from "./pages/Home";
 import AnalysisPage from "./pages/AnalysisPage";
 import BlogListPage from "./pages/BlogListPage";
 import BlogDetailPage from "./pages/BlogDetailPage";
+import KodOdasi from "./pages/KodOdasi";
 import DualPersonaWidget from "./components/DualPersonaWidget";
-import MobileBottomNav from "./components/MobileBottomNav";
+import Sidebar from "./components/Sidebar";
 import { useEffect } from "react";
 import { trackPageView } from "@/lib/analytics";
+
 function Router() {
   const [location] = useLocation();
 
@@ -20,13 +22,13 @@ function Router() {
     trackPageView(location);
   }, [location]);
 
-  // make sure to consider if you need authentication for certain routes
   return (
     <Switch>
       <Route path={"/"} component={Home} />
       <Route path={"/analiz"} component={AnalysisPage} />
       <Route path={"/blog"} component={BlogListPage} />
       <Route path={"/blog/:slug"} component={BlogDetailPage} />
+      <Route path={"/kod-odasi"} component={KodOdasi} />
       <Route path={"/404"} component={NotFound} />
       <Route component={NotFound} />
     </Switch>
@@ -39,11 +41,14 @@ function App() {
       <ThemeProvider defaultTheme="dark">
         <TooltipProvider>
           <Toaster />
-          <Router />
-          {/* Dual Persona Widget - Sarp (Desktop) / Vera (Mobile) */}
+          {/* Sidebar Navigation */}
+          <Sidebar />
+          {/* Main Content Area - offset for sidebar on desktop */}
+          <div className="lg:ml-[220px]">
+            <Router />
+          </div>
+          {/* Dual Persona Widget */}
           <DualPersonaWidget />
-          {/* Mobile Bottom Navigation */}
-          <MobileBottomNav />
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>

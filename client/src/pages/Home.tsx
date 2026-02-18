@@ -39,7 +39,7 @@
 */
 
 import { Helmet } from "react-helmet-async";
-import Navigation from "@/components/Navigation";
+// Navigation is now handled by Sidebar in App.tsx
 import HeroSection from "@/components/HeroSection";
 import ProductsSection from "@/components/ProductsSection";
 import ComparisonSection from "@/components/ComparisonSection";
@@ -84,8 +84,7 @@ export default function Home() {
         Ana içeriğe atla
       </a>
 
-      {/* Navigation - Sticky header */}
-      <Navigation />
+      {/* Navigation is now handled by Sidebar in App.tsx */}
 
       {/* 1. Hero Section (Sarp & Vera Görselleri + Conditional Auth Gate/Analysis) */}
       {/* CRO: Attention & Interest - First impression */}
