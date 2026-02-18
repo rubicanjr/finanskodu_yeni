@@ -93,14 +93,14 @@ export default function Sidebar() {
       {/* Overlay for mobile */}
       {isMobile && isOpen && (
         <div 
-          className="fixed inset-0 z-30 bg-black/60 backdrop-blur-sm"
+          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
           onClick={() => setIsOpen(false)}
         />
       )}
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 h-full z-40 flex flex-col transition-transform duration-300 ${
+        className={`fixed top-0 left-0 h-full z-50 flex flex-col transition-transform duration-300 ${
           isMobile && !isOpen ? "-translate-x-full" : "translate-x-0"
         }`}
         style={{ 

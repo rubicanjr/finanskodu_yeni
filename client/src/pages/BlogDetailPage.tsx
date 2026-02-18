@@ -9,7 +9,6 @@
 
 import { useParams, Link } from "wouter";
 import { Helmet } from "react-helmet-async";
-import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ArrowLeft, Calendar, Clock, User } from "lucide-react";
 import { motion } from "framer-motion";
@@ -167,12 +166,11 @@ export default function BlogDetailPage() {
 
   if (!post || !blogContent) {
     return (
-      <div className="min-h-screen bg-background text-foreground">
-        <Helmet>
-          <title>Blog yazısı bulunamadı - Finans Kodu</title>
-          <meta name="robots" content="noindex, nofollow" />
-        </Helmet>
-        <Navigation />
+    <div className="min-h-screen bg-background text-foreground">
+      <Helmet>
+        <title>Blog yazısı bulunamadı - Finans Kodu</title>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
         <main className="container mx-auto px-4 py-24">
           <div className="max-w-2xl mx-auto text-center">
             <h1 className="text-4xl font-bold mb-4">Blog yazısı bulunamadı</h1>
@@ -283,8 +281,6 @@ export default function BlogDetailPage() {
           {JSON.stringify(structuredData)}
         </script>
       </Helmet>
-
-      <Navigation />
 
       <main className="container mx-auto px-4 py-24 max-w-4xl">
         {/* Back Link */}

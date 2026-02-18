@@ -1329,5 +1329,38 @@
 - [x] Tüm değişiklikleri browser'da test et
 - [x] "Kod Odası'na Git" butonunun /kod-odasi'na yönlendirdiğini doğrula
 - [x] SalaryInsights link'inin https://salaryinsights.com.tr/ olduğunu doğrula
+- [x] Checkpoint kaydet
+- [x] Kullanıcıya rapor sun
+
+
+## BUG FIX & WIDGET INTEGRATION
+
+### Bug 1: Kod Odası Supabase Fetch Sorunu
+- [x] KodOdasi.tsx'deki fetchPosts fonksiyonunu kontrol et
+- [x] N/A - Sayfa seed data kullanıyor, Supabase fetch yok
+- [x] Tüm postlar zaten client-side static data, herkes görebiliyor
+- [x] Backend entegrasyonu için gelecekte tRPC procedure gerekecek
+
+### Bug 2: Mobil Menü & Layout Hatası
+- [x] Sidebar mobil menü z-index'ini artır (z-50, overlay z-40)
+- [x] Menü arka planı zaten opak (bg-[#050810] + backdrop-blur-sm overlay)
+- [x] Blog detay sayfası Navigation component'ini kaldır (Sidebar kullanıyor)
+- [x] py-24 padding zaten mevcut, header spacing yeterli
+
+### Bug 3: TradingView Ticker Tape Widget
+- [x] Mevcut statik borsa şeridi yok (sadece KodOdasi'da static data var)
+- [x] TradingView Ticker Tape Widget entegre et (useEffect ile script append)
+- [x] Widget ayarları: dark theme, transparent, adaptive mode
+- [x] Semboller: BIST:XU100, FX:USDTRY, OANDA:XAUUSD, BINANCE:BTCUSDT
+- [x] App.tsx'e fixed top position ile eklendi (z-30, pt-[46px] offset)
+
+### Bug 4: Hero Metni Typo
+- [x] HeroSection.tsx'de "Sen pilotun" → "Sen pilotsun" düzeltmesi
+
+### Test ve Checkpoint
+- [x] Tüm değişiklikleri browser'da test et (desktop + mobil)
+- [x] TradingView Ticker Tape canlı veri görüntüleniyor (USD/TRY, Altın, Bitcoin)
+- [x] Hero metni typo düzeltmesi doğrulandı ("pilotsun")
+- [x] Sidebar z-index ve layout spacing düzeltildi
 - [ ] Checkpoint kaydet
 - [ ] Kullanıcıya rapor sun

@@ -11,6 +11,7 @@ import BlogDetailPage from "./pages/BlogDetailPage";
 import KodOdasi from "./pages/KodOdasi";
 import DualPersonaWidget from "./components/DualPersonaWidget";
 import Sidebar from "./components/Sidebar";
+import TradingViewTickerTape from "./components/TradingViewTickerTape";
 import { useEffect } from "react";
 import { trackPageView } from "@/lib/analytics";
 
@@ -41,10 +42,14 @@ function App() {
       <ThemeProvider defaultTheme="dark">
         <TooltipProvider>
           <Toaster />
+          {/* TradingView Ticker Tape - Fixed at top */}
+          <div className="fixed top-0 left-0 right-0 z-30 lg:left-[220px]">
+            <TradingViewTickerTape />
+          </div>
           {/* Sidebar Navigation */}
           <Sidebar />
-          {/* Main Content Area - offset for sidebar on desktop */}
-          <div className="lg:ml-[220px]">
+          {/* Main Content Area - offset for sidebar on desktop and ticker tape */}
+          <div className="lg:ml-[220px] pt-[46px]">
             <Router />
           </div>
           {/* Dual Persona Widget */}

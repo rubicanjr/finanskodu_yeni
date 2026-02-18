@@ -127,7 +127,7 @@ export default function HeroSection() {
             style={{ color: '#8899AA' }}
           >
             100+ test edilmiş AI aracı, finansal metodoloji ve algoritmik analiz. 
-            Sen pilotun; navigasyonu biz üstleniyoruz.
+            Sen pilotsun; navigasyonu biz üstleniyoruz.
           </motion.p>
 
           {/* Terminal Animation - Clean, no avatars */}
