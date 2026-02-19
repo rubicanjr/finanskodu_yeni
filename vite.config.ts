@@ -36,6 +36,11 @@ export default defineConfig({
       "localhost",
       "127.0.0.1",
     ],
+    hmr: {
+      // Use the same host as the dev server for WebSocket connections
+      clientPort: 443, // Manus proxy uses HTTPS (port 443)
+      protocol: 'wss', // Use secure WebSocket
+    },
     fs: {
       strict: true,
       deny: ["**/.*"],
