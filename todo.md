@@ -1362,5 +1362,46 @@
 - [x] TradingView Ticker Tape canlı veri görüntüleniyor (USD/TRY, Altın, Bitcoin)
 - [x] Hero metni typo düzeltmesi doğrulandı ("pilotsun")
 - [x] Sidebar z-index ve layout spacing düzeltildi
+- [x] Checkpoint kaydet
+- [x] Kullanıcıya rapor sun
+
+
+## KOD ODASI BACKEND ENTEGRASYONU (SUPABASE)
+
+### Faz 1: Supabase SQL Şemaları
+- [x] posts tablosu SQL şeması hazırla (id, user_id, username, avatar_url, category, title, content, created_at)
+- [x] reactions tablosu SQL şeması hazırla (id, post_id, user_id, reaction_type, created_at)
+- [x] comments tablosu SQL şeması hazırla (id, post_id, user_id, username, content, created_at)
+- [x] RLS (Row Level Security) politikaları ekle (herkes okuyabilir, giriş yapanlar yazabilir)
+- [x] Helper functions (get_post_with_stats) ekle
+- [ ] SQL kodlarını kullanıcıya ilet
+
+### Faz 2: Supabase Client & tRPC Procedures
+- [x] server/_core/supabase.ts dosyası oluştur (Supabase client config)
+- [x] server/kodOdasiRouter.ts oluştur (tRPC procedures)
+- [x] getPosts procedure (tüm postları çek, kategori filtreleme)
+- [x] createPost procedure (yeni post oluştur, auth gerekli)
+- [x] toggleReaction procedure (beğeni/kaydet ekle/kaldır)
+- [x] getComments procedure (post yorumlarını çek)
+- [x] addComment procedure (yorum ekle)
+- [x] kodOdasiRouter'i appRouter'a ekle
+
+### Faz 3: Frontend Entegrasyonu
+- [x] KodOdasi.tsx'den SEED_POSTS'u kaldır
+- [x] trpc.kodOdasi.getPosts.useQuery ile postları çek
+- [x] trpc.kodOdasi.createPost.useMutation ile yeni post oluştur
+- [x] Loading states ve error handling ekle
+- [x] Post paylaşma modal'i entegre et error handling ekle
+- [ ] Optimistic updates (instant UI feedback)
+
+### Faz 4: Reaction & Comment Sistemi
+- [x] Reaction butonlarına gerçek fonksiyon bağla (toggleReaction mutation)
+- [x] Like ve bookmark butonları çalışıyor
+- [ ] Comment modal/drawer UI oluştur (gelecek iterasyon)
+- [ ] Comment listesi ve yeni yorum ekleme formu (gelecek iterasyon)
+
+### Test ve Checkpoint
+- [ ] Tüm CRUD işlemlerini test et (post oluştur, oku, reaction ekle)
+- [ ] Auth flow test et (giriş yapmadan/yaparak)
 - [ ] Checkpoint kaydet
 - [ ] Kullanıcıya rapor sun

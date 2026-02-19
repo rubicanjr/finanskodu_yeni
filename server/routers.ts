@@ -10,6 +10,7 @@ import { getRealStockPrice, calculateTargetPrice } from "./_core/stockData";
 import { getMarketTrend } from "./_core/marketTrend";
 import { analyzeStock } from "./_core/gemini";
 import { getRealStockData } from "./_core/realStockData";
+import { kodOdasiRouter } from "./kodOdasiRouter";
 
 export const appRouter = router({
   system: systemRouter,
@@ -186,6 +187,9 @@ export const appRouter = router({
         return result;
       }),
   }),
+
+  // Kod Odası (Community Forum)
+  kodOdasi: kodOdasiRouter,
 });
 
 export type AppRouter = typeof appRouter;
