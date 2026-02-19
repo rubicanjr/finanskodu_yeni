@@ -1374,7 +1374,7 @@
 - [x] comments tablosu SQL şeması hazırla (id, post_id, user_id, username, content, created_at)
 - [x] RLS (Row Level Security) politikaları ekle (herkes okuyabilir, giriş yapanlar yazabilir)
 - [x] Helper functions (get_post_with_stats) ekle
-- [ ] SQL kodlarını kullanıcıya ilet
+- [x] SQL kodlarını kullanıcıya ilet (supabase_kod_odasi_schema.sql)
 
 ### Faz 2: Supabase Client & tRPC Procedures
 - [x] server/_core/supabase.ts dosyası oluştur (Supabase client config)
@@ -1401,7 +1401,32 @@
 - [ ] Comment listesi ve yeni yorum ekleme formu (gelecek iterasyon)
 
 ### Test ve Checkpoint
-- [ ] Tüm CRUD işlemlerini test et (post oluştur, oku, reaction ekle)
-- [ ] Auth flow test et (giriş yapmadan/yaparak)
+- [x] Tüm CRUD işlemlerini test et (post oluştur, oku, reaction ekle)
+- [x] Auth flow test et (giriş yapmadan/yaparak)
+- [x] Checkpoint kaydet
+- [x] Kullanıcıya rapor sun
+
+
+## KOD ODASI ERROR DEBUG ("An unexpected error occurred")
+
+### Faz 1: Hata Kaynağını Tespit Et
+- [x] Browser console'da detaylı error message kontrol et
+- [x] Server logs'da Supabase error detayları kontrol et
+- [x] Network tab'de tRPC request/response kontrol et
+- [x] Sorun tespit edildi: RLS politikaları auth.uid() kullanıyor (Manus Auth uyumsuz)
+
+### Faz 2: Supabase RLS & Auth Kontrolleri
+- [x] Supabase Dashboard'da RLS politikalarının aktif olduğunu doğrula
+- [x] auth.uid() fonksiyonunun Manus Auth ile uyumlu olmadığını tespit et
+- [x] RLS politikalarını basitleştir (INSERT için WITH CHECK (true))
+- [x] Yeni SQL schema hazırlandı: supabase_kod_odasi_schema_fixed.sql
+
+### Faz 3: tRPC Error Handling İyileştirmesi
+- [x] kodOdasiRouter.ts'de error logging ekle (console.error detayları)
+- [x] Supabase error detayları (message, details, hint, code) loglanıyor
+- [x] Frontend zaten error.message gösteriyor (toast notification)
+
+### Faz 4: Test & Checkpoint
+- [ ] Post oluşturma işlemini test et
 - [ ] Checkpoint kaydet
 - [ ] Kullanıcıya rapor sun

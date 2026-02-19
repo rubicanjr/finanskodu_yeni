@@ -96,6 +96,13 @@ export const kodOdasiRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       try {
+        console.log('[Kod Odası] Creating post with user:', {
+          openId: ctx.user.openId,
+          name: ctx.user.name,
+          category: input.category,
+          title: input.title,
+        });
+
         const { data, error } = await supabase
           .from('posts')
           .insert({
@@ -110,12 +117,20 @@ export const kodOdasiRouter = router({
           .single();
 
         if (error) {
-          console.error('[Kod Odası] Error creating post:', error);
+          console.error('[Kod Odası] Supabase error creating post:', {
+            error,
+            message: error.message,
+            details: error.details,
+            hint: error.hint,
+            code: error.code,
+          });
           throw new TRPCError({
             code: 'INTERNAL_SERVER_ERROR',
-            message: 'Failed to create post',
+            message: `Supabase error: ${error.message}`,
           });
         }
+
+        console.log('[Kod Odası] Post created successfully:', data.id);
 
         return { success: true, post: data };
       } catch (error) {
