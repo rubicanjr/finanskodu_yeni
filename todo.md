@@ -1663,3 +1663,13 @@
 4. [x] TypeScript hatalarını kontrol et (8 hata - eski backup dosyalarından, yeni kod çalışıyor)
 5. [x] Browser'da test et (Google redirect auth butonu görünüyor, i18n çalışıyor)
 6. [ ] Checkpoint kaydet
+
+## TypeScript Güncelleme (pasted_content_4.txt)
+- [x] Görev 1.1: ThemeContext'i güncelle (localStorage key: fk-theme, prefers-color-scheme support)
+- [x] Görev 1.2: I18nContext'i güncelle (localStorage key: fk-language, nested key support)
+- [x] Görev 1.3: App.tsx'i Provider'lar ile sar (zaten mevcut)
+- [x] Görev 2.1: Firebase yapılandırma dosyasını güncelle (VITE_* env variables)
+- [x] Görev 3.1: KodOdasiNew.tsx'de popup → redirect fallback mekanizması ekle
+- [x] Test: Theme toggle çalışıyor
+- [x] Test: Language toggle çalışıyor
+- [x] Test: Firebase auth popup fallback implementasyonu tamamlandı

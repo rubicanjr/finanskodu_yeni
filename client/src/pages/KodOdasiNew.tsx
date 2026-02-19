@@ -20,6 +20,7 @@ import {
 } from "firebase/firestore";
 import {
   GoogleAuthProvider,
+  signInWithPopup,
   signInWithRedirect,
   getRedirectResult,
   signOut as firebaseSignOut,
@@ -285,15 +286,33 @@ export default function KodOdasiNew() {
     return () => { unsubscribeRef.current?.(); };
   }, [user]);
 
-  /* ── Sign in with redirect (avoids popup cross-domain issues) ── */
+  /* ── Sign in with popup, fallback to redirect if blocked ── */
   const handleSignIn = async () => {
+    if (signingIn) return;
     setSigningIn(true);
+    
     try {
-      await signInWithRedirect(auth, googleProvider);
-      // Page will redirect — code below doesn't run
-    } catch (err: any) {
+      // Öncelikli olarak popup ile giriş yapmayı dene
+      await signInWithPopup(auth, googleProvider);
+      // Başarılı giriş sonrası state'i sıfırla
       setSigningIn(false);
-      showToast("Giriş başlatılamadı: " + (err?.message ?? ""));
+    } catch (error: any) {
+      // Popup engellendiyse veya ağ hatası varsa redirect metoduna geç
+      if (error.code === 'auth/popup-blocked' || 
+          error.code === 'auth/cancelled-popup-request' || 
+          error.code === 'auth/popup-closed-by-user') {
+        try {
+          await signInWithRedirect(auth, googleProvider);
+        } catch (redirectError: any) {
+          console.error("Redirect Sign-In Error:", redirectError);
+          showToast("Giriş başlatılamadı: " + (redirectError?.message ?? ""));
+          setSigningIn(false);
+        }
+      } else {
+        console.error("Popup Sign-In Error:", error);
+        showToast("Giriş başlatılamadı: " + (error?.message ?? ""));
+        setSigningIn(false);
+      }
     }
   };
 

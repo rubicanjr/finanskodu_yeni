@@ -1,33 +1,19 @@
-/**
- * Firebase Modular SDK v11 — Singleton initialization
- * 
- * Import { auth, db } from "@/lib/firebase" across the codebase.
- * Never import firebase/* directly in component files — use this singleton.
- * Prevents double-initialization on HMR.
- */
-
-import { initializeApp, getApps, getApp } from "firebase/app";
-import { getAuth }      from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
-import { getAnalytics, isSupported } from "firebase/analytics";
+// client/src/lib/firebase.ts
+import { initializeApp, getApps, getApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey:            "AIzaSyCaTDH_fpFrV1r6CeIaMJuqZpHn16xiSxk",
-  authDomain:        "finanskodu-kododasi.firebaseapp.com",
-  projectId:         "finanskodu-kododasi",
-  storageBucket:     "finanskodu-kododasi.firebasestorage.app",
-  messagingSenderId: "652716411302",
-  appId:             "1:652716411302:web:498529ca46207f5131a767",
-  measurementId:     "G-5GMJE1TSV0",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
-// Singleton guard — safe for HMR & strict mode double-mount
-const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+// Sunucu tarafında re-initialize hatasını önlemek için kontrol
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 
 export const auth = getAuth(app);
-export const db   = getFirestore(app);
-
-// Analytics is optional and fails gracefully in non-browser envs
-isSupported().then((yes) => {
-  if (yes) getAnalytics(app);
-}).catch(() => {});
+export const db = getFirestore(app);
