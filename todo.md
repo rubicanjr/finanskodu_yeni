@@ -1445,6 +1445,116 @@
 - [x] ENV credentials kontrolü ekle (SET/MISSING log)
 
 ### Faz 3: Çözüm & Checkpoint
-- [ ] Sorunu düzelt
-- [ ] Checkpoint kaydet
-- [ ] Kullanıcıya rapor sun
+- [x] Debug tool eklendi (testConnection procedure)
+- [x] Checkpoint kaydet
+- [x] Kullanıcıya rapor sun
+
+
+## 🚀 Supabase Auth & PostgreSQL Migration (Final Prompt)
+
+### PHASE 1: Database Migration (MySQL → Supabase PostgreSQL)
+- [x] Supabase projesi oluştur ve credentials'ı .env'e ekle (VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY, DATABASE_URL)
+- [x] drizzle/schema.ts: MySQL import'larını PostgreSQL'e çevir (mysqlTable → pgTable, int → serial/uuid, mysqlEnum → pgEnum)
+- [x] users tablosunu Supabase Auth ile uyumlu hale getir (id: uuid, openId kaldır)
+- [x] Kod Odası için yeni tablolar ekle (posts, comments, likes, bookmarks)
+- [x] drizzle.config.ts: dialect'i "mysql"'den "postgresql"'e değiştir)
+- [ ] pnpm db:push ile migration'ları çalıştır (Supabase DATABASE_URL gerekli)
+
+### PHASE 2: Supabase RLS Policies
+- [x] posts tablosu için RLS policies oluştur (SELECT: public, INSERT/UPDATE/DELETE: auth.uid())
+- [x] comments tablosu için RLS policies oluştur
+- [x] likes tablosu için RLS policies oluştur
+- [x] bookmarks tablosu için RLS policies oluştur
+- [ ] Supabase Dashboard'da supabase_rls_policies.sql dosyasını çalıştır
+
+### PHASE 3: Authentication Sistemi (Manus Auth → Supabase Auth)
+- [x] client/src/lib/supabase.ts dosyası oluştur (Supabase client initialization)
+- [x] client/src/_core/hooks/useAuth.ts: Manus Auth'u kaldır, Supabase Auth ile değiştir (getSession, onAuthStateChange, signIn, signUp, signOut)
+- [x] server/_core/context.ts: Supabase service role key ile user authentication (Authorization header'dan token al, getUser)
+- [ ] server/_core/trpc.ts: isAuthenticated middleware güncelle (ctx.user kontrolü) - Zaten mevcut
+
+### PHASE 4: Kod Odası Backend (tRPC Router)
+- [x] server/kodOdasiRouter.ts dosyası oluşturuldu (Drizzle ORM ile)
+- [x] posts.list procedure (publicProcedure, postType filter, pagination)
+- [x] posts.create procedure (protectedProcedure, Zod validation)
+- [x] posts.toggleLike procedure (protectedProcedure, toggle like/unlike)
+- [x] posts.toggleBookmark procedure (protectedProcedure)
+- [x] comments.list procedure (publicProcedure, postId filter)
+- [x] comments.create procedure (protectedProcedure)
+- [x] Manus Auth tamamen kaldırıldı (sdk.ts, oauth.ts, cookies.ts, auth router)
+
+### PHASE 5: Kod Odası Frontend
+- [x] client/src/pages/KodOdasi.tsx: Manus Auth yerine Supabase useAuth kullan
+- [x] Post oluşturma formu: signIn/signUp modal entegrasyonu
+- [x] trpc.kodOdasi.getPosts.useQuery ile post listesi göster
+- [x] trpc.kodOdasi.createPost.useMutation ile yeni post oluştur
+- [x] trpc.kodOdasi.toggleLike.useMutation ile like toggle
+- [x] trpc.kodOdasi.toggleBookmark.useMutation ile bookmark toggle
+- [x] AuthModal component eklendi (email/password sign in/sign up)
+- [ ] Supabase Realtime subscription ekle (opsiyonel - yeni post eklendiğinde otomatik güncelle)
+
+### PHASE 6: Testing & Debugging
+- [ ] Auth flow test: Sign up, sign in, sign out
+- [ ] CRUD operations test: Create post, like post, add comment
+- [ ] Real-time updates test: Yeni post eklendiğinde otomatik güncelleme
+- [ ] Error handling test: Network errors, validation errors, unauthorized access
+- [ ] Mobile responsive test: Kod Odası sayfası mobilde düzgün görünüyor mu
+
+### PHASE 7: Cleanup & Final Checks
+- [ ] Manus Auth kodlarını tamamen kaldır (server/_core/oauth.ts, auth.me, auth.logout endpoints)
+- [ ] localStorage "manus-runtime-user-info" key'ini kaldır
+- [ ] Eski MySQL tabloları ve kodları temizle
+- [ ] Environment variables doğrula (VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY set mi?)
+- [ ] RLS policies aktif mi kontrol et
+- [ ] UI tasarımı korunmuş mu kontrol et (dark mode, neon cyan, responsive)
+
+
+
+## Kapsamlı Güncelleme (finanskodu_kapsamli_prompt.md)
+
+### 1. Logo ve Branding Güncellemeleri
+- [x] Yeni logo dosyası (fkodulogo-removebg-preview.png) /public/assets/fk-logo-new.png konumuna yerleştir
+- [x] Logo responsive olmalı: mobil 32px, desktop 40px yükseklik
+- [x] Navbar logo container CSS güncelle (display: flex, align-items: center, height: 44px)
+- [x] Logo sağındaki "FK" yazısını tamamen kaldır (zaten yok)
+- [x] Navbar layout'u gözden geçir (logo sağında boşluk kalmamalı)
+
+### 2. Ticker Şeridi Görsel Sorunu Çözümü (Üç Katmanlı Sistem)
+- [x] Katman 1: Ticker arka planını tam opak yap (#0D1117, rgba() kaldır)
+- [x] Katman 2: backdrop-filter: blur(12px) ekle (-webkit- prefix dahil)
+- [x] Katman 3: Ticker altına gradient shadow pseudo-element ekle (::after)
+- [x] Ticker position: sticky, top: 44px, z-index: 100 ayarla
+- [ ] Scroll sırasında içerik düzgün görünüyor mu test et
+- [ ] Responsive tasarımda (mobil) ticker doğru çalışıyor mu test et
+
+### 3. Kod Odası İyileştirmeleri (Gerçek Zamanlı Sohbet)
+- [x] Supabase veritabanı şemasını oluştur (kod_odasi_messages, mevcut users tablosunu kullan)
+- [x] Supabase RLS politikalarını etkinleştir
+- [x] KodOdasiNew.tsx bileşenini oluştur (real-time subscription ile)
+- [x] MessageBubble bileşenini oluştur (inline styles)
+- [x] Message input formu oluştur (inline)
+- [x] Modal ekranları kaldır (doğrudan sohbet akışı göster)
+- [x] Giriş yapıldığında doğrudan sohbet alanı görünsün
+- [x] Tüm kullanıcılar birbirinin mesajlarını görebilsin
+- [ ] Real-time mesaj akışı çalışıyor mu test et (kullanıcı test edecek)
+
+### 4. Tema Sistemi (Açık/Koyu Tema)
+- [x] ThemeProvider context bileşeni zaten mevcut (ThemeContext.tsx)
+- [x] ThemeToggle bileşeni oluşturuldu (Navigation.tsx içinde inline)
+- [x] Global CSS tema renk paletleri mevcut (index.css'te .dark class)
+- [x] Koyu tema varsayılan olarak ayarlandı (App.tsx)
+- [x] Tema tercihi localStorage'da kaydediliyor (ThemeContext)
+- [x] Navbar'a tema değiştirme düğmesi eklendi (Sun/Moon ikonu)
+- [x] Tüm bileşenlerde Tailwind tema değişkenleri kullanılıyor
+- [ ] Tema değişimi smooth transition ile çalışıyor mu test et (kullanıcı test edecek)
+
+### 5. Çok Dil Desteği (Türkçe/İngilizce)
+- [x] locales/tr.json çeviri dosyasını oluştur
+- [x] locales/en.json çeviri dosyasını oluştur
+- [x] I18nProvider context bileşenini oluştur (I18nContext.tsx)
+- [x] LanguageToggle bileşenini oluştur (Navigation.tsx içinde inline)
+- [x] Navbar'a dil değiştirme düğmesi ekle (TR/EN toggle)
+- [x] Dil tercihi localStorage'da kaydediliyor
+- [ ] Tüm UI öğelerinde t() fonksiyonunu kullan (opsiyonel - şu an sadece altyapı hazır)
+- [ ] Kod Odası başlıklarını çevir
+- [ ] Dil değişimi tüm bileşenlerde çalışıyor mu test et

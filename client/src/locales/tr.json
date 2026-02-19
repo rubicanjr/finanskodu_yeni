@@ -1,0 +1,71 @@
+{
+  "nav": {
+    "products": "Ürünler",
+    "manifesto": "Manifesto",
+    "blog": "Blog",
+    "analysis": "Finansal Analiz",
+    "contact": "İletişim",
+    "kodOdasi": "Kod Odası"
+  },
+  "hero": {
+    "title": "Finansal Özgürlüğün Kodu",
+    "subtitle": "Algoritmik düşünce ile finansal bağımsızlığa giden yolda, her adımı kodlayın.",
+    "cta": "Dijital Ürünleri Keşfet"
+  },
+  "products": {
+    "title": "Dijital Ürünler",
+    "subtitle": "Finansal özgürlük yolculuğunuzda size rehberlik edecek dijital ürünler",
+    "viewDetails": "Detayları Gör",
+    "comingSoon": "Yakında"
+  },
+  "manifesto": {
+    "title": "Manifesto",
+    "problem": "Sorun",
+    "problemText": "Finansal piyasalar karmaşık, erişim sınırlı, bilgi asimetrisi yüksek.",
+    "solution": "Çözüm",
+    "solutionText": "Algoritmik düşünce ile finansal bağımsızlığa giden yolu kodluyoruz."
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Finansal özgürlük yolculuğunda size rehberlik edecek makaleler",
+    "readMore": "Devamını Oku",
+    "backToBlog": "Blog'a Dön"
+  },
+  "testimonials": {
+    "title": "Kullanıcı Yorumları",
+    "subtitle": "Finans Kodu ile finansal özgürlük yolculuğuna çıkanların deneyimleri"
+  },
+  "about": {
+    "title": "Hakkımızda",
+    "subtitle": "Finansal özgürlük yolculuğunuzda size rehberlik edecek ekip"
+  },
+  "footer": {
+    "contact": "İletişim",
+    "email": "E-posta",
+    "phone": "Telefon",
+    "address": "Adres",
+    "social": "Sosyal Medya",
+    "copyright": "© 2024 Finans Kodu. Tüm hakları saklıdır."
+  },
+  "kodOdasi": {
+    "title": "Kod Odası",
+    "subtitle": "Finansal özgürlük yolculuğunda birlikte ilerleyelim",
+    "loginRequired": "Sohbet'e katılmak için giriş yapın",
+    "loginButton": "Giriş Yap",
+    "messagePlaceholder": "Mesajınızı yazın...",
+    "send": "Gönder",
+    "sending": "Gönderiliyor...",
+    "loading": "Yükleniyor...",
+    "noMessages": "Henüz mesaj yok. İlk mesajı siz gönderin!"
+  },
+  "theme": {
+    "light": "Açık Tema",
+    "dark": "Koyu Tema",
+    "toggle": "Temayı Değiştir"
+  },
+  "language": {
+    "tr": "Türkçe",
+    "en": "English",
+    "toggle": "Dili Değiştir"
+  }
+}

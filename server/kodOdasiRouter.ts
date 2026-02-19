@@ -1,85 +1,76 @@
 import { z } from "zod";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
-import { supabase, type Post, type PostWithStats } from "./_core/supabase";
-import { ENV } from "./_core/env";
 import { TRPCError } from "@trpc/server";
+import * as db from "./db";
 
 /**
- * Kod Odası tRPC Router
+ * Kod Odası tRPC Router (Supabase Auth + Drizzle ORM)
  * 
  * Handles community forum operations:
- * - Get posts (with optional category filter)
+ * - Get posts (with optional category/type filter)
  * - Create new post (auth required)
- * - Add/remove reactions (auth required)
+ * - Toggle like/bookmark (auth required)
  * - Get/add comments (auth required for adding)
  */
 
 export const kodOdasiRouter = router({
   /**
-   * Get all posts with stats (like count, comment count, bookmark count)
+   * Get all posts with optional filtering
    * Public - anyone can view posts
    */
   getPosts: publicProcedure
     .input(
       z.object({
-        category: z.enum(['Tümü', 'Soru', 'Kaynak', 'Tartışma']).optional(),
+        category: z.string().optional(),
+        postType: z.enum(['question', 'resource', 'discussion']).optional(),
+        limit: z.number().min(1).max(100).default(20),
+        offset: z.number().min(0).default(0),
       })
     )
     .query(async ({ input }) => {
       try {
-        let query = supabase
-          .from('posts')
-          .select('*')
-          .order('created_at', { ascending: false });
+        console.log('[Kod Odası] Fetching posts:', input);
 
-        // Filter by category if specified (exclude 'Tümü')
-        if (input.category && input.category !== 'Tümü') {
-          query = query.eq('category', input.category);
-        }
+        const posts = await db.getPosts({
+          category: input.category,
+          postType: input.postType,
+          limit: input.limit,
+          offset: input.offset,
+        });
 
-        const { data: posts, error } = await query;
+        console.log('[Kod Odası] Posts fetched:', posts.length);
 
-        if (error) {
-          console.error('[Kod Odası] Error fetching posts:', error);
+        return { success: true, posts };
+      } catch (error) {
+        console.error('[Kod Odası] Error fetching posts:', error);
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to fetch posts',
+        });
+      }
+    }),
+
+  /**
+   * Get single post by ID
+   * Public - anyone can view
+   */
+  getPost: publicProcedure
+    .input(z.object({ postId: z.string().uuid() }))
+    .query(async ({ input }) => {
+      try {
+        const post = await db.getPostById(input.postId);
+
+        if (!post) {
           throw new TRPCError({
-            code: 'INTERNAL_SERVER_ERROR',
-            message: 'Failed to fetch posts',
+            code: 'NOT_FOUND',
+            message: 'Post not found',
           });
         }
 
-        // Fetch reaction counts for each post
-        const postsWithStats: PostWithStats[] = await Promise.all(
-          (posts || []).map(async (post) => {
-            const { data: reactions } = await supabase
-              .from('reactions')
-              .select('reaction_type')
-              .eq('post_id', post.id);
-
-            const { data: comments } = await supabase
-              .from('comments')
-              .select('id')
-              .eq('post_id', post.id);
-
-            const like_count = reactions?.filter(r => r.reaction_type === 'like').length || 0;
-            const bookmark_count = reactions?.filter(r => r.reaction_type === 'bookmark').length || 0;
-            const comment_count = comments?.length || 0;
-
-            return {
-              ...post,
-              like_count,
-              bookmark_count,
-              comment_count,
-            };
-          })
-        );
-
-        return { success: true, posts: postsWithStats };
+        return { success: true, post };
       } catch (error) {
-        console.error('[Kod Odası] Unexpected error:', error);
-        throw new TRPCError({
-          code: 'INTERNAL_SERVER_ERROR',
-          message: 'An unexpected error occurred',
-        });
+        console.error('[Kod Odası] Error fetching post:', error);
+        throw error;
       }
     }),
 
@@ -90,122 +81,153 @@ export const kodOdasiRouter = router({
   createPost: protectedProcedure
     .input(
       z.object({
-        category: z.enum(['Soru', 'Kaynak', 'Tartışma']),
         title: z.string().min(5, 'Başlık en az 5 karakter olmalı').max(200, 'Başlık en fazla 200 karakter olabilir'),
         content: z.string().min(10, 'İçerik en az 10 karakter olmalı').max(5000, 'İçerik en fazla 5000 karakter olabilir'),
+        postType: z.enum(['question', 'resource', 'discussion']),
+        category: z.string().min(1, 'Kategori seçilmeli'),
       })
     )
     .mutation(async ({ ctx, input }) => {
       try {
-        console.log('[Kod Odası] Creating post with user:', {
-          openId: ctx.user.openId,
-          name: ctx.user.name,
-          category: input.category,
+        console.log('[Kod Odası] Creating post:', {
+          userId: ctx.user.id,
           title: input.title,
+          category: input.category,
         });
 
-        const { data, error } = await supabase
-          .from('posts')
-          .insert({
-            user_id: ctx.user.openId,
-            username: ctx.user.name,
-            avatar_url: `https://api.dicebear.com/7.x/avataaars/svg?seed=${ctx.user.name}`,
-            category: input.category,
-            title: input.title,
-            content: input.content,
-          })
-          .select()
-          .single();
+        const post = await db.createPost({
+          userId: ctx.user.id,
+          title: input.title,
+          content: input.content,
+          postType: input.postType,
+          category: input.category,
+        });
 
-        if (error) {
-          console.error('[Kod Odası] Supabase error creating post:', {
-            error,
-            message: error.message,
-            details: error.details,
-            hint: error.hint,
-            code: error.code,
-          });
-          throw new TRPCError({
-            code: 'INTERNAL_SERVER_ERROR',
-            message: `Supabase error: ${error.message}`,
-          });
-        }
+        console.log('[Kod Odası] Post created:', post.id);
 
-        console.log('[Kod Odası] Post created successfully:', data.id);
-
-        return { success: true, post: data };
+        return { success: true, post };
       } catch (error) {
-        console.error('[Kod Odası] Unexpected error:', error);
+        console.error('[Kod Odası] Error creating post:', error);
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
-          message: 'An unexpected error occurred',
+          message: 'Failed to create post',
         });
       }
     }),
 
   /**
-   * Add or remove a reaction (like/bookmark)
-   * Protected - requires authentication
+   * Update post
+   * Protected - only post owner can update
    */
-  toggleReaction: protectedProcedure
+  updatePost: protectedProcedure
     .input(
       z.object({
         postId: z.string().uuid(),
-        reactionType: z.enum(['like', 'bookmark']),
+        title: z.string().min(5).max(200).optional(),
+        content: z.string().min(10).max(5000).optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
       try {
-        // Check if reaction already exists
-        const { data: existing } = await supabase
-          .from('reactions')
-          .select('id')
-          .eq('post_id', input.postId)
-          .eq('user_id', ctx.user.openId)
-          .eq('reaction_type', input.reactionType)
-          .single();
-
-        if (existing) {
-          // Remove reaction if it exists
-          const { error } = await supabase
-            .from('reactions')
-            .delete()
-            .eq('id', existing.id);
-
-          if (error) {
-            console.error('[Kod Odası] Error removing reaction:', error);
-            throw new TRPCError({
-              code: 'INTERNAL_SERVER_ERROR',
-              message: 'Failed to remove reaction',
-            });
-          }
-
-          return { success: true, action: 'removed' };
-        } else {
-          // Add reaction if it doesn't exist
-          const { error } = await supabase
-            .from('reactions')
-            .insert({
-              post_id: input.postId,
-              user_id: ctx.user.openId,
-              reaction_type: input.reactionType,
-            });
-
-          if (error) {
-            console.error('[Kod Odası] Error adding reaction:', error);
-            throw new TRPCError({
-              code: 'INTERNAL_SERVER_ERROR',
-              message: 'Failed to add reaction',
-            });
-          }
-
-          return { success: true, action: 'added' };
+        // Check if user owns the post
+        const existingPost = await db.getPostById(input.postId);
+        
+        if (!existingPost) {
+          throw new TRPCError({
+            code: 'NOT_FOUND',
+            message: 'Post not found',
+          });
         }
+
+        if (existingPost.userId !== ctx.user.id) {
+          throw new TRPCError({
+            code: 'FORBIDDEN',
+            message: 'You can only edit your own posts',
+          });
+        }
+
+        const post = await db.updatePost(input.postId, {
+          title: input.title,
+          content: input.content,
+        });
+
+        return { success: true, post };
       } catch (error) {
-        console.error('[Kod Odası] Unexpected error:', error);
+        console.error('[Kod Odası] Error updating post:', error);
+        throw error;
+      }
+    }),
+
+  /**
+   * Delete post
+   * Protected - only post owner can delete
+   */
+  deletePost: protectedProcedure
+    .input(z.object({ postId: z.string().uuid() }))
+    .mutation(async ({ ctx, input }) => {
+      try {
+        // Check if user owns the post
+        const existingPost = await db.getPostById(input.postId);
+        
+        if (!existingPost) {
+          throw new TRPCError({
+            code: 'NOT_FOUND',
+            message: 'Post not found',
+          });
+        }
+
+        if (existingPost.userId !== ctx.user.id) {
+          throw new TRPCError({
+            code: 'FORBIDDEN',
+            message: 'You can only delete your own posts',
+          });
+        }
+
+        await db.deletePost(input.postId);
+
+        return { success: true };
+      } catch (error) {
+        console.error('[Kod Odası] Error deleting post:', error);
+        throw error;
+      }
+    }),
+
+  /**
+   * Toggle like on post
+   * Protected - requires authentication
+   */
+  toggleLike: protectedProcedure
+    .input(z.object({ postId: z.string().uuid() }))
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const result = await db.togglePostLike(ctx.user.id, input.postId);
+
+        return { success: true, ...result };
+      } catch (error) {
+        console.error('[Kod Odası] Error toggling like:', error);
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
-          message: 'An unexpected error occurred',
+          message: 'Failed to toggle like',
+        });
+      }
+    }),
+
+  /**
+   * Toggle bookmark on post
+   * Protected - requires authentication
+   */
+  toggleBookmark: protectedProcedure
+    .input(z.object({ postId: z.string().uuid() }))
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const result = await db.togglePostBookmark(ctx.user.id, input.postId);
+
+        return { success: true, ...result };
+      } catch (error) {
+        console.error('[Kod Odası] Error toggling bookmark:', error);
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to toggle bookmark',
         });
       }
     }),
@@ -215,81 +237,18 @@ export const kodOdasiRouter = router({
    * Public - anyone can view comments
    */
   getComments: publicProcedure
-    .input(
-      z.object({
-        postId: z.string().uuid(),
-      })
-    )
+    .input(z.object({ postId: z.string().uuid() }))
     .query(async ({ input }) => {
       try {
-        const { data: comments, error } = await supabase
-          .from('comments')
-          .select('*')
-          .eq('post_id', input.postId)
-          .order('created_at', { ascending: true });
+        const comments = await db.getCommentsByPostId(input.postId);
 
-        if (error) {
-          console.error('[Kod Odası] Error fetching comments:', error);
-          throw new TRPCError({
-            code: 'INTERNAL_SERVER_ERROR',
-            message: 'Failed to fetch comments',
-          });
-        }
-
-        return { success: true, comments: comments || [] };
+        return { success: true, comments };
       } catch (error) {
-        console.error('[Kod Odası] Unexpected error:', error);
+        console.error('[Kod Odası] Error fetching comments:', error);
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
-          message: 'An unexpected error occurred',
+          message: 'Failed to fetch comments',
         });
-      }
-    }),
-
-  /**
-   * Test Supabase connection and credentials
-   * Public - for debugging
-   */
-  testConnection: publicProcedure
-    .query(async () => {
-      try {
-        console.log('[Kod Odası] Testing Supabase connection...');
-        console.log('[Kod Odası] ENV.supabaseUrl:', ENV.supabaseUrl ? 'SET' : 'MISSING');
-        console.log('[Kod Odası] ENV.supabaseAnonKey:', ENV.supabaseAnonKey ? 'SET (length: ' + ENV.supabaseAnonKey.length + ')' : 'MISSING');
-
-        // Test simple query
-        const { data, error } = await supabase
-          .from('posts')
-          .select('count')
-          .limit(1);
-
-        if (error) {
-          console.error('[Kod Odası] Supabase connection test FAILED:', {
-            message: error.message,
-            details: error.details,
-            hint: error.hint,
-            code: error.code,
-          });
-          return {
-            success: false,
-            error: error.message,
-            details: error.details,
-            hint: error.hint,
-          };
-        }
-
-        console.log('[Kod Odası] Supabase connection test SUCCESS');
-        return {
-          success: true,
-          message: 'Supabase connection working',
-          postsCount: data?.length || 0,
-        };
-      } catch (error: any) {
-        console.error('[Kod Odası] Test connection unexpected error:', error);
-        return {
-          success: false,
-          error: error.message || 'Unknown error',
-        };
       }
     }),
 
@@ -302,36 +261,70 @@ export const kodOdasiRouter = router({
       z.object({
         postId: z.string().uuid(),
         content: z.string().min(1, 'Yorum boş olamaz').max(1000, 'Yorum en fazla 1000 karakter olabilir'),
+        parentCommentId: z.string().uuid().optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
       try {
-        const { data, error } = await supabase
-          .from('comments')
-          .insert({
-            post_id: input.postId,
-            user_id: ctx.user.openId,
-            username: ctx.user.name,
-            avatar_url: `https://api.dicebear.com/7.x/avataaars/svg?seed=${ctx.user.name}`,
-            content: input.content,
-          })
-          .select()
-          .single();
+        const comment = await db.createComment({
+          postId: input.postId,
+          userId: ctx.user.id,
+          content: input.content,
+          parentCommentId: input.parentCommentId,
+        });
 
-        if (error) {
-          console.error('[Kod Odası] Error adding comment:', error);
-          throw new TRPCError({
-            code: 'INTERNAL_SERVER_ERROR',
-            message: 'Failed to add comment',
-          });
-        }
-
-        return { success: true, comment: data };
+        return { success: true, comment };
       } catch (error) {
-        console.error('[Kod Odası] Unexpected error:', error);
+        console.error('[Kod Odası] Error adding comment:', error);
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
-          message: 'An unexpected error occurred',
+          message: 'Failed to add comment',
+        });
+      }
+    }),
+
+  /**
+   * Get user's bookmarked posts
+   * Protected - requires authentication
+   */
+  getBookmarks: protectedProcedure
+    .query(async ({ ctx }) => {
+      try {
+        const posts = await db.getUserBookmarks(ctx.user.id);
+
+        return { success: true, posts };
+      } catch (error) {
+        console.error('[Kod Odası] Error fetching bookmarks:', error);
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to fetch bookmarks',
+        });
+      }
+    }),
+
+  /**
+   * Check if user has liked/bookmarked a post
+   * Protected - requires authentication
+   */
+  getUserPostStatus: protectedProcedure
+    .input(z.object({ postId: z.string().uuid() }))
+    .query(async ({ ctx, input }) => {
+      try {
+        const [hasLiked, hasBookmarked] = await Promise.all([
+          db.hasUserLikedPost(ctx.user.id, input.postId),
+          db.hasUserBookmarkedPost(ctx.user.id, input.postId),
+        ]);
+
+        return { 
+          success: true, 
+          hasLiked, 
+          hasBookmarked 
+        };
+      } catch (error) {
+        console.error('[Kod Odası] Error fetching user post status:', error);
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to fetch post status',
         });
       }
     }),

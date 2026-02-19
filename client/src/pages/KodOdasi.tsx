@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useAuth } from "@/_core/hooks/useAuth";
-import { getLoginUrl } from "@/const";
-import { LogIn, Send, Loader2 } from "lucide-react";
+import { LogIn, Send, Loader2, X } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 /* ─── Static Data ─── */
 const TICKER_DATA = [
@@ -21,15 +23,18 @@ const TICKER_DATA = [
 ];
 
 const CATEGORIES = [
-  { id: "Tümü", label: "Tümü" },
-  { id: "Soru", label: "Soru" },
-  { id: "Kaynak", label: "Kaynak" },
-  { id: "Tartışma", label: "Tartışma" },
+  { id: "all", label: "Tümü" },
+  { id: "AI", label: "AI" },
+  { id: "Otomasyon", label: "Otomasyon" },
+  { id: "Excel", label: "Excel" },
+  { id: "Altın", label: "Altın" },
+  { id: "Hisse", label: "Hisse" },
+  { id: "Kripto", label: "Kripto" },
 ] as const;
 
 /* ─── Helpers ─── */
-function timeAgo(iso: string) {
-  const diff = Math.floor((Date.now() - new Date(iso).getTime()) / 1000);
+function timeAgo(date: Date | string) {
+  const diff = Math.floor((Date.now() - new Date(date).getTime()) / 1000);
   if (diff < 60) return `${diff}s önce`;
   if (diff < 3600) return `${Math.floor(diff / 60)}dk önce`;
   if (diff < 86400) return `${Math.floor(diff / 3600)}sa önce`;
@@ -56,8 +61,13 @@ function Avatar({ src, size = "md" }: { src: string | null; size?: "sm" | "md" |
 
 function TickerBand() {
   return (
-    <div style={{
-      background: "linear-gradient(90deg, #0D1117 0%, #141B24 50%, #0D1117 100%)",
+    <div className="ticker-band-container" style={{
+      position: "sticky",
+      top: "44px",
+      zIndex: 100,
+      background: "#0D1117",  /* Katman 1: Tam opak */
+      backdropFilter: "blur(12px)",  /* Katman 2: Backdrop blur */
+      WebkitBackdropFilter: "blur(12px)",  /* Safari uyumluğu */
       borderBottom: "1px solid #1E2D3D",
       overflow: "hidden",
       height: "42px",
@@ -85,6 +95,21 @@ function TickerBand() {
           0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }
         }
+        /* Katman 3: Gradient shadow */
+        .ticker-band-container {
+          position: relative;
+        }
+        .ticker-band-container::after {
+          content: '';
+          position: absolute;
+          bottom: -12px;
+          left: 0;
+          right: 0;
+          height: 12px;
+          background: linear-gradient(to bottom, #0D1117, transparent);
+          pointer-events: none;
+          z-index: 101;
+        }
       `}</style>
     </div>
   );
@@ -92,22 +117,21 @@ function TickerBand() {
 
 interface PostCardProps {
   id: string;
-  username: string;
-  avatar_url: string | null;
-  category: string;
+  userId: string;
   title: string;
   content: string;
-  created_at: string;
-  like_count: number;
-  comment_count: number;
-  bookmark_count: number;
+  postType: "question" | "resource" | "discussion";
+  category: string;
+  likesCount: number;
+  commentsCount: number;
+  createdAt: Date;
 }
 
-function PostCard({ id, username, avatar_url, category, title, content, created_at, like_count, comment_count, bookmark_count }: PostCardProps) {
-  const { isAuthenticated } = useAuth();
+function PostCard({ id, userId, title, content, category, likesCount, commentsCount, createdAt }: PostCardProps) {
+  const { isAuthenticated, user } = useAuth();
   const utils = trpc.useUtils();
 
-  const toggleReaction = trpc.kodOdasi.toggleReaction.useMutation({
+  const toggleLike = trpc.kodOdasi.toggleLike.useMutation({
     onSuccess: () => {
       utils.kodOdasi.getPosts.invalidate();
     },
@@ -116,13 +140,34 @@ function PostCard({ id, username, avatar_url, category, title, content, created_
     },
   });
 
-  const handleReaction = (reactionType: 'like' | 'bookmark') => {
+  const toggleBookmark = trpc.kodOdasi.toggleBookmark.useMutation({
+    onSuccess: () => {
+      utils.kodOdasi.getPosts.invalidate();
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
+  const handleLike = () => {
     if (!isAuthenticated) {
-      toast.error("Reaction eklemek için giriş yapmalısınız");
+      toast.error("Beğenmek için giriş yapmalısınız");
       return;
     }
-    toggleReaction.mutate({ postId: id, reactionType });
+    toggleLike.mutate({ postId: id });
   };
+
+  const handleBookmark = () => {
+    if (!isAuthenticated) {
+      toast.error("Kaydetmek için giriş yapmalısınız");
+      return;
+    }
+    toggleBookmark.mutate({ postId: id });
+  };
+
+  // Generate avatar from userId
+  const avatarUrl = `https://api.dicebear.com/7.x/avataaars/svg?seed=${userId}`;
+  const username = user?.user_metadata?.name || user?.email?.split('@')[0] || "Anonim";
 
   return (
     <div style={{
@@ -135,7 +180,7 @@ function PostCard({ id, username, avatar_url, category, title, content, created_
     }}>
       {/* Header */}
       <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "12px" }}>
-        <Avatar src={avatar_url} size="md" />
+        <Avatar src={avatarUrl} size="md" />
         <div style={{ flex: 1 }}>
           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
             <span style={{ color: "#FFFFFF", fontSize: "14px", fontWeight: 600 }}>{username}</span>
@@ -150,7 +195,7 @@ function PostCard({ id, username, avatar_url, category, title, content, created_
               {category}
             </span>
           </div>
-          <span style={{ color: "#8899AA", fontSize: "12px" }}>{timeAgo(created_at)}</span>
+          <span style={{ color: "#8899AA", fontSize: "12px" }}>{timeAgo(createdAt)}</span>
         </div>
       </div>
 
@@ -178,8 +223,8 @@ function PostCard({ id, username, avatar_url, category, title, content, created_
       {/* Actions */}
       <div style={{ display: "flex", gap: "16px", borderTop: "1px solid #1E2D3D", paddingTop: "12px" }}>
         <button
-          onClick={() => handleReaction('like')}
-          disabled={toggleReaction.isPending}
+          onClick={handleLike}
+          disabled={toggleLike.isPending}
           style={{
             background: "transparent",
             border: "none",
@@ -192,7 +237,7 @@ function PostCard({ id, username, avatar_url, category, title, content, created_
             transition: "color 0.2s",
           }}
         >
-          👍 {like_count}
+          👍 {likesCount}
         </button>
         <button
           style={{
@@ -206,11 +251,11 @@ function PostCard({ id, username, avatar_url, category, title, content, created_
             gap: "6px",
           }}
         >
-          💬 {comment_count}
+          💬 {commentsCount}
         </button>
         <button
-          onClick={() => handleReaction('bookmark')}
-          disabled={toggleReaction.isPending}
+          onClick={handleBookmark}
+          disabled={toggleBookmark.isPending}
           style={{
             background: "transparent",
             border: "none",
@@ -223,8 +268,136 @@ function PostCard({ id, username, avatar_url, category, title, content, created_
             transition: "color 0.2s",
           }}
         >
-          🔖 {bookmark_count}
+          🔖
         </button>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Auth Modal ─── */
+function AuthModal({ onClose }: { onClose: () => void }) {
+  const [mode, setMode] = useState<"signin" | "signup">("signin");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { signIn, signUp } = useAuth();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      if (mode === "signin") {
+        const { error } = await signIn(email, password);
+        if (error) {
+          toast.error(error.message);
+        } else {
+          toast.success("Giriş başarılı!");
+          onClose();
+        }
+      } else {
+        const { error } = await signUp(email, password, name);
+        if (error) {
+          toast.error(error.message);
+        } else {
+          toast.success("Kayıt başarılı! Email adresinizi kontrol edin.");
+          onClose();
+        }
+      }
+    } catch (error: any) {
+      toast.error(error.message || "Bir hata oluştu");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div style={{
+      position: "fixed",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      background: "rgba(0, 0, 0, 0.8)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      zIndex: 1000,
+    }}>
+      <div style={{
+        background: "#0D1117",
+        border: "1px solid #1E2D3D",
+        borderRadius: "12px",
+        padding: "32px",
+        maxWidth: "400px",
+        width: "90%",
+        position: "relative",
+      }}>
+        <button
+          onClick={onClose}
+          style={{
+            position: "absolute",
+            top: "16px",
+            right: "16px",
+            background: "transparent",
+            border: "none",
+            color: "#8899AA",
+            cursor: "pointer",
+          }}
+        >
+          <X size={20} />
+        </button>
+
+        <h2 style={{ color: "#FFFFFF", fontSize: "24px", fontWeight: 700, marginBottom: "24px" }}>
+          {mode === "signin" ? "Giriş Yap" : "Kayıt Ol"}
+        </h2>
+
+        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+          {mode === "signup" && (
+            <Input
+              type="text"
+              placeholder="İsim"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          )}
+          <Input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <Input
+            type="password"
+            placeholder="Şifre"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <Button type="submit" disabled={loading}>
+            {loading ? <Loader2 className="animate-spin" size={16} /> : mode === "signin" ? "Giriş Yap" : "Kayıt Ol"}
+          </Button>
+        </form>
+
+        <p style={{ color: "#8899AA", fontSize: "14px", marginTop: "16px", textAlign: "center" }}>
+          {mode === "signin" ? "Hesabınız yok mu? " : "Zaten hesabınız var mı? "}
+          <button
+            onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
+            style={{
+              background: "transparent",
+              border: "none",
+              color: "#0EA5E9",
+              cursor: "pointer",
+              textDecoration: "underline",
+            }}
+          >
+            {mode === "signin" ? "Kayıt Ol" : "Giriş Yap"}
+          </button>
+        </p>
       </div>
     </div>
   );
@@ -232,11 +405,13 @@ function PostCard({ id, username, avatar_url, category, title, content, created_
 
 /* ─── Main Component ─── */
 export default function KodOdasi() {
-  const { isAuthenticated, loading: authLoading } = useAuth();
-  const [selectedCategory, setSelectedCategory] = useState<typeof CATEGORIES[number]["id"]>("Tümü");
+  const { isAuthenticated, loading: authLoading, user } = useAuth();
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [showNewPostModal, setShowNewPostModal] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
   const [newPost, setNewPost] = useState({
-    category: "Soru" as "Soru" | "Kaynak" | "Tartışma",
+    category: "AI",
+    postType: "question" as "question" | "resource" | "discussion",
     title: "",
     content: "",
   });
@@ -245,15 +420,16 @@ export default function KodOdasi() {
 
   // Fetch posts with optional category filter
   const { data: postsData, isLoading: postsLoading } = trpc.kodOdasi.getPosts.useQuery({
-    category: selectedCategory === "Tümü" ? undefined : selectedCategory,
+    category: selectedCategory === "all" ? undefined : selectedCategory,
+    limit: 50,
   });
 
   const createPost = trpc.kodOdasi.createPost.useMutation({
     onSuccess: () => {
       utils.kodOdasi.getPosts.invalidate();
       setShowNewPostModal(false);
-      setNewPost({ category: "Soru", title: "", content: "" });
-      toast.success("Post başarıyla oluşturuldu!");
+      setNewPost({ category: "AI", postType: "question", title: "", content: "" });
+      toast.success("Gönderi başarıyla oluşturuldu!");
     },
     onError: (error) => {
       toast.error(error.message);
@@ -266,6 +442,20 @@ export default function KodOdasi() {
       return;
     }
     createPost.mutate(newPost);
+  };
+
+  const handleNewPostClick = () => {
+    // Wait for auth to load before deciding
+    if (authLoading) {
+      toast.info("Yükleniyor, lütfen bekleyin...");
+      return;
+    }
+    
+    if (!isAuthenticated) {
+      setShowAuthModal(true);
+    } else {
+      setShowNewPostModal(true);
+    }
   };
 
   const posts = postsData?.posts || [];
@@ -328,50 +518,26 @@ export default function KodOdasi() {
           </div>
 
           {/* New Post Button */}
-          {isAuthenticated ? (
-            <button
-              onClick={() => setShowNewPostModal(true)}
-              style={{
-                background: "#0EA5E9",
-                color: "#FFFFFF",
-                border: "none",
-                borderRadius: "8px",
-                padding: "12px 24px",
-                fontSize: "14px",
-                fontWeight: 600,
-                cursor: "pointer",
-                marginBottom: "20px",
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-              }}
-            >
-              <Send size={16} />
-              Yeni Gönderi
-            </button>
-          ) : (
-            <a
-              href={getLoginUrl()}
-              style={{
-                background: "#141B24",
-                color: "#0EA5E9",
-                border: "1px solid #1E2D3D",
-                borderRadius: "8px",
-                padding: "12px 24px",
-                fontSize: "14px",
-                fontWeight: 600,
-                cursor: "pointer",
-                marginBottom: "20px",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px",
-                textDecoration: "none",
-              }}
-            >
-              <LogIn size={16} />
-              Gönderi paylaşmak için giriş yapın
-            </a>
-          )}
+          <button
+            onClick={handleNewPostClick}
+            style={{
+              background: "#0EA5E9",
+              color: "#FFFFFF",
+              border: "none",
+              borderRadius: "8px",
+              padding: "12px 24px",
+              fontSize: "14px",
+              fontWeight: 600,
+              cursor: "pointer",
+              marginBottom: "20px",
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+            }}
+          >
+            <Send size={16} />
+            {isAuthenticated ? "Yeni Gönderi" : "Gönderi Paylaş (Giriş Gerekli)"}
+          </button>
 
           {/* Posts List */}
           {postsLoading ? (
@@ -410,129 +576,110 @@ export default function KodOdasi() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            zIndex: 9999,
-            padding: "20px",
+            zIndex: 1000,
           }}>
             <div style={{
               background: "#0D1117",
               border: "1px solid #1E2D3D",
               borderRadius: "12px",
-              padding: "24px",
+              padding: "32px",
               maxWidth: "600px",
-              width: "100%",
+              width: "90%",
+              position: "relative",
             }}>
-              <h2 style={{ fontSize: "20px", fontWeight: 700, marginBottom: "16px" }}>
-                Yeni Gönderi
-              </h2>
-
-              {/* Category Select */}
-              <select
-                value={newPost.category}
-                onChange={(e) => setNewPost({ ...newPost, category: e.target.value as any })}
+              <button
+                onClick={() => setShowNewPostModal(false)}
                 style={{
-                  width: "100%",
-                  background: "#141B24",
-                  color: "#FFFFFF",
-                  border: "1px solid #1E2D3D",
-                  borderRadius: "8px",
-                  padding: "10px",
-                  fontSize: "14px",
-                  marginBottom: "12px",
+                  position: "absolute",
+                  top: "16px",
+                  right: "16px",
+                  background: "transparent",
+                  border: "none",
+                  color: "#8899AA",
+                  cursor: "pointer",
                 }}
               >
-                <option value="Soru">Soru</option>
-                <option value="Kaynak">Kaynak</option>
-                <option value="Tartışma">Tartışma</option>
-              </select>
+                <X size={20} />
+              </button>
 
-              {/* Title Input */}
-              <input
-                type="text"
-                placeholder="Başlık (min 5 karakter)"
-                value={newPost.title}
-                onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
-                style={{
-                  width: "100%",
-                  background: "#141B24",
-                  color: "#FFFFFF",
-                  border: "1px solid #1E2D3D",
-                  borderRadius: "8px",
-                  padding: "10px",
-                  fontSize: "14px",
-                  marginBottom: "12px",
-                }}
-              />
+              <h2 style={{ color: "#FFFFFF", fontSize: "24px", fontWeight: 700, marginBottom: "24px" }}>
+                Yeni Gönderi Oluştur
+              </h2>
 
-              {/* Content Textarea */}
-              <textarea
-                placeholder="İçerik (min 10 karakter)"
-                value={newPost.content}
-                onChange={(e) => setNewPost({ ...newPost, content: e.target.value })}
-                rows={6}
-                style={{
-                  width: "100%",
-                  background: "#141B24",
-                  color: "#FFFFFF",
-                  border: "1px solid #1E2D3D",
-                  borderRadius: "8px",
-                  padding: "10px",
-                  fontSize: "14px",
-                  marginBottom: "16px",
-                  resize: "vertical",
-                }}
-              />
+              <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                <div>
+                  <label style={{ color: "#8899AA", fontSize: "14px", marginBottom: "8px", display: "block" }}>
+                    Kategori
+                  </label>
+                  <select
+                    value={newPost.category}
+                    onChange={(e) => setNewPost({ ...newPost, category: e.target.value })}
+                    style={{
+                      width: "100%",
+                      background: "#141B24",
+                      border: "1px solid #1E2D3D",
+                      borderRadius: "8px",
+                      padding: "12px",
+                      color: "#FFFFFF",
+                      fontSize: "14px",
+                    }}
+                  >
+                    {CATEGORIES.filter(c => c.id !== "all").map((cat) => (
+                      <option key={cat.id} value={cat.id}>{cat.label}</option>
+                    ))}
+                  </select>
+                </div>
 
-              {/* Actions */}
-              <div style={{ display: "flex", gap: "12px", justifyContent: "flex-end" }}>
-                <button
-                  onClick={() => setShowNewPostModal(false)}
-                  disabled={createPost.isPending}
-                  style={{
-                    background: "#141B24",
-                    color: "#8899AA",
-                    border: "1px solid #1E2D3D",
-                    borderRadius: "8px",
-                    padding: "10px 20px",
-                    fontSize: "14px",
-                    fontWeight: 600,
-                    cursor: "pointer",
-                  }}
-                >
-                  İptal
-                </button>
-                <button
+                <div>
+                  <label style={{ color: "#8899AA", fontSize: "14px", marginBottom: "8px", display: "block" }}>
+                    Tür
+                  </label>
+                  <select
+                    value={newPost.postType}
+                    onChange={(e) => setNewPost({ ...newPost, postType: e.target.value as any })}
+                    style={{
+                      width: "100%",
+                      background: "#141B24",
+                      border: "1px solid #1E2D3D",
+                      borderRadius: "8px",
+                      padding: "12px",
+                      color: "#FFFFFF",
+                      fontSize: "14px",
+                    }}
+                  >
+                    <option value="question">Soru</option>
+                    <option value="resource">Kaynak</option>
+                    <option value="discussion">Tartışma</option>
+                  </select>
+                </div>
+
+                <Input
+                  type="text"
+                  placeholder="Başlık"
+                  value={newPost.title}
+                  onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
+                />
+
+                <Textarea
+                  placeholder="İçerik"
+                  value={newPost.content}
+                  onChange={(e) => setNewPost({ ...newPost, content: e.target.value })}
+                  rows={6}
+                />
+
+                <Button
                   onClick={handleCreatePost}
                   disabled={createPost.isPending}
-                  style={{
-                    background: "#0EA5E9",
-                    color: "#FFFFFF",
-                    border: "none",
-                    borderRadius: "8px",
-                    padding: "10px 20px",
-                    fontSize: "14px",
-                    fontWeight: 600,
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "8px",
-                  }}
                 >
-                  {createPost.isPending ? (
-                    <>
-                      <Loader2 className="animate-spin" size={16} />
-                      Gönderiliyor...
-                    </>
-                  ) : (
-                    <>
-                      <Send size={16} />
-                      Gönder
-                    </>
-                  )}
-                </button>
+                  {createPost.isPending ? <Loader2 className="animate-spin" size={16} /> : "Gönder"}
+                </Button>
               </div>
             </div>
           </div>
         )}
+
+        {/* Auth Modal */}
+        {showAuthModal && <AuthModal onClose={() => setShowAuthModal(false)} />}
       </div>
     </>
   );

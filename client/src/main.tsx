@@ -1,4 +1,5 @@
 import { trpc } from "@/lib/trpc";
+import { supabase } from "@/lib/supabase";
 import { UNAUTHED_ERR_MSG } from '@shared/const';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink, TRPCClientError } from "@trpc/client";
@@ -6,7 +7,6 @@ import { createRoot } from "react-dom/client";
 import superjson from "superjson";
 import { HelmetProvider } from "react-helmet-async";
 import App from "./App";
-import { getLoginUrl } from "./const";
 import "./index.css";
 
 const queryClient = new QueryClient();
@@ -19,7 +19,8 @@ const redirectToLoginIfUnauthorized = (error: unknown) => {
 
   if (!isUnauthorized) return;
 
-  window.location.href = getLoginUrl();
+  // For Supabase Auth, we don't redirect - user can sign in via modal
+  console.warn("[Auth] Unauthorized access - user needs to sign in");
 };
 
 queryClient.getQueryCache().subscribe(event => {
@@ -43,9 +44,20 @@ const trpcClient = trpc.createClient({
     httpBatchLink({
       url: "/api/trpc",
       transformer: superjson,
-      fetch(input, init) {
+      async fetch(input, init) {
+        // Get Supabase session token
+        const { data: { session } } = await supabase.auth.getSession();
+        const token = session?.access_token;
+
+        // Add Authorization header if token exists
+        const headers = new Headers(init?.headers);
+        if (token) {
+          headers.set('Authorization', `Bearer ${token}`);
+        }
+
         return globalThis.fetch(input, {
           ...(init ?? {}),
+          headers,
           credentials: "include",
         });
       },

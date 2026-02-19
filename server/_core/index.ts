@@ -3,7 +3,7 @@ import express from "express";
 import { createServer } from "http";
 import net from "net";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
-import { registerOAuthRoutes } from "./oauth";
+// OAuth removed - using Supabase Auth
 import { seoRouter } from "../seo";
 import { ttsRouter } from "../tts";
 import { appRouter } from "../routers";
@@ -38,8 +38,7 @@ async function startServer() {
   // SEO routes (robots.txt, sitemap.xml) - MUST be before static file serving
   app.use(seoRouter);
   
-  // OAuth callback under /api/oauth/callback
-  registerOAuthRoutes(app);
+  // OAuth removed - using Supabase Auth
   
   // Azure TTS proxy endpoint
   app.use("/api/tts", ttsRouter);

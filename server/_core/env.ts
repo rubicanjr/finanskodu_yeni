@@ -10,4 +10,5 @@ export const ENV = {
   // Supabase credentials for Kod Odası
   supabaseUrl: process.env.VITE_SUPABASE_URL ?? "",
   supabaseAnonKey: process.env.VITE_SUPABASE_ANON_KEY ?? "",
+  supabaseDatabaseUrl: process.env.SUPABASE_DATABASE_URL ?? "",
 };

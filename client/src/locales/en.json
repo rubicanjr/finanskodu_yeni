@@ -1,0 +1,71 @@
+{
+  "nav": {
+    "products": "Products",
+    "manifesto": "Manifesto",
+    "blog": "Blog",
+    "analysis": "Financial Analysis",
+    "contact": "Contact",
+    "kodOdasi": "Code Room"
+  },
+  "hero": {
+    "title": "The Code of Financial Freedom",
+    "subtitle": "Code every step on the path to financial independence with algorithmic thinking.",
+    "cta": "Explore Digital Products"
+  },
+  "products": {
+    "title": "Digital Products",
+    "subtitle": "Digital products to guide you on your journey to financial freedom",
+    "viewDetails": "View Details",
+    "comingSoon": "Coming Soon"
+  },
+  "manifesto": {
+    "title": "Manifesto",
+    "problem": "Problem",
+    "problemText": "Financial markets are complex, access is limited, information asymmetry is high.",
+    "solution": "Solution",
+    "solutionText": "We code the path to financial independence with algorithmic thinking."
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Articles to guide you on your journey to financial freedom",
+    "readMore": "Read More",
+    "backToBlog": "Back to Blog"
+  },
+  "testimonials": {
+    "title": "Testimonials",
+    "subtitle": "Experiences of those who embarked on the journey to financial freedom with Finans Kodu"
+  },
+  "about": {
+    "title": "About Us",
+    "subtitle": "The team to guide you on your journey to financial freedom"
+  },
+  "footer": {
+    "contact": "Contact",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "social": "Social Media",
+    "copyright": "© 2024 Finans Kodu. All rights reserved."
+  },
+  "kodOdasi": {
+    "title": "Code Room",
+    "subtitle": "Let's progress together on the journey to financial freedom",
+    "loginRequired": "Login to join the chat",
+    "loginButton": "Login",
+    "messagePlaceholder": "Type your message...",
+    "send": "Send",
+    "sending": "Sending...",
+    "loading": "Loading...",
+    "noMessages": "No messages yet. Send the first message!"
+  },
+  "theme": {
+    "light": "Light Theme",
+    "dark": "Dark Theme",
+    "toggle": "Toggle Theme"
+  },
+  "language": {
+    "tr": "Türkçe",
+    "en": "English",
+    "toggle": "Change Language"
+  }
+}

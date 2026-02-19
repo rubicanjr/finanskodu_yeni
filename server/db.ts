@@ -1,15 +1,41 @@
-import { eq, and } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, profiles, analysisResults, Profile, InsertProfile, AnalysisResult, InsertAnalysisResult } from "../drizzle/schema";
+import { eq, and, desc, sql } from "drizzle-orm";
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
+import { 
+  InsertUser, 
+  users, 
+  profiles, 
+  analysisResults, 
+  Profile, 
+  InsertProfile, 
+  AnalysisResult, 
+  InsertAnalysisResult,
+  posts,
+  comments,
+  likes,
+  bookmarks,
+  Post,
+  InsertPost,
+  Comment,
+  InsertComment,
+  Like,
+  InsertLike,
+  Bookmark,
+  InsertBookmark
+} from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
+let _client: ReturnType<typeof postgres> | null = null;
 
 // Lazily create the drizzle instance so local tooling can run without a DB.
+// Use SUPABASE_DATABASE_URL for Kod Odası (PostgreSQL)
 export async function getDb() {
-  if (!_db && process.env.DATABASE_URL) {
+  if (!_db && ENV.supabaseDatabaseUrl) {
     try {
-      _db = drizzle(process.env.DATABASE_URL);
+      _client = postgres(ENV.supabaseDatabaseUrl);
+      _db = drizzle(_client);
+      console.log("[Database] Connected to Supabase PostgreSQL");
     } catch (error) {
       console.warn("[Database] Failed to connect:", error);
       _db = null;
@@ -18,9 +44,14 @@ export async function getDb() {
   return _db;
 }
 
+/**
+ * Upsert user (for Supabase Auth compatibility)
+ * Note: Supabase Auth manages users in auth.users table
+ * This function syncs user data to our public.users table
+ */
 export async function upsertUser(user: InsertUser): Promise<void> {
-  if (!user.openId) {
-    throw new Error("User openId is required for upsert");
+  if (!user.id) {
+    throw new Error("User id (UUID) is required for upsert");
   }
 
   const db = await getDb();
@@ -31,60 +62,45 @@ export async function upsertUser(user: InsertUser): Promise<void> {
 
   try {
     const values: InsertUser = {
-      openId: user.openId,
-    };
-    const updateSet: Record<string, unknown> = {};
-
-    const textFields = ["name", "email", "loginMethod"] as const;
-    type TextField = (typeof textFields)[number];
-
-    const assignNullable = (field: TextField) => {
-      const value = user[field];
-      if (value === undefined) return;
-      const normalized = value ?? null;
-      values[field] = normalized;
-      updateSet[field] = normalized;
+      id: user.id,
+      name: user.name ?? null,
+      email: user.email ?? null,
+      avatarUrl: user.avatarUrl ?? null,
+      role: user.role ?? "user",
+      lastSignedIn: user.lastSignedIn ?? new Date(),
     };
 
-    textFields.forEach(assignNullable);
-
-    if (user.lastSignedIn !== undefined) {
-      values.lastSignedIn = user.lastSignedIn;
-      updateSet.lastSignedIn = user.lastSignedIn;
-    }
-    if (user.role !== undefined) {
-      values.role = user.role;
-      updateSet.role = user.role;
-    } else if (user.openId === ENV.ownerOpenId) {
-      values.role = 'admin';
-      updateSet.role = 'admin';
-    }
-
-    if (!values.lastSignedIn) {
-      values.lastSignedIn = new Date();
-    }
-
-    if (Object.keys(updateSet).length === 0) {
-      updateSet.lastSignedIn = new Date();
-    }
-
-    await db.insert(users).values(values).onDuplicateKeyUpdate({
-      set: updateSet,
-    });
+    // PostgreSQL upsert using ON CONFLICT
+    await db
+      .insert(users)
+      .values(values)
+      .onConflictDoUpdate({
+        target: users.id,
+        set: {
+          name: values.name,
+          email: values.email,
+          avatarUrl: values.avatarUrl,
+          lastSignedIn: values.lastSignedIn,
+          updatedAt: new Date(),
+        },
+      });
   } catch (error) {
     console.error("[Database] Failed to upsert user:", error);
     throw error;
   }
 }
 
-export async function getUserByOpenId(openId: string) {
+/**
+ * Get user by UUID (Supabase Auth user ID)
+ */
+export async function getUserById(userId: string) {
   const db = await getDb();
   if (!db) {
     console.warn("[Database] Cannot get user: database not available");
     return undefined;
   }
 
-  const result = await db.select().from(users).where(eq(users.openId, openId)).limit(1);
+  const result = await db.select().from(users).where(eq(users.id, userId)).limit(1);
 
   return result.length > 0 ? result[0] : undefined;
 }
@@ -92,7 +108,7 @@ export async function getUserByOpenId(openId: string) {
 /**
  * Get or create user profile
  */
-export async function getOrCreateProfile(userId: number): Promise<Profile> {
+export async function getOrCreateProfile(userId: string): Promise<Profile> {
   const db = await getDb();
   if (!db) {
     throw new Error("Database not available");
@@ -120,7 +136,7 @@ export async function getOrCreateProfile(userId: number): Promise<Profile> {
 /**
  * Get user profile by userId
  */
-export async function getProfileByUserId(userId: number): Promise<Profile | undefined> {
+export async function getProfileByUserId(userId: string): Promise<Profile | undefined> {
   const db = await getDb();
   if (!db) return undefined;
 
@@ -131,7 +147,7 @@ export async function getProfileByUserId(userId: number): Promise<Profile | unde
 /**
  * Increment daily usage count and check if reset is needed
  */
-export async function incrementUsageCount(userId: number): Promise<Profile> {
+export async function incrementUsageCount(userId: string): Promise<Profile> {
   const db = await getDb();
   if (!db) {
     throw new Error("Database not available");
@@ -167,29 +183,253 @@ export async function saveAnalysisResult(data: InsertAnalysisResult): Promise<An
     throw new Error("Database not available");
   }
 
-  await db.insert(analysisResults).values(data);
-  // Get the most recent analysis result for this user and ticker
-  const saved = await db.select().from(analysisResults)
-    .where(and(eq(analysisResults.userId, data.userId), eq(analysisResults.ticker, data.ticker)))
-    .orderBy(analysisResults.createdAt)
-    .limit(1);
+  const inserted = await db.insert(analysisResults).values(data).returning();
   
-  if (saved.length === 0) {
+  if (inserted.length === 0) {
     throw new Error("Failed to save analysis result");
   }
-  return saved[0];
+  return inserted[0];
 }
 
 /**
  * Get analysis results by user and ticker
  */
-export async function getAnalysisResults(userId: number, ticker: string): Promise<AnalysisResult[]> {
+export async function getAnalysisResults(userId: string, ticker: string): Promise<AnalysisResult[]> {
   const db = await getDb();
   if (!db) return [];
 
   return db.select().from(analysisResults)
     .where(and(eq(analysisResults.userId, userId), eq(analysisResults.ticker, ticker)))
-    .orderBy(analysisResults.createdAt);
+    .orderBy(desc(analysisResults.createdAt));
 }
 
-// TODO: add feature queries here as your schema grows.
+// ============================================
+// KOD ODASI DATABASE QUERIES
+// ============================================
+
+/**
+ * Get all posts with optional filtering
+ */
+export async function getPosts(options?: {
+  category?: string;
+  postType?: "question" | "resource" | "discussion";
+  limit?: number;
+  offset?: number;
+}): Promise<Post[]> {
+  const db = await getDb();
+  if (!db) return [];
+
+  let query = db.select().from(posts).orderBy(desc(posts.createdAt));
+
+  if (options?.category && options.category !== "all") {
+    query = query.where(eq(posts.category, options.category)) as any;
+  }
+
+  if (options?.postType) {
+    query = query.where(eq(posts.postType, options.postType)) as any;
+  }
+
+  if (options?.limit) {
+    query = query.limit(options.limit) as any;
+  }
+
+  if (options?.offset) {
+    query = query.offset(options.offset) as any;
+  }
+
+  return query;
+}
+
+/**
+ * Get post by ID
+ */
+export async function getPostById(postId: string): Promise<Post | undefined> {
+  const db = await getDb();
+  if (!db) return undefined;
+
+  const result = await db.select().from(posts).where(eq(posts.id, postId)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+/**
+ * Create new post
+ */
+export async function createPost(data: InsertPost): Promise<Post> {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  const inserted = await db.insert(posts).values(data).returning();
+  
+  if (inserted.length === 0) {
+    throw new Error("Failed to create post");
+  }
+  return inserted[0];
+}
+
+/**
+ * Update post
+ */
+export async function updatePost(postId: string, data: Partial<InsertPost>): Promise<Post> {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  const updated = await db.update(posts)
+    .set({ ...data, updatedAt: new Date() })
+    .where(eq(posts.id, postId))
+    .returning();
+  
+  if (updated.length === 0) {
+    throw new Error("Post not found");
+  }
+  return updated[0];
+}
+
+/**
+ * Delete post
+ */
+export async function deletePost(postId: string): Promise<void> {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  await db.delete(posts).where(eq(posts.id, postId));
+}
+
+/**
+ * Get comments for a post
+ */
+export async function getCommentsByPostId(postId: string): Promise<Comment[]> {
+  const db = await getDb();
+  if (!db) return [];
+
+  return db.select().from(comments)
+    .where(eq(comments.postId, postId))
+    .orderBy(desc(comments.createdAt));
+}
+
+/**
+ * Create new comment
+ */
+export async function createComment(data: InsertComment): Promise<Comment> {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  const inserted = await db.insert(comments).values(data).returning();
+  
+  if (inserted.length === 0) {
+    throw new Error("Failed to create comment");
+  }
+
+  // Increment comments count on post
+  await db.update(posts)
+    .set({ commentsCount: sql`${posts.commentsCount} + 1` })
+    .where(eq(posts.id, data.postId));
+
+  return inserted[0];
+}
+
+/**
+ * Check if user has liked a post
+ */
+export async function hasUserLikedPost(userId: string, postId: string): Promise<boolean> {
+  const db = await getDb();
+  if (!db) return false;
+
+  const result = await db.select().from(likes)
+    .where(and(eq(likes.userId, userId), eq(likes.postId, postId)))
+    .limit(1);
+
+  return result.length > 0;
+}
+
+/**
+ * Toggle like on post
+ */
+export async function togglePostLike(userId: string, postId: string): Promise<{ liked: boolean }> {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  const existingLike = await db.select().from(likes)
+    .where(and(eq(likes.userId, userId), eq(likes.postId, postId)))
+    .limit(1);
+
+  if (existingLike.length > 0) {
+    // Unlike
+    await db.delete(likes).where(eq(likes.id, existingLike[0].id));
+    await db.update(posts)
+      .set({ likesCount: sql`${posts.likesCount} - 1` })
+      .where(eq(posts.id, postId));
+    return { liked: false };
+  } else {
+    // Like
+    await db.insert(likes).values({ userId, postId });
+    await db.update(posts)
+      .set({ likesCount: sql`${posts.likesCount} + 1` })
+      .where(eq(posts.id, postId));
+    return { liked: true };
+  }
+}
+
+/**
+ * Check if user has bookmarked a post
+ */
+export async function hasUserBookmarkedPost(userId: string, postId: string): Promise<boolean> {
+  const db = await getDb();
+  if (!db) return false;
+
+  const result = await db.select().from(bookmarks)
+    .where(and(eq(bookmarks.userId, userId), eq(bookmarks.postId, postId)))
+    .limit(1);
+
+  return result.length > 0;
+}
+
+/**
+ * Toggle bookmark on post
+ */
+export async function togglePostBookmark(userId: string, postId: string): Promise<{ bookmarked: boolean }> {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  const existingBookmark = await db.select().from(bookmarks)
+    .where(and(eq(bookmarks.userId, userId), eq(bookmarks.postId, postId)))
+    .limit(1);
+
+  if (existingBookmark.length > 0) {
+    // Remove bookmark
+    await db.delete(bookmarks).where(eq(bookmarks.id, existingBookmark[0].id));
+    return { bookmarked: false };
+  } else {
+    // Add bookmark
+    await db.insert(bookmarks).values({ userId, postId });
+    return { bookmarked: true };
+  }
+}
+
+/**
+ * Get user's bookmarked posts
+ */
+export async function getUserBookmarks(userId: string): Promise<Post[]> {
+  const db = await getDb();
+  if (!db) return [];
+
+  const bookmarkedPosts = await db
+    .select({ post: posts })
+    .from(bookmarks)
+    .innerJoin(posts, eq(bookmarks.postId, posts.id))
+    .where(eq(bookmarks.userId, userId))
+    .orderBy(desc(bookmarks.createdAt));
+
+  return bookmarkedPosts.map(row => row.post);
+}

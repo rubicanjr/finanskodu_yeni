@@ -4,11 +4,12 @@ import NotFound from "@/pages/NotFound";
 import { Route, Switch, useLocation } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { I18nProvider } from "./contexts/I18nContext";
 import Home from "./pages/Home";
 import AnalysisPage from "./pages/AnalysisPage";
 import BlogListPage from "./pages/BlogListPage";
 import BlogDetailPage from "./pages/BlogDetailPage";
-import KodOdasi from "./pages/KodOdasi";
+import KodOdasiNew from "./pages/KodOdasiNew";
 import DualPersonaWidget from "./components/DualPersonaWidget";
 import Sidebar from "./components/Sidebar";
 import TradingViewTickerTape from "./components/TradingViewTickerTape";
@@ -29,7 +30,7 @@ function Router() {
       <Route path={"/analiz"} component={AnalysisPage} />
       <Route path={"/blog"} component={BlogListPage} />
       <Route path={"/blog/:slug"} component={BlogDetailPage} />
-      <Route path={"/kod-odasi"} component={KodOdasi} />
+      <Route path={"/kod-odasi"} component={KodOdasiNew} />
       <Route path={"/404"} component={NotFound} />
       <Route component={NotFound} />
     </Switch>
@@ -39,8 +40,9 @@ function Router() {
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider defaultTheme="dark">
-        <TooltipProvider>
+      <I18nProvider defaultLanguage="tr">
+        <ThemeProvider defaultTheme="dark" switchable={true}>
+          <TooltipProvider>
           <Toaster />
           {/* TradingView Ticker Tape - Fixed at top */}
           <div className="fixed top-0 left-0 right-0 z-30 lg:left-[220px]">
@@ -54,8 +56,9 @@ function App() {
           </div>
           {/* Dual Persona Widget */}
           <DualPersonaWidget />
-        </TooltipProvider>
-      </ThemeProvider>
+          </TooltipProvider>
+        </ThemeProvider>
+      </I18nProvider>
     </ErrorBoundary>
   );
 }

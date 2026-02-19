@@ -1,84 +1,152 @@
-import { getLoginUrl } from "@/const";
-import { trpc } from "@/lib/trpc";
-import { TRPCClientError } from "@trpc/client";
-import { useCallback, useEffect, useMemo } from "react";
+import { useEffect, useState } from 'react';
+import { supabase } from '@/lib/supabase';
+import type { User, AuthError } from '@supabase/supabase-js';
 
-type UseAuthOptions = {
-  redirectOnUnauthenticated?: boolean;
-  redirectPath?: string;
-};
+export interface UseAuthReturn {
+  user: User | null;
+  loading: boolean;
+  error: AuthError | null;
+  isAuthenticated: boolean;
+  signIn: (email: string, password: string) => Promise<{ error: AuthError | null }>;
+  signUp: (email: string, password: string, name: string) => Promise<{ error: AuthError | null }>;
+  signOut: () => Promise<{ error: AuthError | null }>;
+  refresh: () => Promise<void>;
+}
 
-export function useAuth(options?: UseAuthOptions) {
-  const { redirectOnUnauthenticated = false, redirectPath = getLoginUrl() } =
-    options ?? {};
-  const utils = trpc.useUtils();
-
-  const meQuery = trpc.auth.me.useQuery(undefined, {
-    retry: false,
-    refetchOnWindowFocus: false,
-  });
-
-  const logoutMutation = trpc.auth.logout.useMutation({
-    onSuccess: () => {
-      utils.auth.me.setData(undefined, null);
-    },
-  });
-
-  const logout = useCallback(async () => {
-    try {
-      await logoutMutation.mutateAsync();
-    } catch (error: unknown) {
-      if (
-        error instanceof TRPCClientError &&
-        error.data?.code === "UNAUTHORIZED"
-      ) {
-        return;
-      }
-      throw error;
-    } finally {
-      utils.auth.me.setData(undefined, null);
-      await utils.auth.me.invalidate();
-    }
-  }, [logoutMutation, utils]);
-
-  const state = useMemo(() => {
-    localStorage.setItem(
-      "manus-runtime-user-info",
-      JSON.stringify(meQuery.data)
-    );
-    return {
-      user: meQuery.data ?? null,
-      loading: meQuery.isLoading || logoutMutation.isPending,
-      error: meQuery.error ?? logoutMutation.error ?? null,
-      isAuthenticated: Boolean(meQuery.data),
-    };
-  }, [
-    meQuery.data,
-    meQuery.error,
-    meQuery.isLoading,
-    logoutMutation.error,
-    logoutMutation.isPending,
-  ]);
+/**
+ * Supabase Auth hook
+ * Replaces Manus Auth with Supabase authentication
+ * 
+ * @example
+ * const { user, isAuthenticated, signIn, signOut } = useAuth();
+ * 
+ * // Sign in
+ * const { error } = await signIn('user@example.com', 'password');
+ * 
+ * // Sign out
+ * await signOut();
+ */
+export function useAuth(): UseAuthReturn {
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<AuthError | null>(null);
 
   useEffect(() => {
-    if (!redirectOnUnauthenticated) return;
-    if (meQuery.isLoading || logoutMutation.isPending) return;
-    if (state.user) return;
-    if (typeof window === "undefined") return;
-    if (window.location.pathname === redirectPath) return;
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session }, error }) => {
+      if (error) {
+        console.error('[Auth] Failed to get session:', error);
+        setError(error);
+      }
+      setUser(session?.user ?? null);
+      setLoading(false);
+    });
 
-    window.location.href = redirectPath
-  }, [
-    redirectOnUnauthenticated,
-    redirectPath,
-    logoutMutation.isPending,
-    meQuery.isLoading,
-    state.user,
-  ]);
+    // Listen for auth state changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+      setLoading(false);
+      setError(null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const signIn = async (email: string, password: string) => {
+    setLoading(true);
+    setError(null);
+    
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      console.error('[Auth] Sign in error:', error);
+      setError(error);
+    } else {
+      setUser(data.user);
+    }
+
+    setLoading(false);
+    return { error };
+  };
+
+  const signUp = async (email: string, password: string, name: string) => {
+    setLoading(true);
+    setError(null);
+
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          name,
+        },
+      },
+    });
+
+    if (error) {
+      console.error('[Auth] Sign up error:', error);
+      setError(error);
+    } else {
+      setUser(data.user);
+      
+      // Sync user to public.users table
+      if (data.user) {
+        await supabase.from('users').insert({
+          id: data.user.id,
+          name,
+          email: data.user.email,
+          avatar_url: null,
+          role: 'user',
+        });
+      }
+    }
+
+    setLoading(false);
+    return { error };
+  };
+
+  const signOut = async () => {
+    setLoading(true);
+    setError(null);
+
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
+      console.error('[Auth] Sign out error:', error);
+      setError(error);
+    } else {
+      setUser(null);
+    }
+
+    setLoading(false);
+    return { error };
+  };
+
+  const refresh = async () => {
+    setLoading(true);
+    const { data: { session }, error } = await supabase.auth.getSession();
+    
+    if (error) {
+      console.error('[Auth] Refresh error:', error);
+      setError(error);
+    } else {
+      setUser(session?.user ?? null);
+    }
+    
+    setLoading(false);
+  };
 
   return {
-    ...state,
-    refresh: () => meQuery.refetch(),
-    logout,
+    user,
+    loading,
+    error,
+    isAuthenticated: !!user,
+    signIn,
+    signUp,
+    signOut,
+    refresh,
   };
 }
