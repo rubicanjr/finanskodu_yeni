@@ -7,4 +7,7 @@ export const ENV = {
   isProduction: process.env.NODE_ENV === "production",
   forgeApiUrl: process.env.BUILT_IN_FORGE_API_URL ?? "",
   forgeApiKey: process.env.BUILT_IN_FORGE_API_KEY ?? "",
+  // Supabase credentials for Kod Odası
+  supabaseUrl: process.env.VITE_SUPABASE_URL ?? "",
+  supabaseAnonKey: process.env.VITE_SUPABASE_ANON_KEY ?? "",
 };

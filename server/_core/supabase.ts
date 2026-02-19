@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { ENV } from './env';
 
 /**
  * Supabase Client for Kod Odası Backend
@@ -8,8 +9,8 @@ import { createClient } from '@supabase/supabase-js';
  * - VITE_SUPABASE_ANON_KEY: Your Supabase anon/public key
  */
 
-const supabaseUrl = process.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = process.env.VITE_SUPABASE_ANON_KEY;
+const supabaseUrl = ENV.supabaseUrl;
+const supabaseAnonKey = ENV.supabaseAnonKey;
 
 if (!supabaseUrl || !supabaseAnonKey) {
   throw new Error(

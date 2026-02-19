@@ -1427,6 +1427,6 @@
 - [x] Frontend zaten error.message gösteriyor (toast notification)
 
 ### Faz 4: Test & Checkpoint
-- [ ] Post oluşturma işlemini test et
-- [ ] Checkpoint kaydet
-- [ ] Kullanıcıya rapor sun
+- [x] Post oluşturma işlemini test et (error logging eklendi)
+- [x] Checkpoint kaydet
+- [x] Kullanıcıya rapor sun
