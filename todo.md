@@ -1430,3 +1430,21 @@
 - [x] Post oluşturma işlemini test et (error logging eklendi)
 - [x] Checkpoint kaydet
 - [x] Kullanıcıya rapor sun
+
+
+## KOD ODASI "AN UNEXPECTED ERROR" DEBUG (ROUND 2)
+
+### Faz 1: Server Logs Kontrol
+- [x] Terminal'de [Kod Odası] error mesajlarını kontrol et
+- [x] Supabase error detaylarını (message, details, hint, code) logla (zaten mevcut)
+- [x] ENV.supabaseUrl ve ENV.supabaseAnonKey'in dolu olduğunu doğrula
+
+### Faz 2: Supabase Credentials Test
+- [x] Test procedure oluştur (kodOdasi.testConnection)
+- [x] Supabase client bağlantısını test et
+- [x] ENV credentials kontrolü ekle (SET/MISSING log)
+
+### Faz 3: Çözüm & Checkpoint
+- [ ] Sorunu düzelt
+- [ ] Checkpoint kaydet
+- [ ] Kullanıcıya rapor sun

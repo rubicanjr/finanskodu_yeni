@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { supabase, type Post, type PostWithStats } from "./_core/supabase";
+import { ENV } from "./_core/env";
 import { TRPCError } from "@trpc/server";
 
 /**
@@ -242,6 +243,53 @@ export const kodOdasiRouter = router({
           code: 'INTERNAL_SERVER_ERROR',
           message: 'An unexpected error occurred',
         });
+      }
+    }),
+
+  /**
+   * Test Supabase connection and credentials
+   * Public - for debugging
+   */
+  testConnection: publicProcedure
+    .query(async () => {
+      try {
+        console.log('[Kod Odası] Testing Supabase connection...');
+        console.log('[Kod Odası] ENV.supabaseUrl:', ENV.supabaseUrl ? 'SET' : 'MISSING');
+        console.log('[Kod Odası] ENV.supabaseAnonKey:', ENV.supabaseAnonKey ? 'SET (length: ' + ENV.supabaseAnonKey.length + ')' : 'MISSING');
+
+        // Test simple query
+        const { data, error } = await supabase
+          .from('posts')
+          .select('count')
+          .limit(1);
+
+        if (error) {
+          console.error('[Kod Odası] Supabase connection test FAILED:', {
+            message: error.message,
+            details: error.details,
+            hint: error.hint,
+            code: error.code,
+          });
+          return {
+            success: false,
+            error: error.message,
+            details: error.details,
+            hint: error.hint,
+          };
+        }
+
+        console.log('[Kod Odası] Supabase connection test SUCCESS');
+        return {
+          success: true,
+          message: 'Supabase connection working',
+          postsCount: data?.length || 0,
+        };
+      } catch (error: any) {
+        console.error('[Kod Odası] Test connection unexpected error:', error);
+        return {
+          success: false,
+          error: error.message || 'Unknown error',
+        };
       }
     }),
 
