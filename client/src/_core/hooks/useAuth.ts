@@ -1,142 +1,88 @@
-import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabase';
-import type { User, AuthError } from '@supabase/supabase-js';
-
-export interface UseAuthReturn {
-  user: User | null;
-  loading: boolean;
-  error: AuthError | null;
-  isAuthenticated: boolean;
-  signIn: (email: string, password: string) => Promise<{ error: AuthError | null }>;
-  signUp: (email: string, password: string, name: string) => Promise<{ error: AuthError | null }>;
-  signOut: () => Promise<{ error: AuthError | null }>;
-  refresh: () => Promise<void>;
-}
-
 /**
- * Supabase Auth hook
- * Replaces Manus Auth with Supabase authentication
+ * Firebase Auth hook — replaces Supabase Auth
+ * 
+ * Supports:
+ *  - Google Sign-In (popup)
+ *  - Sign out
+ *  - Persistent auth state (Firebase handles token refresh)
  * 
  * @example
- * const { user, isAuthenticated, signIn, signOut } = useAuth();
- * 
- * // Sign in
- * const { error } = await signIn('user@example.com', 'password');
- * 
- * // Sign out
- * await signOut();
+ *   const { user, isAuthenticated, signInWithGoogle, signOut } = useAuth();
  */
+
+import { useEffect, useState } from "react";
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut as firebaseSignOut,
+  onAuthStateChanged,
+  type User,
+} from "firebase/auth";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { auth, db } from "@/lib/firebase";
+
+export interface UseAuthReturn {
+  user:              User | null;
+  loading:           boolean;
+  error:             string | null;
+  isAuthenticated:   boolean;
+  signInWithGoogle:  () => Promise<{ error: string | null }>;
+  signOut:           () => Promise<{ error: string | null }>;
+}
+
+const googleProvider = new GoogleAuthProvider();
+
 export function useAuth(): UseAuthReturn {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser]       = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<AuthError | null>(null);
+  const [error, setError]     = useState<string | null>(null);
 
   useEffect(() => {
-    // Get initial session
-    supabase.auth.getSession().then(({ data: { session }, error }) => {
-      if (error) {
-        console.error('[Auth] Failed to get session:', error);
-        setError(error);
-      }
-      setUser(session?.user ?? null);
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      setUser(firebaseUser);
       setLoading(false);
     });
-
-    // Listen for auth state changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-      setLoading(false);
-      setError(null);
-    });
-
-    return () => subscription.unsubscribe();
+    return unsubscribe;
   }, []);
 
-  const signIn = async (email: string, password: string) => {
-    setLoading(true);
+  const signInWithGoogle = async (): Promise<{ error: string | null }> => {
     setError(null);
-    
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const fbUser = result.user;
 
-    if (error) {
-      console.error('[Auth] Sign in error:', error);
-      setError(error);
-    } else {
-      setUser(data.user);
-    }
-
-    setLoading(false);
-    return { error };
-  };
-
-  const signUp = async (email: string, password: string, name: string) => {
-    setLoading(true);
-    setError(null);
-
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          name,
+      // Persist/merge user profile in Firestore
+      await setDoc(
+        doc(db, "users", fbUser.uid),
+        {
+          name:      fbUser.displayName ?? "Anonim",
+          email:     fbUser.email       ?? "",
+          photoURL:  fbUser.photoURL    ?? "",
+          lastLogin: serverTimestamp(),
         },
-      },
-    });
+        { merge: true }
+      );
 
-    if (error) {
-      console.error('[Auth] Sign up error:', error);
-      setError(error);
-    } else {
-      setUser(data.user);
-      
-      // Sync user to public.users table
-      if (data.user) {
-        await supabase.from('users').insert({
-          id: data.user.id,
-          name,
-          email: data.user.email,
-          avatar_url: null,
-          role: 'user',
-        });
-      }
+      return { error: null };
+    } catch (err: any) {
+      // Ignore user-dismissed popup — not a real error
+      if (err?.code === "auth/popup-closed-by-user") return { error: null };
+      const msg = err?.message ?? "Giriş yapılamadı.";
+      setError(msg);
+      return { error: msg };
     }
-
-    setLoading(false);
-    return { error };
   };
 
-  const signOut = async () => {
-    setLoading(true);
+  const signOut = async (): Promise<{ error: string | null }> => {
     setError(null);
-
-    const { error } = await supabase.auth.signOut();
-
-    if (error) {
-      console.error('[Auth] Sign out error:', error);
-      setError(error);
-    } else {
-      setUser(null);
+    try {
+      await firebaseSignOut(auth);
+      return { error: null };
+    } catch (err: any) {
+      const msg = err?.message ?? "Çıkış yapılamadı.";
+      setError(msg);
+      return { error: msg };
     }
-
-    setLoading(false);
-    return { error };
-  };
-
-  const refresh = async () => {
-    setLoading(true);
-    const { data: { session }, error } = await supabase.auth.getSession();
-    
-    if (error) {
-      console.error('[Auth] Refresh error:', error);
-      setError(error);
-    } else {
-      setUser(session?.user ?? null);
-    }
-    
-    setLoading(false);
   };
 
   return {
@@ -144,9 +90,7 @@ export function useAuth(): UseAuthReturn {
     loading,
     error,
     isAuthenticated: !!user,
-    signIn,
-    signUp,
+    signInWithGoogle,
     signOut,
-    refresh,
   };
 }

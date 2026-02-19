@@ -1582,3 +1582,52 @@
 - [x] KodOdasiNew bileşeni doğru import ediliyor (satır 12)
 - [x] Sol menüdeki Kod Odası linki doğru çalışıyor (tarayıcıda test edildi)
 - [x] Sayfa "Kod Odası'na Hoş Geldiniz" gösteriyor (404 yok!)
+
+
+## GitHub Otomatik Güncelleme (pasted_content_3.txt)
+
+### Görev 1: Ticker Şeridi CSS Specificity
+- [ ] GitHub deposunu klonla (rubicanjr/ManusRepo)
+- [ ] Ticker CSS dosyasını bul (globals.css veya Ticker.css)
+- [ ] .ticker-bar kuralını !important ile güncelle
+- [ ] ::after pseudo-element ekle (gradient shadow)
+
+### Görev 2: Provider Yapısı ve Toggle Konumları
+- [ ] App.jsx'te ThemeProvider ve I18nProvider'ı Router'ı saracak şekilde düzenle
+- [ ] Sidebar.jsx'e ThemeToggle ve LanguageToggle ekle
+- [ ] Blog sayfasından toggle'ları kaldır
+- [ ] Sidebar.css'e spacer ve controls stilleri ekle
+
+### Görev 3: Kod Odası Rotası ve ProtectedRoute
+- [ ] App.jsx'te /kod-odasi rotasını ekle
+- [ ] KodOdasiPage.jsx oluştur
+- [ ] ProtectedRoute.jsx oluştur (Supabase auth check)
+- [ ] NotFoundPage.jsx oluştur (404 sayfası)
+
+### Görev 4: GitHub Push
+- [ ] Tüm değişiklikleri commit et ("FIX: Ticker, Toggles, and Kod Odasi 404")
+- [ ] GitHub'a push et
+
+
+## Firebase Migrasyonu (files.zip)
+
+### Kritik Değişiklikler
+- [x] Supabase Auth → Firebase Google Auth geçişi
+- [x] Supabase Realtime → Firebase Firestore onSnapshot geçişi
+- [x] `useAuth` hook'unu Firebase versiyonuyla değiştir
+- [x] `KodOdasiNew.tsx` Firebase entegrasyonlu versiyonla değiştir
+- [x] `Sidebar.tsx` güncel versiyonla değiştir (tema/dil toggle'ları dahil)
+- [x] `index.css` OKLCH renk sistemli versiyonla değiştir
+
+### Firebase Kurulum
+- [x] `/client/src/lib/firebase.ts` oluştur (firebase config)
+- [ ] Firebase Console'da Firestore Security Rules ekle (firestore.rules) - KULLANICI YAPACAK
+- [x] Firebase paketi kur: `pnpm add firebase`
+- [ ] Google Auth provider etkinleştir (Firebase Console) - KULLANICI YAPACAK
+
+### Test
+- [ ] Kod Odası sayfasında Google ile giriş yapılıyor mu
+- [ ] Mesajlar gerçek zamanlı güncelleniyor mu
+- [ ] Ticker şeridi scroll animasyonu çalışıyor mu
+- [ ] Tema toggle (açık/koyu) tüm sayfayı etkiliyor mu
+- [ ] Dil toggle (TR/EN) çalışıyor mu

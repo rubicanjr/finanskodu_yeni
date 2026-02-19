@@ -82,46 +82,7 @@
 :root {
   --radius: 0.5rem;
   
-  /* ─── Finans Kodu 2.0 LIGHT Theme ─────────────────────────────────
-     Root = Light. Dark class overrides below.
-     Action blue stays consistent across both themes.
-  ──────────────────────────────────────────────────────────────────── */
-  --background: oklch(0.98 0.005 240);    /* #F6F8FA near-white */
-  --foreground: oklch(0.13 0.02 250);     /* #0D1117 deep navy text */
-  --card: oklch(1 0 0);                   /* #FFFFFF */
-  --card-foreground: oklch(0.13 0.02 250);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.13 0.02 250);
-  --primary: oklch(0.55 0.18 230);        /* #0369A1 slightly deeper blue for light */
-  --primary-foreground: oklch(0.98 0 0);
-  --secondary: oklch(0.93 0.01 240);      /* #EDF2F7 light grey */
-  --secondary-foreground: oklch(0.25 0.02 250);
-  --muted: oklch(0.93 0.01 240);
-  --muted-foreground: oklch(0.45 0.03 230); /* #64748B */
-  --accent: oklch(0.93 0.01 240);
-  --accent-foreground: oklch(0.13 0.02 250);
-  --destructive: oklch(0.55 0.22 27);
-  --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(0.87 0.01 240);         /* #CBD5E1 light border */
-  --input: oklch(0.93 0.01 240);
-  --ring: oklch(0.55 0.18 230);
-  --chart-1: oklch(0.55 0.18 230);
-  --chart-2: oklch(0.54 0.17 160);
-  --chart-3: oklch(0.55 0.22 27);
-  --chart-4: oklch(0.65 0.12 75);
-  --chart-5: oklch(0.45 0.03 230);
-  --sidebar: oklch(0.95 0.008 245);       /* #EEF2F7 sidebar light */
-  --sidebar-foreground: oklch(0.25 0.02 250);
-  --sidebar-primary: oklch(0.55 0.18 230);
-  --sidebar-primary-foreground: oklch(0.98 0 0);
-  --sidebar-accent: oklch(0.90 0.01 240);
-  --sidebar-accent-foreground: oklch(0.25 0.02 250);
-  --sidebar-border: oklch(0.87 0.01 240);
-  --sidebar-ring: oklch(0.55 0.18 230);
-}
-
-.dark {
-  /* ─── Finans Kodu 2.0 DARK Theme ──────────────────────────────── */
+  /* Finans Kodu 2.0 Dark Theme */
   --background: oklch(0.06 0.02 260);     /* #050810 */
   --foreground: oklch(0.95 0.01 240);     /* #F0F4F8 */
   --card: oklch(0.11 0.02 250);           /* #0D1117 */
@@ -129,8 +90,43 @@
   --popover: oklch(0.11 0.02 250);
   --popover-foreground: oklch(0.95 0.01 240);
   --primary: oklch(0.63 0.17 230);        /* #0EA5E9 Action Blue */
-  --primary-foreground: oklch(0.98 0 0);
+  --primary-foreground: oklch(0.98 0 0);  /* White */
   --secondary: oklch(0.14 0.02 245);      /* #141B24 */
+  --secondary-foreground: oklch(0.82 0.02 230);
+  --muted: oklch(0.14 0.02 245);
+  --muted-foreground: oklch(0.60 0.03 230); /* #8899AA */
+  --accent: oklch(0.14 0.02 245);
+  --accent-foreground: oklch(0.95 0.01 240);
+  --destructive: oklch(0.55 0.22 27);     /* #EF4444 */
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.20 0.02 240);         /* #1E2D3D */
+  --input: oklch(0.14 0.02 245);
+  --ring: oklch(0.63 0.17 230);           /* #0EA5E9 */
+  --chart-1: oklch(0.63 0.17 230);        /* Action Blue */
+  --chart-2: oklch(0.62 0.17 160);        /* Positive Green */
+  --chart-3: oklch(0.55 0.22 27);         /* Negative Red */
+  --chart-4: oklch(0.75 0.12 75);         /* Premium Gold */
+  --chart-5: oklch(0.60 0.03 230);        /* Muted */
+  --sidebar: oklch(0.06 0.02 260);
+  --sidebar-foreground: oklch(0.95 0.01 240);
+  --sidebar-primary: oklch(0.63 0.17 230);
+  --sidebar-primary-foreground: oklch(0.98 0 0);
+  --sidebar-accent: oklch(0.14 0.02 245);
+  --sidebar-accent-foreground: oklch(0.95 0.01 240);
+  --sidebar-border: oklch(0.20 0.02 240);
+  --sidebar-ring: oklch(0.63 0.17 230);
+}
+
+.dark {
+  --background: oklch(0.06 0.02 260);
+  --foreground: oklch(0.95 0.01 240);
+  --card: oklch(0.11 0.02 250);
+  --card-foreground: oklch(0.95 0.01 240);
+  --popover: oklch(0.11 0.02 250);
+  --popover-foreground: oklch(0.95 0.01 240);
+  --primary: oklch(0.63 0.17 230);
+  --primary-foreground: oklch(0.98 0 0);
+  --secondary: oklch(0.14 0.02 245);
   --secondary-foreground: oklch(0.82 0.02 230);
   --muted: oklch(0.14 0.02 245);
   --muted-foreground: oklch(0.60 0.03 230);
@@ -138,7 +134,7 @@
   --accent-foreground: oklch(0.95 0.01 240);
   --destructive: oklch(0.55 0.22 27);
   --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(0.20 0.02 240);         /* #1E2D3D */
+  --border: oklch(0.20 0.02 240);
   --input: oklch(0.14 0.02 245);
   --ring: oklch(0.63 0.17 230);
   --chart-1: oklch(0.63 0.17 230);

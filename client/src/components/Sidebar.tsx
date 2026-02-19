@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
-import { 
-  Home, ShoppingBag, FileText, BarChart3, MessageSquareText, 
+import {
+  Home, ShoppingBag, FileText, BarChart3, MessageSquareText,
   BookOpen, Menu, X, ChevronRight, Sun, Moon
 } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
@@ -9,19 +9,18 @@ import { useI18n } from "@/contexts/I18nContext";
 
 interface NavItem {
   href: string;
-  label: string;
+  labelKey: string;
   icon: typeof Home;
   isRoute?: boolean;
-  isExternal?: boolean;
 }
 
 const navItems: NavItem[] = [
-  { href: "/", label: "Ana Sayfa", icon: Home, isRoute: true },
-  { href: "#urunler", label: "Ürünler", icon: ShoppingBag },
-  { href: "#manifesto", label: "Manifesto", icon: FileText },
-  { href: "/blog", label: "Blog", icon: BookOpen, isRoute: true },
-  { href: "/analiz", label: "Finansal Analiz", icon: BarChart3, isRoute: true },
-  { href: "/kod-odasi", label: "Kod Odası", icon: MessageSquareText, isRoute: true },
+  { href: "/",          labelKey: "nav.home",     icon: Home,              isRoute: true },
+  { href: "#urunler",   labelKey: "nav.products", icon: ShoppingBag },
+  { href: "#manifesto", labelKey: "nav.manifesto",icon: FileText },
+  { href: "/blog",      labelKey: "nav.blog",     icon: BookOpen,          isRoute: true },
+  { href: "/analiz",    labelKey: "nav.analysis", icon: BarChart3,         isRoute: true },
+  { href: "/kod-odasi", labelKey: "nav.kodOdasi", icon: MessageSquareText, isRoute: true },
 ];
 
 export default function Sidebar() {
@@ -29,7 +28,9 @@ export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const { theme, toggleTheme, switchable } = useTheme();
-  const { language, setLanguage } = useI18n();
+  const { language, setLanguage, t } = useI18n();
+
+  const isDark = theme === "dark";
 
   useEffect(() => {
     const checkMobile = () => {
@@ -46,7 +47,6 @@ export default function Sidebar() {
     if (item.isRoute) {
       setLocation(item.href);
     } else {
-      // Section scroll - navigate to home first if not there
       if (location !== "/") {
         setLocation("/");
         setTimeout(() => {
@@ -67,39 +67,41 @@ export default function Sidebar() {
     return false;
   };
 
+  // Theme-reactive palette — sidebar uses explicit hex to avoid Tailwind dark: class conflicts
+  const pal = {
+    bg:          isDark ? "#050810" : "#EEF2F7",
+    border:      isDark ? "#1E2D3D" : "#CBD5E1",
+    text:        isDark ? "#8899AA" : "#64748B",
+    activeBg:    isDark ? "rgba(14,165,233,0.06)" : "rgba(59,130,246,0.08)",
+    activeBorder:isDark ? "#0EA5E9" : "#3B82F6",
+    activeColor: isDark ? "#0EA5E9" : "#2563EB",
+    hover:       isDark ? "#141B24" : "#E2E8F0",
+    mobileBg:    isDark ? "#0D1117" : "#FFFFFF",
+    mobileColor: isDark ? "#F0F4F8" : "#1E293B",
+  };
+
   return (
     <>
-      {/* Mobile Toggle Button */}
+      {/* Mobile Toggle */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed top-4 left-4 z-50 lg:hidden p-2.5 rounded-lg transition-colors"
-        style={{ 
-          background: '#0D1117', 
-          border: '1px solid #1E2D3D',
-          color: '#F0F4F8'
-        }}
+        className="fixed top-4 left-4 z-50 lg:hidden p-2.5 rounded-lg"
+        style={{ background: pal.mobileBg, border: `1px solid ${pal.border}`, color: pal.mobileColor }}
         aria-label={isOpen ? "Menüyü kapat" : "Menüyü aç"}
       >
         {isOpen ? <X size={20} /> : <Menu size={20} />}
       </button>
 
-      {/* Mobile Logo - top right */}
+      {/* Mobile Logo */}
       <div className="fixed top-4 right-4 z-50 lg:hidden">
         <a href="/" onClick={(e) => { e.preventDefault(); setLocation("/"); }}>
-          <img
-            src="/assets/fk-logo-new.png"
-            alt="Finans Kodu Logo"
-            className="h-8 w-auto"
-          />
+          <img src="/assets/fk-logo-new.png" alt="Finans Kodu Logo" className="h-8 w-auto" />
         </a>
       </div>
 
-      {/* Overlay for mobile */}
+      {/* Backdrop */}
       {isMobile && isOpen && (
-        <div 
-          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
-          onClick={() => setIsOpen(false)}
-        />
+        <div className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
       )}
 
       {/* Sidebar */}
@@ -107,29 +109,19 @@ export default function Sidebar() {
         className={`fixed top-0 left-0 h-full z-50 flex flex-col transition-transform duration-300 ${
           isMobile && !isOpen ? "-translate-x-full" : "translate-x-0"
         }`}
-        style={{ 
-          width: '220px',
-          background: '#050810',
-          borderRight: '1px solid #1E2D3D'
-        }}
+        style={{ width: "220px", background: pal.bg, borderRight: `1px solid ${pal.border}` }}
         role="navigation"
         aria-label="Ana navigasyon"
       >
         {/* Logo */}
-        <div className="p-5 pb-3 flex items-center gap-3" style={{ borderBottom: '1px solid #1E2D3D' }}>
+        <div className="p-5 pb-3 flex items-center gap-3" style={{ borderBottom: `1px solid ${pal.border}` }}>
           <a href="/" onClick={(e) => { e.preventDefault(); setLocation("/"); }} className="flex items-center gap-3">
-            <img
-              src="/assets/fk-logo-new.png"
-              alt="Finans Kodu Logo"
-              className="h-8 w-auto"
-            />
-            <span className="font-mono text-xs font-semibold tracking-[0.08em]" style={{ color: '#0EA5E9' }}>
-              FK
-            </span>
+            <img src="/assets/fk-logo-new.png" alt="Finans Kodu Logo" className="h-8 w-auto" />
+            <span className="font-mono text-xs font-semibold tracking-[0.08em]" style={{ color: pal.activeBorder }}>FK</span>
           </a>
         </div>
 
-        {/* Navigation Links */}
+        {/* Nav Links */}
         <nav className="flex-1 py-4 px-3 space-y-1">
           {navItems.map((item) => {
             const active = isActive(item);
@@ -137,77 +129,66 @@ export default function Sidebar() {
               <button
                 key={item.href}
                 onClick={() => handleNavClick(item)}
-                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-all duration-200 group ${
-                  active ? "" : "hover:bg-[#141B24]"
-                }`}
+                className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left group"
                 style={{
-                  background: active ? '#0EA5E910' : 'transparent',
-                  borderLeft: active ? '2px solid #0EA5E9' : '2px solid transparent',
-                  color: active ? '#0EA5E9' : '#8899AA',
+                  background: active ? pal.activeBg : "transparent",
+                  borderLeft: `2px solid ${active ? pal.activeBorder : "transparent"}`,
+                  color: active ? pal.activeColor : pal.text,
+                  transition: "all 0.15s ease",
                 }}
+                onMouseEnter={(e) => { if (!active) (e.currentTarget as HTMLElement).style.background = pal.hover; }}
+                onMouseLeave={(e) => { if (!active) (e.currentTarget as HTMLElement).style.background = "transparent"; }}
               >
                 <item.icon size={18} className="flex-shrink-0" />
-                <span className="text-sm font-medium font-sans">{item.label}</span>
-                {active && (
-                  <ChevronRight size={14} className="ml-auto opacity-60" />
-                )}
+                <span className="text-sm font-medium font-sans">{t(item.labelKey)}</span>
+                {active && <ChevronRight size={14} className="ml-auto opacity-60" />}
               </button>
             );
           })}
         </nav>
 
-        {/* Spacer - pushes controls to bottom */}
-        <div style={{ flexGrow: 1 }} />
+        <div className="flex-grow" />
 
-        {/* Theme & Language Controls */}
-        <div 
-          className="px-3 py-4 flex flex-col gap-3"
-          style={{ borderTop: '1px solid #1E2D3D' }}
-        >
-          {/* Theme Toggle */}
+        {/* Controls */}
+        <div className="px-3 py-4 flex flex-col gap-2" style={{ borderTop: `1px solid ${pal.border}` }}>
           {switchable && toggleTheme && (
             <button
               onClick={toggleTheme}
-              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-all duration-200 hover:bg-[#141B24]"
-              style={{ color: '#8899AA' }}
-              aria-label={theme === "dark" ? "Açık temaya geç" : "Koyu temaya geç"}
-              title={theme === "dark" ? "Açık temaya geç" : "Koyu temaya geç"}
+              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left"
+              style={{ color: pal.text }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = pal.hover; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; }}
+              aria-label={isDark ? t("theme.light") : t("theme.dark")}
             >
-              {theme === "dark" ? (
-                <Sun size={18} className="flex-shrink-0" />
-              ) : (
-                <Moon size={18} className="flex-shrink-0" />
-              )}
+              {isDark ? <Sun size={18} className="flex-shrink-0" /> : <Moon size={18} className="flex-shrink-0" />}
               <span className="text-sm font-medium font-sans">
-                {theme === "dark" ? "Açık Tema" : "Koyu Tema"}
+                {isDark ? t("theme.light") : t("theme.dark")}
               </span>
             </button>
           )}
 
-          {/* Language Toggle */}
           <button
             onClick={() => setLanguage(language === "tr" ? "en" : "tr")}
-            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-all duration-200 hover:bg-[#141B24]"
-            style={{ color: '#8899AA' }}
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left"
+            style={{ color: pal.text }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = pal.hover; }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; }}
             aria-label={language === "tr" ? "Switch to English" : "Türkçe'ye geç"}
-            title={language === "tr" ? "Switch to English" : "Türkçe'ye geç"}
           >
             <span className="flex-shrink-0 text-sm font-bold w-[18px] text-center">
               {language === "tr" ? "EN" : "TR"}
             </span>
             <span className="text-sm font-medium font-sans">
-              {language === "tr" ? "English" : "Türkçe"}
+              {language === "tr" ? t("language.en") : t("language.tr")}
             </span>
           </button>
         </div>
 
         {/* Footer */}
-        <div className="p-4" style={{ borderTop: '1px solid #1E2D3D' }}>
+        <div className="p-4" style={{ borderTop: `1px solid ${pal.border}` }}>
           <div className="flex items-center gap-2">
-            <div className="w-1.5 h-1.5 rounded-full" style={{ background: '#10B981' }} />
-            <span className="text-xs font-mono" style={{ color: '#8899AA' }}>
-              v2.0
-            </span>
+            <div className="w-1.5 h-1.5 rounded-full" style={{ background: "#10B981" }} />
+            <span className="text-xs font-mono" style={{ color: pal.text }}>v2.0</span>
           </div>
         </div>
       </aside>
