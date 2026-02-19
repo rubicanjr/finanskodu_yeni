@@ -1631,3 +1631,35 @@
 - [ ] Ticker şeridi scroll animasyonu çalışıyor mu
 - [ ] Tema toggle (açık/koyu) tüm sayfayı etkiliyor mu
 - [ ] Dil toggle (TR/EN) çalışıyor mu
+
+
+## files(1).zip Revize Analizi
+
+### Kritik Değişiklikler (KodOdasiNew.tsx)
+- [x] signInWithPopup → signInWithRedirect (Firebase authorized domains hatası düzeltmesi)
+- [x] TickerBand kaldırıldı (App.tsx'te global TradingViewTickerTape var)
+- [x] Tüm UI metinleri t() ile i18n destekli
+- [x] Inline hex renkler → CSS variables (--foreground, --background, --border, vb.)
+- [x] XSS koruması: textContent kullanımı (innerHTML yok)
+- [x] Rate limiting: 3 mesaj / 5 saniye
+- [x] getRedirectResult() ile redirect sonucunu yakalama
+
+### Sidebar.tsx Değişiklikleri
+- [x] Tema-reaktif palet: isDark kontrolü ile hex renkler
+- [x] Mobile toggle ve backdrop iyileştirmeleri
+- [x] Tüm nav item'lar t() ile çevrilmiş
+- [x] Theme/Language toggle'ları sidebar footer'da
+- [x] Versiyon badge: v2.0
+
+### Çeviri Dosyaları (tr.json, en.json)
+- [x] kodOdasi section eklendi (loginTitle, loginDesc, loginButton, vb.)
+- [x] theme ve language section'ları eklendi
+- [x] Tüm nav, hero, products, comparison, manifesto, blog, footer metinleri
+
+### Uygulama Adımları
+1. [x] KodOdasiNew.tsx'i yeni versiyonla değiştir
+2. [x] Sidebar.tsx'i yeni versiyonla değiştir
+3. [x] tr.json ve en.json'u güncelle
+4. [x] TypeScript hatalarını kontrol et (8 hata - eski backup dosyalarından, yeni kod çalışıyor)
+5. [x] Browser'da test et (Google redirect auth butonu görünüyor, i18n çalışıyor)
+6. [ ] Checkpoint kaydet

@@ -1,5 +1,6 @@
 {
   "nav": {
+    "home": "Home",
     "products": "Products",
     "manifesto": "Manifesto",
     "blog": "Blog",
@@ -8,28 +9,108 @@
     "kodOdasi": "Code Room"
   },
   "hero": {
-    "title": "The Code of Financial Freedom",
-    "subtitle": "Code every step on the path to financial independence with algorithmic thinking.",
-    "cta": "Explore Digital Products"
+    "eyebrow": "// FOR FINANCIAL EFFICIENCY",
+    "heading1": "Chaos Is Not Your Job.",
+    "heading2": "The Decision Is Yours,",
+    "heading3": "We Filter the Noise.",
+    "subtitle": "100+ tested AI tools, financial methodology and algorithmic analysis. You're the pilot; we handle the navigation.",
+    "cta1": "Explore Digital Tools",
+    "cta2": "Go to Code Room",
+    "terminal": {
+      "ready": "System Ready...",
+      "analyzing": "Analysis Starting...",
+      "loading": "Loading Data...",
+      "scanning": "Scanning Portfolio...",
+      "calculating": "Calculating Strategy..."
+    }
   },
   "products": {
-    "title": "Digital Products",
-    "subtitle": "Digital products to guide you on your journey to financial freedom",
+    "eyebrow": "// DIGITAL SHOWCASE",
+    "title": "Digital",
+    "titleHighlight": "Tools",
+    "subtitle": "100+ ready AI prompts, financial methodology and monthly strategy newsletter",
     "viewDetails": "View Details",
-    "comingSoon": "Coming Soon"
+    "comingSoon": "Coming Soon",
+    "goTo": "go to page",
+    "item1": {
+      "title": "AI Prompt Library",
+      "desc": "A collection of 100+ AI prompts specifically designed for finance professionals.",
+      "badge": "Use Now",
+      "journey": "START",
+      "cta": "Explore Prompts"
+    },
+    "item2": {
+      "title": "FINANS KODU: Order in Chaos",
+      "desc": "A comprehensive methodology and toolset to transform your financial operations.",
+      "badge": "Best Seller",
+      "journey": "CONTINUE",
+      "cta": "Explore the System"
+    },
+    "item3": {
+      "title": "Pro - Algorithmic Strategy & Analysis Newsletter",
+      "desc": "A comprehensive monthly newsletter with market direction, macro analysis and algorithmic signals.",
+      "badge": "Monthly Signal",
+      "journey": "ADVANCE",
+      "cta": "Join Newsletter"
+    }
+  },
+  "comparison": {
+    "eyebrow": "// CHAOS vs ORDER",
+    "title": "From Market Noise to",
+    "titleHighlight": "Strategy",
+    "subtitle": "Most investors get lost in chaos. Finans Kodu filters the noise and gives you a clear roadmap.",
+    "chaos": {
+      "title": "CHAOS",
+      "subtitle": "Traditional Approach",
+      "result": "Result: Loss & Stress",
+      "items": [
+        "News-driven trading",
+        "Emotional decisions",
+        "Herd mentality",
+        "Information overload",
+        "Mistimed entries & exits"
+      ]
+    },
+    "order": {
+      "title": "ORDER",
+      "subtitle": "AI-Powered Approach",
+      "result": "Result: Discipline & Profit",
+      "items": [
+        "AI-driven data analysis",
+        "Risk management algorithms",
+        "Automated signal generation",
+        "Technical + Fundamental analysis",
+        "Disciplined strategy"
+      ]
+    },
+    "cta": "Switch to Order"
   },
   "manifesto": {
-    "title": "Manifesto",
-    "problem": "Problem",
-    "problemText": "Financial markets are complex, access is limited, information asymmetry is high.",
-    "solution": "Solution",
-    "solutionText": "We code the path to financial independence with algorithmic thinking."
+    "eyebrow": "// MANIFESTO",
+    "title": "From Chaos to",
+    "titleHighlight": "Order",
+    "titleSuffix": "",
+    "subtitle": "We understand the daily struggle of finance professionals. Because we've been there too.",
+    "problem": {
+      "title": "Current State",
+      "subtitle": "Financial Chaos"
+    },
+    "solution": {
+      "title": "Finans Kodu Solution",
+      "subtitle": "Engineering Excellence"
+    },
+    "quote": "We save you time and speed. Because solving the complexity of finance requires",
+    "quoteHighlight": "engineering thinking",
+    "quoteEnd": ".",
+    "quoteAuthor": "— The Finans Kodu Team"
   },
   "blog": {
     "title": "Blog",
-    "subtitle": "Articles to guide you on your journey to financial freedom",
+    "subtitle": "In-depth content on algorithmic finance, artificial intelligence and productivity strategies",
     "readMore": "Read More",
-    "backToBlog": "Back to Blog"
+    "backToBlog": "Back to Blog",
+    "allPosts": "View all posts",
+    "titleHighlight": "Analysis"
   },
   "testimonials": {
     "title": "Testimonials",
@@ -40,23 +121,35 @@
     "subtitle": "The team to guide you on your journey to financial freedom"
   },
   "footer": {
-    "contact": "Contact",
-    "email": "Email",
-    "phone": "Phone",
-    "address": "Address",
+    "meetFounder": "Meet our Founding Strategist:",
+    "quickLinks": "Quick Links",
     "social": "Social Media",
-    "copyright": "© 2024 Finans Kodu. All rights reserved."
+    "followUs": "Follow us on social media!",
+    "newsletter": {
+      "title": "Stay Updated",
+      "subtitle": "Join our newsletter for new products, AI tips and productivity strategies.",
+      "placeholder": "Your email address",
+      "cta": "Join",
+      "success": "Newsletter subscription received! We will be in touch soon."
+    },
+    "copyright": "All rights reserved."
   },
   "kodOdasi": {
     "title": "Code Room",
-    "subtitle": "Let's progress together on the journey to financial freedom",
-    "loginRequired": "Login to join the chat",
-    "loginButton": "Login",
-    "messagePlaceholder": "Type your message...",
+    "subtitle": "Finance community — Real-time chat",
+    "loginTitle": "Welcome to Code Room",
+    "loginDesc": "Sign in with your Google account to discuss investments, stock market and economy together.",
+    "loginButton": "Sign in with Google",
+    "loginTerms": "By signing in you accept the terms of use.",
+    "messagePlaceholder": "Type your message... (Enter to send)",
     "send": "Send",
     "sending": "Sending...",
-    "loading": "Loading...",
-    "noMessages": "No messages yet. Send the first message!"
+    "loading": "Loading messages...",
+    "noMessages": "No messages yet. Be the first to send one!",
+    "signOut": "Sign Out",
+    "rateLimitError": "⚠️ You're sending messages too fast. Please wait.",
+    "sendError": "Could not send message. Please try again.",
+    "loadError": "Could not load messages. Please refresh the page."
   },
   "theme": {
     "light": "Light Theme",

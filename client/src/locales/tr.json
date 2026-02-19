@@ -1,5 +1,6 @@
 {
   "nav": {
+    "home": "Ana Sayfa",
     "products": "Ürünler",
     "manifesto": "Manifesto",
     "blog": "Blog",
@@ -8,28 +9,108 @@
     "kodOdasi": "Kod Odası"
   },
   "hero": {
-    "title": "Finansal Özgürlüğün Kodu",
-    "subtitle": "Algoritmik düşünce ile finansal bağımsızlığa giden yolda, her adımı kodlayın.",
-    "cta": "Dijital Ürünleri Keşfet"
+    "eyebrow": "// FİNANSAL VERİMLİLİK İÇİN",
+    "heading1": "Kaos Senin İşin Değil.",
+    "heading2": "Karar Senin,",
+    "heading3": "Gürültüyü Biz Filtreleriz.",
+    "subtitle": "100+ test edilmiş AI aracı, finansal metodoloji ve algoritmik analiz. Sen pilotsun; navigasyonu biz üstleniyoruz.",
+    "cta1": "Dijital Araçları Keşfet",
+    "cta2": "Kod Odası'na Git",
+    "terminal": {
+      "ready": "Sistem Hazır...",
+      "analyzing": "Analiz Başlıyor...",
+      "loading": "Veriler Yükleniyor...",
+      "scanning": "Portföy Taranıyor...",
+      "calculating": "Strateji Hesaplanıyor..."
+    }
   },
   "products": {
-    "title": "Dijital Ürünler",
-    "subtitle": "Finansal özgürlük yolculuğunuzda size rehberlik edecek dijital ürünler",
+    "eyebrow": "// DİJİTAL VİTRİN",
+    "title": "Dijital",
+    "titleHighlight": "Araçlar",
+    "subtitle": "100+ hazır AI prompt, finansal metodoloji ve aylık strateji bülteni",
     "viewDetails": "Detayları Gör",
-    "comingSoon": "Yakında"
+    "comingSoon": "Yakında",
+    "goTo": "sayfasına git",
+    "item1": {
+      "title": "AI Prompt Kütüphanesi",
+      "desc": "Finans profesyonelleri için özel olarak tasarlanmış 100+ yapay zeka prompt koleksiyonu.",
+      "badge": "Hemen Kullan",
+      "journey": "BAŞLA",
+      "cta": "Prompt'ları Keşfet"
+    },
+    "item2": {
+      "title": "FİNANS KODU: Kaos İçinde Düzen",
+      "desc": "Finansal operasyonlarınızı dönüştürecek kapsamlı metodoloji ve araç seti.",
+      "badge": "Çok Satan",
+      "journey": "DEVAM ET",
+      "cta": "Sistemi İncele"
+    },
+    "item3": {
+      "title": "Pro - Algoritmik Strateji ve Analiz Bülteni",
+      "desc": "Piyasa yönü, makro analizler ve algoritmik sinyaller içeren kapsamlı aylık bülten.",
+      "badge": "Aylık Sinyal",
+      "journey": "İLERLE",
+      "cta": "Bültene Katıl"
+    }
+  },
+  "comparison": {
+    "eyebrow": "// KAOS vs DÜZEN",
+    "title": "Piyasa Gürültüsünden",
+    "titleHighlight": "Stratejiye",
+    "subtitle": "Çoğu yatırımcı kaosta kaybolur. Finans Kodu, gürültüyü filtreleyerek sana net bir yol haritası sunar.",
+    "chaos": {
+      "title": "KAOS",
+      "subtitle": "Geleneksel Yaklaşım",
+      "result": "Sonuç: Kayıp & Stres",
+      "items": [
+        "Haberlere göre alım-satım",
+        "Duygusal kararlar",
+        "Sürü psikolojisi",
+        "Bilgi kirliliği",
+        "Zamansız giriş-çıkış"
+      ]
+    },
+    "order": {
+      "title": "DÜZEN",
+      "subtitle": "AI Destekli Yaklaşım",
+      "result": "Sonuç: Disiplin & Kazanç",
+      "items": [
+        "AI destekli veri analizi",
+        "Risk yönetimi algoritmaları",
+        "Otomatik sinyal üretimi",
+        "Teknik + Temel analiz",
+        "Disiplinli strateji"
+      ]
+    },
+    "cta": "Düzene Geç"
   },
   "manifesto": {
-    "title": "Manifesto",
-    "problem": "Sorun",
-    "problemText": "Finansal piyasalar karmaşık, erişim sınırlı, bilgi asimetrisi yüksek.",
-    "solution": "Çözüm",
-    "solutionText": "Algoritmik düşünce ile finansal bağımsızlığa giden yolu kodluyoruz."
+    "eyebrow": "// MANİFESTO",
+    "title": "Kaos'tan",
+    "titleHighlight": "Düzen",
+    "titleSuffix": "'e",
+    "subtitle": "Finansçıların yaşadığı günlük mücadeleyi anlıyoruz. Çünkü biz de oradaydık.",
+    "problem": {
+      "title": "Mevcut Durum",
+      "subtitle": "Finansal Kaos"
+    },
+    "solution": {
+      "title": "Finans Kodu Çözümü",
+      "subtitle": "Mühendislik Harikası"
+    },
+    "quote": "Size zaman ve hız kazandırıyoruz. Çünkü finansın karmaşıklığını çözmek için",
+    "quoteHighlight": "mühendislik düşüncesi",
+    "quoteEnd": "gerekir.",
+    "quoteAuthor": "— Finans Kodu Ekibi"
   },
   "blog": {
     "title": "Blog",
-    "subtitle": "Finansal özgürlük yolculuğunda size rehberlik edecek makaleler",
+    "subtitle": "Algoritmik finans, yapay zeka ve verimlilik stratejileri hakkında derinlemesine içerikler",
     "readMore": "Devamını Oku",
-    "backToBlog": "Blog'a Dön"
+    "backToBlog": "Blog'a Dön",
+    "allPosts": "Tüm yazıları görüntüle",
+    "titleHighlight": "Analizler"
   },
   "testimonials": {
     "title": "Kullanıcı Yorumları",
@@ -40,23 +121,35 @@
     "subtitle": "Finansal özgürlük yolculuğunuzda size rehberlik edecek ekip"
   },
   "footer": {
-    "contact": "İletişim",
-    "email": "E-posta",
-    "phone": "Telefon",
-    "address": "Adres",
+    "meetFounder": "Kurucu Stratejistimizle tanışın:",
+    "quickLinks": "Hızlı Linkler",
     "social": "Sosyal Medya",
-    "copyright": "© 2024 Finans Kodu. Tüm hakları saklıdır."
+    "followUs": "Bizi sosyal medyada takip edin!",
+    "newsletter": {
+      "title": "Güncel Kalın",
+      "subtitle": "Yeni ürünler, AI ipuçları ve verimlilik stratejileri için e-bültenimize katılın.",
+      "placeholder": "E-posta adresiniz",
+      "cta": "Katıl",
+      "success": "E-bülten kaydınız alındı! Yakında sizinle iletişime geçeceğiz."
+    },
+    "copyright": "Tüm hakları saklıdır."
   },
   "kodOdasi": {
     "title": "Kod Odası",
-    "subtitle": "Finansal özgürlük yolculuğunda birlikte ilerleyelim",
-    "loginRequired": "Sohbet'e katılmak için giriş yapın",
-    "loginButton": "Giriş Yap",
-    "messagePlaceholder": "Mesajınızı yazın...",
+    "subtitle": "Finans topluluğu — Gerçek zamanlı sohbet",
+    "loginTitle": "Kod Odası'na Hoş Geldiniz",
+    "loginDesc": "Yatırım, borsa ve ekonomiyi birlikte tartışmak için Google hesabınızla giriş yapın.",
+    "loginButton": "Google ile Giriş Yap",
+    "loginTerms": "Giriş yaparak kullanım şartlarını kabul etmiş olursunuz.",
+    "messagePlaceholder": "Mesajınızı yazın... (Enter ile gönder)",
     "send": "Gönder",
     "sending": "Gönderiliyor...",
-    "loading": "Yükleniyor...",
-    "noMessages": "Henüz mesaj yok. İlk mesajı siz gönderin!"
+    "loading": "Mesajlar yükleniyor...",
+    "noMessages": "Henüz mesaj yok. İlk mesajı siz gönderin!",
+    "signOut": "Çıkış",
+    "rateLimitError": "⚠️ Çok hızlı mesaj gönderiyorsunuz. Biraz bekleyin.",
+    "sendError": "Mesaj gönderilemedi. Tekrar deneyin.",
+    "loadError": "Mesajlar yüklenemedi. Sayfayı yenileyin."
   },
   "theme": {
     "light": "Açık Tema",
