@@ -41,7 +41,7 @@ export default function TradingViewTickerTape() {
         }
       ],
       "showSymbolLogo": true,
-      "isTransparent": true,
+      "isTransparent": false,
       "displayMode": "adaptive",
       "colorTheme": "dark",
       "locale": "tr"

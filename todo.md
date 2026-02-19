@@ -1558,3 +1558,27 @@
 - [ ] Tüm UI öğelerinde t() fonksiyonunu kullan (opsiyonel - şu an sadece altyapı hazır)
 - [ ] Kod Odası başlıklarını çevir
 - [ ] Dil değişimi tüm bileşenlerde çalışıyor mu test et
+
+## Kritik Düzeltmeler (pasted_content_2.txt)
+
+### 1. Ticker Şeridi Şeffaflık Problemi (Kalıcı Çözüm)
+- [x] CSS specificity artır (inline style ile zorla)
+- [x] z-index: 100 ve background: #0D1117 uygula
+- [x] Gradient shadow div ekle (::after yerine React div)
+- [x] isTransparent: false yapıldı
+- [x] backdropFilter: blur(12px) eklendi
+- [ ] Scroll sırasında ticker sayfa içeriğini kapatıyor mu test et
+
+### 2. Tema ve Dil Toggle'larını Sidebar'a Taşıma
+- [x] ThemeProvider ve I18nProvider tüm uygulamayı sarıyor (App.tsx'te doğrulandı)
+- [x] Toggle bileşenlerini Navigation'dan kaldır
+- [x] Toggle bileşenlerini Sidebar'ın en altına ekle (Sun/Moon + EN/TR)
+- [x] Sidebar CSS güncelle (flex-grow spacer ile toggle'ları alta it)
+- [ ] Tema değiştirme butonu çalışıyor ve tüm siteyi etkiliyor mu test et
+- [ ] Dil değiştirme butonu çalışıyor ve tüm metinleri çeviriyor mu test et
+
+### 3. Kod Odası 404 Hatası
+- [x] /kod-odasi rotası App.tsx'te tanımlı (satır 33: Route path="/kod-odasi" component={KodOdasiNew})
+- [x] KodOdasiNew bileşeni doğru import ediliyor (satır 12)
+- [x] Sol menüdeki Kod Odası linki doğru çalışıyor (tarayıcıda test edildi)
+- [x] Sayfa "Kod Odası'na Hoş Geldiniz" gösteriyor (404 yok!)

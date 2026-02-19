@@ -10,11 +10,8 @@
 */
 
 import { useState, useEffect } from "react";
-import { Menu, X, Sun, Moon } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useTheme } from "@/contexts/ThemeContext";
-import { useI18n } from "@/contexts/I18nContext";
-
 const navLinks = [
   { href: "#urunler", label: "Ürünler" },
   { href: "#manifesto", label: "Manifesto" },
@@ -22,44 +19,6 @@ const navLinks = [
   { href: "/analiz", label: "Finansal Analiz", isRoute: true },
   { href: "#iletisim", label: "İletişim" },
 ];
-
-// Language Toggle Button Component
-function LanguageToggleButton() {
-  const { language, setLanguage } = useI18n();
-  
-  return (
-    <button
-      onClick={() => setLanguage(language === "tr" ? "en" : "tr")}
-      className="p-2 text-foreground hover:text-primary transition-colors rounded-lg hover:bg-accent text-sm font-medium"
-      aria-label={language === "tr" ? "Switch to English" : "Türkçe'ye geç"}
-      title={language === "tr" ? "Switch to English" : "Türkçe'ye geç"}
-    >
-      {language === "tr" ? "EN" : "TR"}
-    </button>
-  );
-}
-
-// Theme Toggle Button Component
-function ThemeToggleButton() {
-  const { theme, toggleTheme, switchable } = useTheme();
-  
-  if (!switchable || !toggleTheme) return null;
-  
-  return (
-    <button
-      onClick={toggleTheme}
-      className="p-2 text-foreground hover:text-primary transition-colors rounded-lg hover:bg-accent"
-      aria-label={theme === "dark" ? "Açık temaya geç" : "Koyu temaya geç"}
-      title={theme === "dark" ? "Açık temaya geç" : "Koyu temaya geç"}
-    >
-      {theme === "dark" ? (
-        <Sun size={20} aria-hidden="true" />
-      ) : (
-        <Moon size={20} aria-hidden="true" />
-      )}
-    </button>
-  );
-}
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -141,15 +100,8 @@ export default function Navigation() {
           />
         </a>
 
-        {/* Language, Theme Toggle & Mobile Menu Buttons */}
+        {/* Mobile Menu Button */}
         <div className="flex items-center gap-2">
-          {/* Language Toggle Button */}
-          <LanguageToggleButton />
-          
-          {/* Theme Toggle Button */}
-          <ThemeToggleButton />
-          
-          {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="md:hidden p-2 text-foreground hover:text-primary transition-colors"

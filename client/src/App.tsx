@@ -45,8 +45,30 @@ function App() {
           <TooltipProvider>
           <Toaster />
           {/* TradingView Ticker Tape - Fixed at top */}
-          <div className="fixed top-0 left-0 right-0 z-30 lg:left-[220px]">
+          <div 
+            className="fixed top-0 left-0 right-0 lg:left-[220px]"
+            style={{
+              zIndex: 100,
+              background: '#0D1117',
+              borderBottom: '1px solid #1E2D3D',
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+            }}
+          >
             <TradingViewTickerTape />
+            {/* Gradient shadow below ticker */}
+            <div 
+              style={{
+                position: 'absolute',
+                bottom: '-12px',
+                left: 0,
+                right: 0,
+                height: '12px',
+                background: 'linear-gradient(to bottom, #0D1117, transparent)',
+                pointerEvents: 'none',
+                zIndex: 101,
+              }}
+            />
           </div>
           {/* Sidebar Navigation */}
           <Sidebar />
