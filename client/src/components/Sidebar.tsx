@@ -27,7 +27,7 @@ export default function Sidebar() {
   const [location, setLocation] = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const { theme, toggleTheme, switchable } = useTheme();
+  const { theme, toggleTheme } = useTheme();
   const { language, setLanguage, t } = useI18n();
 
   const isDark = theme === "dark";
@@ -151,7 +151,7 @@ export default function Sidebar() {
 
         {/* Controls */}
         <div className="px-3 py-4 flex flex-col gap-2" style={{ borderTop: `1px solid ${pal.border}` }}>
-          {switchable && toggleTheme && (
+          {toggleTheme && (
             <button
               onClick={toggleTheme}
               className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left"

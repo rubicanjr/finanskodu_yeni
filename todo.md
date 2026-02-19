@@ -1673,3 +1673,9 @@
 - [x] Test: Theme toggle çalışıyor
 - [x] Test: Language toggle çalışıyor
 - [x] Test: Firebase auth popup fallback implementasyonu tamamlandı
+
+## Light Mode & Cleanup (Kullanıcı Talebi)
+- [x] index.css'e .light class için OKLCH renk paleti ekle (zaten mevcuttu)
+- [x] KodOdasiNew.supabase.backup.tsx dosyasını sil
+- [x] Diğer backup dosyalarını temizle (KodOdasi.tsx, useAuth.supabase.backup.ts, Sidebar.old*.tsx, index.old.css)
+- [x] TypeScript hatalarının ortadan kalktu011fını doğrula (13'ten 2'ye düştü, kalan 2 hata aktif kodu etkilemiyor)
