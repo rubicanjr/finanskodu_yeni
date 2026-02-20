@@ -1679,3 +1679,28 @@
 - [x] KodOdasiNew.supabase.backup.tsx dosyasını sil
 - [x] Diğer backup dosyalarını temizle (KodOdasi.tsx, useAuth.supabase.backup.ts, Sidebar.old*.tsx, index.old.css)
 - [x] TypeScript hatalarının ortadan kalktu011fını doğrula (13'ten 2'ye düştü, kalan 2 hata aktif kodu etkilemiyor)
+## Kapsamlı Modernizasyon (pasted_content_5.txt)
+### Görev 1: Global State ve Uygulama Yapısını Güçlendir
+- [x] 1.1: ThemeContext.tsx'i güncelle (mounted state, SSR uyumluluk, setTheme eklendi)
+- [x] 1.2: I18nContext.tsx'i güncelle (useCallback optimizasyonları, document.lang)
+- [x] 1.3: App.tsx'i güncelle (HelmetProvider eklendi, invalid props kaldırıldı, CSS variables)
+- [x] 1.4: index.css'i güncelle (transition-colors duration-200 eklendi)
+
+### Görev 2: Çekirdek Mantık (Hooks) Oluşturma
+- [x] 2.1: hooks/useAuth.ts oluştur (popup/redirect fallback, getRedirectResult, mobile detection)
+- [x] 2.2: hooks/useChat.ts oluştur (Firestore real-time messaging, MESSAGE_LIMIT=100)
+
+### Görev 3: Arayüz Bileşenleri Oluştur/Güncelle
+- [x] 3.1: components/TickerTape.tsx oluştur (TradingView widget, theme-aware, transparent)
+- [x] 3.2: components/MobileNav.tsx oluştur (hamburger menu, overlay, slide-in)
+- [x] 3.3: components/SidebarContent.tsx oluştur (shared sidebar logic, nav items)
+- [x] 3.4: components/Sidebar.tsx'i yeniden yapılandır (desktop only wrapper)
+- [x] 3.5: components/ThemeToggle.tsx oluştur (Sun/Moon icons, aria-label)
+- [x] 3.6: components/LanguageToggle.tsx oluştur (TR/EN buttons)
+
+### Görev 4: Kod Odası Yeniden Tasarım
+- [x] 4.1: pages/KodOdasiNew.tsx (mevcut versiyon daha kapsamlı, korundu)
+- [x] 4.2: components/kod-odasi/ChatLayout.tsx oluştur (simplified version, auto-scroll)
+- [x] 4.3: components/kod-odasi/MessageGroup.tsx oluştur (user grouping, date-fns)
+- [x] 4.4: components/kod-odasi/ChatInput.tsx oluştur (Enter to send, disabled state)
+- [x] 4.5: components/kod-odasi/LoginScreen.tsx oluştur (Google sign-in UI)
