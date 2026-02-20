@@ -1720,3 +1720,15 @@
 - [ ] 3.5: Footer.tsx - t() ile güncelle (kalan iş)
 - [ ] 3.6: Diğer bileşenleri kontrol et (kalan iş)
 - [x] 3.7: tr.json ve en.json'a eksik çevirileri ekle (zaten eksiksiz)
+
+## RAR Dosyası Revizyonu (K## RAR Dosyası Revizyonu (Kullanıcı Talebi)
+- [x] App.tsx farklarını incele ve uygula (ticker tape mobilde gizlendi)
+- [x] ThemeContext.tsx ve ThemeToggle.tsx farklarını incele (mevcut versiyon daha iyi, atlandı)
+- [ ] Navigation.tsx, Sidebar.tsx, MobileBottomNav.tsx farklarını incele (kısmen)
+- [ ] TradingViewTickerTape.tsx farklarını incele (kısmen)
+- [ ] index.css farklarını incele (kısmen)
+- [x] tr.json ve en.json çeviri farklarını incele (eksik çeviriler eklendi)
+- [ ] AnalysisPage.tsx, BlogDetailPage.tsx, BlogListPage.tsx farklarını incele (kalan iş)
+- [ ] KodOdasiNew.tsx farklarını incele (kalan iş)
+- [ ] Tüm değişiklikleri test etrklar\u0131n\u0131 incele
+- [ ] T\u00fcm de\u011fi\u015fiklikleri test et

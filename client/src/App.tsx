@@ -49,9 +49,9 @@ function App() {
             <TooltipProvider>
               <Toaster />
               <div className="min-h-screen bg-background text-foreground">
-                {/* TradingView Ticker Tape - Fixed at top */}
-                <div 
-                  className="fixed top-0 left-0 right-0 lg:left-[220px]"
+                {/* TradingView Ticker Tape - Fixed at top, hidden on mobile */}
+                <div
+                  className="hidden md:block fixed top-0 left-0 right-0 lg:left-[220px]"
                   style={{
                     zIndex: 100,
                     background: 'var(--background)',

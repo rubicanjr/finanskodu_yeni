@@ -6,7 +6,13 @@
     "blog": "Blog",
     "analysis": "Finansal Analiz",
     "contact": "İletişim",
-    "kodOdasi": "Kod Odası"
+    "kodOdasi": "Kod Odası",
+    "ariaLabel": "Ana navigasyon",
+    "goToPage": "sayfasına git",
+    "goToSection": "bölümüne git",
+    "closeMenu": "Menüyü kapat",
+    "openMenu": "Menüyü aç",
+    "mobileMenu": "Mobil navigasyon menüsü"
   },
   "hero": {
     "eyebrow": "// FİNANSAL VERİMLİLİK İÇİN",
@@ -110,7 +116,14 @@
     "readMore": "Devamını Oku",
     "backToBlog": "Blog'a Dön",
     "allPosts": "Tüm yazıları görüntüle",
-    "titleHighlight": "Analizler"
+    "titleHighlight": "Analizler",
+    "pageSubtitle": "Finans, yatırım, otomasyon ve yapay zeka konularında güncel içerikler",
+    "noResults": "Bu kategoride henüz içerik bulunmuyor.",
+    "allCategories": "Tümü",
+    "loading": "Yükleniyor...",
+    "notFound": "Blog yazısı bulunamadı",
+    "notFoundDesc": "Aradığınız blog yazısı mevcut değil veya kaldırılmış olabilir.",
+    "backToList": "Blog listesine dön"
   },
   "testimonials": {
     "title": "Kullanıcı Yorumları",
@@ -149,7 +162,15 @@
     "signOut": "Çıkış",
     "rateLimitError": "⚠️ Çok hızlı mesaj gönderiyorsunuz. Biraz bekleyin.",
     "sendError": "Mesaj gönderilemedi. Tekrar deneyin.",
-    "loadError": "Mesajlar yüklenemedi. Sayfayı yenileyin."
+    "loadError": "Mesajlar yüklenemedi. Sayfayı yenileyin.",
+    "tabs": {
+      "general": "Genel",
+      "bugs": "Hata",
+      "performance": "Performans",
+      "ui": "Arayüz Tasarımı"
+    },
+    "newPost": "Yeni Gönderi",
+    "postPlaceholder": "Düşüncelerinizi paylaşın..."
   },
   "theme": {
     "light": "Açık Tema",
@@ -160,5 +181,21 @@
     "tr": "Türkçe",
     "en": "English",
     "toggle": "Dili Değiştir"
+  },
+  "mobile": {
+    "assistant": "Asistan",
+    "navigation": "Mobil navigasyon"
+  },
+  "analysis": {
+    "maintenance": {
+      "title": "Bakım Çalışması",
+      "subtitle": "Finansal Analiz aracımız şu anda bakımdadır.",
+      "description": "Daha güçlü ve doğru analizler sunabilmek için sistemlerimizi güncelliyoruz. Kısa süre içinde tekrar hizmetinizde olacağız.",
+      "eta": "Tahmini dönüş: Yakında",
+      "backHome": "Ana Sayfaya Dön"
+    }
+  },
+  "accessibility": {
+    "skipToContent": "Ana içeriğe atla"
   }
 }

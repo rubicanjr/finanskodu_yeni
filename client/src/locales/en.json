@@ -6,7 +6,13 @@
     "blog": "Blog",
     "analysis": "Financial Analysis",
     "contact": "Contact",
-    "kodOdasi": "Code Room"
+    "kodOdasi": "Code Room",
+    "ariaLabel": "Main navigation",
+    "goToPage": "go to page",
+    "goToSection": "go to section",
+    "closeMenu": "Close menu",
+    "openMenu": "Open menu",
+    "mobileMenu": "Mobile navigation menu"
   },
   "hero": {
     "eyebrow": "// FOR FINANCIAL EFFICIENCY",
@@ -110,7 +116,14 @@
     "readMore": "Read More",
     "backToBlog": "Back to Blog",
     "allPosts": "View all posts",
-    "titleHighlight": "Analysis"
+    "titleHighlight": "Analysis",
+    "pageSubtitle": "Latest articles on finance, investment, automation and artificial intelligence",
+    "noResults": "No content found in this category.",
+    "allCategories": "All",
+    "loading": "Loading...",
+    "notFound": "Blog post not found",
+    "notFoundDesc": "The blog post you're looking for doesn't exist or has been removed.",
+    "backToList": "Back to blog list"
   },
   "testimonials": {
     "title": "Testimonials",
@@ -149,7 +162,15 @@
     "signOut": "Sign Out",
     "rateLimitError": "⚠️ You're sending messages too fast. Please wait.",
     "sendError": "Could not send message. Please try again.",
-    "loadError": "Could not load messages. Please refresh the page."
+    "loadError": "Could not load messages. Please refresh the page.",
+    "tabs": {
+      "general": "General",
+      "bugs": "Bugs",
+      "performance": "Performance",
+      "ui": "UI Design"
+    },
+    "newPost": "New Post",
+    "postPlaceholder": "Share your thoughts..."
   },
   "theme": {
     "light": "Light Theme",
@@ -160,5 +181,21 @@
     "tr": "Türkçe",
     "en": "English",
     "toggle": "Change Language"
+  },
+  "mobile": {
+    "assistant": "Assistant",
+    "navigation": "Mobile navigation"
+  },
+  "analysis": {
+    "maintenance": {
+      "title": "Under Maintenance",
+      "subtitle": "Our Financial Analysis tool is currently under maintenance.",
+      "description": "We are upgrading our systems to provide more powerful and accurate analyses. We will be back in service shortly.",
+      "eta": "Estimated return: Soon",
+      "backHome": "Back to Home"
+    }
+  },
+  "accessibility": {
+    "skipToContent": "Skip to main content"
   }
 }
