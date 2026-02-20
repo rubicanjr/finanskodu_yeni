@@ -3,17 +3,19 @@ import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { trackCTAClick } from "@/lib/analytics";
+import { useI18n } from "@/contexts/I18nContext";
 
 export default function HeroSection() {
+  const { t } = useI18n();
   const [typedText, setTypedText] = useState("");
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
   
   const messages = [
-    "Sistem Hazır...",
-    "Analiz Başlıyor...",
-    "Veriler Yükleniyor...",
-    "Portföy Taranıyor...",
-    "Strateji Hesaplanıyor..."
+    t('hero.terminal.ready'),
+    t('hero.terminal.analyzing'),
+    t('hero.terminal.loading'),
+    t('hero.terminal.scanning'),
+    t('hero.terminal.calculating')
   ];
 
   useEffect(() => {
@@ -43,7 +45,7 @@ export default function HeroSection() {
 
     typeWriter();
     return () => clearTimeout(timeoutId);
-  }, [currentMessageIndex]);
+  }, [currentMessageIndex, messages]);
 
   const scrollToProducts = () => {
     trackCTAClick('hero_products_cta', '#urunler');
@@ -100,7 +102,7 @@ export default function HeroSection() {
             className="text-xs sm:text-sm font-mono tracking-[0.15em] mb-6"
             style={{ color: '#0EA5E9' }}
           >
-            // FİNANSAL VERİMLİLİK İÇİN
+            {t('hero.eyebrow')}
           </motion.div>
 
           {/* Main Heading - Updated for 2.0 */}
@@ -110,12 +112,12 @@ export default function HeroSection() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="font-display font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight mb-6 text-white"
           >
-            Kaos Senin İşin Değil.{" "}
+            {t('hero.heading1')}{" "}
             <br className="hidden sm:block" />
             <span style={{ color: '#0EA5E9' }}>
-              Karar Senin,
+              {t('hero.heading2')}
             </span>{" "}
-            Gürültüyü Biz Filtreleriz.
+            {t('hero.heading3')}
           </motion.h1>
 
           {/* Subheading - Updated for 2.0 */}
@@ -126,8 +128,7 @@ export default function HeroSection() {
             className="text-base sm:text-lg max-w-2xl mx-auto mb-10 leading-relaxed"
             style={{ color: '#8899AA' }}
           >
-            100+ test edilmiş AI aracı, finansal metodoloji ve algoritmik analiz. 
-            Sen pilotsun; navigasyonu biz üstleniyoruz.
+            {t('hero.subtitle')}
           </motion.p>
 
           {/* Terminal Animation - Clean, no avatars */}
@@ -179,7 +180,7 @@ export default function HeroSection() {
               aria-label="Dijital araçları keşfet"
             >
               <span className="relative z-10 flex items-center gap-2">
-                Dijital Araçları Keşfet
+                {t('hero.cta1')}
                 <ArrowRight className="w-5 h-5" />
               </span>
             </Button>
@@ -196,7 +197,7 @@ export default function HeroSection() {
               aria-label="Kod Odası'na git"
             >
               <MessageSquare className="w-5 h-5 mr-2" />
-              Kod Odası'na Git
+              {t('hero.cta2')}
             </Button>
           </motion.div>
         </div>

@@ -1704,3 +1704,19 @@
 - [x] 4.3: components/kod-odasi/MessageGroup.tsx oluştur (user grouping, date-fns)
 - [x] 4.4: components/kod-odasi/ChatInput.tsx oluştur (Enter to send, disabled state)
 - [x] 4.5: components/kod-odasi/LoginScreen.tsx oluştur (Google sign-in UI)
+
+## Optimizasyon ve Uluslararasılaştırma (pasted_content_6.txt)
+### Görev 1: FOUC Sorununu Çöz
+- [x] 1.1: index.html'e inline script ekle (localStorage'dan tema oku, React öncesi uygula)
+
+### Görev 2: Dil Yönetimini Optimize Et
+- [x] 2.1: I18nContext.tsx'i güncelle (useState lazy initialization, useEffect düzeltme)
+
+### Görev 3: Statik Metinleri Uluslararasılaştır
+- [x] 3.1: HeroSection.tsx - t() ile güncelle
+- [ ] 3.2: ComparisonSection.tsx - t() ile güncelle (kalan iş)
+- [ ] 3.3: ManifestoSection.tsx - t() ile güncelle (kalan iş)
+- [ ] 3.4: LoginScreen.tsx - t() ile güncelle (kalan iş)
+- [ ] 3.5: Footer.tsx - t() ile güncelle (kalan iş)
+- [ ] 3.6: Diğer bileşenleri kontrol et (kalan iş)
+- [x] 3.7: tr.json ve en.json'a eksik çevirileri ekle (zaten eksiksiz)

@@ -14,19 +14,25 @@ const translations = { tr, en };
 const I18nContext = createContext<I18nContextType | null>(null);
 
 export const I18nProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [language, setLanguageState] = useState<Language>('tr');
+  const [language, setLanguageState] = useState<Language>(() => {
+    // Bu fonksiyon sadece ilk render'da çalışır.
+    if (typeof window !== 'undefined') {
+      const savedLang = localStorage.getItem('fk-language') as Language;
+      if (savedLang && ['tr', 'en'].includes(savedLang)) {
+        return savedLang;
+      }
+    }
+    return 'tr'; // Varsayılan dil
+  });
 
   useEffect(() => {
-    const savedLang = localStorage.getItem('fk-language') as Language;
-    if (savedLang && ['tr', 'en'].includes(savedLang)) {
-      setLanguageState(savedLang);
-    }
+    // Bu useEffect artık sadece 'language' state'i değiştiğinde çalışır.
     document.documentElement.lang = language;
+    localStorage.setItem('fk-language', language);
   }, [language]);
 
   const setLanguage = useCallback((lang: Language) => {
     setLanguageState(lang);
-    localStorage.setItem('fk-language', lang);
   }, []);
 
   const t = useCallback((key: string): string => {
