@@ -6,18 +6,30 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Sidebar from '@/components/Sidebar';
 import TradingViewTickerTape from '@/components/TradingViewTickerTape';
 import { Route, Switch, useLocation } from 'wouter';
-import { useEffect } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
 import { trackPageView } from '@/lib/analytics';
 import ErrorBoundary from './components/ErrorBoundary';
 import DualPersonaWidget from './components/DualPersonaWidget';
 
-// Sayfaları import et
-import Home from '@/pages/Home';
-import AnalysisPage from '@/pages/AnalysisPage';
-import BlogListPage from '@/pages/BlogListPage';
-import BlogDetailPage from '@/pages/BlogDetailPage';
-import KodOdasiNew from '@/pages/KodOdasiNew';
-import NotFound from '@/pages/NotFound';
+// Route-based code splitting: Lazy load pages
+const Home = lazy(() => import('@/pages/Home'));
+const AnalysisPage = lazy(() => import('@/pages/AnalysisPage'));
+const BlogListPage = lazy(() => import('@/pages/BlogListPage'));
+const BlogDetailPage = lazy(() => import('@/pages/BlogDetailPage'));
+const KodOdasiNew = lazy(() => import('@/pages/KodOdasiNew'));
+const NotFound = lazy(() => import('@/pages/NotFound'));
+
+// Loading fallback component
+function PageLoader() {
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="flex flex-col items-center gap-4">
+        <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+        <p className="text-muted-foreground">Yükleniyor...</p>
+      </div>
+    </div>
+  );
+}
 
 function Router() {
   const [location] = useLocation();
@@ -28,15 +40,17 @@ function Router() {
   }, [location]);
 
   return (
-    <Switch>
-      <Route path="/" component={Home} />
-      <Route path="/analiz" component={AnalysisPage} />
-      <Route path="/blog" component={BlogListPage} />
-      <Route path="/blog/:slug" component={BlogDetailPage} />
-      <Route path="/kod-odasi" component={KodOdasiNew} />
-      <Route path="/404" component={NotFound} />
-      <Route component={NotFound} />
-    </Switch>
+    <Suspense fallback={<PageLoader />}>
+      <Switch>
+        <Route path="/" component={Home} />
+        <Route path="/analiz" component={AnalysisPage} />
+        <Route path="/blog" component={BlogListPage} />
+        <Route path="/blog/:slug" component={BlogDetailPage} />
+        <Route path="/kod-odasi" component={KodOdasiNew} />
+        <Route path="/404" component={NotFound} />
+        <Route component={NotFound} />
+      </Switch>
+    </Suspense>
   );
 }
 

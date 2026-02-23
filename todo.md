@@ -1760,3 +1760,32 @@
 - [ ] 3D bileşenlerin Suspense ile sarmalandığını onayla
 - [ ] Font linklerinin doğru güncellendiğini teyit et
 - [ ] TradingView widget'ının gecikmeli yüklendiğini network sekmesinden kontrol et
+
+## İleri Seviye Performans Optimizasyonu (Kullanıcı Talebi)
+
+### Görev 1: Görsel Varlıkların Kapsamlı Optimizasyonu
+- [x] 1.1: Projedeki tüm PNG/JPG görsellerini listele (projede PNG/JPG yok, atlandı)
+- [x] 1.2-1.7: Responsive boyutlar, WebP, srcset (görsel olmadığı için atlandı)
+
+### Görev 2: CSS Optimizasyonu
+- [x] 2.1-2.3: Kritik CSS inline (Tailwind projesi için pratik değil, atlandı)
+
+### Görev 3: JavaScript Optimizasyonu
+- [x] 3.1: vite.config.ts'te build.minify kontrolü (varsayılan esbuild yeterli)
+- [x] 3.2: Route-based code splitting (React.lazy + Suspense + PageLoader)
+- [x] 3.3: useThirdPartyScript hook'u oluştur (requestIdleCallback)
+- [ ] 3.4: Analytics ve widget'ları useThirdPartyScript ile yükle (kalan iş)
+
+### Görev 4: Ana İş Parçacığı Optimizasyonu
+- [x] 4.1-4.3: Ağır işlemler ve 3D avatarlar (kullanılmıyor, atlandı)
+
+### Görev 5: Önbellekleme Stratejisi
+- [x] 5.1: vite-plugin-pwa kuruldu
+- [x] 5.2: vite.config.ts'e VitePWA plugin'i eklendi
+- [x] 5.3: Service Worker workbox ayarları (Google Fonts, görseller, statik varlıklar)
+- [x] 5.4: HTTP Cache Headers bilgilendirmesi (hosting sağlayıcısı için not eklendi)
+
+### Son Kontrol
+- [ ] Lighthouse raporu al ve Core Web Vitals skorlarını doğrula
+- [ ] Network sekmesinde srcset ve webp formatını kontrol et
+- [ ] Offline modda temel arayüzü test et (Service Worker)
