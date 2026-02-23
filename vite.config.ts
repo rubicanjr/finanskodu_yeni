@@ -24,6 +24,16 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom', 'react-helmet-async', 'wouter'],
+          'vendor-motion': ['framer-motion'],
+          'vendor-three': ['three', '@react-three/fiber', '@react-three/drei'],
+          'vendor-firebase': ['firebase/app', 'firebase/auth', 'firebase/firestore'],
+        },
+      },
+    },
   },
   server: {
     host: true,

@@ -1732,3 +1732,31 @@
 - [ ] KodOdasiNew.tsx farklarını incele (kalan iş)
 - [ ] Tüm değişiklikleri test etrklar\u0131n\u0131 incele
 - [ ] T\u00fcm de\u011fi\u015fiklikleri test et
+
+## Kapsamlı Performans Optimizasyonu (Core Web Vitals)
+
+### Görev 1: Görsel Varlıklarını Optimize Et
+- [x] 1.1: Tüm PNG/JPG görselleri WebP formatına dönüştür (projede PNG/JPG yok, atlandı)
+- [ ] 1.2: Görsellere width/height attribute'ları ekle (CLS önleme) - Kalan iş
+- [ ] 1.3: Kritik olmayan görsellere loading="lazy" ekle - Kalan iş
+- [ ] 1.4: Hero section görsellerine fetchpriority="high" ekle - HeroSection'da görsel yok
+
+### Görev 2: Kod Bölümleme ve Lazy Loading
+- [x] 2.1: vite.config.ts'e manualChunks ekle (vendor-react, vendor-motion, vendor-three, vendor-firebase)
+- [x] 2.2: 3D bileşenleri React.lazy ile lazy load yap (3D avatarlar kullanılmıyor, atlandı)
+- [x] 2.3: Suspense fallback'leri ekle (gerek yok, 3D avatarlar kullanılmıyor)
+
+### Görev 3: Font Yüklemesini Optimize Et
+- [x] 3.1: index.html'de Google Fonts linkini preconnect + preload ile optimize et
+- [x] 3.2: display=swap parametresinin font URL'sinde olduğunu doğrula (zaten vardı)
+
+### Görev 4: Üçüncü Parti Script'leri Geciktir
+- [x] 4.1: TickerTape.tsx'te TradingView widget'ını requestIdleCallback ile geciktir
+- [x] 4.2: Widget'ın zaten yüklenmişse tekrar yüklenmemesini sağla (hasChildNodes kontrolü)
+
+### Son Kontrol
+- [ ] Tüm görsellerin WebP formatında olduğunu doğrula
+- [ ] vite.config.ts'te manualChunks'ın doğru olduğunu kontrol et
+- [ ] 3D bileşenlerin Suspense ile sarmalandığını onayla
+- [ ] Font linklerinin doğru güncellendiğini teyit et
+- [ ] TradingView widget'ının gecikmeli yüklendiğini network sekmesinden kontrol et
