@@ -4,17 +4,13 @@
   <head>
     <!-- FOUC engelleyici - React yüklenme den önce tema class'ı uygular -->
     <script>
-      (function() {
-        try {
-          var theme = localStorage.getItem('fk-theme');
-          if (!theme) {
-            theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-          }
-          document.documentElement.classList.add(theme);
-        } catch(e) {
-          // Hata durumunda sessiz kal, uygulamanın çökmesini engelle
-        }
-      })();
+(function(){
+  try {
+    var t = localStorage.getItem('fk-theme');
+    if(!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    document.documentElement.className = t;
+  } catch(e){}
+})();
     </script>
     <meta charset="UTF-8" />
     <meta

@@ -19,10 +19,10 @@ export default function SponsorshipSection() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <span className="text-xs font-mono tracking-[0.2em] text-[#0EA5E9] mb-4 block">
+            <span className="text-xs font-mono tracking-[0.2em] text-primary mb-4 block">
               // TRUSTED BY
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-white">
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground">
               Sponsorumuz
             </h2>
           </motion.div>
@@ -56,19 +56,19 @@ export default function SponsorshipSection() {
               {/* Description */}
               <div className="flex-1 text-center md:text-left">
                 <div className="flex items-center gap-3 justify-center md:justify-start mb-4">
-                  <h3 className="text-2xl sm:text-3xl font-bold text-white font-sans">
+                  <h3 className="text-2xl sm:text-3xl font-bold text-foreground font-sans">
                     SalaryInsights
                   </h3>
                   <a 
                     href="https://salaryinsights.com.tr/" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-[#0EA5E9] hover:text-[#38BDF8] transition-colors"
+                    className="text-primary hover:text-primary/80 transition-colors"
                   >
                     <ExternalLink className="w-5 h-5" />
                   </a>
                 </div>
-                <blockquote className="text-[#C8D6E5] text-base sm:text-lg leading-relaxed font-sans italic border-l-2 border-[#0EA5E9] pl-4 md:pl-6">
+                <blockquote className="text-muted-foreground text-base sm:text-lg leading-relaxed font-sans italic border-l-2 border-primary pl-4 md:pl-6">
                   "SalaryInsights, Finans Kodu topluluğuna sponsor oldu çünkü ikimiz de aynı şeye inanıyoruz: finansal kararlar veri ile verilir, tahminle değil. Onlar maaş şeffaflığı sağlıyor, biz yatırım şeffaflığı. Farklı sorular, aynı felsefe."
                 </blockquote>
               </div>
@@ -83,11 +83,11 @@ export default function SponsorshipSection() {
             viewport={{ once: true }}
             className="mt-8 text-center"
           >
-            <p className="text-[#8899AA] text-sm font-mono">
+            <p className="text-muted-foreground text-sm font-mono">
               Sponsor olmak ister misiniz?{" "}
               <a
                 href="mailto:info@finanskodu.com"
-                className="text-[#0EA5E9] hover:text-[#38BDF8] transition-colors inline-flex items-center gap-1"
+                className="text-primary hover:text-primary/80 transition-colors inline-flex items-center gap-1"
               >
                 <Mail className="w-3.5 h-3.5" />
                 info@finanskodu.com

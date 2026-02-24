@@ -2062,3 +2062,40 @@
 - [x] Bakır/Ons ekle (COMEX:HG1!) - zaten var
 - [x] Paladyum/Ons ekle (TVC:PALLADIUM) - zaten var
 - [x] Platin/Ons ekle (TVC:PLATINUM) - zaten var
+
+
+## Tema Geçiş Sorunu - Kapsamlı Düzeltme
+
+### Adım 1: CSS Variable Doğrulama
+- [x] globals.css'te :root ve .dark için tüm color variable'ları kontrol et - eksiksiz
+- [x] .light class'ı için tüm color variable'ları ekle - :root = light
+- [x] Her renk her iki temada da tanımlı olmalı - doğrulandı
+
+### Adım 2: FOUC Fix
+- [x] index.html <head> içine FOUC önleme script'i ekle (en üste) - düzeltildi
+- [x] localStorage'dan tema oku, yoksa prefers-color-scheme kullan - eksiksiz
+- [x] document.documentElement.className = t - classList.add yerine className kullanılıyor
+
+### Adım 3: Hedef Bileşenler
+- [ ] FAQSection → bg-black veya bg-[#0D1117] → bg-background
+- [ ] BlogSection → Kart container bg-[#...] → bg-card
+- [ ] TestimonialsSection → Wrapper div hardcoded renk → bg-background
+- [x] SponsorshipSection → bg-white → bg-card - düzeltildi, tüm hardcoded renkler tema-aware yapıldı
+- [ ] FeedbackSection → Hardcoded bg → bg-background
+- [ ] TradingViewTickerTape → style={{ background: '#...' }} → var(--background)
+- [ ] App.tsx → Ticker wrapper kontrol
+- [ ] Sidebar → Tema-aware bg kontrol
+
+### Adım 4: Global Arama
+- [ ] bg-[#0D1117] → bg-background
+- [ ] bg-[#121A24] → bg-card
+- [ ] bg-[#17202E] → bg-muted
+- [ ] text-[#E8EDF5] → text-foreground
+- [ ] text-[#8B97AB] → text-muted-foreground
+- [ ] style={{ background: '#0D1117' }} → var(--background)
+
+### Adım 5: Test Protokolü
+- [ ] Light'a geç → tüm sayfa açık
+- [ ] Dark'a geç → tüm sayfa koyu
+- [ ] Sayfa kapat/aç → tema korunmalı, flash yok
+- [ ] Her section scroll kontrol
