@@ -1938,3 +1938,79 @@
 - [x] Bakır/Ons ekle (COMEX:HG1!) - zaten var
 - [x] Platin/Ons ekle (TVC:PLATINUM) - zaten var
 - [x] Paladyum/Ons ekle (TVC:PALLADIUM) - zaten var
+
+
+## Piksel-Perfect Hero ve Süreç Bölümü Revizyonu (pasted_content_7.txt)
+
+### Görev 1: Renk Tokenları ve Font Sistemi
+- [x] CSS variables ekle: --bg: #0D1117, --bg-card: #121A24, --bg-elevated: #17202E, --cyan: #00D4FF, --green: #00C896, --gold: #F0B429
+- [x] Font import: Syne (800 weight), JetBrains Mono, Figtree
+- [x] Font tanımları: Syne (display/başlıklar), JetBrains Mono (kod/etiketler), Figtree (body)
+
+### Görev 2: Hero Section Tam Spesifikasyon
+- [ ] Tam ekran, dikey ortalamalı layout
+- [ ] Arka plan: 52px grid çizgileri rgba(0,212,255,0.035), radial vignette
+- [ ] İki radial glow blob (sol üst + sağ alt)
+- [ ] İçerik max-width 820px ortada
+- [ ] Pill eyebrow: pulse 6px cyan dot + metin, rgba(0,212,255,0.09) fill, rgba(0,212,255,0.18) border, 100px radius
+- [ ] H1: clamp(28px, 5vw, 54px), Syne 800, "finanskodu" #00D4FF, son satır #00C896
+- [ ] Subtitle: clamp(15px,2vw,17px), #8B97AB, max-width 560px
+- [ ] Terminal widget: #0A1018 bg, rgba(0,212,255,0.18) border, 12px radius
+- [ ] Titlebar: 3 macOS dot + sağda mono etiket
+- [ ] 4 satır fadeIn animasyonu: $ finans-kodu init / › Portföy taranıyor / › Risk modeli hesaplanıyor / ✔ Sistem hazır
+- [ ] Blink cursor son satırda
+- [ ] İki buton: #00D4FF solid + rgba(0,212,255,0.08) outline, hover translateY(-2px) + glow
+- [ ] Trust strip: 4 item, #4E5D71, aralarında 4px cyan dot
+
+### Görev 3: Süreç Section Tam Spesifikasyon
+- [ ] Padding: 120px 0 140px, grid bg
+- [ ] Section head: eyebrow + çizgiler, H2 clamp(28px,4.5vw,46px), em kısımları #00D4FF
+- [ ] Subtitle #8B97AB + mono etiket ── 3 ADIMDA ──
+- [ ] Progress track (desktop): 3 node (56x56px, 1.5px border), gradient çizgi (#00D4FF → #00C896)
+- [ ] Node 1-2 cyan, node 3 green, 8px box-shadow ring
+- [ ] 3 kart grid: repeat(3,1fr), gap 20px
+- [ ] Kart: #121A24 bg, rgba(255,255,255,0.11) border, 16px radius, 36px 32px padding
+- [ ] Hover: translateY(-5px), 2px gradient çizgi, radial glow, border opacity
+- [ ] Kart 3 green temalı
+- [ ] Altın garanti rozeti: yıldız SVG, rgba(240,180,41,0.10) bg, rgba(240,180,41,0.20) border
+- [ ] Büyük numara: 52px Syne 800, cyan/green, hover glow
+- [ ] H3: 20px Syne 700
+- [ ] Divider: 32px → 56px hover, renkli
+- [ ] Body: 14px 1.75 line-height #8B97AB, strong #E8EDF5
+- [ ] 3 pillar: 16x16px icon + metin
+- [ ] CTA block: #17202E bg, rgba(0,212,255,0.18) border, 20px radius, 44px 52px padding
+- [ ] Sol kenarda 3px gradient çizgi (#00D4FF → #00C896)
+- [ ] İçerik: sol metin grubu + sağ buton (#00D4FF bg) + alt mono not
+- [ ] Buton https://cal.com/rubi-can target="_blank"
+
+### Görev 4: Scroll Animasyonları
+- [ ] IntersectionObserver hook: fadeUp (opacity 0→1, translateY 28→0, .65s cubic-bezier)
+- [ ] prefers-reduced-motion desteği
+
+
+## Piksel-Perfect Hero ve Süreç Bölümü Revizyonu (pasted_content_7.txt)
+
+### Görev 1: Renk Tokenları ve Font Sistemi
+- [x] CSS variables ekle: --bg: #0D1117, --bg-card: #121A24, --bg-elevated: #17202E, --cyan: #00D4FF, --green: #00C896, --gold: #F0B429
+- [x] Font import: Syne (800 weight), JetBrains Mono, Figtree
+- [x] Font tanımları: Syne (display/başlıklar), JetBrains Mono (kod/etiketler), Figtree (body)
+
+### Görev 2: Hero Section Piksel-Perfect Yeniden Yazım
+- [x] 52px grid arka plan + radial vignette + glow blobs
+- [x] Pill eyebrow + pulse dot (cyan)
+- [x] H1: "finanskodu" cyan, "bir üst seviyeye taşıyın" green
+- [x] Terminal widget: macOS dots + 4 satır fadeIn + blink cursor
+- [x] Trust strip: 4 items with cyan dots
+
+### Görev 3: ProcessModelSection Piksel-Perfect Yeniden Yazım
+- [x] Section header: "// Özel Çözüm" eyebrow + "dışına çıkıyorsa, buradayız" (cyan)
+- [x] Progress track: 01, 02, 03 node'lar (cyan/green) + gradient çizgi
+- [x] 3 cards: #121A24 arkaplan, 52px numaralar, ikonlar, pillar listesi
+- [ ] Gold badges (yıldız SVG + "Kara kutu yok" vb.) - NOT VISIBLE (needs investigation)
+- [x] CTA block: #17202E arkaplan, cyan border, gradient line, buton
+
+### Görev 4: Scroll Animasyonları
+- [x] Framer Motion whileInView kullanımı
+- [x] fadeUp animasyonları (opacity 0→1, translateY 28→0)
+- [x] prefers-reduced-motion desteği (otomatik)
+

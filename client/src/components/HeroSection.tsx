@@ -6,54 +6,39 @@ import { useI18n } from "@/contexts/I18nContext";
 
 export default function HeroSection() {
   const { t } = useI18n();
-  const [terminalLines, setTerminalLines] = useState<string[]>([]);
-  const [currentLineIndex, setCurrentLineIndex] = useState(0);
-  const [currentCharIndex, setCurrentCharIndex] = useState(0);
-  const [showCursor, setShowCursor] = useState(true);
-  
-  const lines = [
-    "$ init finanskodu.system",
-    "> Loading modules...",
-    "> Connecting to data streams...",
-    "✓ Sistem hazır. Kaos filtrelendi."
-  ];
+  const [terminalLines, setTerminalLines] = useState<Array<{ text: string; visible: boolean }>>([
+    { text: "$ finans-kodu init --mode=analiz", visible: false },
+    { text: "› Portföy taranıyor…", visible: false },
+    { text: "› Risk modeli hesaplanıyor…", visible: false },
+    { text: "✔ Sistem hazır. Kaos filtrelendi.", visible: false },
+  ]);
+  const [showCursor, setShowCursor] = useState(false);
 
-  // Typing animation for terminal
+  // Terminal fadeIn animation
   useEffect(() => {
-    if (currentLineIndex >= lines.length) return;
+    const delays = [300, 900, 1500, 2100];
+    const timeouts = terminalLines.map((_, index) =>
+      setTimeout(() => {
+        setTerminalLines(prev =>
+          prev.map((line, i) => (i === index ? { ...line, visible: true } : line))
+        );
+        if (index === terminalLines.length - 1) {
+          setTimeout(() => setShowCursor(true), 200);
+        }
+      }, delays[index])
+    );
 
-    const currentLine = lines[currentLineIndex];
-    
-    if (currentCharIndex < currentLine.length) {
-      const timeout = setTimeout(() => {
-        setTerminalLines(prev => {
-          const newLines = [...prev];
-          newLines[currentLineIndex] = currentLine.slice(0, currentCharIndex + 1);
-          return newLines;
-        });
-        setCurrentCharIndex(prev => prev + 1);
-      }, 50); // 50ms per character
-      
-      return () => clearTimeout(timeout);
-    } else {
-      // Line completed, move to next line after delay
-      const timeout = setTimeout(() => {
-        setCurrentLineIndex(prev => prev + 1);
-        setCurrentCharIndex(0);
-      }, 300);
-      
-      return () => clearTimeout(timeout);
-    }
-  }, [currentCharIndex, currentLineIndex, lines]);
+    return () => timeouts.forEach(clearTimeout);
+  }, []);
 
-  // Cursor blink animation
+  // Cursor blink
   useEffect(() => {
+    if (!showCursor) return;
     const interval = setInterval(() => {
       setShowCursor(prev => !prev);
-    }, 500);
-    
+    }, 530);
     return () => clearInterval(interval);
-  }, []);
+  }, [showCursor]);
 
   const scrollToProducts = () => {
     const productsSection = document.getElementById('dijital-araclar');
@@ -70,89 +55,185 @@ export default function HeroSection() {
   return (
     <section 
       className="relative min-h-screen flex items-center justify-center px-4 py-20 overflow-hidden"
-      style={{ 
-        background: 'linear-gradient(135deg, #0D1117 0%, #1A1F2E 50%, #0D1117 100%)'
-      }}
+      style={{ background: 'var(--fk-bg)' }}
       aria-labelledby="hero-heading"
     >
-      {/* Animated Background Grid */}
+      {/* 52px Grid Background */}
       <div 
-        className="absolute inset-0 opacity-10"
+        className="absolute inset-0"
         style={{
           backgroundImage: `
-            linear-gradient(rgba(14, 165, 233, 0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(14, 165, 233, 0.1) 1px, transparent 1px)
+            linear-gradient(rgba(0, 212, 255, 0.035) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 212, 255, 0.035) 1px, transparent 1px)
           `,
-          backgroundSize: '50px 50px'
+          backgroundSize: '52px 52px'
         }}
       />
 
-      {/* Radial Gradient Overlay */}
+      {/* Radial Vignette */}
       <div 
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'radial-gradient(circle at 50% 50%, rgba(14, 165, 233, 0.05) 0%, transparent 50%)'
+          background: 'radial-gradient(ellipse at center, transparent 0%, rgba(13, 17, 23, 0.8) 100%)'
+        }}
+      />
+
+      {/* Glow Blob - Top Left */}
+      <div 
+        className="absolute -top-32 -left-32 w-96 h-96 rounded-full pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%)',
+          filter: 'blur(80px)'
+        }}
+      />
+
+      {/* Glow Blob - Bottom Right */}
+      <div 
+        className="absolute -bottom-32 -right-32 w-96 h-96 rounded-full pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle, rgba(0, 200, 150, 0.12) 0%, transparent 70%)',
+          filter: 'blur(80px)'
         }}
       />
 
       {/* Content Container */}
-      <div className="relative z-10 max-w-5xl mx-auto text-center">
+      <div className="relative z-10 w-full max-w-[820px] mx-auto text-center">
         <div className="space-y-8">
-          {/* Eyebrow Label with Pulse Dot */}
+          {/* Pill Eyebrow */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="flex items-center justify-center gap-2 mb-4"
+            className="flex items-center justify-center gap-2 mx-auto w-fit px-4 py-2"
+            style={{
+              background: 'rgba(0, 212, 255, 0.09)',
+              border: '1px solid rgba(0, 212, 255, 0.18)',
+              borderRadius: '100px'
+            }}
           >
-            <span className="relative flex h-3 w-3">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-cyan-500"></span>
+            {/* Pulse Dot */}
+            <span className="relative flex h-[6px] w-[6px]">
+              <span 
+                className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
+                style={{ background: 'var(--fk-cyan)' }}
+              />
+              <span 
+                className="relative inline-flex rounded-full h-[6px] w-[6px]"
+                style={{ background: 'var(--fk-cyan)' }}
+              />
             </span>
-            <span className="text-cyan-400 font-mono text-sm tracking-wider">
-              {t('hero.eyebrow')}
+            <span 
+              className="font-mono text-xs tracking-wider"
+              style={{ 
+                fontFamily: 'var(--font-jetbrains)',
+                color: 'var(--fk-cyan)'
+              }}
+            >
+              // FİNANSAL VERİMLİLİK İÇİN
             </span>
           </motion.div>
 
-          {/* Main Heading */}
+          {/* H1 Heading */}
           <motion.h1
             id="hero-heading"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold max-w-4xl mx-auto leading-tight text-white"
+            className="leading-tight"
+            style={{
+              fontFamily: 'var(--font-syne)',
+              fontWeight: 800,
+              fontSize: 'clamp(28px, 5vw, 54px)',
+              color: '#fff'
+            }}
           >
-            {t('hero.heading1')}
+            Finansınızı{' '}
+            <span style={{ color: 'var(--fk-cyan)' }}>finanskodu</span>{' '}
+            dijital ürünleri ile{' '}
+            <span style={{ color: 'var(--fk-green)' }}>bir üst seviyeye taşıyın.</span>
           </motion.h1>
 
-          {/* Terminal Animation - 4 Lines */}
+          {/* Subtitle */}
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="mx-auto"
+            style={{
+              fontSize: 'clamp(15px, 2vw, 17px)',
+              color: '#8B97AB',
+              maxWidth: '560px',
+              fontFamily: 'var(--font-figtree)'
+            }}
+          >
+            100+ test edilmiş AI aracı, finansal metodoloji ve algoritmik analiz. Sen pilotsun; navigasyonu biz üstleniyoruz.
+          </motion.p>
+
+          {/* Terminal Widget */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="flex justify-center mb-10"
+            className="mx-auto"
+            style={{
+              maxWidth: '680px',
+              background: '#0A1018',
+              border: '1px solid rgba(0, 212, 255, 0.18)',
+              borderRadius: '12px',
+              overflow: 'hidden'
+            }}
           >
+            {/* Titlebar */}
             <div 
-              className="w-full max-w-2xl rounded-xl border p-6"
+              className="flex items-center justify-between px-4 py-3"
+              style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.06)' }}
+            >
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-red-500" />
+                <div className="w-3 h-3 rounded-full bg-yellow-500" />
+                <div className="w-3 h-3 rounded-full bg-green-500" />
+              </div>
+              <span 
+                className="text-xs opacity-50"
+                style={{ 
+                  fontFamily: 'var(--font-jetbrains)',
+                  color: '#8B97AB'
+                }}
+              >
+                finans-kodu-terminal
+              </span>
+            </div>
+
+            {/* Terminal Body */}
+            <div 
+              className="p-6 font-mono text-sm space-y-2"
               style={{ 
-                background: '#0a0a0a',
-                borderColor: '#1E2D3D',
+                fontFamily: 'var(--font-jetbrains)',
+                minHeight: '140px'
               }}
             >
-              <div className="font-mono text-xs sm:text-sm space-y-2 text-left">
-                {terminalLines.map((line, index) => (
-                  <div key={index} style={{ color: index === 3 ? '#10b981' : '#8899AA' }}>
-                    {line}
-                    {index === currentLineIndex && showCursor && (
-                      <span className="inline-block w-2 h-4 ml-1 bg-cyan-500" />
-                    )}
-                  </div>
-                ))}
-                {/* Empty lines for spacing */}
-                {Array.from({ length: 4 - terminalLines.length }).map((_, i) => (
-                  <div key={`empty-${i}`} className="h-5" />
-                ))}
-              </div>
+              {terminalLines.map((line, index) => (
+                <div
+                  key={index}
+                  className="transition-opacity duration-500"
+                  style={{
+                    opacity: line.visible ? 1 : 0,
+                    color: index === 3 ? 'var(--fk-green)' : '#8B97AB'
+                  }}
+                >
+                  {line.text}
+                  {index === terminalLines.length - 1 && line.visible && (
+                    <span
+                      className="inline-block w-2 h-4 ml-1"
+                      style={{
+                        background: 'var(--fk-cyan)',
+                        opacity: showCursor ? 1 : 0,
+                        transition: 'opacity 0.1s'
+                      }}
+                    />
+                  )}
+                </div>
+              ))}
             </div>
           </motion.div>
 
@@ -166,46 +247,82 @@ export default function HeroSection() {
             <Button
               onClick={scrollToProducts}
               size="lg"
-              className="group relative overflow-hidden px-8 py-6 text-base font-semibold rounded-lg transition-all duration-300 hover:scale-105"
+              className="group px-8 py-6 text-base font-semibold rounded-lg transition-all duration-300 hover:-translate-y-0.5"
               style={{
-                background: 'linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%)',
-                color: 'white',
-                border: 'none'
+                background: 'var(--fk-cyan)',
+                color: 'var(--fk-bg)',
+                border: 'none',
+                fontFamily: 'var(--font-figtree)',
+                fontWeight: 600,
+                boxShadow: '0 0 0 0 rgba(0, 212, 255, 0.4)'
               }}
-              aria-label={t('hero.cta1')}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.boxShadow = '0 0 24px 0 rgba(0, 212, 255, 0.4)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.boxShadow = '0 0 0 0 rgba(0, 212, 255, 0.4)';
+              }}
             >
-              <span className="relative z-10">{t('hero.cta1')}</span>
-              <div 
-                className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-              />
+              {t('hero.cta1')}
             </Button>
 
             <Button
               onClick={goToKodOdasi}
               size="lg"
               variant="outline"
-              className="group px-8 py-6 text-base font-semibold rounded-lg transition-all duration-300 hover:scale-105 hover:border-cyan-400"
+              className="group px-8 py-6 text-base font-semibold rounded-lg transition-all duration-300 hover:-translate-y-0.5"
               style={{
-                borderColor: '#0EA5E9',
-                borderWidth: '2px',
-                color: '#0EA5E9',
-                background: 'rgba(0, 212, 255, 0.08)'
+                background: 'rgba(0, 212, 255, 0.08)',
+                color: 'var(--fk-cyan)',
+                border: '1px solid rgba(0, 212, 255, 0.18)',
+                fontFamily: 'var(--font-figtree)',
+                fontWeight: 600,
+                boxShadow: '0 0 0 0 rgba(0, 212, 255, 0.3)'
               }}
-              aria-label={t('hero.cta2')}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.boxShadow = '0 0 20px 0 rgba(0, 212, 255, 0.3)';
+                e.currentTarget.style.borderColor = 'rgba(0, 212, 255, 0.4)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.boxShadow = '0 0 0 0 rgba(0, 212, 255, 0.3)';
+                e.currentTarget.style.borderColor = 'rgba(0, 212, 255, 0.18)';
+              }}
             >
-              <span className="relative z-10 group-hover:text-cyan-300 transition-colors">{t('hero.cta2')}</span>
+              {t('hero.cta2')}
             </Button>
+          </motion.div>
+
+          {/* Trust Strip */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.8 }}
+            className="flex flex-wrap items-center justify-center gap-3 pt-8"
+            style={{
+              fontFamily: 'var(--font-figtree)',
+              fontSize: '14px',
+              color: '#4E5D71'
+            }}
+          >
+            <span>100+ AI Prompt</span>
+            <div 
+              className="w-1 h-1 rounded-full"
+              style={{ background: 'var(--fk-cyan)' }}
+            />
+            <span>Finansal Metodoloji</span>
+            <div 
+              className="w-1 h-1 rounded-full"
+              style={{ background: 'var(--fk-cyan)' }}
+            />
+            <span>Algoritmik Analiz</span>
+            <div 
+              className="w-1 h-1 rounded-full"
+              style={{ background: 'var(--fk-cyan)' }}
+            />
+            <span>Aylık Strateji Bülteni</span>
           </motion.div>
         </div>
       </div>
-
-      {/* Bottom Fade */}
-      <div 
-        className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
-        style={{
-          background: 'linear-gradient(to bottom, transparent, #0D1117)'
-        }}
-      />
     </section>
   );
 }

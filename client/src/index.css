@@ -1,6 +1,9 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Finans Kodu Piksel-Perfect Design System Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@800&family=JetBrains+Mono:wght@400;500;600&family=Figtree:wght@400;500;600;700&display=swap');
+
 @custom-variant dark (&:is(.dark *));
 
 /* 
@@ -77,6 +80,17 @@
   --font-display: 'IBM Plex Sans', 'Space Grotesk', sans-serif;
   --font-body: 'IBM Plex Sans', 'Inter', sans-serif;
   --font-mono: 'IBM Plex Mono', 'JetBrains Mono', monospace;
+  
+  /* Piksel-Perfect Design System */
+  --fk-bg: #0D1117;
+  --fk-bg-card: #121A24;
+  --fk-bg-elevated: #17202E;
+  --fk-cyan: #00D4FF;
+  --fk-green: #00C896;
+  --fk-gold: #F0B429;
+  --font-syne: 'Syne', sans-serif;
+  --font-jetbrains: 'JetBrains Mono', monospace;
+  --font-figtree: 'Figtree', sans-serif;
 }
 
 :root {
