@@ -1802,3 +1802,38 @@
 - [ ] Accessibility skorunu kontrol et (kalan iş)
 - [ ] Best Practices skorunu kontrol et (kalan iş)
 - [ ] SEO skorunu kontrol et (kalan iş)
+
+## Kapsamlı Tasarım ve İşlevsellik Revizyonu (Kullanıcı Talebi)
+
+### Görev 1: Ticker Veri Akışını Güncelle
+- [x] 1.1: TickerTape.tsx'i bul ve symbols array'ini güncelle
+- [x] 1.2: BIST100 (BIST:XU100) sembolünü kaldır
+- [x] 1.3: Gümüş/Ons (TVC:SILVER) ekle
+- [x] 1.4: Bakır/Ons (COMEX:HG1!) ekle
+- [x] 1.5: Platin/Ons (TVC:PLATINUM) ekle
+- [x] 1.6: Paladyum/Ons (TVC:PALLADIUM) ekle
+- [ ] 1.7: TradingView widget'ının yeni sembolleri gösterdiğini doğrula (test edilecek)
+
+### Görev 2: Hero Section Metnini Değiştir
+- [x] 2.1: HeroSection.tsx'te mevcut metinleri kaldır (eyebrow ve heading kaldırıldı)
+- [x] 2.2: tr.json ve en.json'a yeni çeviri anahtarı ekle (hero.newSubtitle)
+- [x] 2.3: HeroSection.tsx'te yeni subtitle'ı t() ile ekle
+
+### Görev 3: Dijital Araçlar Bölümünü Yeniden Yapılandır
+- [ ] 3.1: SidebarContent.tsx'e "Dijital Araçlar" navigasyon linki ekle (/dijital-araclar)
+- [ ] 3.2: App.tsx'e /dijital-araclar rotası ekle
+- [ ] 3.3: DijitalAraclarPage.tsx oluştur
+- [ ] 3.4: AI Prompt Kütüphanesi bölümü ekle (metin, SSS, satın al butonu)
+- [ ] 3.5: FİNANS KODU: Kaos İçinde Düzen bölümü ekle
+- [ ] 3.6: Pro - Algoritmik Strateji ve Analiz Bülteni bölümü ekle
+- [ ] 3.7: Her ürün için "Sesli Dinle" butonu ekle (useSpeechSynthesis)
+- [ ] 3.8: Home.tsx'teki ürün kartlarının hikie.space linklerini kaldır
+
+### Görev 4: Manifesto → Süreç Modeli Dönüşümü
+- [ ] 4.1: Home.tsx'te mevcut Manifesto bölümünü kaldır
+- [ ] 4.2: Yeni "Süreç Modeli" bölümü oluştur (3 adım kart)
+- [ ] 4.3: Her kartın sağ üstüne altın renkli "Garanti Rozeti" ekle
+- [ ] 4.4: İlk iki kart cyan, son kart green renk
+- [ ] 4.5: Terminal/sistem diyagramı estetiği uygula
+- [ ] 4.6: "Sürecini birlikte haritalayalım" CTA bölümü ekle
+- [ ] 4.7: "Görüşme Talep Et" butonu cal.com linkine yönlendir

@@ -14,11 +14,13 @@ function TickerTape() {
       script.async = true;
       script.innerHTML = JSON.stringify({
         "symbols": [
-          { "proName": "BIST:XU100", "title": "BIST 100" },
           { "proName": "FX_IDC:USDTRY", "title": "USD/TRY" },
-          { "proName": "FX_IDC:EURTRY", "title": "EUR/TRY" },
-          { "proName": "BITSTAMP:BTCUSD", "title": "Bitcoin" },
-          { "proName": "BITSTAMP:ETHUSD", "title": "Ethereum" }
+          { "proName": "TVC:GOLD", "title": "Altın/Ons" },
+          { "proName": "TVC:SILVER", "title": "Gümüş/Ons" },
+          { "proName": "COMEX:HG1!", "title": "Bakır/Ons" },
+          { "proName": "TVC:PLATINUM", "title": "Platin/Ons" },
+          { "proName": "TVC:PALLADIUM", "title": "Paladyum/Ons" },
+          { "proName": "BITSTAMP:BTCUSD", "title": "Bitcoin" }
         ],
         "showSymbolLogo": true,
         "colorTheme": theme,
