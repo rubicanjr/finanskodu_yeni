@@ -13,7 +13,10 @@ import Footer from "@/components/Footer";
 import { ArrowLeft, Calendar, Clock, User } from "lucide-react";
 import { motion } from "framer-motion";
 import { blogContents } from "@/data/blogContent";
-import { Streamdown } from "streamdown";
+import { lazy, Suspense } from "react";
+
+// Lazy load Streamdown to reduce initial bundle size
+const Streamdown = lazy(() => import("streamdown").then(mod => ({ default: mod.Streamdown })));
 import { useEffect, useState } from "react";
 import { trackBlogView } from "@/lib/analytics";
 
@@ -355,7 +358,13 @@ export default function BlogDetailPage() {
             prose-blockquote:border-l-primary prose-blockquote:text-gray-400
           "
         >
-          <Streamdown>{blogContent.content}</Streamdown>
+          <Suspense fallback={
+            <div className="flex items-center justify-center py-12">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+            </div>
+          }>
+            <Streamdown>{blogContent.content}</Streamdown>
+          </Suspense>
         </motion.article>
 
         {/* Tags */}

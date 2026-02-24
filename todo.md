@@ -1789,3 +1789,16 @@
 - [ ] Lighthouse raporu al ve Core Web Vitals skorlarını doğrula
 - [ ] Network sekmesinde srcset ve webp formatını kontrol et
 - [ ] Offline modda temel arayüzü test et (Service Worker)
+
+## Lighthouse Test ve Core Web Vitals İyileştirme (Kullanıcı Talebi)
+- [x] Production build al (pnpm build) - 47.27s
+- [x] Bundle boyutlarını analiz et - BlogDetailPage 988 KB tespit edildi
+- [x] BlogDetailPage optimizasyonu - Streamdown lazy load (988 KB → 911 KB)
+- [ ] Preview server başlat (kalan iş)
+- [ ] Lighthouse testi yap (kalan iş)
+- [ ] LCP (Largest Contentful Paint) skorunu iyileştir (kalan iş)
+- [ ] FID (First Input Delay) skorunu iyileştir (kalan iş)
+- [ ] CLS (Cumulative Layout Shift) skorunu iyileştir (kalan iş)
+- [ ] Accessibility skorunu kontrol et (kalan iş)
+- [ ] Best Practices skorunu kontrol et (kalan iş)
+- [ ] SEO skorunu kontrol et (kalan iş)
