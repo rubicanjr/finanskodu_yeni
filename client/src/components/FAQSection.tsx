@@ -94,7 +94,7 @@ export default function FAQSection() {
       </script>
 
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#0f0f14] to-[#0a0a0a]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[var(--background)] via-[var(--card)] to-[var(--background)]" />
       
       <div className="container relative z-10">
         {/* Header */}
@@ -108,7 +108,7 @@ export default function FAQSection() {
             style={{
               background: "linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(138, 43, 226, 0.1))",
               border: "1px solid rgba(0, 212, 255, 0.2)",
-              color: "#00D4FF"
+              color: "var(--primary)"
             }}
           >
             Uzman Görüşleri

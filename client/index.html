@@ -6,9 +6,8 @@
     <script>
 (function(){
   try {
-    var t = localStorage.getItem('fk-theme');
-    if(!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    document.documentElement.className = t;
+    var t = localStorage.getItem('fk-theme') || 'dark';
+    document.documentElement.classList.add(t);
   } catch(e){}
 })();
     </script>

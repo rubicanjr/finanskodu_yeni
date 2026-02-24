@@ -314,8 +314,8 @@ export default function BlogSection() {
                 <div 
                   className="h-full rounded-xl overflow-hidden flex flex-col transition-all duration-300 hover:translate-y-[-2px]"
                   style={{
-                    background: '#0D1117',
-                    border: '1px solid #1E2D3D',
+                    background: 'var(--card)',
+                    border: '1px solid var(--border)',
                   }}
                 >
                   {/* Featured Image */}
@@ -334,7 +334,7 @@ export default function BlogSection() {
                         <span
                           key={tag}
                           className="px-2 py-0.5 text-xs font-mono font-medium rounded"
-                          style={{ background: '#0EA5E920', color: '#0EA5E9' }}
+                          style={{ background: 'var(--primary)20', color: 'var(--primary)' }}
                         >
                           {tag}
                         </span>

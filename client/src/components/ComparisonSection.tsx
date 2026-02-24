@@ -51,13 +51,13 @@ export default function ComparisonSection() {
             whileHover={{ x: -4 }}
             className="rounded-xl p-8 transition-all duration-300 group"
             style={{
-              background: '#0D1117',
-              border: '1px solid #EF444430',
+              background: 'var(--card)',
+              border: '1px solid oklch(0.55 0.22 27)30',
             }}
           >
             {/* Header */}
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ background: '#EF444415' }}>
+              <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ background: 'oklch(0.55 0.22 27)15' }}>
                 <AlertTriangle size={20} style={{ color: 'var(--destructive)' }} />
               </div>
               <div>
@@ -82,7 +82,7 @@ export default function ComparisonSection() {
             </div>
 
             {/* Result */}
-            <div className="mt-6 pt-5" style={{ borderTop: '1px solid #1E2D3D' }}>
+            <div className="mt-6 pt-5" style={{ borderTop: '1px solid var(--border)' }}>
               <div className="flex items-center gap-2">
                 <TrendingDown size={16} style={{ color: 'var(--destructive)' }} />
                 <span className="text-sm font-mono font-semibold" style={{ color: 'var(--destructive)' }}>
@@ -101,22 +101,22 @@ export default function ComparisonSection() {
             whileHover={{ scale: 1.01 }}
             className="rounded-xl p-8 transition-all duration-300 group relative"
             style={{
-              background: '#0D1117',
-              border: '1px solid #10B98130',
-              boxShadow: '0 0 30px #10B98108',
+              background: 'var(--card)',
+              border: '1px solid oklch(0.62 0.17 160)30',
+              boxShadow: '0 0 30px oklch(0.62 0.17 160)08',
             }}
           >
             {/* Badge */}
             <div 
               className="absolute -top-3 right-6 px-3 py-1 rounded-full text-xs font-mono font-semibold"
-              style={{ background: '#10B98120', color: '#10B981', border: '1px solid #10B98140' }}
+              style={{ background: 'oklch(0.62 0.17 160)20', color: 'oklch(0.62 0.17 160)', border: '1px solid oklch(0.62 0.17 160)40' }}
             >
               Finans Kodu
             </div>
 
             {/* Header */}
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ background: '#10B98115' }}>
+              <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ background: 'oklch(0.62 0.17 160)15' }}>
                 <CheckCircle size={20} style={{ color: 'var(--chart-2)' }} />
               </div>
               <div>
@@ -141,7 +141,7 @@ export default function ComparisonSection() {
             </div>
 
             {/* Result */}
-            <div className="mt-6 pt-5" style={{ borderTop: '1px solid #1E2D3D' }}>
+            <div className="mt-6 pt-5" style={{ borderTop: '1px solid var(--border)' }}>
               <div className="flex items-center gap-2">
                 <TrendingUp size={16} style={{ color: 'var(--chart-2)' }} />
                 <span className="text-sm font-mono font-semibold" style={{ color: 'var(--chart-2)' }}>
@@ -164,9 +164,9 @@ export default function ComparisonSection() {
             href="/analiz"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-sm transition-all duration-300 hover:scale-105"
             style={{
-              background: '#0EA5E9',
+              background: 'var(--primary)',
               color: '#fff',
-              boxShadow: '0 0 20px #0EA5E920',
+              boxShadow: '0 0 20px var(--primary)20',
             }}
           >
             Düzene Geç

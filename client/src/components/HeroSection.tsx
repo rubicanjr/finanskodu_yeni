@@ -161,7 +161,7 @@ export default function HeroSection() {
             className="mx-auto"
             style={{
               fontSize: 'clamp(15px, 2vw, 17px)',
-              color: '#8B97AB',
+              color: 'var(--muted-foreground)',
               maxWidth: '560px',
               fontFamily: 'var(--font-figtree)'
             }}
@@ -177,7 +177,7 @@ export default function HeroSection() {
             className="mx-auto"
             style={{
               maxWidth: '680px',
-              background: '#0A1018',
+              background: 'var(--card)',
               border: '1px solid rgba(0, 212, 255, 0.18)',
               borderRadius: '12px',
               overflow: 'hidden'
@@ -197,7 +197,7 @@ export default function HeroSection() {
                 className="text-xs opacity-50"
                 style={{ 
                   fontFamily: 'var(--font-jetbrains)',
-                  color: '#8B97AB'
+                  color: 'var(--muted-foreground)'
                 }}
               >
                 finans-kodu-terminal
@@ -218,7 +218,7 @@ export default function HeroSection() {
                   className="transition-opacity duration-500"
                   style={{
                     opacity: line.visible ? 1 : 0,
-                    color: index === 3 ? 'var(--fk-green)' : '#8B97AB'
+                    color: index === 3 ? 'var(--fk-green)' : 'var(--muted-foreground)'
                   }}
                 >
                   {line.text}
@@ -301,7 +301,7 @@ export default function HeroSection() {
             style={{
               fontFamily: 'var(--font-figtree)',
               fontSize: '14px',
-              color: '#4E5D71'
+              color: 'var(--muted-foreground)'
             }}
           >
             <span>100+ AI Prompt</span>

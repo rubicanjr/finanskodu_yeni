@@ -33,7 +33,7 @@ export default function SponsorshipSection() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             viewport={{ once: true }}
-            className="rounded-xl border border-[#1E2D3D] p-8 sm:p-10 md:p-12"
+            className="rounded-xl border border-[var(--border)] p-8 sm:p-10 md:p-12"
             style={{ background: 'var(--card)' }}
           >
             <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
