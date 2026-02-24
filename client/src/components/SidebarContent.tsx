@@ -22,7 +22,13 @@ export default function SidebarContent({ onLinkClick }: SidebarContentProps) {
 
   return (
     <div className="flex flex-col h-full p-4">
-      <img src="/assets/fk-logo-new.png" alt="Finans Kodu" className="h-10 mb-8" />
+      <div className="mb-8 flex items-center gap-2">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
+          <rect width="32" height="32" rx="6" className="fill-primary/10" />
+          <text x="16" y="22" fontFamily="var(--font-mono)" fontSize="16" fontWeight="700" textAnchor="middle" className="fill-primary">FK</text>
+        </svg>
+        <span className="font-mono text-lg font-bold text-foreground">finans<span className="text-primary">kodu</span></span>
+      </div>
       <nav className="flex flex-col gap-2">
         {navItems.map(item => {
           const isActive = location === item.href;

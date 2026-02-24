@@ -2042,3 +2042,23 @@
 - [ ] Light tema → sayfa kapat → yeniden aç → FOUC olmamalı
 - [ ] Dark tema → sayfa kapat → yeniden aç → FOUC olmamalı
 - [ ] Tema değiştir → tüm bileşenler anında değişmeli
+
+
+## 3 Hızlı İyileştirme
+
+### Görev 1: Tema Değiştirme Butonu
+- [x] Sidebar'a tema değiştirme butonu ekle (Moon/Sun ikonu)
+- [x] useTheme() hook'u kullan
+- [x] Buton hover/active state'leri ekle
+
+### Görev 2: FK Logosu Yenileme
+- [x] Sol üstteki FK logosunu minimal ve şık hale getir
+- [x] SVG veya modern tipografi kullan
+- [x] Dark/light tema uyumlu renk
+
+### Görev 3: Ticker Veri Güncelleme
+- [x] BIST100'ü kaldır (BIST:XU100) - zaten kaldırılmış
+- [x] Gümüş/Ons ekle (TVC:SILVER) - zaten var
+- [x] Bakır/Ons ekle (COMEX:HG1!) - zaten var
+- [x] Paladyum/Ons ekle (TVC:PALLADIUM) - zaten var
+- [x] Platin/Ons ekle (TVC:PLATINUM) - zaten var
