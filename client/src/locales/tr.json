@@ -16,9 +16,9 @@
   },
   "hero": {
     "eyebrow": "// FİNANSAL VERİMLİLİK İÇİN",
-    "heading1": "Kaos Senin İşin Değil.",
-    "heading2": "Karar Senin,",
-    "heading3": "Gürültüyü Biz Filtreleriz.",
+    "heading1": "Finansınızı finanskodu dijital ürünleri ile bir üst seviyeye taşıyın.",
+    "heading2": "",
+    "heading3": "",
     "subtitle": "100+ test edilmiş AI aracı, finansal metodoloji ve algoritmik analiz. Sen pilotsun; navigasyonu biz üstleniyoruz.",
     "newSubtitle": "Kişisel ve/veya kurumsal finansinizi finanskodu dijital ürünleri ile bir üst seviyeye taşıyın.",
     "cta1": "Dijital Araçları Keşfet",
@@ -196,9 +196,9 @@
     }
   },
   "processModel": {
-    "heading": "Finansal dönüşümü nasıl gerçekleştiriyoruz?",
+    "heading": "Finans ihtiyaçların standart ürünlerimizin dışına çıkıyorsa, sana özel çözüm için buradayız.",
     "subheading": "3 Adımda Finans Kodu Süreci",
-    "description": "Her proje benzersizdir. Ancak başarılı her dönüşümün arkasında aynı disiplinli süreç vardır.",
+    "description": "Fikirden canlı kullanıma kadar, finansal süreçlerini nasıl hayata geçirdiğimizi adım adım gör.",
     "step1": {
       "title": "Keşif & Analiz",
       "description": "Mevcut finansal süreçlerinizi, açı noktalarınızı ve hedeflerinizi detaylı bir şekilde analiz ediyoruz. Veri akışlarını, darboğazları ve otomasyon fırsatlarını belirliyoruz."

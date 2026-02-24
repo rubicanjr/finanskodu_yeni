@@ -6,45 +6,54 @@ import { useI18n } from "@/contexts/I18nContext";
 
 export default function HeroSection() {
   const { t } = useI18n();
-  const [typedText, setTypedText] = useState("");
-  const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
+  const [terminalLines, setTerminalLines] = useState<string[]>([]);
+  const [currentLineIndex, setCurrentLineIndex] = useState(0);
+  const [currentCharIndex, setCurrentCharIndex] = useState(0);
+  const [showCursor, setShowCursor] = useState(true);
   
-  const messages = [
-    t('hero.terminal.ready'),
-    t('hero.terminal.analyzing'),
-    t('hero.terminal.loading'),
-    t('hero.terminal.scanning'),
-    t('hero.terminal.calculating')
+  const lines = [
+    "$ init finanskodu.system",
+    "> Loading modules...",
+    "> Connecting to data streams...",
+    "✓ Sistem hazır. Kaos filtrelendi."
   ];
 
+  // Typing animation for terminal
   useEffect(() => {
-    let currentIndex = 0;
-    let isDeleting = false;
-    let timeoutId: NodeJS.Timeout;
-    const currentMessage = messages[currentMessageIndex];
+    if (currentLineIndex >= lines.length) return;
 
-    const typeWriter = () => {
-      if (!isDeleting && currentIndex <= currentMessage.length) {
-        setTypedText(currentMessage.slice(0, currentIndex));
-        currentIndex++;
-        timeoutId = setTimeout(typeWriter, 150);
-      } else if (!isDeleting && currentIndex > currentMessage.length) {
-        isDeleting = true;
-        timeoutId = setTimeout(typeWriter, 2000);
-      } else if (isDeleting && currentIndex > 0) {
-        currentIndex--;
-        setTypedText(currentMessage.slice(0, currentIndex));
-        timeoutId = setTimeout(typeWriter, 100);
-      } else if (isDeleting && currentIndex === 0) {
-        isDeleting = false;
-        setCurrentMessageIndex((prev) => (prev + 1) % messages.length);
-        timeoutId = setTimeout(typeWriter, 500);
-      }
-    };
+    const currentLine = lines[currentLineIndex];
+    
+    if (currentCharIndex < currentLine.length) {
+      const timeout = setTimeout(() => {
+        setTerminalLines(prev => {
+          const newLines = [...prev];
+          newLines[currentLineIndex] = currentLine.slice(0, currentCharIndex + 1);
+          return newLines;
+        });
+        setCurrentCharIndex(prev => prev + 1);
+      }, 50); // 50ms per character
+      
+      return () => clearTimeout(timeout);
+    } else {
+      // Line completed, move to next line after delay
+      const timeout = setTimeout(() => {
+        setCurrentLineIndex(prev => prev + 1);
+        setCurrentCharIndex(0);
+      }, 300);
+      
+      return () => clearTimeout(timeout);
+    }
+  }, [currentCharIndex, currentLineIndex, lines]);
 
-    typeWriter();
-    return () => clearTimeout(timeoutId);
-  }, [currentMessageIndex, messages]);
+  // Cursor blink animation
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setShowCursor(prev => !prev);
+    }, 500);
+    
+    return () => clearInterval(interval);
+  }, []);
 
   const scrollToProducts = () => {
     const productsSection = document.getElementById('dijital-araclar');
@@ -89,17 +98,34 @@ export default function HeroSection() {
       {/* Content Container */}
       <div className="relative z-10 max-w-5xl mx-auto text-center">
         <div className="space-y-8">
-          {/* New Subtitle - Replaces eyebrow and heading */}
-          <motion.p
+          {/* Eyebrow Label with Pulse Dot */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="flex items-center justify-center gap-2 mb-4"
+          >
+            <span className="relative flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-cyan-500"></span>
+            </span>
+            <span className="text-cyan-400 font-mono text-sm tracking-wider">
+              {t('hero.eyebrow')}
+            </span>
+          </motion.div>
+
+          {/* Main Heading */}
+          <motion.h1
+            id="hero-heading"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-xl sm:text-2xl md:text-3xl font-semibold max-w-3xl mx-auto leading-relaxed text-white"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold max-w-4xl mx-auto leading-tight text-white"
           >
-            {t('hero.newSubtitle')}
-          </motion.p>
+            {t('hero.heading1')}
+          </motion.h1>
 
-          {/* Terminal Animation - Clean, no avatars */}
+          {/* Terminal Animation - 4 Lines */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -107,17 +133,25 @@ export default function HeroSection() {
             className="flex justify-center mb-10"
           >
             <div 
-              className="w-64 h-20 sm:w-80 sm:h-24 rounded-xl border flex items-center justify-center"
+              className="w-full max-w-2xl rounded-xl border p-6"
               style={{ 
-                background: '#0D1117',
+                background: '#0a0a0a',
                 borderColor: '#1E2D3D',
               }}
             >
-              <div className="flex flex-col items-center justify-center gap-1">
-                <div className="font-mono text-xs sm:text-sm h-5" style={{ color: '#8899AA' }}>
-                  {typedText}
-                  <span className="inline-block w-2 h-4 ml-1 bg-cyan-500 animate-pulse" />
-                </div>
+              <div className="font-mono text-xs sm:text-sm space-y-2 text-left">
+                {terminalLines.map((line, index) => (
+                  <div key={index} style={{ color: index === 3 ? '#10b981' : '#8899AA' }}>
+                    {line}
+                    {index === currentLineIndex && showCursor && (
+                      <span className="inline-block w-2 h-4 ml-1 bg-cyan-500" />
+                    )}
+                  </div>
+                ))}
+                {/* Empty lines for spacing */}
+                {Array.from({ length: 4 - terminalLines.length }).map((_, i) => (
+                  <div key={`empty-${i}`} className="h-5" />
+                ))}
               </div>
             </div>
           </motion.div>
@@ -150,15 +184,16 @@ export default function HeroSection() {
               onClick={goToKodOdasi}
               size="lg"
               variant="outline"
-              className="group px-8 py-6 text-base font-semibold rounded-lg transition-all duration-300 hover:scale-105"
+              className="group px-8 py-6 text-base font-semibold rounded-lg transition-all duration-300 hover:scale-105 hover:border-cyan-400"
               style={{
                 borderColor: '#0EA5E9',
+                borderWidth: '2px',
                 color: '#0EA5E9',
-                background: 'transparent'
+                background: 'rgba(0, 212, 255, 0.08)'
               }}
               aria-label={t('hero.cta2')}
             >
-              <span className="relative z-10">{t('hero.cta2')}</span>
+              <span className="relative z-10 group-hover:text-cyan-300 transition-colors">{t('hero.cta2')}</span>
             </Button>
           </motion.div>
         </div>

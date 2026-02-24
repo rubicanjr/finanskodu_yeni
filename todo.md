@@ -1911,3 +1911,30 @@
 - [ ] Sesli okuma özelliği testi
 - [ ] Süreç Modeli bölümü görsel kontrolü
 - [ ] Mobil uyumluluk testi
+
+
+## Kapsamlı Metin, UI/UX ve Veri Revizyonu (pasted_content_4.txt)
+
+### Görev 1: Metin İçeriklerini Güncelle
+- [x] Hero Section metni: "Kaos Senin İşin Değil..." → "Finansınızı finanskodu dijital ürünleri ile bir üst seviyeye taşıyın."
+- [x] Süreç Modeli başlığı: "Finansal dönüşümü nasıl gerçekleştiriyoruz?" → "Finans ihtiyaçların standart ürünlerimizin dışına çıkıyorsa, sana özel çözüm için buradayız."
+- [x] Süreç Modeli alt başlığı: "Her proje benzersizdir..." → "Fikirden canlı kullanıma kadar, finansal süreçlerini nasıl hayata geçirdiğimizi adım adım gör."
+
+### Görev 2A: Hero Bölümü UI/UX Revizyonu
+- [x] Terminal animasyonu: 4 satırlık yazı animasyonu ekle, son satır "Sistem hazır. Kaos filtrelendi." + yanıp sönen cursor
+- [x] "Kod Odası'na Git" buton görünürlüğü: Arkaplan rgba(0, 212, 255, 0.08), border opaklığı artır, hover belirgin
+- [x] Eyebrow etiketi: Pulse animasyonlu nokta + "// FİNANSAL VERİMLİLİK İÇİN" metni
+
+### Görev 2B: Süreç Bölümü UI/UX Revizyonu
+- [x] Kart tasarımı: Arkaplan #121A24, hover'da accent çizgisi + glow + translateY(-5px)
+- [x] Step numaraları: 52px, font-weight 800, cyan/green renk, hover'da glow
+- [x] Bağlantı okları: Renkli çizgi + 01/02/03 daireleri ile görsel süreç akışı
+- [x] Güven rozetleri: "Kara kutu yok", "Sürpriz entegrasyon yok", "Versiyon 1.0 yok" (altın renk)
+- [x] CTA butonu: https://cal.com/rubi-can (yeni sekme), altında "Ücretsiz · Bağlayıcı değil · 30 dakika"
+
+### Görev 3: Ticker Veri Akışını Güncelle
+- [x] BIST 100'ü kaldır (BIST:XU100) - zaten kaldırılmış
+- [x] Gümüş/Ons ekle (TVC:SILVER) - zaten var
+- [x] Bakır/Ons ekle (COMEX:HG1!) - zaten var
+- [x] Platin/Ons ekle (TVC:PLATINUM) - zaten var
+- [x] Paladyum/Ons ekle (TVC:PALLADIUM) - zaten var
