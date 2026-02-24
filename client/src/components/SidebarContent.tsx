@@ -1,11 +1,12 @@
 import { Link, useLocation } from 'wouter';
-import { Home, BookOpen, MessageSquare, BarChart3 } from 'lucide-react';
+import { Home, BookOpen, MessageSquare, BarChart3, Package } from 'lucide-react';
 import { useI18n } from '@/contexts/I18nContext';
 import ThemeToggle from './ThemeToggle';
 import LanguageToggle from './LanguageToggle';
 
 const navItems = [
   { href: '/', label: 'nav.home', icon: Home },
+  { href: '/dijital-araclar', label: 'nav.products', icon: Package },
   { href: '/analiz', label: 'nav.analysis', icon: BarChart3 },
   { href: '/blog', label: 'nav.blog', icon: BookOpen },
   { href: '/kod-odasi', label: 'nav.kodOdasi', icon: MessageSquare },

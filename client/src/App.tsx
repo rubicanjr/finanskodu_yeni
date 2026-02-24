@@ -13,6 +13,7 @@ import DualPersonaWidget from './components/DualPersonaWidget';
 
 // Route-based code splitting: Lazy load pages
 const Home = lazy(() => import('@/pages/Home'));
+const DigitalToolsPage = lazy(() => import('@/pages/DigitalToolsPage'));
 const AnalysisPage = lazy(() => import('@/pages/AnalysisPage'));
 const BlogListPage = lazy(() => import('@/pages/BlogListPage'));
 const BlogDetailPage = lazy(() => import('@/pages/BlogDetailPage'));
@@ -43,6 +44,7 @@ function Router() {
     <Suspense fallback={<PageLoader />}>
       <Switch>
         <Route path="/" component={Home} />
+        <Route path="/dijital-araclar" component={DigitalToolsPage} />
         <Route path="/analiz" component={AnalysisPage} />
         <Route path="/blog" component={BlogListPage} />
         <Route path="/blog/:slug" component={BlogDetailPage} />

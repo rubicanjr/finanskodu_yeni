@@ -1837,3 +1837,32 @@
 - [ ] 4.5: Terminal/sistem diyagramı estetiği uygula
 - [ ] 4.6: "Sürecini birlikte haritalayalım" CTA bölümü ekle
 - [ ] 4.7: "Görüşme Talep Et" butonu cal.com linkine yönlendir
+
+## Kapsamlı Tasarım Revizyonu (Finanskodu.comKapsamlıTasarımveİşlevsellikRevizyonPrompt'u.md)
+
+### Görev 1: Ticker Veri Akışı Güncelleme ✓
+- [x] BIST 100 kaldırıldı
+- [x] Gümüş (XAG/USD) eklendi
+- [x] Bakır (HG1) eklendi
+- [x] Platin (PL1) eklendi
+- [x] Paladyum (PA1) eklendi
+
+### Görev 2: Hero Section Metin Değişikliği ✓
+- [x] Eyebrow kaldırıldı
+- [x] Heading kaldırıldı
+- [x] Yeni subtitle eklendi: "Kişisel ve/veya kurumsal finansinizi finanskodu dijital ürünleri ile bir üst seviyeye taşıyın."
+
+### Görev 3: Dijital Araçlar Yeniden Yapılandırma ⏳
+- [x] Sidebar'a "Dijital Araçlar" linki eklendi (Package icon)
+- [x] /dijital-araclar rotası oluşturuldu
+- [x] DigitalToolsPage.tsx oluşturuldu (3 ürün kartı + SSS + CTA)
+- [x] Sesli okuma özelliği eklendi (Web Speech API)
+- [x] tr.json ve en.json'a ürün çevirileri eklendi
+- [ ] Ana sayfadaki ProductsSection'dan hikie.space linkleri kaldırılacak
+
+### Görev 4: Manifesto → Süreç Modeli Dönüşümü ⏳
+- [ ] ManifestoSection'ı ProcessModelSection ile değiştir
+- [ ] 3 adım kart oluştur (Analiz, Strateji, Uygulama)
+- [ ] Garanti rozeti/mührü ekle
+- [ ] CTA butonlarını güncelle
+- [ ] tr.json ve en.json'a çeviriler ekle

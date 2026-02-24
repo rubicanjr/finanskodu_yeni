@@ -1,7 +1,7 @@
 {
   "nav": {
     "home": "Ana Sayfa",
-    "products": "Ürünler",
+    "products": "Dijital Araçlar",
     "manifesto": "Manifesto",
     "blog": "Blog",
     "analysis": "Finansal Analiz",
@@ -39,6 +39,61 @@
     "viewDetails": "Detayları Gör",
     "comingSoon": "Yakında",
     "goTo": "sayfasına git",
+    "speechNotSupported": "Tarayıcınız sesli okuma özelliğini desteklemiyor.",
+    "startSpeech": "Sesli okumayı başlat",
+    "stopSpeech": "Sesli okumayı durdur",
+    "hero": {
+      "title": "Dijital Araçlar",
+      "subtitle": "Finansal verimliliğinizi artıracak, yapay zeka destekli dijital çözümler"
+    },
+    "finansalPerformans": {
+      "title": "Finansal Performans Takip Sistemi",
+      "description": "Kişisel ve kurumsal finansınızı gerçek zamanlı izleyin, analiz edin ve optimize edin. Yapay zeka destekli öngörüler ile geleceğe hazır olun.",
+      "feature1": "Gerçek zamanlı finansal dashboard ve raporlama",
+      "feature2": "AI destekli harcama analizi ve öneriler",
+      "feature3": "Bütçe planlama ve hedef takibi",
+      "feature4": "Çoklu hesap ve portföy yönetimi",
+      "price": "₺299/ay",
+      "cta": "Hemen Başla"
+    },
+    "yapayZekaAsistan": {
+      "title": "Yapay Zeka Finansal Asistan",
+      "description": "7/24 yanınızda olan AI asistanınız ile finansal kararlarınızı güçlendirin. Piyasa analizleri, yatırım önerileri ve risk değerlendirmeleri.",
+      "feature1": "Doğal dil ile finansal sorgulama",
+      "feature2": "Otomatik piyasa analizi ve sinyal üretimi",
+      "feature3": "Kişiselleştirilmiş yatırım stratejileri",
+      "feature4": "Risk yönetimi ve portföy optimizasyonu",
+      "price": "₺499/ay",
+      "cta": "Asistanı Dene"
+    },
+    "kurumsalCozumler": {
+      "title": "Kurumsal Finansal Çözümler",
+      "description": "Şirketinizin finansal operasyonlarını dijitalleştirin. Ekip yönetimi, raporlama, compliance ve entegrasyon desteği ile tam kontrol.",
+      "feature1": "Çoklu kullanıcı ve yetki yönetimi",
+      "feature2": "API entegrasyonu ve özel raporlar",
+      "feature3": "Compliance ve denetim desteği",
+      "feature4": "Öncelikli destek ve eğitim",
+      "price": "Özel Fiyat",
+      "cta": "Teklif Al"
+    },
+    "faq": {
+      "title": "Sıkça Sorulan Sorular",
+      "q1": "Dijital araçlar nasıl çalışır?",
+      "a1": "Tüm dijital araçlarımız bulut tabanlıdır ve herhangi bir kurulum gerektirmez. Hesabınızı oluşturduktan sonra web tarayıcınız üzerinden anında erişebilirsiniz.",
+      "q2": "Verilerim güvende mi?",
+      "a2": "Evet, tüm verileriniz 256-bit SSL şifreleme ile korunur ve düzenli olarak yedeklenir. KVKK ve GDPR uyumlu çalışıyoruz.",
+      "q3": "Üyeliğimi iptal edebilir miyim?",
+      "a3": "Evet, istediğiniz zaman üyeliğinizi iptal edebilirsiniz. İptal sonrası mevcut dönem sonuna kadar hizmetlerimizi kullanmaya devam edebilirsiniz.",
+      "q4": "Deneme süresi var mı?",
+      "a4": "Evet, tüm ürünlerimizde 14 günlük ücretsiz deneme süresi sunuyoruz. Kredi kartı bilgisi gerekmez.",
+      "q5": "Kurumsal destek alabilir miyim?",
+      "a5": "Kurumsal paketlerimizde öncelikli destek, özel eğitimler ve danışmanlık hizmetleri sunuyoruz. Detaylı bilgi için iletişime geçin."
+    },
+    "cta": {
+      "title": "Finansal Dönüşümünüze Bugün Başlayın",
+      "subtitle": "14 gün ücretsiz deneyin, kredi kartı gerekmez",
+      "button": "Ücretsiz Deneyin"
+    },
     "item1": {
       "title": "AI Prompt Kütüphanesi",
       "desc": "Finans profesyonelleri için özel olarak tasarlanmış 100+ yapay zeka prompt koleksiyonu.",

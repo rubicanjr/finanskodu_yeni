@@ -1,7 +1,7 @@
 {
   "nav": {
     "home": "Home",
-    "products": "Products",
+    "products": "Digital Tools",
     "manifesto": "Manifesto",
     "blog": "Blog",
     "analysis": "Financial Analysis",
@@ -39,6 +39,61 @@
     "viewDetails": "View Details",
     "comingSoon": "Coming Soon",
     "goTo": "go to page",
+    "speechNotSupported": "Your browser does not support text-to-speech.",
+    "startSpeech": "Start text-to-speech",
+    "stopSpeech": "Stop text-to-speech",
+    "hero": {
+      "title": "Digital Tools",
+      "subtitle": "AI-powered digital solutions to boost your financial efficiency"
+    },
+    "finansalPerformans": {
+      "title": "Financial Performance Tracking System",
+      "description": "Monitor, analyze and optimize your personal and corporate finances in real-time. Get ready for the future with AI-powered insights.",
+      "feature1": "Real-time financial dashboard and reporting",
+      "feature2": "AI-powered spending analysis and recommendations",
+      "feature3": "Budget planning and goal tracking",
+      "feature4": "Multi-account and portfolio management",
+      "price": "$99/mo",
+      "cta": "Get Started"
+    },
+    "yapayZekaAsistan": {
+      "title": "AI Financial Assistant",
+      "description": "Strengthen your financial decisions with your 24/7 AI assistant. Market analysis, investment recommendations and risk assessments.",
+      "feature1": "Natural language financial queries",
+      "feature2": "Automated market analysis and signal generation",
+      "feature3": "Personalized investment strategies",
+      "feature4": "Risk management and portfolio optimization",
+      "price": "$149/mo",
+      "cta": "Try Assistant"
+    },
+    "kurumsalCozumler": {
+      "title": "Enterprise Financial Solutions",
+      "description": "Digitize your company's financial operations. Full control with team management, reporting, compliance and integration support.",
+      "feature1": "Multi-user and permission management",
+      "feature2": "API integration and custom reports",
+      "feature3": "Compliance and audit support",
+      "feature4": "Priority support and training",
+      "price": "Custom Pricing",
+      "cta": "Get Quote"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "q1": "How do digital tools work?",
+      "a1": "All our digital tools are cloud-based and require no installation. After creating your account, you can access them instantly through your web browser.",
+      "q2": "Is my data secure?",
+      "a2": "Yes, all your data is protected with 256-bit SSL encryption and regularly backed up. We comply with GDPR standards.",
+      "q3": "Can I cancel my subscription?",
+      "a3": "Yes, you can cancel your subscription at any time. After cancellation, you can continue using our services until the end of the current period.",
+      "q4": "Is there a trial period?",
+      "a4": "Yes, we offer a 14-day free trial on all our products. No credit card required.",
+      "q5": "Can I get enterprise support?",
+      "a5": "Our enterprise packages include priority support, custom training and consulting services. Contact us for details."
+    },
+    "cta": {
+      "title": "Start Your Financial Transformation Today",
+      "subtitle": "Try free for 14 days, no credit card required",
+      "button": "Try For Free"
+    },
     "item1": {
       "title": "AI Prompt Library",
       "desc": "A collection of 100+ AI prompts specifically designed for finance professionals.",
