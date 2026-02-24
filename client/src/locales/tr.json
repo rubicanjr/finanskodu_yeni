@@ -116,6 +116,102 @@
       "cta": "Bültene Katıl"
     }
   },
+  "digitalTools": {
+    "hero": {
+      "title": "Dijital Araçlar",
+      "subtitle": "Finansal verimliliğinizi artıracak, yapay zeka destekli dijital çözümler"
+    },
+    "featuresTitle": "Özellikler",
+    "faqTitle": "Sıkça Sorulan Sorular",
+    "purchaseButton": "Satın Al",
+    "consultationButton": "Ürünle ilgili Görüşme Talep Et",
+    "aiPromptLibrary": {
+      "title": "AI Prompt Kütüphanesi",
+      "subtitle": "Özel olarak tasarlanmış yapay zeka prompt koleksiyonu",
+      "description": "Finans Kodu: AI Prompt Kütüphanesi (100+ Komut) - Yapay zeka ile 'sohbet etmeyi' bırakın, ona 'emretmeyi' öğrenin. Herkes yapay zeka kullanıyor ama herkes aynı sonucu alamıyor. Aradığı fark, sorduğunuz sorunun (Prompt) kalitesidir. Özellikle Finansal analizde hata payı yoktur. Bu yüzden, ChatGPT, Gemini veya Claude ile çalışırken rastgele cümleler kuramazsınız. Bir mühendis disipliniyle, bağlamı ve kısıtları net belirlenmiş komutlar kullanmalısınız. Finans Kodu: AI Prompt Kütüphanesi, deneme-yanılma sürecini ortadan kaldırır. Sizin için test edilmiş, optimize edilmiş ve finansal terminolojiye hakim 100'den fazla 'Akıllı Komut' içerir.",
+      "feature1": "🧠 100+ Profesyonel Komut: Genel sohbetler için değil; finansal analiz, raporlama ve strateji oluşturmak için optimize edilmiş dev arşiv.",
+      "feature2": "👔 Sanal Analist: ChatGPT, Gemini veya Claude'u sıradan bir bottan, sizin için çalışan 'Kıdemli Bir Analiste' dönüştüren özel kurgular.",
+      "feature3": "⚡ Hız ve Verimlilik: Saatler süren pazar araştırmalarını ve veri özetlerini saniyelere düşüren, 'sonuç odaklı' mühendislik promptları.",
+      "feature4": "📊 Tam Kapsam: Bilanço yorumlamadan profesyonel e-postalara, Excel formül üretiminden risk analizine kadar her senaryo için hazır şablonlar.",
+      "feature5": "📋 Kopyala-Yapıştır: Karmaşık 'prompt mühendisliği' öğrenmenize gerek yok. Hazır şablonları kopyalayın, verinizi girin ve sonucu alın.",
+      "feature6": "🚀 AI Okuryazarlığı: Sadece çıktı almayı değil; yapay zekayı bir 'Düşünce Partneri' olarak nasıl yöneteceğinizi öğreten strüktür.",
+      "faq1Question": "Zaten yapay zekaya soru sorabiliyorum, buna neden ihtiyaçım var?",
+      "faq1Answer": "Herkes soru sorabilir ama herkes doğru cevabı alamaz. 'Bana piyasayı anlat' demekle, bu kütüphanedeki gibi parametreleri, tonu, analiz formatı ve kısıtlamaları belirlenmiş bir 'Mühendislik Promptu' girmek arasında dağlar kadar fark vardır.",
+      "faq2Question": "Hangi yapay zeka modelleriyle uyumlu?",
+      "faq2Answer": "Bu kütüphane 'Model Bağımsız' (Model Agnostic) hazırlanmıştır. ChatGPT (3.5/4o), Google Gemini, Claude veya Copilot fark etmeksizin tüm büyük dil modellerinde çalışır.",
+      "faq3Question": "Bu bir eğitim videosu mu?",
+      "faq3Answer": "Hayır. Bu, doğrudan işinizde kullanabileceğiniz yazılı bir 'Komut Veritabanı'dır. Videoları izleyip not almakla uğraşmazsınız; ihtiyacınız olan başlığı bulur, komutu kopyalar ve işinizi halledersiniz.",
+      "faq4Question": "İngilizce bilmem gerekiyor mu?",
+      "faq4Answer": "Hayır. Tüm promptlar Türkçe olarak hazırlanmış ve optimize edilmiştir. Ancak dilerseniz yapay zekaya 'Cevabı İngilizce ver' diyerek uluslararası raporlar da hazırlatabilirsiniz.",
+      "faq5Question": "Güncellemelerden faydalanacak mıyım?",
+      "faq5Answer": "AI dünyası hızla değişiyor. Bu kütüphane statik bir dosya değildir; yeni ve etkili prompt teknikleri keşfedildikçe güncellenir ve siz de bu güncel versiyonlara erişim sağlarsınız."
+    },
+    "finansKodu": {
+      "title": "FİNANS KODU: Kaos İçinde Düzen",
+      "subtitle": "Finansal Özgürlük ve Sürdürülebilirlik İçin: 'Sistemin Kaynak Kodları'",
+      "description": "Bir binayı inşa etmeden önce temeli atarsınız. Bir yazılımı kodlamadan önce mimarisini kurarsınız. Peki, finansal geleceğinizi inşa ederken hangi 'kurallara' sadık kalıyorsunuz? 'FİNANS KODU: Kaos İçinde Düzen', teknik bir Excel eğitimi veya geçici bir yatırım tavsiyesi değildir. Bu belge, bir Endüstri Mühendisi ve CIO perspektifiyle yazılmış, finansal kararların 'Anayasası'dır. Kaosun içinde kaybolmamanız, duygusal kararlarla hata yapmamanız ve sürdürülebilir bir büyüme yakalamanız için gereken Temel Kanunlar bu dosyanın içindedir. Sisteminizi kurun, duygularınızı devreden çıkarın. Çünkü matematikte 'umarım' diye bir değişken yoktur.",
+      "feature1": "🏭 Mühendislik Perspektifi: Finansı Girdi-Çıktı ve Optimizasyon problemi olarak ele alan sistematik bir yaklaşım",
+      "feature2": "🧠 Duygu-Bozucu Algoritmalar: Piyasa düşerken panik yapmanızı, yükselirken açgözlü olmanızı engelleyen, önceden tanımlı davranış kalıpları",
+      "feature3": "⚖️ Risk/Getiri Mühendisliği: Sistemi yıkmadan ne kadar risk alabilirim? sorusunu çözen matematiksel formüller",
+      "feature4": "🔄 Sürdürülebilir Varlık Döngüsü: Tek seferlik vurkaç kazançları değil, 10-20 yıllık Bileşik Getiri etkisini maksimize eden portföy mimarisi",
+      "feature5": "🎯 Karar Matrisleri: Hangi varlığın, ne zaman ve hangi koşullarda portföye ekleneceğine dair sübjektif değil, objektif kriterler",
+      "feature6": "🚫 Gürültü Filtreleme: Haber akışları, tüyolar ve manipülasyonlar arasında kaybolmadan sadece sinyale odaklanılan zihinsel modeller",
+      "faq1Question": "Bu dosyanın içinde hisse senedi veya coin tüyoları var mı?",
+      "faq1Answer": "Hayır. Bu dosya size 'hangi balığı tutacağınızı' değil, okyanusun durumuna göre 'hangi oltayı kullanacağınızı' ve fırtına çıktığında 'gemiyi nasıl limana yanaştıracağınızı' öğretir. Balık (Tüyo) bayatlar, ama Balıkçılık (Metodoloji) ömür boyu besler.",
+      "faq2Question": "İleri düzey matematik veya Excel bilmem gerekiyor mu?",
+      "faq2Answer": "Hayır. 'Finans Kodu' bir mühendis tarafından yazılmış olsa da, dili herkesin anlayabileceği sadeliktedir. Karmaşık formüller değil, 'Sağlam Mantık' üzerine kuruludur. İhtiyacınız olan tek şey hesap makinesi ve disiplindir.",
+      "faq3Question": "Bu bir eğitim videosu mu yoksa yazılı bir kaynak mı?",
+      "faq3Answer": "Bu, dijital bir okunabilir belgedir (PDF/E-Kitap formatında). Videolar izlenir ve unutulur; ancak bu doküman, her yatırım kararı öncesinde dönüp bakacağınız, masanızda durması gereken bir 'Referans Kitapçığı' (Cheatsheet) olarak tasarlanmıştır.",
+      "faq4Question": "Bu sistem kısa vadeli al-sat (Trade) yapanlar için uygun mu?",
+      "faq4Answer": "Eğer amacınız 'yarın zengin olmak' ise bu ürün size göre değildir. Ancak amacınız trade işlemlerinizi 'duygusal kumardan' çıkarıp 'disiplinli bir iş modeline' dönüştürmekse, buradaki risk yönetimi kuralları hayat kurtarıcıdır.",
+      "faq5Question": "Neden 'Kaos İçinde Düzen' diyoruz?",
+      "faq5Answer": "Çünkü piyasalar kaotiktir, tahmin edilemez. Piyasayı kontrol edemezsiniz, kontrol edebileceğiniz tek şey 'kendi davranışlarınızdır'. Bu doküman, dışarıdaki kaos ne olursa olsun, içerideki düzeni (portföyünüzü) nasıl koruyacağınızın anayasasıdır."
+    },
+    "proBulletin": {
+      "title": "Pro - Algoritmik Strateji ve Analiz Bülteni (1 Aylık Erişim)",
+      "subtitle": "Veriyi sağlıyoruz, stratejinizi denetliyoruz. Hata şansını sıfıra indirin.",
+      "description": "Bu paket; Finans Kodu'nun en gelişmiş Algoritmik Veri Akışı (1 Ay) hizmeti ile portföyünüzü mühendis gözüyle inceleyen Birebir Check-Up seansını birleştirir. Sadece piyasanın nereye gittiğini bilmek yetmez; sizin o piyasada nerede durduğunuz da önemlidir. Algoritmalarımız Altın ve Fon piyasalarındaki yönü tayin ederken, 45 dakikalık birebir strateji seansmızda mevcut varlık dağılımınızdaki 'mantık hatalarını' (bug'ları) temizliyoruz. Duygu yok, tahmin yok. Hem makro veride hem de kişisel portföyünüzde sadece matematik var.",
+      "feature1": "🥇 Altın Algoritması: Ons, Gram ve Altın sertifikaları için duygulardan arınmış, tamamen veriye dayalı trend ve yön analizi sinyalleri.",
+      "feature2": "📈 Akıllı Fon Sepetleri: Onlarca TEFAS fonu arasından matematiksel modellerle seçilmiş, kazandırma potansiyeli yüksek sepet stratejileri",
+      "feature3": "🎙️ Haftalık Sesli Brifing: Haftanın karmaşasını değil, stratejisini dinleyin. Piyasa gürültüsünü filtreleyen net ve öz sesli yönetici notla",
+      "feature4": "🚀 Kanıtlanmış Model: Son ay referans portföyde %30 büyüme yakalayan matematiksel disiplini ve stratejiyi yatırımlarınıza entegre edin",
+      "feature5": "🎯 Yüksek Veri İsabeti: Trend yönü tayininde %99 teknik veri akışı başarısına sahip algoritmalarla belirsizliği minimize et, yönünü bul",
+      "feature6": "🔍 1:1 Finansal Check-Up: 45 dk'lık online seansta portföyünüzdeki mantık hatalarını ve riskleri temizleyen kişisel Denetim hizmeti",
+      "feature7": "🛣️ Kişisel Reçete: Görüşme sonunda genel geçer tavsiyeler değil, bütçenize ve hedefinize özel 'Optimizasyon Planı' çıkarılır.",
+      "feature8": "📲 VIP İletişim Hattı: Günlük piyasa değişimlerini, model sinyallerini ve check-up sonrası takibi içeren özel birebir iletişim",
+      "faq1Question": "Bu hizmette doğrudan 'Al-Sat' tüyosu mu veriliyor?",
+      "faq1Answer": "Hayır. Finans Kodu bir 'tüyo merkezi' değil, bir 'veri işleme istasyonu'dur. Size 'Şunu al' demek yerine; algoritmamızın ürettigi giriş-çıkış bölgelerini, trend değişim sinyallerini ve risk seviyelerini sunarız. Karar her zaman yatırımcıya aittir.",
+      "faq2Question": "%99 Başarı oranı kesin kazanç anlamına mı gelir?",
+      "faq2Answer": "Finansal piyasalarda 'garanti' kelimesi sadece dolandırıcılar tarafından kullanılır. %99, algoritmamızın 'Teknik Veri Akışı' başarısıdır; yani trendin yönünü doğru okuma kapasitesidir. Biz geleceği değil, verinin ne söylediğini garanti ederiz",
+      "faq3Question": "Hiç finans bilgim yok, analizleri anlayabilir miyim?",
+      "faq3Answer": "Evet. Bizim işimiz karmaşık matematiği arka planda yapmak ve size 'sadeleştirilmiş sonucu' sunmaktır. Sesli notlar ve özetler, her seviyeden yatırımcının anlayabileceği netliktedir.",
+      "faq4Question": "Hizmet süresi nasıl işliyor?",
+      "faq4Answer": "Satın alımınızla birlikte 30 gün boyunca Telegram kanalına ve bültenlere erişim hakkı kazanırsınız. Süre sonunda erişim otomatik olarak sonlanır, devam etmek için üyeliğinizi yenilemeniz gerekir.",
+      "faq5Question": "Bu analizler hisse senetlerini kapsıyor mu?",
+      "faq5Answer": "Bu paket spesifik olarak Altın ve Yatırım Fonları (TEFAS) dikeyine odaklanmıştır. Hisse senedi piyasasının manipülatif gürültüsünden uzak, daha stabil ve makro trendlere dayalı varlıkları yönetmek isteyenler için tasarlanmıştır.",
+      "faq6Question": "Mentörlük görüşmesi (Check-Up) nasıl yapılıyor?",
+      "faq6Answer": "Ürünü satın aldıktan sonra size özel bir takvim linki iletiliyor. Online (Zoom/Google Meet) üzerinden 45 dakikalık, tamamen size ve rakamlarınıza odaklanılan bir seans gerçekleştiriyoruz.",
+      "faq7Question": "Görüşme için hazırlık yapmam gerekiyor mu?",
+      "faq7Answer": "Evet. Verimli bir 45 dakika geçirmek için mevcut varlık dağılımınızı (Hisse, Altın, Döviz vb. oranları) ve finansal hedeflerinizi önden not etmeniz, reçetenin doğruluğunu artırır."
+    }
+  },
+  "processModel": {
+    "heading": "Finansal dönüşümü nasıl gerçekleştiriyoruz?",
+    "subheading": "3 Adımda Finans Kodu Süreci",
+    "description": "Her proje benzersizdir. Ancak başarılı her dönüşümün arkasında aynı disiplinli süreç vardır.",
+    "step1": {
+      "title": "Keşif & Analiz",
+      "description": "Mevcut finansal süreçlerinizi, açı noktalarınızı ve hedeflerinizi detaylı bir şekilde analiz ediyoruz. Veri akışlarını, darboğazları ve otomasyon fırsatlarını belirliyoruz."
+    },
+    "step2": {
+      "title": "Tasarım & Geliştirme",
+      "description": "Size özel çözüm mimarisini tasarlıyoruz. Yapay zeka, otomasyon ve mühendislik prensiplerini birleştirerek operasyonel verimliliğinizi maksimize edecek sistemleri geliştiriyoruz."
+    },
+    "step3": {
+      "title": "Kurulum & Sürekli Beta",
+      "description": "Sistemi devreye alıyor, ekibinizi eğitiyor ve sürekli iyileştirme döngüsüne geçiyoruz. Piyasa değiştikçe, sistemleriniz de evrim geçiriyor. Sonuç: Sürdürülebilir büyüme ve rekabet avantajı."
+    }
+  },
   "comparison": {
     "eyebrow": "// KAOS vs DÜZEN",
     "title": "Piyasa Gürültüsünden",

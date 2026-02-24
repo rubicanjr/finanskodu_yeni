@@ -1,62 +1,147 @@
 import { useState } from 'react';
 import { useI18n } from '@/contexts/I18nContext';
-import { Volume2, VolumeX, Package, Sparkles, TrendingUp, Users } from 'lucide-react';
+import { Volume2, VolumeX, Brain, BookOpen, TrendingUp, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 interface Product {
   id: string;
-  icon: typeof Package;
+  icon: typeof Brain;
   titleKey: string;
+  subtitleKey: string;
   descriptionKey: string;
   featuresKey: string[];
-  priceKey: string;
-  ctaKey: string;
+  faqKeys: { questionKey: string; answerKey: string }[];
+  purchaseLink: string;
+  consultationLink?: string; // Optional for Pro product
 }
 
 const products: Product[] = [
   {
-    id: 'finansal-performans',
+    id: 'ai-prompt-library',
+    icon: Brain,
+    titleKey: 'digitalTools.aiPromptLibrary.title',
+    subtitleKey: 'digitalTools.aiPromptLibrary.subtitle',
+    descriptionKey: 'digitalTools.aiPromptLibrary.description',
+    featuresKey: [
+      'digitalTools.aiPromptLibrary.feature1',
+      'digitalTools.aiPromptLibrary.feature2',
+      'digitalTools.aiPromptLibrary.feature3',
+      'digitalTools.aiPromptLibrary.feature4',
+      'digitalTools.aiPromptLibrary.feature5',
+      'digitalTools.aiPromptLibrary.feature6',
+    ],
+    faqKeys: [
+      {
+        questionKey: 'digitalTools.aiPromptLibrary.faq1Question',
+        answerKey: 'digitalTools.aiPromptLibrary.faq1Answer',
+      },
+      {
+        questionKey: 'digitalTools.aiPromptLibrary.faq2Question',
+        answerKey: 'digitalTools.aiPromptLibrary.faq2Answer',
+      },
+      {
+        questionKey: 'digitalTools.aiPromptLibrary.faq3Question',
+        answerKey: 'digitalTools.aiPromptLibrary.faq3Answer',
+      },
+      {
+        questionKey: 'digitalTools.aiPromptLibrary.faq4Question',
+        answerKey: 'digitalTools.aiPromptLibrary.faq4Answer',
+      },
+      {
+        questionKey: 'digitalTools.aiPromptLibrary.faq5Question',
+        answerKey: 'digitalTools.aiPromptLibrary.faq5Answer',
+      },
+    ],
+    purchaseLink: 'https://hikie.space/link/checkout/j9p0eW1ITmovb8v0xE752kmcTTjyPZ3zSLnAuQlm',
+  },
+  {
+    id: 'finans-kodu',
+    icon: BookOpen,
+    titleKey: 'digitalTools.finansKodu.title',
+    subtitleKey: 'digitalTools.finansKodu.subtitle',
+    descriptionKey: 'digitalTools.finansKodu.description',
+    featuresKey: [
+      'digitalTools.finansKodu.feature1',
+      'digitalTools.finansKodu.feature2',
+      'digitalTools.finansKodu.feature3',
+      'digitalTools.finansKodu.feature4',
+      'digitalTools.finansKodu.feature5',
+      'digitalTools.finansKodu.feature6',
+    ],
+    faqKeys: [
+      {
+        questionKey: 'digitalTools.finansKodu.faq1Question',
+        answerKey: 'digitalTools.finansKodu.faq1Answer',
+      },
+      {
+        questionKey: 'digitalTools.finansKodu.faq2Question',
+        answerKey: 'digitalTools.finansKodu.faq2Answer',
+      },
+      {
+        questionKey: 'digitalTools.finansKodu.faq3Question',
+        answerKey: 'digitalTools.finansKodu.faq3Answer',
+      },
+      {
+        questionKey: 'digitalTools.finansKodu.faq4Question',
+        answerKey: 'digitalTools.finansKodu.faq4Answer',
+      },
+      {
+        questionKey: 'digitalTools.finansKodu.faq5Question',
+        answerKey: 'digitalTools.finansKodu.faq5Answer',
+      },
+    ],
+    purchaseLink: 'https://hikie.space/link/checkout/dzxB5G6fSEOYxRYgC2xkpcKJ3C1no8jHiPOl6iCY',
+  },
+  {
+    id: 'pro-bulletin',
     icon: TrendingUp,
-    titleKey: 'products.finansalPerformans.title',
-    descriptionKey: 'products.finansalPerformans.description',
+    titleKey: 'digitalTools.proBulletin.title',
+    subtitleKey: 'digitalTools.proBulletin.subtitle',
+    descriptionKey: 'digitalTools.proBulletin.description',
     featuresKey: [
-      'products.finansalPerformans.feature1',
-      'products.finansalPerformans.feature2',
-      'products.finansalPerformans.feature3',
-      'products.finansalPerformans.feature4',
+      'digitalTools.proBulletin.feature1',
+      'digitalTools.proBulletin.feature2',
+      'digitalTools.proBulletin.feature3',
+      'digitalTools.proBulletin.feature4',
+      'digitalTools.proBulletin.feature5',
+      'digitalTools.proBulletin.feature6',
+      'digitalTools.proBulletin.feature7',
+      'digitalTools.proBulletin.feature8',
     ],
-    priceKey: 'products.finansalPerformans.price',
-    ctaKey: 'products.finansalPerformans.cta',
-  },
-  {
-    id: 'yapay-zeka-asistan',
-    icon: Sparkles,
-    titleKey: 'products.yapayZekaAsistan.title',
-    descriptionKey: 'products.yapayZekaAsistan.description',
-    featuresKey: [
-      'products.yapayZekaAsistan.feature1',
-      'products.yapayZekaAsistan.feature2',
-      'products.yapayZekaAsistan.feature3',
-      'products.yapayZekaAsistan.feature4',
+    faqKeys: [
+      {
+        questionKey: 'digitalTools.proBulletin.faq1Question',
+        answerKey: 'digitalTools.proBulletin.faq1Answer',
+      },
+      {
+        questionKey: 'digitalTools.proBulletin.faq2Question',
+        answerKey: 'digitalTools.proBulletin.faq2Answer',
+      },
+      {
+        questionKey: 'digitalTools.proBulletin.faq3Question',
+        answerKey: 'digitalTools.proBulletin.faq3Answer',
+      },
+      {
+        questionKey: 'digitalTools.proBulletin.faq4Question',
+        answerKey: 'digitalTools.proBulletin.faq4Answer',
+      },
+      {
+        questionKey: 'digitalTools.proBulletin.faq5Question',
+        answerKey: 'digitalTools.proBulletin.faq5Answer',
+      },
+      {
+        questionKey: 'digitalTools.proBulletin.faq6Question',
+        answerKey: 'digitalTools.proBulletin.faq6Answer',
+      },
+      {
+        questionKey: 'digitalTools.proBulletin.faq7Question',
+        answerKey: 'digitalTools.proBulletin.faq7Answer',
+      },
     ],
-    priceKey: 'products.yapayZekaAsistan.price',
-    ctaKey: 'products.yapayZekaAsistan.cta',
-  },
-  {
-    id: 'kurumsal-cozumler',
-    icon: Users,
-    titleKey: 'products.kurumsalCozumler.title',
-    descriptionKey: 'products.kurumsalCozumler.description',
-    featuresKey: [
-      'products.kurumsalCozumler.feature1',
-      'products.kurumsalCozumler.feature2',
-      'products.kurumsalCozumler.feature3',
-      'products.kurumsalCozumler.feature4',
-    ],
-    priceKey: 'products.kurumsalCozumler.price',
-    ctaKey: 'products.kurumsalCozumler.cta',
+    purchaseLink: 'https://hikie.space/link/checkout/dzxB5G6fSEOYxRYgC2xkpcKJ3C1no8jHiPOl6iCY',
+    consultationLink: 'https://cal.com/rubi-can',
   },
 ];
 
@@ -65,7 +150,7 @@ export default function DigitalToolsPage() {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [currentSpeakingId, setCurrentSpeakingId] = useState<string | null>(null);
 
-  const handleTextToSpeech = (text: string, productId: string) => {
+  const handleTextToSpeech = (productId: string) => {
     // Stop any ongoing speech
     if (isSpeaking) {
       window.speechSynthesis.cancel();
@@ -80,7 +165,19 @@ export default function DigitalToolsPage() {
       return;
     }
 
-    const utterance = new SpeechSynthesisUtterance(text);
+    // Find product
+    const product = products.find(p => p.id === productId);
+    if (!product) return;
+
+    // Combine all text for this product
+    const textToRead = [
+      t(product.titleKey),
+      t(product.subtitleKey),
+      t(product.descriptionKey),
+      ...product.featuresKey.map(key => t(key)),
+    ].join('. ');
+
+    const utterance = new SpeechSynthesisUtterance(textToRead);
     utterance.lang = 'tr-TR'; // Turkish language
     utterance.rate = 0.9; // Slightly slower for clarity
     utterance.pitch = 1;
@@ -106,115 +203,138 @@ export default function DigitalToolsPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-16 md:py-24">
-        <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-            {t('products.hero.title')}
+      <section className="py-16 px-4 text-center">
+        <div className="container max-w-4xl mx-auto">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            {t('digitalTools.hero.title')}
           </h1>
-          <p className="text-lg md:text-xl text-muted-foreground">
-            {t('products.hero.subtitle')}
+          <p className="text-lg text-muted-foreground">
+            {t('digitalTools.hero.subtitle')}
           </p>
         </div>
       </section>
 
       {/* Products Section */}
-      <section className="container mx-auto px-4 py-12">
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {products.map((product) => {
+      <section className="py-12 px-4">
+        <div className="container max-w-6xl mx-auto space-y-16">
+          {products.map((product, index) => {
             const Icon = product.icon;
-            const description = t(product.descriptionKey);
-            const isSpeakingThis = currentSpeakingId === product.id;
+            const isCurrentlySpeaking = currentSpeakingId === product.id;
 
             return (
-              <Card key={product.id} className="flex flex-col">
-                <CardHeader>
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="p-3 rounded-lg bg-primary/10">
-                      <Icon className="h-6 w-6 text-primary" />
+              <Card key={product.id} className="overflow-hidden">
+                <CardHeader className="space-y-4">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex items-center gap-4">
+                      <div className="p-3 rounded-lg bg-primary/10">
+                        <Icon className="w-8 h-8 text-primary" />
+                      </div>
+                      <div className="flex-1">
+                        <CardTitle className="text-2xl md:text-3xl mb-2">
+                          {t(product.titleKey)}
+                        </CardTitle>
+                        <CardDescription className="text-base">
+                          {t(product.subtitleKey)}
+                        </CardDescription>
+                      </div>
                     </div>
                     <Button
                       variant="ghost"
                       size="icon"
-                      onClick={() => handleTextToSpeech(description, product.id)}
-                      disabled={isSpeaking && !isSpeakingThis}
-                      className="h-8 w-8"
-                      aria-label={isSpeakingThis ? t('products.stopSpeech') : t('products.startSpeech')}
+                      onClick={() => handleTextToSpeech(product.id)}
+                      title={isCurrentlySpeaking ? t('products.stopSpeech') : t('products.startSpeech')}
+                      className="shrink-0"
                     >
-                      {isSpeakingThis ? (
-                        <VolumeX className="h-4 w-4" />
+                      {isCurrentlySpeaking ? (
+                        <VolumeX className="w-5 h-5" />
                       ) : (
-                        <Volume2 className="h-4 w-4" />
+                        <Volume2 className="w-5 h-5" />
                       )}
                     </Button>
                   </div>
-                  <CardTitle className="text-2xl mb-2">{t(product.titleKey)}</CardTitle>
-                  <CardDescription className="text-base">{description}</CardDescription>
                 </CardHeader>
-                <CardContent className="flex-1 flex flex-col">
-                  <ul className="space-y-2 mb-6 flex-1">
-                    {product.featuresKey.map((featureKey, index) => (
-                      <li key={index} className="flex items-start gap-2">
-                        <span className="text-primary mt-1">✓</span>
-                        <span className="text-sm text-muted-foreground">{t(featureKey)}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="space-y-3">
-                    <div className="text-2xl font-bold text-primary">{t(product.priceKey)}</div>
-                    <Button className="w-full" size="lg">
-                      {t(product.ctaKey)}
+
+                <CardContent className="space-y-6">
+                  {/* Description */}
+                  <p className="text-base leading-relaxed">
+                    {t(product.descriptionKey)}
+                  </p>
+
+                  {/* Features */}
+                  <div>
+                    <h3 className="text-lg font-semibold mb-3">
+                      {t('digitalTools.featuresTitle')}
+                    </h3>
+                    <ul className="space-y-2">
+                      {product.featuresKey.map((featureKey, idx) => (
+                        <li key={idx} className="flex items-start gap-2">
+                          <span className="text-primary mt-1">✓</span>
+                          <span className="text-sm">{t(featureKey)}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* FAQ */}
+                  <div>
+                    <h3 className="text-lg font-semibold mb-3">
+                      {t('digitalTools.faqTitle')}
+                    </h3>
+                    <Accordion type="single" collapsible className="w-full">
+                      {product.faqKeys.map((faq, idx) => (
+                        <AccordionItem key={idx} value={`item-${idx}`}>
+                          <AccordionTrigger className="text-left">
+                            {t(faq.questionKey)}
+                          </AccordionTrigger>
+                          <AccordionContent>
+                            {t(faq.answerKey)}
+                          </AccordionContent>
+                        </AccordionItem>
+                      ))}
+                    </Accordion>
+                  </div>
+
+                  {/* CTA Buttons */}
+                  <div className="flex flex-col sm:flex-row gap-3 pt-4">
+                    <Button
+                      asChild
+                      size="lg"
+                      className="flex-1"
+                    >
+                      <a
+                        href={product.purchaseLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center gap-2"
+                      >
+                        {t('digitalTools.purchaseButton')}
+                        <ExternalLink className="w-4 h-4" />
+                      </a>
                     </Button>
+
+                    {product.consultationLink && (
+                      <Button
+                        asChild
+                        variant="outline"
+                        size="lg"
+                        className="flex-1"
+                      >
+                        <a
+                          href={product.consultationLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center justify-center gap-2"
+                        >
+                          {t('digitalTools.consultationButton')}
+                          <ExternalLink className="w-4 h-4" />
+                        </a>
+                      </Button>
+                    )}
                   </div>
                 </CardContent>
               </Card>
             );
           })}
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="container mx-auto px-4 py-16 md:py-24">
-        <div className="max-w-3xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-            {t('products.faq.title')}
-          </h2>
-          <Accordion type="single" collapsible className="w-full">
-            <AccordionItem value="item-1">
-              <AccordionTrigger>{t('products.faq.q1')}</AccordionTrigger>
-              <AccordionContent>{t('products.faq.a1')}</AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-2">
-              <AccordionTrigger>{t('products.faq.q2')}</AccordionTrigger>
-              <AccordionContent>{t('products.faq.a2')}</AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-3">
-              <AccordionTrigger>{t('products.faq.q3')}</AccordionTrigger>
-              <AccordionContent>{t('products.faq.a3')}</AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-4">
-              <AccordionTrigger>{t('products.faq.q4')}</AccordionTrigger>
-              <AccordionContent>{t('products.faq.a4')}</AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-5">
-              <AccordionTrigger>{t('products.faq.q5')}</AccordionTrigger>
-              <AccordionContent>{t('products.faq.a5')}</AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="container mx-auto px-4 py-16 md:py-24">
-        <div className="max-w-4xl mx-auto bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 rounded-2xl p-8 md:p-12 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            {t('products.cta.title')}
-          </h2>
-          <p className="text-lg text-muted-foreground mb-8">
-            {t('products.cta.subtitle')}
-          </p>
-          <Button size="lg" className="px-8">
-            {t('products.cta.button')}
-          </Button>
         </div>
       </section>
     </div>

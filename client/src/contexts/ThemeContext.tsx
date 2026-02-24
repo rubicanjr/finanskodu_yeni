@@ -12,14 +12,14 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [theme, setThemeState] = useState<Theme>(() => {
-    // İlk render'da localStorage'dan veya system preference'dan tema al
+    // İlk render'da localStorage'dan tema al, yoksa varsayılan olarak 'dark' kullan
     if (typeof window !== 'undefined') {
       const savedTheme = localStorage.getItem('fk-theme') as Theme;
       if (savedTheme && ['light', 'dark'].includes(savedTheme)) {
         return savedTheme;
       }
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      return prefersDark ? 'dark' : 'light';
+      // Varsayılan tema: dark (system preference göz ardı edildi)
+      return 'dark';
     }
     return 'dark';
   });

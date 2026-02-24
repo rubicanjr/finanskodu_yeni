@@ -1866,3 +1866,48 @@
 - [ ] Garanti rozeti/mührü ekle
 - [ ] CTA butonlarını güncelle
 - [ ] tr.json ve en.json'a çeviriler ekle
+
+## Kritik Hata Düzeltme ve İçerik Revizyon (pasted_content_2.txt)
+
+### Görev 1: Tema ve UI/UX Hatalarını Gider
+- [ ] ThemeContext.tsx: Varsayılan temayı 'dark' olarak ayarla
+- [ ] Açık mod seçeneğini geçici olarak devre dışı bırak/gizle
+- [ ] Header.tsx: Bozulmuş UI/UX tasarımını düzelt (flexbox, padding, margin, responsive)
+- [ ] İmleç animasyonu: "Sistem Hazır" metnini düzelt ve animasyonu onar
+
+### Görev 2: Dijital Araçlar Yönlendirmesini Düzelt
+- [ ] Home.tsx: "Dijital Araçlar Keşfet" butonunu bul
+- [ ] Butonu hikie.space yerine /dijital-araclar rotasına yönlendir
+
+### Görev 3: Dijital Araçlar Sayfasını Tamamen Yenile (pasted_content_6.txt gerekli)
+- [ ] DijitalAraclarPage.tsx: Mevcut içeriği tamamen kaldır
+- [ ] Yeni ürünler ekle:
+  - [ ] AI Prompt Kütüphanesi (pasted_content_6.txt'den)
+  - [ ] FİNANS KODU: Kaos İçinde Düzen
+  - [ ] Pro - Algoritmik Strateji ve Analiz Bülteni
+- [ ] Her ürün için: başlık, alt başlık, açıklama, özellikler, SSS
+- [ ] Her ürün için "Satın Al" butonu (hikie.space linkleri)
+- [ ] Pro Bülten için "Ürünle ilgili Görüşme Talep Et" butonu (cal.com/rubi-can)
+- [ ] Her ürün için "Sesli Dinle" butonu (Sarp/Vera sesleri)
+- [ ] Çeviri dosyalarına (tr.json, en.json) tüm metinleri ekle
+
+### Görev 4: Manifesto → Süreç Modeli Dönüşümü
+- [ ] Home.tsx: Mevcut Manifesto bölümünü kaldır
+- [ ] Yeni "Süreç Modeli" bölümü oluştur:
+  - [ ] Başlık: "Kişisel veya kurumsal finans ihtiyaçların..."
+  - [ ] Alt Başlık: "Finans Kodu Süreç Modeli"
+  - [ ] Açıklama metni
+  - [ ] 3 adım kartı: 01 Keşif & Analiz, 02 Tasarım & Geliştirme, 03 Kurulum & Sürekli Beta
+- [ ] Çeviri dosyalarına metinleri ekle
+
+### Son Kontrol
+- [ ] Varsayılan koyu tema kontrolü
+- [ ] Header responsive kontrolü
+- [ ] İmleç animasyonu kontrolü
+- [ ] "Dijital Araçlar Keşfet" yönlendirme testi
+- [ ] /dijital-araclar sayfası içerik kontrolü
+- [ ] Satın alma butonları link testi
+- [ ] Görüşme talep butonu link testi
+- [ ] Sesli okuma özelliği testi
+- [ ] Süreç Modeli bölümü görsel kontrolü
+- [ ] Mobil uyumluluk testi
