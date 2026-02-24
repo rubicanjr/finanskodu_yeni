@@ -6,7 +6,7 @@ export default function SponsorshipSection() {
     <section 
       id="sponsorship" 
       className="py-16 sm:py-20 md:py-24"
-      style={{ background: "#050810" }}
+      style={{ background: 'var(--background)' }}
       aria-label="Sponsorluk bölümü"
     >
       <div className="container mx-auto px-4">
@@ -34,7 +34,7 @@ export default function SponsorshipSection() {
             transition={{ duration: 0.6, delay: 0.1 }}
             viewport={{ once: true }}
             className="rounded-xl border border-[#1E2D3D] p-8 sm:p-10 md:p-12"
-            style={{ background: "#0D1117" }}
+            style={{ background: 'var(--card)' }}
           >
             <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
               {/* Logo */}

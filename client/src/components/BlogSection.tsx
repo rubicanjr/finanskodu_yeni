@@ -212,7 +212,7 @@ export default function BlogSection() {
       {/* Background */}
       <div 
         className="absolute inset-0"
-        style={{ background: "#050810" }}
+        style={{ background: 'var(--background)' }}
       />
 
       <div className="container relative z-10" ref={ref}>
@@ -223,17 +223,17 @@ export default function BlogSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <span className="font-mono text-xs tracking-[0.15em] mb-3 block" style={{ color: '#0EA5E9' }}>
+          <span className="font-mono text-xs tracking-[0.15em] mb-3 block" style={{ color: 'var(--primary)' }}>
             // İÇGÖRÜLER
           </span>
           <h2 
             id="blog-heading"
             className="font-display font-bold text-3xl sm:text-4xl mb-4"
-            style={{ color: '#F0F4F8' }}
+            style={{ color: 'var(--foreground)' }}
           >
-            Blog & <span style={{ color: '#10B981' }}>Analizler</span>
+            Blog & <span style={{ color: 'var(--chart-2)' }}>Analizler</span>
           </h2>
-          <p className="max-w-xl mx-auto" style={{ color: '#8899AA' }}>
+          <p className="max-w-xl mx-auto" style={{ color: 'var(--muted-foreground)' }}>
             Algoritmik finans, yapay zeka ve verimlilik stratejileri hakkında derinlemesine içerikler
           </p>
         </motion.header>
@@ -267,13 +267,13 @@ export default function BlogSection() {
           {/* Gradient Fade Left */}
           <div 
             className="absolute left-0 top-0 bottom-0 w-16 z-10 pointer-events-none hidden md:block"
-            style={{ background: "linear-gradient(to right, #0a0a0a, transparent)" }}
+            style={{ background: "linear-gradient(to right, var(--background), transparent)" }}
           />
           
           {/* Gradient Fade Right */}
           <div 
             className="absolute right-0 top-0 bottom-0 w-16 z-10 pointer-events-none hidden md:block"
-            style={{ background: "linear-gradient(to left, #0a0a0a, transparent)" }}
+            style={{ background: "linear-gradient(to left, var(--background), transparent)" }}
           />
 
           {/* Scrollable Container */}
@@ -326,7 +326,7 @@ export default function BlogSection() {
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, transparent 40%, #0D1117 100%)' }} />
+                    <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, transparent 40%, var(--card) 100%)' }} />
                     
                     {/* Tags */}
                     <div className="absolute top-3 left-3 flex flex-wrap gap-1">
@@ -345,7 +345,7 @@ export default function BlogSection() {
                   {/* Content */}
                   <div className="p-5 flex flex-col flex-grow">
                     {/* Meta Info */}
-                    <div className="flex items-center gap-3 text-xs mb-3" style={{ color: '#4A5568' }}>
+                    <div className="flex items-center gap-3 text-xs mb-3" style={{ color: 'var(--muted-foreground)' }}>
                       <div className="flex items-center gap-1">
                         <Calendar className="w-3 h-3" />
                         <span>{post.date}</span>
@@ -357,12 +357,12 @@ export default function BlogSection() {
                     </div>
 
                     {/* Title */}
-                    <h3 className="font-display font-bold mb-2 line-clamp-2 transition-colors" style={{ color: '#F0F4F8' }}>
+                    <h3 className="font-display font-bold mb-2 line-clamp-2 transition-colors" style={{ color: 'var(--foreground)' }}>
                       {post.title}
                     </h3>
 
                     {/* Excerpt */}
-                    <p className="text-sm mb-4 flex-grow line-clamp-3" style={{ color: '#8899AA' }}>
+                    <p className="text-sm mb-4 flex-grow line-clamp-3" style={{ color: 'var(--muted-foreground)' }}>
                       {post.excerpt}
                     </p>
 
@@ -372,7 +372,7 @@ export default function BlogSection() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 font-medium text-sm transition-colors group/btn"
-                      style={{ color: '#0EA5E9' }}
+                      style={{ color: 'var(--primary)' }}
                     >
                       <span>Devamını Oku</span>
                       <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />

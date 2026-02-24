@@ -159,9 +159,9 @@ export default function ProcessModelSection() {
               color: '#4E5D71'
             }}
           >
-            <div className="h-px w-8" style={{ background: '#4E5D71' }} />
+            <div className="h-px w-8" style={{ background: 'var(--border)' }} />
             <span>3 ADIMDA FİNANS KODU SÜRECİ</span>
-            <div className="h-px w-8" style={{ background: '#4E5D71' }} />
+            <div className="h-px w-8" style={{ background: 'var(--border)' }} />
           </div>
         </motion.header>
 

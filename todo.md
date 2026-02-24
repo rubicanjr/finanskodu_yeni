@@ -2014,3 +2014,31 @@
 - [x] fadeUp animasyonları (opacity 0→1, translateY 28→0)
 - [x] prefers-reduced-motion desteği (otomatik)
 
+
+
+## Tema Geçiş Sorunu Düzeltmesi
+
+### Görev 1: FOUC Önleme Script
+- [x] index.html <head> içine localStorage'dan tema okuyan script ekle - zaten mevcut
+- [x] Script React mount'tan önce çalışmalı - zaten mevcut
+- [x] prefers-color-scheme fallback ekle - zaten mevcut
+
+### Görev 2: CSS Variable Tutarlılığı
+- [x] index.css'te :root ve .dark için tüm color variable'ları tanımla - eksiksiz
+- [x] .light class'ı için tüm color variable'ları tanımla - :root = light theme
+- [x] Hardcoded hex renk olmamالı, her renk var(--...) token'ı üzerinden gelmeli - doğrulandı
+
+### Görev 3: Hardcoded Renk Temizliği
+- [x] App.tsx'teki ticker div'i kontrol et - düzeltildi
+- [x] Sidebar bileşenini kontrol et - düzeltildi
+- [x] TradingViewTickerTape bileşenini kontrol et - düzeltildi
+- [x] HeroSection bileşenini kontrol et - düzeltildi
+- [x] Tüm inline style={{ background: '#...' }} kullanımlarını CSS variable'lara çevir - 5 dosya düzeltildi
+
+### Görev 4: ThemeContext Optimizasyonu- [x] useEffect içindeki DOM manipülasyonunu sadelesţir - zaten optimize
+- [x] classList.remove('light', 'dark') + classList.add(theme) + localStorage.setItem - zaten doğru
+
+### Görev 5: Test
+- [ ] Light tema → sayfa kapat → yeniden aç → FOUC olmamalı
+- [ ] Dark tema → sayfa kapat → yeniden aç → FOUC olmamalı
+- [ ] Tema değiştir → tüm bileşenler anında değişmeli

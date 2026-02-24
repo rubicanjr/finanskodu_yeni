@@ -85,7 +85,7 @@ function ProductCard({ product, index, isInView }: { product: Product; index: nu
             loading="lazy"
           />
           {/* Gradient overlay */}
-          <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, transparent 40%, #0D1117 100%)" }} />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, transparent 40%, var(--card) 100%)" }} />
           
           {/* Journey Badge */}
           <span
@@ -108,16 +108,16 @@ function ProductCard({ product, index, isInView }: { product: Product; index: nu
         <div className="p-5 flex flex-col flex-1">
           {/* Icon + Title */}
           <div className="flex items-start gap-3 mb-3">
-            <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "#141B24" }}>
-              <IconComponent size={18} style={{ color: "#0EA5E9" }} />
+            <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: 'var(--secondary)' }}>
+              <IconComponent size={18} style={{ color: 'var(--primary)' }} />
             </div>
-            <h3 className="font-bold text-[15px] leading-tight" style={{ color: "#F0F4F8" }} itemProp="name">
+            <h3 className="font-bold text-[15px] leading-tight" style={{ color: 'var(--foreground)' }} itemProp="name">
               {product.title}
             </h3>
           </div>
 
           {/* Description */}
-          <p className="text-sm leading-relaxed mb-5 flex-1 line-clamp-2" style={{ color: "#8899AA" }} itemProp="description">
+          <p className="text-sm leading-relaxed mb-5 flex-1 line-clamp-2" style={{ color: 'var(--muted-foreground)' }} itemProp="description">
             {product.description}
           </p>
 
@@ -149,7 +149,7 @@ export default function ProductsSection() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="urunler" className="relative py-20 overflow-hidden" aria-labelledby="products-heading" style={{ background: "#050810" }}>
+    <section id="urunler" className="relative py-20 overflow-hidden" aria-labelledby="products-heading" style={{ background: 'var(--background)' }}>
       <div className="container relative z-10" ref={ref}>
         {/* Header */}
         <motion.header
@@ -158,13 +158,13 @@ export default function ProductsSection() {
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <span className="font-mono text-xs tracking-[0.15em] mb-3 block" style={{ color: "#0EA5E9" }}>
+          <span className="font-mono text-xs tracking-[0.15em] mb-3 block" style={{ color: 'var(--primary)' }}>
             // DİJİTAL VİTRİN
           </span>
-          <h2 id="products-heading" className="font-display font-bold text-3xl sm:text-4xl mb-4" style={{ color: "#F0F4F8" }}>
-            Dijital <span style={{ color: "#10B981" }}>Araçlar</span>
+          <h2 id="products-heading" className="font-display font-bold text-3xl sm:text-4xl mb-4" style={{ color: 'var(--foreground)' }}>
+            Dijital <span style={{ color: 'var(--chart-2)' }}>Araçlar</span>
           </h2>
-          <p className="max-w-xl mx-auto" style={{ color: "#8899AA" }}>
+          <p className="max-w-xl mx-auto" style={{ color: 'var(--muted-foreground)' }}>
             100+ hazır AI prompt, finansal metodoloji ve aylık strateji bülteni
           </p>
         </motion.header>
