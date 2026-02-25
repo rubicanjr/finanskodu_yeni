@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { useTheme } from "@/contexts/ThemeContext";
 
 /**
  * TradingView Ticker Tape Widget
@@ -10,6 +11,7 @@ import { useEffect, useRef } from "react";
 
 export default function TradingViewTickerTape() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const { theme } = useTheme();
 
   useEffect(() => {
     // Clean up any existing script
@@ -55,7 +57,7 @@ export default function TradingViewTickerTape() {
       "showSymbolLogo": true,
       "isTransparent": true,
       "displayMode": "compact",
-      "colorTheme": "dark",
+      "colorTheme": theme === "light" ? "light" : "dark",
       "locale": "tr"
     });
 
@@ -67,7 +69,7 @@ export default function TradingViewTickerTape() {
         containerRef.current.innerHTML = "";
       }
     };
-  }, []);
+  }, [theme]);
 
   return (
     <div className="tradingview-widget-container" style={{ width: "100%", height: "46px" }}>

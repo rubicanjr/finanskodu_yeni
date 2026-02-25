@@ -2177,3 +2177,21 @@
 - [ ] CTA eyebrow: text-cyan-600 dark:text-cyan-400
 - [ ] CTA başlık: text-foreground
 - [ ] CTA açıklama: text-muted-foreground
+
+
+## CTA Block ve Ticker Düzeltmeleri
+
+### Sorun 1 - CTA Block Renkleri
+- [ ] Wrapper: bg-card border-border
+- [ ] Sol çizgi: border-l-4 border-cyan-500 (koru)
+- [ ] Eyebrow: text-cyan-600 dark:text-cyan-400
+- [ ] Başlık: text-foreground
+- [ ] Açıklama: text-muted-foreground
+- [ ] Alt not: text-muted-foreground
+
+### Sorun 2 - Ticker Tape
+- [ ] useTheme() hook'u import et
+- [ ] useEffect'e theme dependency ekle
+- [ ] Container'ı her render'da temizle
+- [ ] colorTheme'i dinamik yap (theme === 'light' ? 'light' : 'dark')
+- [ ] Scroll animasyonunun çalıştığını doğrula

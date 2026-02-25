@@ -364,13 +364,7 @@ export default function ProcessModelSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.65, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="relative max-w-4xl mx-auto mt-16"
-          style={{
-            background: 'var(--fk-bg-elevated)',
-            border: '1px solid rgba(0, 212, 255, 0.18)',
-            borderRadius: '20px',
-            padding: '44px 52px'
-          }}
+          className="relative max-w-4xl mx-auto mt-16 bg-card border border-border rounded-3xl p-12"
         >
           {/* Left Gradient Line */}
           <div 
@@ -384,10 +378,9 @@ export default function ProcessModelSection() {
             {/* Left: Text Group */}
             <div className="flex-1">
               <div 
-                className="text-xs tracking-wider mb-2"
+                className="text-xs tracking-wider mb-2 text-cyan-600 dark:text-cyan-400"
                 style={{
-                  fontFamily: 'var(--font-jetbrains)',
-                  color: 'var(--fk-cyan)'
+                  fontFamily: 'var(--font-jetbrains)'
                 }}
               >
                 // ÜCRETSİZ KEŞİF GÖRÜŞMESİ
