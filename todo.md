@@ -2152,3 +2152,28 @@
 - [ ] Wrapper div: bg-card border-border
 - [ ] Başlık: text-foreground
 - [ ] Açıklama: text-muted-foreground
+
+
+## Açık Tema Metin ve Kart Düzeltmeleri
+
+### Sorun 1 - Hero Metin Renkleri
+- [ ] H1 başlık: text-white → text-foreground
+- [ ] Subtitle: text-muted-foreground
+- [ ] Eyebrow: text-muted-foreground
+- [ ] "finanskodu": text-cyan-600 dark:text-cyan-300
+- [ ] "bir üst seviyeye taşıyın": text-emerald-600 dark:text-emerald-300
+- [ ] Terminal komut satırları: text-muted-foreground
+- [ ] Terminal "Sistem hazır": text-emerald-600 dark:text-emerald-400
+- [ ] Terminal başlık: text-muted-foreground
+
+### Sorun 2 - Süreç Kartları ve CTA
+- [ ] Kart wrapper: bg-card border border-border
+- [ ] Büyük numara (01/02): text-cyan-600 dark:text-cyan-400
+- [ ] Başlık: text-foreground
+- [ ] Gövde: text-muted-foreground
+- [ ] Pillar metinleri: text-muted-foreground
+- [ ] Pillar ikonları: text-cyan-600 dark:text-cyan-400
+- [ ] CTA wrapper: bg-card border border-border
+- [ ] CTA eyebrow: text-cyan-600 dark:text-cyan-400
+- [ ] CTA başlık: text-foreground
+- [ ] CTA açıklama: text-muted-foreground

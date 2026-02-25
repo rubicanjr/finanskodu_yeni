@@ -223,12 +223,8 @@ export default function ProcessModelSection() {
                 }}
                 onMouseEnter={() => setHoveredCard(step.id)}
                 onMouseLeave={() => setHoveredCard(null)}
-                className="relative transition-transform duration-300"
+                className="relative transition-transform duration-300 bg-card border border-border rounded-2xl p-8"
                 style={{
-                  background: 'var(--fk-bg-card)',
-                  border: `1px solid rgba(255, 255, 255, ${isHovered ? 0.16 : 0.11})`,
-                  borderRadius: '16px',
-                  padding: '36px 32px',
                   transform: isHovered ? 'translateY(-5px)' : 'translateY(0)'
                 }}
               >

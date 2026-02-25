@@ -139,18 +139,17 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="leading-tight"
+            className="leading-tight text-foreground"
             style={{
               fontFamily: 'var(--font-syne)',
               fontWeight: 800,
-              fontSize: 'clamp(28px, 5vw, 54px)',
-              color: '#fff'
+              fontSize: 'clamp(28px, 5vw, 54px)'
             }}
           >
             Finansınızı{' '}
-            <span style={{ color: 'var(--fk-cyan)' }}>finanskodu</span>{' '}
+            <span className="text-cyan-600 dark:text-cyan-300">finanskodu</span>{' '}
             dijital ürünleri ile{' '}
-            <span style={{ color: 'var(--fk-green)' }}>bir üst seviyeye taşıyın.</span>
+            <span className="text-emerald-600 dark:text-emerald-300">bir üst seviyeye taşıyın.</span>
           </motion.h1>
 
           {/* Subtitle */}
@@ -215,10 +214,9 @@ export default function HeroSection() {
               {terminalLines.map((line, index) => (
                 <div
                   key={index}
-                  className="transition-opacity duration-500"
+                  className={`transition-opacity duration-500 ${index === 3 ? 'text-emerald-600 dark:text-emerald-400' : 'text-muted-foreground'}`}
                   style={{
-                    opacity: line.visible ? 1 : 0,
-                    color: index === 3 ? 'var(--fk-green)' : 'var(--muted-foreground)'
+                    opacity: line.visible ? 1 : 0
                   }}
                 >
                   {line.text}
