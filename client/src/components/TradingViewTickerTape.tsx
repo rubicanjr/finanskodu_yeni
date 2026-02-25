@@ -48,8 +48,8 @@ export default function TradingViewTickerTape() {
           "title": "Paladyum/Ons"
         },
         {
-          "proName": "COMEX:HG1!",
-          "title": "Bakır/lb"
+          "proName": "CAPITALCOM:COPPER",
+          "title": "Bakır/Ons"
         }
       ],
       "showSymbolLogo": true,

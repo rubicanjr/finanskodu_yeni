@@ -2099,3 +2099,31 @@
 - [ ] Dark'a geç → tüm sayfa koyu
 - [ ] Sayfa kapat/aç → tema korunmalı, flash yok
 - [ ] Her section scroll kontrol
+
+
+## TradingViewTickerTape UI/UX Düzeltmeleri
+
+### Sorun 1 - Bakır/lb Veri Hatası
+- [ ] Bakır sembolünü COMEX:HG1! yerine CAPITALCOM:COPPER dene
+- [ ] Veri gelmeyen sembolleri gizle (bozuk görünüm yerine)
+
+### Sorun 2 - Öğeler Arası Ayraç
+- [ ] Her ticker öğesi arasına · veya | separator ekle
+- [ ] Separator rengi: text-muted/40
+
+### Sorun 3 - Typography Hiyerarşisi
+- [ ] Varlık adı: text-xs font-medium text-muted-foreground
+- [ ] Fiyat: text-sm font-semibold text-foreground
+- [ ] Değişim: text-xs font-normal, pozitif text-emerald-400, negatif text-red-400
+
+### Sorun 4 - İkon Tutarlılığı
+- [ ] Tüm ikonlar aynı boyutta (w-4 h-4 veya w-5 h-5)
+- [ ] İkonu olmayan varlık için varsayılan nötr ikon
+- [ ] ⚠️ ikonu gösterme
+
+### Sorun 5 - Ticker Scroll Hızı ve Spacing
+- [ ] Öğeler arası padding: px-4 veya px-5
+- [ ] Scroll hızı: 60px/saniye veya animation-duration: 30s
+
+### Sorun 6 - Hover Davranışı
+- [ ] Hover'da scroll durdur: animation-play-state: paused
