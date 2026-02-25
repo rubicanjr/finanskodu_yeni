@@ -38,11 +38,27 @@ export default function TradingViewTickerTape() {
         {
           "proName": "BINANCE:BTCUSDT",
           "title": "Bitcoin"
+        },
+        {
+          "proName": "OANDA:XAGUSD",
+          "title": "Gümüş/Ons"
+        },
+        {
+          "proName": "OANDA:XPTUSD",
+          "title": "Platin/Ons"
+        },
+        {
+          "proName": "OANDA:XPDUSD",
+          "title": "Paladyum/Ons"
+        },
+        {
+          "proName": "COMEX:HG1!",
+          "title": "Bakır/lb"
         }
       ],
       "showSymbolLogo": true,
-      "isTransparent": false,
-      "displayMode": "adaptive",
+      "isTransparent": true,
+      "displayMode": "compact",
       "colorTheme": "dark",
       "locale": "tr"
     });
