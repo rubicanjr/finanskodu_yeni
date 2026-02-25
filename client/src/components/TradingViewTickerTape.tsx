@@ -24,10 +24,6 @@ export default function TradingViewTickerTape() {
     script.innerHTML = JSON.stringify({
       "symbols": [
         {
-          "proName": "BIST:XU100",
-          "title": "BIST 100"
-        },
-        {
           "proName": "FX:USDTRY",
           "title": "USD/TRY"
         },
