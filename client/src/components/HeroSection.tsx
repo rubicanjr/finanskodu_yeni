@@ -55,7 +55,7 @@ export default function HeroSection() {
   return (
     <section 
       className="relative min-h-screen flex items-center justify-center px-4 py-20 overflow-hidden"
-      style={{ background: 'var(--fk-bg)' }}
+      style={{ background: 'var(--background)' }}
       aria-labelledby="hero-heading"
     >
       {/* 52px Grid Background */}
@@ -74,7 +74,7 @@ export default function HeroSection() {
       <div 
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse at center, transparent 0%, rgba(13, 17, 23, 0.8) 100%)'
+          background: 'radial-gradient(ellipse at center, transparent 0%, var(--background) 100%)'
         }}
       />
 

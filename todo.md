@@ -2127,3 +2127,28 @@
 
 ### Sorun 6 - Hover Davranışı
 - [ ] Hover'da scroll durdur: animation-play-state: paused
+
+
+## 4 Bileşende Tema Düzeltmesi
+
+### 1 - HeroSection
+- [ ] Section wrapper: bg-[#0D1117] → bg-background
+- [ ] Grid overlay/radial glow: style={{ background: '...' }} → var(--background)
+- [ ] Terminal widget dış container: bg-[#0A1018] → bg-card
+- [ ] Terminal widget iç alan: bg-card
+
+### 2 - ProductsSection
+- [ ] 3 ürün kartı içerik alanı: bg-[#121A24] → bg-card
+- [ ] Kart border: border-[#...] → border-border
+- [ ] CTA buton: bg-[#...] → bg-primary veya bg-cyan-500
+
+### 3 - ProcessModelSection
+- [ ] Section wrapper: bg-background
+- [ ] 3 süreç kartı: bg-card border-border
+- [ ] Progress track: bg-background
+- [ ] Garanti rozetleri: bg-muted
+
+### 4 - CTA Block
+- [ ] Wrapper div: bg-card border-border
+- [ ] Başlık: text-foreground
+- [ ] Açıklama: text-muted-foreground

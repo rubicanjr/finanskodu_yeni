@@ -75,7 +75,7 @@ export default function ProcessModelSection() {
       id="process-model" 
       className="relative overflow-hidden"
       style={{ 
-        background: 'var(--fk-bg)',
+        background: 'var(--background)',
         padding: '120px 0 140px'
       }}
       aria-labelledby="process-model-heading"
@@ -131,7 +131,7 @@ export default function ProcessModelSection() {
               fontFamily: 'var(--font-syne)',
               fontWeight: 800,
               fontSize: 'clamp(28px, 4.5vw, 46px)',
-              color: '#fff'
+              color: 'var(--foreground)'
             }}
           >
             Finans ihtiyaçların standart ürünlerimizin <em style={{ color: 'var(--fk-cyan)', fontStyle: 'normal' }}>dışına çıkıyorsa</em>, sana özel çözüm için <em style={{ color: 'var(--fk-cyan)', fontStyle: 'normal' }}>buradayız</em>.
@@ -142,7 +142,7 @@ export default function ProcessModelSection() {
             className="mx-auto mb-6"
             style={{
               fontSize: '16px',
-              color: '#8B97AB',
+              color: 'var(--muted-foreground)',
               maxWidth: '640px',
               fontFamily: 'var(--font-figtree)'
             }}
@@ -156,7 +156,7 @@ export default function ProcessModelSection() {
             style={{
               fontFamily: 'var(--font-jetbrains)',
               fontSize: '12px',
-              color: '#4E5D71'
+              color: 'var(--muted-foreground)'
             }}
           >
             <div className="h-px w-8" style={{ background: 'var(--border)' }} />
@@ -186,7 +186,7 @@ export default function ProcessModelSection() {
                     width: '56px',
                     height: '56px',
                     borderRadius: '50%',
-                    background: 'var(--fk-bg)',
+                    background: 'var(--background)',
                     border: `1.5px solid ${step.color}`,
                     boxShadow: `0 0 0 8px ${step.color}20`,
                     fontFamily: 'var(--font-syne)',
@@ -300,7 +300,7 @@ export default function ProcessModelSection() {
                       fontFamily: 'var(--font-syne)',
                       fontWeight: 700,
                       fontSize: '20px',
-                      color: '#fff'
+                      color: 'var(--foreground)'
                     }}
                   >
                     {t(step.titleKey)}
@@ -323,10 +323,10 @@ export default function ProcessModelSection() {
                       fontFamily: 'var(--font-figtree)',
                       fontSize: '14px',
                       lineHeight: '1.75',
-                      color: '#8B97AB'
+                      color: 'var(--muted-foreground)'
                     }}
                     dangerouslySetInnerHTML={{
-                      __html: t(step.descriptionKey).replace(/\*\*(.*?)\*\*/g, '<strong style="color: #E8EDF5">$1</strong>')
+                      __html: t(step.descriptionKey).replace(/\*\*(.*?)\*\*/g, '<strong style="color: var(--foreground)">$1</strong>')
                     }}
                   />
 
@@ -342,13 +342,13 @@ export default function ProcessModelSection() {
                             background: step.color
                           }}
                         >
-                          <CheckCircle className="w-3 h-3" style={{ color: 'var(--fk-bg)' }} />
+                          <CheckCircle className="w-3 h-3" style={{ color: 'var(--background)' }} />
                         </div>
                         <span 
                           style={{
                             fontFamily: 'var(--font-figtree)',
                             fontSize: '13px',
-                            color: '#8B97AB'
+                            color: 'var(--muted-foreground)'
                           }}
                         >
                           {pillar.text}
@@ -402,7 +402,7 @@ export default function ProcessModelSection() {
                   fontFamily: 'var(--font-syne)',
                   fontWeight: 700,
                   fontSize: '24px',
-                  color: '#fff'
+                  color: 'var(--foreground)'
                 }}
               >
                 Finansal dönüşümünü planlamaya hazır mısın?
@@ -411,7 +411,7 @@ export default function ProcessModelSection() {
                 style={{
                   fontFamily: 'var(--font-figtree)',
                   fontSize: '15px',
-                  color: '#8B97AB'
+                  color: 'var(--muted-foreground)'
                 }}
               >
                 30 dakikalık ücretsiz görüşmede, ihtiyaçlarını analiz edip en uygun çözümü birlikte belirleyelim.
@@ -426,7 +426,7 @@ export default function ProcessModelSection() {
                 className="px-8 py-6 text-base font-semibold rounded-lg transition-all duration-300 hover:-translate-y-0.5"
                 style={{
                   background: 'var(--fk-cyan)',
-                  color: 'var(--fk-bg)',
+                  color: 'var(--background)',
                   border: 'none',
                   fontFamily: 'var(--font-figtree)',
                   fontWeight: 600,
@@ -447,7 +447,7 @@ export default function ProcessModelSection() {
                 className="text-xs"
                 style={{
                   fontFamily: 'var(--font-jetbrains)',
-                  color: '#4E5D71'
+                  color: 'var(--muted-foreground)'
                 }}
               >
                 Ücretsiz · Bağlayıcı değil · 30 dakika

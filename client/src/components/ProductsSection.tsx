@@ -72,8 +72,8 @@ function ProductCard({ product, index, isInView }: { product: Product; index: nu
       <div
         className="h-full rounded-xl overflow-hidden flex flex-col transition-all duration-300 hover:translate-y-[-2px]"
         style={{
-          background: "#0D1117",
-          border: "1px solid #1E2D3D",
+          background: "var(--card)",
+          border: "1px solid var(--border)",
         }}
       >
         {/* Image */}
@@ -129,9 +129,9 @@ function ProductCard({ product, index, isInView }: { product: Product; index: nu
             itemProp="url"
             className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 hover:scale-[1.02]"
             style={{
-              background: "#0EA5E910",
-              color: "#0EA5E9",
-              border: "1px solid #0EA5E930",
+              background: "var(--primary)",
+              color: "var(--primary-foreground)",
+              border: "1px solid var(--primary)",
             }}
             aria-label={`${product.title} sayfasına git`}
           >
