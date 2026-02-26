@@ -1,5 +1,5 @@
-import { useEffect, useRef } from "react";
-import { useTheme } from "@/contexts/ThemeContext";
+import { useEffect, useRef } from 'react';
+import { useTheme } from '@/contexts/ThemeContext';
 
 /**
  * TradingView Ticker Tape Widget
@@ -10,82 +10,59 @@ import { useTheme } from "@/contexts/ThemeContext";
  */
 
 export default function TradingViewTickerTape() {
-  const containerRef = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Clean up any existing script
-    if (containerRef.current) {
-      containerRef.current.innerHTML = "";
-    }
-
-    // Create TradingView widget script
-    const script = document.createElement("script");
-    script.src = "https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js";
+    const container = containerRef.current;
+    if (!container) return;
+    
+    // Önce temizle
+    container.innerHTML = '';
+    
+    // Widget div oluştur
+    const widgetDiv = document.createElement('div');
+    widgetDiv.className = 'tradingview-widget-container__widget';
+    container.appendChild(widgetDiv);
+    
+    // Script oluştur
+    const script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js';
     script.async = true;
     script.innerHTML = JSON.stringify({
       "symbols": [
-        {
-          "proName": "BIST:XU100",
-          "title": "BIST 100"
-        },
-        {
-          "proName": "FX:USDTRY",
-          "title": "USD/TRY"
-        },
-        {
-          "proName": "FX:EURTRY",
-          "title": "EUR/TRY"
-        },
-        {
-          "proName": "OANDA:XAUUSD",
-          "title": "Altın/Ons"
-        },
-        {
-          "proName": "OANDA:XAGUSD",
-          "title": "Gümüş/Ons"
-        },
-        {
-          "proName": "OANDA:XPTUSD",
-          "title": "Platin/Ons"
-        },
-        {
-          "proName": "OANDA:XPDUSD",
-          "title": "Paladyum/Ons"
-        },
-        {
-          "proName": "CAPITALCOM:COPPER",
-          "title": "Bakır/lb"
-        },
-        {
-          "proName": "BITSTAMP:BTCUSD",
-          "title": "Bitcoin"
-        },
-        {
-          "proName": "BITSTAMP:ETHUSD",
-          "title": "Ethereum"
-        }
+        { "proName": "BIST:XU100", "title": "BIST 100" },
+        { "proName": "FX:USDTRY", "title": "USD/TRY" },
+        { "proName": "FX:EURTRY", "title": "EUR/TRY" },
+        { "proName": "TVC:GOLD", "title": "Altın/Ons" },
+        { "proName": "TVC:SILVER", "title": "Gümüş/Ons" },
+        { "proName": "TVC:PLATINUM", "title": "Platin/Ons" },
+        { "proName": "TVC:PALLADIUM", "title": "Paladyum/Ons" },
+        { "proName": "COMEX:HG1!", "title": "Bakır/lb" },
+        { "proName": "BITSTAMP:BTCUSD", "title": "Bitcoin" },
+        { "proName": "BITSTAMP:ETHUSD", "title": "Ethereum" }
       ],
       "showSymbolLogo": true,
       "isTransparent": true,
       "displayMode": "adaptive",
-      "colorTheme": theme === "light" ? "light" : "dark",
+      "colorTheme": theme === 'light' ? 'light' : 'dark',
       "locale": "tr"
     });
-
-    containerRef.current?.appendChild(script);
-
-    // Cleanup function
+    
+    container.appendChild(script);
+    
+    // Cleanup
     return () => {
-      if (containerRef.current) {
-        containerRef.current.innerHTML = "";
-      }
+      if (container) container.innerHTML = '';
     };
-  }, [theme]);
+  }, [theme]); // theme değişince yeniden yükle
 
   return (
-    <div className="tradingview-widget-container" style={{ width: "100%", height: "46px" }}>
-      <div className="tradingview-widget-container__widget" ref={containerRef}></div>
-    </div>
+    <div 
+      ref={containerRef}
+      className="tradingview-widget-container"
+      style={{ height: '46px', overflow: 'hidden' }}
+    />
   );
 }

@@ -2267,3 +2267,19 @@
 - [x] Ethereum sembolünü güncelle (BITSTAMP:ETHUSD)
 - [x] BIST 100 sembolünü güncelle (BIST:XU100)
 - [x] Ticker config'e showSymbolLogo, isTransparent, displayMode, colorTheme, locale ekle
+
+
+## Ticker Büyük Ekran Boşluk ve Gerçek Zamanlı Veri (pasted_content_11.txt)
+
+### Sorun 1: Büyük Ekranda Ticker ile Hero Arasındaki Boşluk
+- [x] App.tsx main element'inde lg:pt-[...] fazla padding değerini kaldır (sadece pt-[46px] kalmalı)
+- [x] md:pt-, sm:pt- gibi breakpoint'e özel padding değerlerini sil
+- [x] Ticker wrapper div'inde height veya min-height değerini kaldır (yok)
+- [x] HeroSection.tsx section'ında mt-[...] veya pt-[...] fazla değerleri kontrol et (py-20 var, normal)
+
+### Sorun 2: Ticker Verisi Gerçek Zamanlı Olmalı
+- [x] TradingViewTickerTape.tsx useEffect'i yeniden yaz (container temizleme, widget div oluşturma)
+- [x] Metal sembollerini güncelle (TVC:GOLD, TVC:SILVER, TVC:PLATINUM, TVC:PALLADIUM)
+- [x] Bakır sembolünü güncelle (COMEX:HG1!)
+- [x] Cleanup fonksiyonunu ekle (container.innerHTML = '')
+- [x] Theme dependency'yi ekle (tema değişince widget yeniden yüklensin)
