@@ -54,7 +54,7 @@ export default function HeroSection() {
 
   return (
     <section 
-      className="relative min-h-screen flex items-center justify-center px-4 py-20 overflow-hidden"
+      className="relative min-h-[calc(100vh-46px)] flex items-center justify-center px-4 py-20 overflow-hidden"
       style={{ background: 'var(--background)' }}
       aria-labelledby="hero-heading"
     >

@@ -33,6 +33,9 @@ export default function MarqueeTicker() {
 
   useEffect(() => {
     const fetchPrices = async () => {
+      const newPriceData: Record<string, PriceData> = {};
+
+      // Fetch crypto prices from CoinGecko
       try {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 5000);
@@ -46,20 +49,180 @@ export default function MarqueeTicker() {
 
         if (response.ok) {
           const data = await response.json();
-          setPriceData({
-            BTCUSDT: {
-              price: data.bitcoin?.usd ?? null,
-              change24h: data.bitcoin?.usd_24h_change ?? null,
-            },
-            ETHUSDT: {
-              price: data.ethereum?.usd ?? null,
-              change24h: data.ethereum?.usd_24h_change ?? null,
-            },
-          });
+          newPriceData.BTCUSDT = {
+            price: data.bitcoin?.usd ?? null,
+            change24h: data.bitcoin?.usd_24h_change ?? null,
+          };
+          newPriceData.ETHUSDT = {
+            price: data.ethereum?.usd ?? null,
+            change24h: data.ethereum?.usd_24h_change ?? null,
+          };
         }
       } catch (error) {
-        // Silently fail, keep showing "—"
+        // Silently fail for crypto
       }
+
+      // Fetch currency rates (USD/TRY, EUR/TRY)
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+        const response = await fetch(
+          'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json',
+          { signal: controller.signal }
+        );
+
+        clearTimeout(timeoutId);
+
+        if (response.ok) {
+          const data = await response.json();
+          const usdTry = data.usd?.try ?? null;
+          const usdEur = data.usd?.eur ?? null;
+
+          if (usdTry) {
+            newPriceData.USDTRY = {
+              price: usdTry,
+              change24h: null,
+            };
+          }
+
+          if (usdTry && usdEur) {
+            newPriceData.EURTRY = {
+              price: (1 / usdEur) * usdTry,
+              change24h: null,
+            };
+          }
+        }
+      } catch (error) {
+        // Silently fail for currencies
+      }
+
+      // Fetch metals prices in parallel
+      await Promise.all([
+        // Gold (XAU)
+        (async () => {
+          try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+            const response = await fetch(
+              'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/xau.json',
+              { signal: controller.signal }
+            );
+
+            clearTimeout(timeoutId);
+
+            if (response.ok) {
+              const data = await response.json();
+              const xauUsd = data.xau?.usd ?? null;
+
+              if (xauUsd) {
+                newPriceData.XAUUSD = {
+                  price: xauUsd,
+                  change24h: null,
+                };
+
+                // Copper estimate (temporary)
+                newPriceData.HGUSD = {
+                  price: xauUsd / 400,
+                  change24h: null,
+                };
+              }
+            }
+          } catch (error) {
+            // Silently fail for gold
+          }
+        })(),
+
+        // Silver (XAG)
+        (async () => {
+          try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+            const response = await fetch(
+              'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/xag.json',
+              { signal: controller.signal }
+            );
+
+            clearTimeout(timeoutId);
+
+            if (response.ok) {
+              const data = await response.json();
+              const xagUsd = data.xag?.usd ?? null;
+
+              if (xagUsd) {
+                newPriceData.XAGUSD = {
+                  price: xagUsd,
+                  change24h: null,
+                };
+              }
+            }
+          } catch (error) {
+            // Silently fail for silver
+          }
+        })(),
+
+        // Platinum (XPT)
+        (async () => {
+          try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+            const response = await fetch(
+              'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/xpt.json',
+              { signal: controller.signal }
+            );
+
+            clearTimeout(timeoutId);
+
+            if (response.ok) {
+              const data = await response.json();
+              const xptUsd = data.xpt?.usd ?? null;
+
+              if (xptUsd) {
+                newPriceData.XPTUSD = {
+                  price: xptUsd,
+                  change24h: null,
+                };
+              }
+            }
+          } catch (error) {
+            // Silently fail for platinum
+          }
+        })(),
+
+        // Palladium (XPD)
+        (async () => {
+          try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+            const response = await fetch(
+              'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/xpd.json',
+              { signal: controller.signal }
+            );
+
+            clearTimeout(timeoutId);
+
+            if (response.ok) {
+              const data = await response.json();
+              const xpdUsd = data.xpd?.usd ?? null;
+
+              if (xpdUsd) {
+                newPriceData.XPDUSD = {
+                  price: xpdUsd,
+                  change24h: null,
+                };
+              }
+            }
+          } catch (error) {
+            // Silently fail for palladium
+          }
+        })(),
+      ]);
+
+      setPriceData(newPriceData);
     };
 
     fetchPrices();
