@@ -2195,3 +2195,21 @@
 - [ ] Container'ı her render'da temizle
 - [ ] colorTheme'i dinamik yap (theme === 'light' ? 'light' : 'dark')
 - [ ] Scroll animasyonunun çalıştığını doğrula
+
+
+## Dijital Araçlar Bölümü Kapsamlı Revizyon (pasted_content_8.txt)
+
+### Görev 1: Dinamik Yönlendirme ve Ürün Detay Sayfaları
+- [x] App.tsx'e 3 yeni rota ekle (/dijital-araclar/ai-prompt-kutuphanesi, /dijital-araclar/finans-kodu-kaos-icinde-duzen, /dijital-araclar/pro-algoritmik-strateji-ve-analiz-bulteni)
+- [x] AIPromptLibraryPage.tsx oluştur (tablo yapısı ile)
+- [x] FinansKoduPage.tsx oluştur
+- [x] ProBultenPage.tsx oluştur
+- [x] Ana sayfadaki ürün kartlarının butonlarını yeni detay sayfalarına yönlendir
+
+### Görev 2: Ana Sayfa Ürün Kartlarına Özellik Listeleri
+- [x] Ürün veri yapısına features array'i ekle
+- [x] Ürün kartı bileşenini güncelle (özellik listesi gösterimi)
+- [x] AI Prompt Kütüphanesi için 6 özellik ekle
+- [x] Finans Kodu için 6 özellik ekle
+- [x] Pro Bülten için 8 özellik ekle
+- [x] Responsive tasarımı doğrula

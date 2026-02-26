@@ -14,6 +14,7 @@ interface Product {
   journeyBadge: string;
   journeyColor: string;
   buttonText: string;
+  features: string[];
 }
 
 const products: Product[] = [
@@ -23,12 +24,20 @@ const products: Product[] = [
     description: "Finans profesyonelleri için özel olarak tasarlanmış 100+ yapay zeka prompt koleksiyonu.",
     icon: Brain,
     image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/eExAEklLAjIAZkEK.png",
-    link: "https://www.hikie.space/finanskodu/file/6cf62b1f141d48d1af13cb5ca04a53ab",
+    link: "/dijital-araclar/ai-prompt-kutuphanesi",
     badge: "Hemen Kullan",
     badgeColor: "#8B5CF6",
     journeyBadge: "BAŞLA",
     journeyColor: "#10B981",
     buttonText: "Prompt'ları Keşfet",
+    features: [
+      "🧠 100+ Profesyonel Komut",
+      "👔 Sanal Analist",
+      "⚡ Hız ve Verimlilik",
+      "📊 Tam Kapsam",
+      "📋 Kopyala-Yapıştır",
+      "🚀 AI Okuryazarlığı",
+    ],
   },
   {
     id: 2,
@@ -36,12 +45,20 @@ const products: Product[] = [
     description: "Finansal operasyonlarınızı dönüştürecek kapsamlı metodoloji ve araç seti.",
     icon: Layers,
     image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/tipqmgRCXZXEvHBH.png",
-    link: "https://www.hikie.space/finanskodu/file/3813040824b54db8bba17e4f4b2dd56f",
+    link: "/dijital-araclar/finans-kodu-kaos-icinde-duzen",
     badge: "Çok Satan",
     badgeColor: "#0EA5E9",
     journeyBadge: "DEVAM ET",
     journeyColor: "#0EA5E9",
     buttonText: "Sistemi İncele",
+    features: [
+      "🏭 Mühendislik Perspektifi",
+      "🧠 Duygu-Bozucu Algoritmalar",
+      "⚖️ Risk/Getiri Mühendisliği",
+      "🔄 Sürdürülebilir Varlık Döngüsü",
+      "🎯 Karar Matrisleri",
+      "🚫 Gürültü Filtreleme",
+    ],
   },
   {
     id: 3,
@@ -49,12 +66,22 @@ const products: Product[] = [
     description: "Piyasa yönü, makro analizler ve algoritmik sinyaller içeren kapsamlı aylık bülten.",
     icon: LayoutDashboard,
     image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/KzrqHllOnTCvKWzx.png",
-    link: "https://www.hikie.space/finanskodu/algoritmik-strateji-ve-analiz",
+    link: "/dijital-araclar/pro-algoritmik-strateji-ve-analiz-bulteni",
     badge: "Aylık Sinyal",
     badgeColor: "#D4A853",
     journeyBadge: "İLERLE",
     journeyColor: "#8899AA",
     buttonText: "Bültene Katıl",
+    features: [
+      "🥇 Altın Algoritması",
+      "📈 Akıllı Fon Sepetleri",
+      "🎙️ Haftalık Sesli Brifing",
+      "🚀 Kanıtlanmış Model",
+      "🎯 Yüksek Veri İsabeti",
+      "🔍 1:1 Finansal Check-Up",
+      "🛣️ Kişisel Reçete",
+      "📲 VIP İletişim Hattı",
+    ],
   },
 ];
 
@@ -117,15 +144,22 @@ function ProductCard({ product, index, isInView }: { product: Product; index: nu
           </div>
 
           {/* Description */}
-          <p className="text-sm leading-relaxed mb-5 flex-1 line-clamp-2" style={{ color: 'var(--muted-foreground)' }} itemProp="description">
+          <p className="text-sm leading-relaxed mb-4" style={{ color: 'var(--muted-foreground)' }} itemProp="description">
             {product.description}
           </p>
+
+          {/* Features List */}
+          <ul className="space-y-2 mb-5 flex-1">
+            {product.features.map((feature, idx) => (
+              <li key={idx} className="text-xs flex items-start gap-2" style={{ color: 'var(--muted-foreground)' }}>
+                <span className="flex-shrink-0">{feature}</span>
+              </li>
+            ))}
+          </ul>
 
           {/* CTA */}
           <a
             href={product.link}
-            target="_blank"
-            rel="noopener noreferrer"
             itemProp="url"
             className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 hover:scale-[1.02]"
             style={{
