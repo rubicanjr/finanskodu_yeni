@@ -2229,3 +2229,27 @@
 - [x] Hamburger butonu ekle (lg:hidden, sol üst köşe)
 - [x] Hamburger butonu Sidebar içinde (state dahili)
 - [x] lg:ml-[220px] olan main content mobilde ml-0 yap (zaten otomatik)
+
+
+## Ticker Tape Üstündeki Boş Alan ve Özel Marquee Ticker (pasted_content_10.txt)
+
+### Görev 1: Ticker Tape Üstündeki Boş Alanı Kaldır
+- [ ] App.tsx main element'inde fazladan mt-[...] veya pt-[...] değerlerini kaldır
+- [ ] index.css veya globals.css'de body/#root için margin-top/padding-top kontrol et
+- [ ] Hamburger butonunun top değerini kontrol et (top-[12px] ile sınırla)
+
+### Görev 2: MarqueeTicker Bileşeni Oluştur
+- [ ] client/src/components/MarqueeTicker.tsx dosyası oluştur
+- [ ] useTheme hook'unu import et, isDark değişkeni türet
+- [ ] 10 sembol listesi ekle (BIST100, USDTRY, EURTRY, XAUUSD, XAGUSD, XPTUSD, XPDUSD, HGUSD, BTCUSDT, ETHUSDT)
+- [ ] CoinGecko API'den Bitcoin ve Ethereum fiyatlarını çek (5s timeout, 30s interval)
+- [ ] @keyframes fk-marquee animasyonu tanımla (translateX 0 → -50%)
+- [ ] Sembol listesini 2 kez render et (seamless loop)
+- [ ] Her sembol hücresi: renkli nokta, başlık, fiyat, değişim badge'i
+- [ ] Wrapper: 100% width, 46px height, overflow hidden
+- [ ] Sol ve sağ kenara gradient overlay ekle
+
+### Görev 3: App.tsx'te TradingView'i Değiştir
+- [ ] TradingViewTickerTape import'unu sil
+- [ ] MarqueeTicker import'unu ekle
+- [ ] JSX'te TradingViewTickerTape'i MarqueeTicker ile değiştir
