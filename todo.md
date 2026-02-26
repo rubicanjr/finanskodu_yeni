@@ -2213,3 +2213,19 @@
 - [x] Finans Kodu için 6 özellik ekle
 - [x] Pro Bülten için 8 özellik ekle
 - [x] Responsive tasarımı doğrula
+
+
+## Mobil Kritik Düzeltmeler (pasted_content_9.txt)
+
+### Sorun 1: Mobilde Her Zaman Dark Tema Açılsın
+- [x] index.html FOUC script'inde || 'dark' fallback'i kontrol et
+- [x] ThemeContext.tsx'te useState initializer'da 'dark' varsayılanı kontrol et
+- [x] window.matchMedia('(prefers-color-scheme: dark)') satırını sil (varsa)
+
+### Sorun 2: Mobilde Sidebar ve Tema Toggle Erişilebilir Olsun
+- [x] Sidebar.tsx'e mobileOpen state ekle
+- [x] Mobil overlay ekle (tıklayınca sidebar kapansın)
+- [x] Sidebar'a mobil slide-in animasyonu ekle (translate-x)
+- [x] Hamburger butonu ekle (lg:hidden, sol üst köşe)
+- [x] Hamburger butonu Sidebar içinde (state dahili)
+- [x] lg:ml-[220px] olan main content mobilde ml-0 yap (zaten otomatik)
