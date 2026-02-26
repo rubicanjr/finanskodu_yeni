@@ -4,7 +4,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Sidebar from '@/components/Sidebar';
-import MarqueeTicker from '@/components/MarqueeTicker';
+import TradingViewTickerTape from '@/components/TradingViewTickerTape';
 import { Route, Switch, useLocation } from 'wouter';
 import { useEffect, lazy, Suspense } from 'react';
 import { trackPageView } from '@/lib/analytics';
@@ -82,20 +82,7 @@ function App() {
                     WebkitBackdropFilter: 'blur(12px)',
                   }}
                 >
-                  <MarqueeTicker />
-                  {/* Gradient shadow below ticker */}
-                  <div 
-                    style={{
-                      position: 'absolute',
-                      bottom: '-12px',
-                      left: 0,
-                      right: 0,
-                      height: '12px',
-                      background: 'linear-gradient(to bottom, var(--background), transparent)',
-                      pointerEvents: 'none',
-                      zIndex: 101,
-                    }}
-                  />
+                  <TradingViewTickerTape />
                 </div>
                 
                 {/* Sidebar Navigation */}

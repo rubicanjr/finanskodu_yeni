@@ -26,16 +26,20 @@ export default function TradingViewTickerTape() {
     script.innerHTML = JSON.stringify({
       "symbols": [
         {
+          "proName": "BIST:XU100",
+          "title": "BIST 100"
+        },
+        {
           "proName": "FX:USDTRY",
           "title": "USD/TRY"
         },
         {
-          "proName": "OANDA:XAUUSD",
-          "title": "Altın/Ons"
+          "proName": "FX:EURTRY",
+          "title": "EUR/TRY"
         },
         {
-          "proName": "BINANCE:BTCUSDT",
-          "title": "Bitcoin"
+          "proName": "OANDA:XAUUSD",
+          "title": "Altın/Ons"
         },
         {
           "proName": "OANDA:XAGUSD",
@@ -51,12 +55,20 @@ export default function TradingViewTickerTape() {
         },
         {
           "proName": "CAPITALCOM:COPPER",
-          "title": "Bakır/Ons"
+          "title": "Bakır/lb"
+        },
+        {
+          "proName": "BITSTAMP:BTCUSD",
+          "title": "Bitcoin"
+        },
+        {
+          "proName": "BITSTAMP:ETHUSD",
+          "title": "Ethereum"
         }
       ],
       "showSymbolLogo": true,
       "isTransparent": true,
-      "displayMode": "compact",
+      "displayMode": "adaptive",
       "colorTheme": theme === "light" ? "light" : "dark",
       "locale": "tr"
     });

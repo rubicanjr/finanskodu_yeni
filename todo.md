@@ -2253,3 +2253,17 @@
 - [ ] TradingViewTickerTape import'unu sil
 - [ ] MarqueeTicker import'unu ekle
 - [ ] JSX'te TradingViewTickerTape'i MarqueeTicker ile değiştir
+
+
+## Ticker Boşluk ve Sembol Düzeltmeleri
+
+### Sorun 1: Ticker ile Hero Arasındaki Boşluk
+- [x] App.tsx main element pt- değerini ticker yüksekliğine eşitle (46px)
+- [x] Ticker wrapper div yüksekliğini kontrol et
+- [x] Fazladan mt-, top-, padding değerlerini kaldır (gradient shadow kaldırıldı)
+
+### Sorun 2: TradingViewTickerTape Sembolleri
+- [x] Bitcoin sembolünü güncelle (BITSTAMP:BTCUSD)
+- [x] Ethereum sembolünü güncelle (BITSTAMP:ETHUSD)
+- [x] BIST 100 sembolünü güncelle (BIST:XU100)
+- [x] Ticker config'e showSymbolLogo, isTransparent, displayMode, colorTheme, locale ekle
