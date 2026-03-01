@@ -2316,3 +2316,6 @@
 - [ ] HeroSection section py-6 → pt-8 pb-0 yap
 - [ ] min-h-[calc(100vh-46px)] koru
 - [x] Sidebar.tsx'te lg:static kaldırıldı (her zaman fixed) - asıl boşluk sorunu çözüldü
+
+## Ticker Marquee Scrolling
+- [x] App.tsx'te TradingViewTickerTape yerine MarqueeTicker kullanıldı (CSS fk-marquee animasyonu)

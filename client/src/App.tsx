@@ -4,7 +4,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Sidebar from '@/components/Sidebar';
-import TradingViewTickerTape from '@/components/TradingViewTickerTape';
+import MarqueeTicker from '@/components/MarqueeTicker';
 import { Route, Switch, useLocation } from 'wouter';
 import { useEffect, lazy, Suspense } from 'react';
 import { trackPageView } from '@/lib/analytics';
@@ -82,7 +82,7 @@ function App() {
                     WebkitBackdropFilter: 'blur(12px)',
                   }}
                 >
-                  <TradingViewTickerTape />
+                  <MarqueeTicker />
                 </div>
                 
                 {/* Sidebar Navigation */}
