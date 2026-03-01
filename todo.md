@@ -2342,3 +2342,13 @@
 - [ ] Firestore kurallarını güncelle: presence ve typing koleksiyonlarına auth izni
 - [ ] Pinned mesaj özelliğini aktif et: chatRooms/genel dokümanına pinnedMessage alanı
 - [ ] Mesaj silme özelliği: hover menüye Sil butonu ekle, Firestore'dan sil
+
+## KodOdası Login Ekranı Yeniden Tasarım
+- [x] Mevcut login bileşenini incele (KodOdasiLogin.tsx veya KodOdasiNew.tsx içindeki login kısmı)
+- [x] İki panel layout: sol panel (brand + canlı aktivite), sağ panel (login formu, 460px)
+- [x] Sol panel: logo, eyebrow, H1, subtitle, 3 istatistik, canlı aktivite feed, trust chips
+- [x] Sol panel arka plan: grid background, radial glow blob'lar
+- [x] Sağ panel: sohbet ikonu, online badge (Firebase), feature listesi, Google butonu
+- [x] Google butonu: hover animasyonu, loading state
+- [x] Tüm elementler fadeUp animasyonuyla gelsin, feed mesajları slideIn
+- [x] Mobilde (max-width: 900px) sol panel gizlensin
