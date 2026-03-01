@@ -2352,3 +2352,11 @@
 - [x] Google butonu: hover animasyonu, loading state
 - [x] Tüm elementler fadeUp animasyonuyla gelsin, feed mesajları slideIn
 - [x] Mobilde (max-width: 900px) sol panel gizlensin
+
+## KodOdası Login Ekranı 6 Değişiklik
+- [x] Değişiklik 1: Container genişliği — w-full h-full flex items-center justify-center
+- [x] Değişiklik 2: İkon 💬, gradient bg + border + glow shadow
+- [x] Değişiklik 3: Online badge (yeşil pulse dot + "38 kişi şu an aktif")
+- [x] Değişiklik 4: Feature listesi (3 madde, cyan bg)
+- [x] Değişiklik 5: Başlık "Kod Odası'na Giriş" text-2xl, alt metin güncelle
+- [x] Değişiklik 6: Arka plan radial gradient atmosfer

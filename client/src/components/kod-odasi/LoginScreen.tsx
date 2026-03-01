@@ -164,7 +164,7 @@ export default function LoginScreen({ onSignIn }: LoginScreenProps) {
         height: '100vh',
         display: 'flex',
         overflow: 'hidden',
-        background: 'var(--background)',
+        background: 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,212,255,0.05) 0%, transparent 60%), var(--background)',
         fontFamily: 'Inter, sans-serif',
       }}
     >
@@ -467,9 +467,10 @@ export default function LoginScreen({ onSignIn }: LoginScreenProps) {
               style={{
                 width: '64px',
                 height: '64px',
-                background: 'linear-gradient(135deg, rgba(0,212,255,0.15), rgba(16,185,129,0.10))',
-                border: '1px solid rgba(0,212,255,0.20)',
+                background: 'linear-gradient(135deg, rgba(0,212,255,0.15), rgba(0,200,150,0.10))',
+                border: '1px solid rgba(0,212,255,0.18)',
                 borderRadius: '16px',
+                boxShadow: '0 0 0 8px rgba(0,212,255,0.05)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -513,7 +514,7 @@ export default function LoginScreen({ onSignIn }: LoginScreenProps) {
           {/* Title */}
           <h2
             style={{
-              fontSize: '22px',
+              fontSize: '24px',
               fontWeight: 700,
               color: 'var(--foreground)',
               marginBottom: '8px',
@@ -521,7 +522,7 @@ export default function LoginScreen({ onSignIn }: LoginScreenProps) {
               ...fadeUp(240),
             }}
           >
-            Kod Odası'na Katıl
+            Kod Odası'na Giriş
           </h2>
           <p
             style={{
@@ -532,7 +533,7 @@ export default function LoginScreen({ onSignIn }: LoginScreenProps) {
               ...fadeUp(300),
             }}
           >
-            Yatırım, borsa ve ekonomiyi birlikte tartışmak için giriş yap.
+            Finans topluluğuna katılmak için Google hesabınla devam et.
           </p>
 
           {/* Feature list */}
@@ -548,22 +549,22 @@ export default function LoginScreen({ onSignIn }: LoginScreenProps) {
             }}
           >
             {[
-              { icon: '⚡', text: 'Gerçek zamanlı tartışmalar' },
-              { icon: '📊', text: 'Finansal analiz paylaşımı' },
-              { icon: '🔔', text: 'Anlık uyarılar' },
+              { icon: '⚡', text: 'Gerçek zamanlı piyasa tartışmaları' },
+              { icon: '📊', text: 'Finansal analiz ve strateji paylaşımı' },
+              { icon: '🔔', text: 'Anlık piyasa uyarıları' },
             ].map((item) => (
               <div
                 key={item.text}
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '10px',
-                  padding: '6px 0',
-                  fontSize: '13px',
-                  color: 'var(--foreground)',
+              display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                padding: '6px 0',
+                fontSize: '13px',
+                color: 'var(--muted-foreground)',
                 }}
               >
-                <span style={{ fontSize: '15px' }}>{item.icon}</span>
+                <div style={{ width: '24px', height: '24px', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px', flexShrink: 0, background: 'rgba(0,212,255,0.10)' }}>{item.icon}</div>
                 <span>{item.text}</span>
               </div>
             ))}
