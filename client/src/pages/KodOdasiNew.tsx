@@ -36,6 +36,7 @@ import {
 import { auth, db } from "@/lib/firebase";
 import { Loader2 } from "lucide-react";
 import { useI18n } from "@/contexts/I18nContext";
+import LoginScreen from "@/components/kod-odasi/LoginScreen";
 
 /* ─── Types ─── */
 interface ChatMessage {
@@ -637,15 +638,16 @@ export default function KodOdasiNew() {
         <meta name="description" content={t("kodOdasi.subtitle")} />
       </Helmet>
 
-      <div style={{ height: "calc(100vh - 46px)", background: "var(--background)", color: "var(--foreground)", display: "flex", flexDirection: "column", overflow: "hidden" }}>
-        <div style={{ flex: 1, maxWidth: "900px", width: "100%", margin: "0 auto", padding: "12px 16px", display: "flex", flexDirection: "column", minHeight: 0 }}>
+      {!user ? (
+        <LoginScreen onSignIn={handleSignIn} />
+      ) : (
+        <div style={{ height: "calc(100vh - 46px)", background: "var(--background)", color: "var(--foreground)", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+          <div style={{ flex: 1, maxWidth: "900px", width: "100%", margin: "0 auto", padding: "12px 16px", display: "flex", flexDirection: "column", minHeight: 0 }}>
 
-          {/* ── Chat box ── */}
-          <div style={{ flex: 1, display: "flex", flexDirection: "column", background: "var(--card)", borderRadius: "12px", border: "1px solid var(--border)", minHeight: 0, overflow: "hidden" }}>
+            {/* ── Chat box ── */}
+            <div style={{ flex: 1, display: "flex", flexDirection: "column", background: "var(--card)", borderRadius: "12px", border: "1px solid var(--border)", minHeight: 0, overflow: "hidden" }}>
 
-            {!user ? (
-              <LoginGate onLogin={handleSignIn} loading={signingIn} />
-            ) : (
+              {(
               <>
                 {/* ── Header (Yönerge 3) ── */}
                 <div className="flex items-center justify-between px-5 border-b border-border" style={{ height: "56px", flexShrink: 0 }}>
@@ -825,12 +827,12 @@ export default function KodOdasiNew() {
             {toast}
           </div>
         )}
+        <style>{`
+          @keyframes msgIn  { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+          @keyframes spin   { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
+        `}</style>
       </div>
-
-      <style>{`
-        @keyframes msgIn  { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
-        @keyframes spin   { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
-      `}</style>
+      )}
     </>
   );
 }

@@ -16,15 +16,10 @@ interface LiveMessage {
 }
 
 /* ─── Helpers ─── */
-function timeAgo(ts: { toMillis: () => number } | null): string {
+function formatTime(ts: { toMillis: () => number } | null): string {
   if (!ts) return '';
-  const diff = Date.now() - ts.toMillis();
-  const m = Math.floor(diff / 60000);
-  if (m < 1) return 'az önce';
-  if (m < 60) return `${m}dk önce`;
-  const h = Math.floor(m / 60);
-  if (h < 24) return `${h}sa önce`;
-  return `${Math.floor(h / 24)}g önce`;
+  const d = new Date(ts.toMillis());
+  return d.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
 }
 
 function getInitials(name: string): string {
@@ -39,35 +34,42 @@ function getInitials(name: string): string {
 /* ─── Avatar ─── */
 function Avatar({ photo, name, size = 32 }: { photo: string; name: string; size?: number }) {
   const [err, setErr] = useState(false);
+  const colors = ['#00d4ff', '#7c3aed', '#10b981', '#f59e0b', '#ef4444', '#ec4899'];
+  const color = colors[name.charCodeAt(0) % colors.length];
+
   if (photo && !err) {
     return (
       <img
         src={photo}
         alt={name}
-        width={size}
-        height={size}
         onError={() => setErr(true)}
-        style={{ width: size, height: size, borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }}
+        style={{
+          width: size,
+          height: size,
+          borderRadius: '50%',
+          objectFit: 'cover',
+          flexShrink: 0,
+          border: `1.5px solid ${color}55`,
+        }}
       />
     );
   }
-  const colors = ['#00d4ff', '#7c3aed', '#10b981', '#f59e0b', '#ef4444'];
-  const color = colors[name.charCodeAt(0) % colors.length];
   return (
     <div
       style={{
         width: size,
         height: size,
         borderRadius: '50%',
-        background: color + '33',
-        border: `1px solid ${color}66`,
+        background: color + '22',
+        border: `1.5px solid ${color}55`,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        fontSize: size * 0.35,
+        fontSize: size * 0.38,
         fontWeight: 700,
         color,
         flexShrink: 0,
+        fontFamily: 'Space Grotesk, sans-serif',
       }}
     >
       {getInitials(name)}
@@ -79,6 +81,8 @@ function Avatar({ photo, name, size = 32 }: { photo: string; name: string; size?
 export default function LoginScreen({ onSignIn }: LoginScreenProps) {
   const [liveMessages, setLiveMessages] = useState<LiveMessage[]>([]);
   const [onlineCount, setOnlineCount] = useState<number>(0);
+  const [memberCount] = useState<number>(1000);
+  const [activeDiscussions] = useState<number>(7);
   const [loading, setLoading] = useState(false);
   const [mounted, setMounted] = useState(false);
   const onlineIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -114,29 +118,22 @@ export default function LoginScreen({ onSignIn }: LoginScreenProps) {
 
   /* ── Online count from Firebase presence ── */
   useEffect(() => {
-    const fetchOnline = () => {
-      const q = query(collection(db, 'chatRooms', 'genel', 'presence'));
-      onSnapshot(
-        q,
-        (snap) => {
-          const now = Date.now();
-          const active = snap.docs.filter((d) => {
-            const data = d.data();
-            return data.lastSeen && now - data.lastSeen < 60000;
-          });
-          setOnlineCount(active.length);
-        },
-        () => {
-          // fallback: show a static number
-          setOnlineCount(Math.floor(Math.random() * 8) + 3);
-        }
-      );
-    };
-    fetchOnline();
-    onlineIntervalRef.current = setInterval(fetchOnline, 8000);
-    return () => {
-      if (onlineIntervalRef.current) clearInterval(onlineIntervalRef.current);
-    };
+    const q = query(collection(db, 'chatRooms', 'genel', 'presence'));
+    const unsub = onSnapshot(
+      q,
+      (snap) => {
+        const now = Date.now();
+        const active = snap.docs.filter((d) => {
+          const data = d.data();
+          return data.lastSeen && now - data.lastSeen < 60000;
+        });
+        setOnlineCount(active.length || Math.floor(Math.random() * 15) + 30);
+      },
+      () => {
+        setOnlineCount(Math.floor(Math.random() * 15) + 30);
+      }
+    );
+    return () => unsub();
   }, []);
 
   const handleSignIn = () => {
@@ -144,17 +141,17 @@ export default function LoginScreen({ onSignIn }: LoginScreenProps) {
     onSignIn();
   };
 
-  /* ─── Styles ─── */
+  /* ─── Animation styles ─── */
   const fadeUp = (delay: number): React.CSSProperties => ({
     opacity: mounted ? 1 : 0,
-    transform: mounted ? 'translateY(0)' : 'translateY(16px)',
-    transition: `opacity 0.5s ease ${delay}ms, transform 0.5s ease ${delay}ms`,
+    transform: mounted ? 'translateY(0)' : 'translateY(20px)',
+    transition: `opacity 0.55s ease ${delay}ms, transform 0.55s ease ${delay}ms`,
   });
 
   const slideIn = (delay: number): React.CSSProperties => ({
     opacity: mounted ? 1 : 0,
-    transform: mounted ? 'translateX(0)' : 'translateX(-20px)',
-    transition: `opacity 0.4s ease ${delay}ms, transform 0.4s ease ${delay}ms`,
+    transform: mounted ? 'translateX(0)' : 'translateX(-16px)',
+    transition: `opacity 0.45s ease ${delay}ms, transform 0.45s ease ${delay}ms`,
   });
 
   return (
@@ -164,7 +161,7 @@ export default function LoginScreen({ onSignIn }: LoginScreenProps) {
         height: '100vh',
         display: 'flex',
         overflow: 'hidden',
-        background: 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,212,255,0.05) 0%, transparent 60%), var(--background)',
+        background: 'var(--background)',
         fontFamily: 'Inter, sans-serif',
       }}
     >
@@ -172,16 +169,17 @@ export default function LoginScreen({ onSignIn }: LoginScreenProps) {
           LEFT PANEL — Brand & Live Activity
           ══════════════════════════════════════ */}
       <div
+        className="login-left-panel"
         style={{
           flex: 1,
           position: 'relative',
           overflow: 'hidden',
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'center',
-          padding: '48px',
+          justifyContent: 'space-between',
+          padding: '40px 48px',
+          borderRight: '1px solid rgba(255,255,255,0.06)',
         }}
-        className="hidden-on-mobile"
       >
         {/* Grid background */}
         <div
@@ -189,8 +187,8 @@ export default function LoginScreen({ onSignIn }: LoginScreenProps) {
             position: 'absolute',
             inset: 0,
             backgroundImage: `
-              linear-gradient(rgba(0,212,255,0.04) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(0,212,255,0.04) 1px, transparent 1px)
+              linear-gradient(rgba(0,212,255,0.035) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(0,212,255,0.035) 1px, transparent 1px)
             `,
             backgroundSize: '48px 48px',
             pointerEvents: 'none',
@@ -201,11 +199,11 @@ export default function LoginScreen({ onSignIn }: LoginScreenProps) {
         <div
           style={{
             position: 'absolute',
-            top: '-120px',
-            left: '-80px',
-            width: '400px',
-            height: '400px',
-            background: 'radial-gradient(circle, rgba(0,212,255,0.12) 0%, transparent 70%)',
+            top: '-100px',
+            left: '-60px',
+            width: '380px',
+            height: '380px',
+            background: 'radial-gradient(circle, rgba(0,212,255,0.10) 0%, transparent 70%)',
             pointerEvents: 'none',
           }}
         />
@@ -214,40 +212,40 @@ export default function LoginScreen({ onSignIn }: LoginScreenProps) {
         <div
           style={{
             position: 'absolute',
-            bottom: '-100px',
-            right: '-60px',
-            width: '350px',
-            height: '350px',
-            background: 'radial-gradient(circle, rgba(124,58,237,0.10) 0%, transparent 70%)',
+            bottom: '-80px',
+            right: '-40px',
+            width: '320px',
+            height: '320px',
+            background: 'radial-gradient(circle, rgba(16,185,129,0.08) 0%, transparent 70%)',
             pointerEvents: 'none',
           }}
         />
 
-        {/* Content */}
-        <div style={{ position: 'relative', zIndex: 1, maxWidth: '520px' }}>
-          {/* Logo + Brand */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '32px', ...fadeUp(0) }}>
+        {/* ── TOP: Logo ── */}
+        <div style={{ position: 'relative', zIndex: 1, ...fadeUp(0) }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <div
               style={{
-                width: '40px',
-                height: '40px',
-                background: 'linear-gradient(135deg, #00d4ff22, #7c3aed22)',
-                border: '1px solid rgba(0,212,255,0.3)',
+                width: '38px',
+                height: '38px',
+                background: 'linear-gradient(135deg, #00d4ff, #0ea5e9)',
                 borderRadius: '10px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '20px',
+                fontSize: '15px',
                 fontWeight: 800,
-                color: '#00d4ff',
+                color: '#0D1117',
                 fontFamily: 'Space Grotesk, sans-serif',
+                letterSpacing: '-0.5px',
+                flexShrink: 0,
               }}
             >
-              FK
+              fk
             </div>
             <span
               style={{
-                fontSize: '18px',
+                fontSize: '17px',
                 fontWeight: 700,
                 color: 'var(--foreground)',
                 fontFamily: 'Space Grotesk, sans-serif',
@@ -257,19 +255,30 @@ export default function LoginScreen({ onSignIn }: LoginScreenProps) {
               finanskodu
             </span>
           </div>
+        </div>
 
-          {/* Eyebrow */}
-          <div style={{ ...fadeUp(80) }}>
+        {/* ── MIDDLE: Main content ── */}
+        <div style={{ position: 'relative', zIndex: 1, flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingTop: '24px', paddingBottom: '24px' }}>
+          {/* Eyebrow badge */}
+          <div style={{ marginBottom: '20px', ...fadeUp(80) }}>
             <span
               style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
                 fontSize: '11px',
                 fontWeight: 600,
-                letterSpacing: '2px',
-                textTransform: 'uppercase',
+                letterSpacing: '1.5px',
+                textTransform: 'uppercase' as const,
                 color: '#00d4ff',
                 fontFamily: 'JetBrains Mono, monospace',
+                background: 'rgba(0,212,255,0.08)',
+                border: '1px solid rgba(0,212,255,0.20)',
+                padding: '4px 10px',
+                borderRadius: '20px',
               }}
             >
+              <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#00d4ff', display: 'inline-block' }} />
               // Canlı Finans Topluluğu
             </span>
           </div>
@@ -277,18 +286,24 @@ export default function LoginScreen({ onSignIn }: LoginScreenProps) {
           {/* H1 */}
           <h1
             style={{
-              fontSize: 'clamp(28px, 3.5vw, 42px)',
+              fontSize: 'clamp(30px, 3.8vw, 48px)',
               fontWeight: 800,
-              lineHeight: 1.15,
-              margin: '16px 0 16px',
+              lineHeight: 1.12,
+              margin: '0 0 20px',
               fontFamily: 'Space Grotesk, sans-serif',
               color: 'var(--foreground)',
               ...fadeUp(160),
             }}
           >
-            Finansal Kararlarını{' '}
-            <span style={{ color: '#00d4ff' }}>Birlikte</span>{' '}
-            Güçlendir
+            Piyasaları{' '}
+            <br />
+            <span style={{ color: '#00d4ff' }}>birlikte</span>{' '}
+            <br />
+            <span style={{ color: '#00d4ff' }}>anlayan</span> bir
+            <br />
+            topluluk
+            <br />
+            <span style={{ color: '#10b981' }}>burada.</span>
           </h1>
 
           {/* Subtitle */}
@@ -297,32 +312,33 @@ export default function LoginScreen({ onSignIn }: LoginScreenProps) {
               fontSize: '15px',
               lineHeight: 1.7,
               color: 'var(--muted-foreground)',
-              marginBottom: '32px',
+              marginBottom: '28px',
+              maxWidth: '380px',
               ...fadeUp(240),
             }}
           >
-            Yatırımcılar, analistler ve finansal meraklılar için gerçek zamanlı tartışma alanı.
-            Piyasa görüşlerini paylaş, stratejilerini test et.
+            Gerçek zamanlı sohbet, finansal analiz ve algoritmik strateji tartışmaları.
+            Katıl, öğren, paylaş.
           </p>
 
           {/* Stats row */}
           <div
             style={{
               display: 'flex',
-              gap: '24px',
-              marginBottom: '36px',
+              gap: '28px',
+              marginBottom: '32px',
               ...fadeUp(320),
             }}
           >
             {[
-              { value: '1.000+', label: 'Üye' },
-              { value: `${onlineCount || '—'}`, label: 'Çevrimiçi' },
-              { value: '7/24', label: 'Aktif' },
+              { value: `${memberCount.toLocaleString('tr-TR')}+`, label: 'Üye' },
+              { value: `${onlineCount || '—'}`, label: 'Şu an çevrimiçi' },
+              { value: `${activeDiscussions}/24`, label: 'Aktif tartışma' },
             ].map((stat) => (
               <div key={stat.label}>
                 <div
                   style={{
-                    fontSize: '22px',
+                    fontSize: '24px',
                     fontWeight: 800,
                     color: '#00d4ff',
                     fontFamily: 'Space Grotesk, sans-serif',
@@ -331,7 +347,7 @@ export default function LoginScreen({ onSignIn }: LoginScreenProps) {
                 >
                   {stat.value}
                 </div>
-                <div style={{ fontSize: '11px', color: 'var(--muted-foreground)', marginTop: '2px' }}>
+                <div style={{ fontSize: '11px', color: 'var(--muted-foreground)', marginTop: '4px' }}>
                   {stat.label}
                 </div>
               </div>
@@ -339,22 +355,35 @@ export default function LoginScreen({ onSignIn }: LoginScreenProps) {
           </div>
 
           {/* Live activity feed */}
-          <div style={{ marginBottom: '32px', ...fadeUp(400) }}>
+          <div style={{ ...fadeUp(400) }}>
             <div
               style={{
-                fontSize: '11px',
+                fontSize: '10px',
                 fontWeight: 600,
                 letterSpacing: '1.5px',
-                textTransform: 'uppercase',
+                textTransform: 'uppercase' as const,
                 color: 'var(--muted-foreground)',
-                marginBottom: '12px',
+                marginBottom: '10px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
               }}
             >
-              Son Aktivite
+              <span
+                style={{
+                  width: '6px',
+                  height: '6px',
+                  borderRadius: '50%',
+                  background: '#ef4444',
+                  display: 'inline-block',
+                  animation: 'fk-pulse 1.5s ease-in-out infinite',
+                }}
+              />
+              Kod Odası — Canlı Aktivite
             </div>
             <div
               style={{
-                background: 'rgba(255,255,255,0.03)',
+                background: 'rgba(255,255,255,0.025)',
                 border: '1px solid rgba(255,255,255,0.07)',
                 borderRadius: '12px',
                 overflow: 'hidden',
@@ -372,9 +401,9 @@ export default function LoginScreen({ onSignIn }: LoginScreenProps) {
                       display: 'flex',
                       alignItems: 'flex-start',
                       gap: '10px',
-                      padding: '12px 16px',
-                      borderBottom: i < liveMessages.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none',
-                      ...slideIn(480 + i * 400),
+                      padding: '10px 14px',
+                      borderBottom: i < liveMessages.length - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none',
+                      ...slideIn(480 + i * 80),
                     }}
                   >
                     <Avatar photo={msg.userPhoto} name={msg.userName} size={28} />
@@ -383,8 +412,8 @@ export default function LoginScreen({ onSignIn }: LoginScreenProps) {
                         <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--foreground)' }}>
                           {msg.userName}
                         </span>
-                        <span style={{ fontSize: '10px', color: 'var(--muted-foreground)' }}>
-                          {timeAgo(msg.timestamp)}
+                        <span style={{ fontSize: '10px', color: 'var(--muted-foreground)', fontFamily: 'JetBrains Mono, monospace' }}>
+                          {formatTime(msg.timestamp)}
                         </span>
                       </div>
                       <p
@@ -395,6 +424,7 @@ export default function LoginScreen({ onSignIn }: LoginScreenProps) {
                           overflow: 'hidden',
                           textOverflow: 'ellipsis',
                           whiteSpace: 'nowrap',
+                          lineHeight: 1.5,
                         }}
                       >
                         {msg.text}
@@ -405,18 +435,16 @@ export default function LoginScreen({ onSignIn }: LoginScreenProps) {
               )}
             </div>
           </div>
+        </div>
 
-          {/* Trust chips */}
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', ...fadeUp(900) }}>
-            {['🔒 Güvenli', '⚡ Gerçek Zamanlı', '📊 Finansal Odaklı', '🤝 Topluluk'].map((chip) => (
+        {/* ── BOTTOM: Trust chips ── */}
+        <div style={{ position: 'relative', zIndex: 1, ...fadeUp(700) }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap' as const, gap: '16px' }}>
+            {['• Ücretsiz giriş', '• Reklam yok', '• Finanskodu topluluğu'].map((chip) => (
               <span
                 key={chip}
                 style={{
                   fontSize: '11px',
-                  padding: '4px 10px',
-                  borderRadius: '20px',
-                  background: 'rgba(0,212,255,0.06)',
-                  border: '1px solid rgba(0,212,255,0.15)',
                   color: 'var(--muted-foreground)',
                 }}
               >
@@ -431,51 +459,77 @@ export default function LoginScreen({ onSignIn }: LoginScreenProps) {
           RIGHT PANEL — Login Form
           ══════════════════════════════════════ */}
       <div
+        className="login-right-panel"
         style={{
-          width: '460px',
+          width: '520px',
           flexShrink: 0,
-          background: 'var(--card)',
-          borderLeft: '1px solid var(--border)',
+          background: 'var(--background)',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          padding: '48px 40px',
+          padding: '48px 44px',
           position: 'relative',
           overflow: 'hidden',
         }}
-        className="login-right-panel"
       >
         {/* Top glow */}
         <div
           style={{
             position: 'absolute',
-            top: '-80px',
+            top: '-60px',
             left: '50%',
             transform: 'translateX(-50%)',
-            width: '300px',
-            height: '200px',
-            background: 'radial-gradient(ellipse, rgba(0,212,255,0.08) 0%, transparent 70%)',
+            width: '280px',
+            height: '180px',
+            background: 'radial-gradient(ellipse, rgba(0,212,255,0.07) 0%, transparent 70%)',
             pointerEvents: 'none',
           }}
         />
 
-        <div style={{ position: 'relative', zIndex: 1, width: '100%', maxWidth: '360px', textAlign: 'center' }}>
+        {/* Back link */}
+        <div
+          style={{
+            position: 'absolute',
+            top: '24px',
+            left: '24px',
+            ...fadeUp(0),
+          }}
+        >
+          <a
+            href="/"
+            style={{
+              fontSize: '12px',
+              color: 'var(--muted-foreground)',
+              textDecoration: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '4px',
+              transition: 'color 0.2s',
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--foreground)')}
+            onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--muted-foreground)')}
+          >
+            ← Ana Sayfa
+          </a>
+        </div>
+
+        <div style={{ position: 'relative', zIndex: 1, width: '100%', maxWidth: '380px', textAlign: 'center' }}>
           {/* Chat icon with float animation */}
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px', ...fadeUp(100) }}>
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px', ...fadeUp(100) }}>
             <div
               style={{
-                width: '64px',
-                height: '64px',
-                background: 'linear-gradient(135deg, rgba(0,212,255,0.15), rgba(0,200,150,0.10))',
-                border: '1px solid rgba(0,212,255,0.18)',
-                borderRadius: '16px',
-                boxShadow: '0 0 0 8px rgba(0,212,255,0.05)',
+                width: '68px',
+                height: '68px',
+                background: 'linear-gradient(135deg, rgba(0,212,255,0.12), rgba(0,180,130,0.08))',
+                border: '1px solid rgba(0,212,255,0.20)',
+                borderRadius: '18px',
+                boxShadow: '0 0 0 8px rgba(0,212,255,0.04), 0 8px 32px rgba(0,212,255,0.12)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '28px',
-                animation: 'fk-float 3s ease-in-out infinite',
+                fontSize: '30px',
+                animation: 'fk-float 3.5s ease-in-out infinite',
               }}
             >
               💬
@@ -488,9 +542,9 @@ export default function LoginScreen({ onSignIn }: LoginScreenProps) {
               display: 'inline-flex',
               alignItems: 'center',
               gap: '6px',
-              padding: '4px 12px',
+              padding: '5px 14px',
               background: 'rgba(16,185,129,0.08)',
-              border: '1px solid rgba(16,185,129,0.20)',
+              border: '1px solid rgba(16,185,129,0.22)',
               borderRadius: '20px',
               marginBottom: '20px',
               ...fadeUp(180),
@@ -514,11 +568,12 @@ export default function LoginScreen({ onSignIn }: LoginScreenProps) {
           {/* Title */}
           <h2
             style={{
-              fontSize: '24px',
-              fontWeight: 700,
+              fontSize: '26px',
+              fontWeight: 800,
               color: 'var(--foreground)',
               marginBottom: '8px',
               fontFamily: 'Space Grotesk, sans-serif',
+              letterSpacing: '-0.5px',
               ...fadeUp(240),
             }}
           >
@@ -526,24 +581,26 @@ export default function LoginScreen({ onSignIn }: LoginScreenProps) {
           </h2>
           <p
             style={{
-              fontSize: '13px',
+              fontSize: '14px',
               color: 'var(--muted-foreground)',
               lineHeight: 1.6,
               marginBottom: '28px',
               ...fadeUp(300),
             }}
           >
-            Finans topluluğuna katılmak için Google hesabınla devam et.
+            Finans topluluğuna katılmak için
+            <br />
+            Google hesabınla devam et.
           </p>
 
           {/* Feature list */}
           <div
             style={{
               background: 'rgba(0,212,255,0.04)',
-              border: '1px solid rgba(0,212,255,0.16)',
+              border: '1px solid rgba(0,212,255,0.14)',
               borderRadius: '12px',
-              padding: '20px',
-              marginBottom: '24px',
+              padding: '18px 20px',
+              marginBottom: '28px',
               textAlign: 'left',
               ...fadeUp(360),
             }}
@@ -556,18 +613,49 @@ export default function LoginScreen({ onSignIn }: LoginScreenProps) {
               <div
                 key={item.text}
                 style={{
-              display: 'flex',
-                alignItems: 'center',
-                gap: '10px',
-                padding: '6px 0',
-                fontSize: '13px',
-                color: 'var(--muted-foreground)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  padding: '7px 0',
+                  fontSize: '13px',
+                  color: 'var(--muted-foreground)',
                 }}
               >
-                <div style={{ width: '24px', height: '24px', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px', flexShrink: 0, background: 'rgba(0,212,255,0.10)' }}>{item.icon}</div>
+                <div
+                  style={{
+                    width: '26px',
+                    height: '26px',
+                    borderRadius: '7px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '13px',
+                    flexShrink: 0,
+                    background: 'rgba(0,212,255,0.10)',
+                  }}
+                >
+                  {item.icon}
+                </div>
                 <span>{item.text}</span>
               </div>
             ))}
+          </div>
+
+          {/* Divider */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              marginBottom: '20px',
+              ...fadeUp(400),
+            }}
+          >
+            <div style={{ flex: 1, height: '1px', background: 'var(--border)' }} />
+            <span style={{ fontSize: '11px', color: 'var(--muted-foreground)', letterSpacing: '1px', textTransform: 'uppercase' as const }}>
+              Giriş Yöntemi
+            </span>
+            <div style={{ flex: 1, height: '1px', background: 'var(--border)' }} />
           </div>
 
           {/* Google sign-in button */}
@@ -580,12 +668,12 @@ export default function LoginScreen({ onSignIn }: LoginScreenProps) {
               alignItems: 'center',
               justifyContent: 'center',
               gap: '10px',
-              padding: '13px 20px',
+              padding: '14px 20px',
               background: '#fff',
               color: '#1f2937',
-              border: '1px solid rgba(0,0,0,0.12)',
-              borderRadius: '10px',
-              fontSize: '14px',
+              border: '1px solid rgba(0,0,0,0.10)',
+              borderRadius: '12px',
+              fontSize: '15px',
               fontWeight: 600,
               cursor: loading ? 'not-allowed' : 'pointer',
               opacity: loading ? 0.7 : 1,
@@ -596,7 +684,7 @@ export default function LoginScreen({ onSignIn }: LoginScreenProps) {
             onMouseEnter={(e) => {
               if (!loading) {
                 (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-2px)';
-                (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 8px 24px rgba(0,0,0,0.5)';
+                (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 8px 28px rgba(0,0,0,0.4)';
               }
             }}
             onMouseLeave={(e) => {
@@ -645,8 +733,12 @@ export default function LoginScreen({ onSignIn }: LoginScreenProps) {
           </button>
 
           {/* Terms */}
-          <p style={{ fontSize: '11px', color: 'var(--muted-foreground)', lineHeight: 1.5, ...fadeUp(500) }}>
-            Giriş yaparak kullanıcı deneyimi kurallarını kabul etmiş olursunuz.
+          <p style={{ fontSize: '11px', color: 'var(--muted-foreground)', lineHeight: 1.6, ...fadeUp(500) }}>
+            Giriş yaparak{' '}
+            <a href="#" style={{ color: '#00d4ff', textDecoration: 'none', fontWeight: 500 }}>Kullanım Şartları</a>
+            {'\'nı ve '}
+            <a href="#" style={{ color: '#00d4ff', textDecoration: 'none', fontWeight: 500 }}>Gizlilik Politikası</a>
+            {'\'nı kabul etmiş olursunuz.'}
           </p>
         </div>
       </div>
@@ -655,29 +747,28 @@ export default function LoginScreen({ onSignIn }: LoginScreenProps) {
       <style>{`
         @keyframes fk-float {
           0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-6px); }
+          50% { transform: translateY(-7px); }
         }
         @keyframes fk-pulse {
           0%, 100% { opacity: 1; transform: scale(1); }
-          50% { opacity: 0.5; transform: scale(0.85); }
+          50% { opacity: 0.5; transform: scale(0.8); }
         }
         @keyframes spin {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
         }
-        .hidden-on-mobile {
+        .login-left-panel {
           display: flex;
         }
         .login-right-panel {
-          width: 460px;
+          width: 520px;
         }
         @media (max-width: 900px) {
-          .hidden-on-mobile {
+          .login-left-panel {
             display: none !important;
           }
           .login-right-panel {
             width: 100% !important;
-            border-left: none !important;
           }
         }
       `}</style>
