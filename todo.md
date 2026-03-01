@@ -2296,3 +2296,8 @@
 - [x] vite.config.ts'e cache busting hash ekle (entryFileNames, chunkFileNames, assetFileNames)
 - [x] Service worker cache version kontrolü (varsa artır) - VitePWA otomatik yönetiyor
 - [x] index.html'e no-cache meta tag'leri ekle
+
+## Ticker Kayma Sorunu Düzeltme
+- [x] TradingViewTickerTape.tsx overflow:hidden kaldır
+- [x] displayMode "adaptive" → "scrolling" olarak değiştir
+- [x] Widget div'i script'ten önce DOM'a ekle (inject sırası düzelt)

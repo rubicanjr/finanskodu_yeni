@@ -4,9 +4,10 @@ import { useTheme } from '@/contexts/ThemeContext';
 /**
  * TradingView Ticker Tape Widget
  * Real-time market data strip for BIST100, USD/TRY, Gold, Bitcoin
- * 
+ *
  * Displays live prices with color-coded changes
  * Auto-scrolling ticker tape at the top of the page
+ * displayMode: "scrolling" ensures continuous animation
  */
 
 export default function TradingViewTickerTape() {
@@ -16,16 +17,16 @@ export default function TradingViewTickerTape() {
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
-    
-    // Önce temizle
+
+    // Temizle
     container.innerHTML = '';
-    
-    // Widget div oluştur
+
+    // 1. Önce widget div'i ekle (script'ten önce DOM'da olmalı)
     const widgetDiv = document.createElement('div');
     widgetDiv.className = 'tradingview-widget-container__widget';
     container.appendChild(widgetDiv);
-    
-    // Script oluştur
+
+    // 2. Sonra script'i ekle
     const script = document.createElement('script');
     script.type = 'text/javascript';
     script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js';
@@ -45,13 +46,13 @@ export default function TradingViewTickerTape() {
       ],
       "showSymbolLogo": true,
       "isTransparent": true,
-      "displayMode": "adaptive",
+      "displayMode": "scrolling",
       "colorTheme": theme === 'light' ? 'light' : 'dark',
       "locale": "tr"
     });
-    
+
     container.appendChild(script);
-    
+
     // Cleanup
     return () => {
       if (container) container.innerHTML = '';
@@ -59,10 +60,10 @@ export default function TradingViewTickerTape() {
   }, [theme]); // theme değişince yeniden yükle
 
   return (
-    <div 
+    <div
       ref={containerRef}
       className="tradingview-widget-container"
-      style={{ height: '46px', overflow: 'hidden' }}
+      style={{ width: '100%', height: '46px' }}
     />
   );
 }
