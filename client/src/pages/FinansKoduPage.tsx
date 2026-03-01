@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import { useI18n } from '@/contexts/I18nContext';
 import { BookOpen, ExternalLink, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import AudioPlayerButton from '@/components/AudioPlayerButton';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function FinansKoduPage() {
@@ -33,13 +34,17 @@ export default function FinansKoduPage() {
               {t('digitalTools.finansKodu.description')}
             </p>
 
-            <div className="flex flex-wrap justify-center gap-4 pt-4">
+            <div className="flex flex-wrap justify-center items-center gap-4 pt-4">
               <Button size="lg" asChild className="bg-green-600 hover:bg-green-700 text-white">
                 <a href="https://hikie.space/link/checkout/dzxB5G6fSEOYxRYgC2xkpcKJ3C1no8jHiPOl6iCY" target="_blank" rel="noopener noreferrer">
                   Satın Al
                   <ExternalLink className="ml-2 w-4 h-4" />
                 </a>
               </Button>
+              <AudioPlayerButton
+                text={`${t('digitalTools.finansKodu.title')}. ${t('digitalTools.finansKodu.subtitle')}. ${t('digitalTools.finansKodu.description')}. Özellikler: ${['feature1','feature2','feature3','feature4','feature5','feature6'].map(k => t('digitalTools.finansKodu.' + k)).join('. ')}`}
+                duration="~2 dk"
+              />
             </div>
           </div>
         </section>

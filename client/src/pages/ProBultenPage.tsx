@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import { useI18n } from '@/contexts/I18nContext';
 import { TrendingUp, ExternalLink, AlertCircle, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import AudioPlayerButton from '@/components/AudioPlayerButton';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
@@ -38,7 +39,7 @@ export default function ProBultenPage() {
               {t('digitalTools.proBulletin.description')}
             </p>
 
-            <div className="flex flex-wrap justify-center gap-4 pt-4">
+            <div className="flex flex-wrap justify-center items-center gap-4 pt-4">
               <Button size="lg" asChild className="bg-amber-600 hover:bg-amber-700 text-white">
                 <a href="https://www.hikie.space/finanskodu/algoritmik-strateji-ve-analiz" target="_blank" rel="noopener noreferrer">
                   Satın Al (1 Aylık Erişim)
@@ -51,6 +52,10 @@ export default function ProBultenPage() {
                   Ücretsiz Danışma
                 </a>
               </Button>
+              <AudioPlayerButton
+                text={`${t('digitalTools.proBulletin.title')}. ${t('digitalTools.proBulletin.subtitle')}. ${t('digitalTools.proBulletin.description')}. Özellikler: ${['feature1','feature2','feature3','feature4','feature5','feature6','feature7','feature8'].map(k => t('digitalTools.proBulletin.' + k)).join('. ')}`}
+                duration="~3 dk"
+              />
             </div>
           </div>
         </section>

@@ -1,7 +1,7 @@
-import { useState } from 'react';
 import { useI18n } from '@/contexts/I18nContext';
-import { Volume2, VolumeX, Brain, BookOpen, TrendingUp, ExternalLink } from 'lucide-react';
+import { Brain, BookOpen, TrendingUp, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import AudioPlayerButton from '@/components/AudioPlayerButton';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
@@ -147,58 +147,7 @@ const products: Product[] = [
 
 export default function DigitalToolsPage() {
   const { t } = useI18n();
-  const [isSpeaking, setIsSpeaking] = useState(false);
-  const [currentSpeakingId, setCurrentSpeakingId] = useState<string | null>(null);
 
-  const handleTextToSpeech = (productId: string) => {
-    // Stop any ongoing speech
-    if (isSpeaking) {
-      window.speechSynthesis.cancel();
-      setIsSpeaking(false);
-      setCurrentSpeakingId(null);
-      return;
-    }
-
-    // Check if browser supports speech synthesis
-    if (!('speechSynthesis' in window)) {
-      alert(t('products.speechNotSupported') || 'Tarayıcınız sesli okuma özelliğini desteklemiyor.');
-      return;
-    }
-
-    // Find product
-    const product = products.find(p => p.id === productId);
-    if (!product) return;
-
-    // Combine all text for this product
-    const textToRead = [
-      t(product.titleKey),
-      t(product.subtitleKey),
-      t(product.descriptionKey),
-      ...product.featuresKey.map(key => t(key)),
-    ].join('. ');
-
-    const utterance = new SpeechSynthesisUtterance(textToRead);
-    utterance.lang = 'tr-TR'; // Turkish language
-    utterance.rate = 0.9; // Slightly slower for clarity
-    utterance.pitch = 1;
-
-    utterance.onstart = () => {
-      setIsSpeaking(true);
-      setCurrentSpeakingId(productId);
-    };
-
-    utterance.onend = () => {
-      setIsSpeaking(false);
-      setCurrentSpeakingId(null);
-    };
-
-    utterance.onerror = () => {
-      setIsSpeaking(false);
-      setCurrentSpeakingId(null);
-    };
-
-    window.speechSynthesis.speak(utterance);
-  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -219,7 +168,12 @@ export default function DigitalToolsPage() {
         <div className="container max-w-6xl mx-auto space-y-16">
           {products.map((product, index) => {
             const Icon = product.icon;
-            const isCurrentlySpeaking = currentSpeakingId === product.id;
+            const productText = [
+              t(product.titleKey),
+              t(product.subtitleKey),
+              t(product.descriptionKey),
+              ...product.featuresKey.map(key => t(key)),
+            ].join('. ');
 
             return (
               <Card key={product.id} className="overflow-hidden">
@@ -238,19 +192,10 @@ export default function DigitalToolsPage() {
                         </CardDescription>
                       </div>
                     </div>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => handleTextToSpeech(product.id)}
-                      title={isCurrentlySpeaking ? t('products.stopSpeech') : t('products.startSpeech')}
-                      className="shrink-0"
-                    >
-                      {isCurrentlySpeaking ? (
-                        <VolumeX className="w-5 h-5" />
-                      ) : (
-                        <Volume2 className="w-5 h-5" />
-                      )}
-                    </Button>
+                    <AudioPlayerButton
+                      text={productText}
+                      duration="~2 dk"
+                    />
                   </div>
                 </CardHeader>
 

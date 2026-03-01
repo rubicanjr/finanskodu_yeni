@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import { useI18n } from '@/contexts/I18nContext';
 import { Brain, ExternalLink, Calendar, Tag, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import AudioPlayerButton from '@/components/AudioPlayerButton';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
@@ -107,13 +108,17 @@ export default function AIPromptLibraryPage() {
               {t('digitalTools.aiPromptLibrary.description')}
             </p>
 
-            <div className="flex flex-wrap justify-center gap-4 pt-4">
+            <div className="flex flex-wrap justify-center items-center gap-4 pt-4">
               <Button size="lg" asChild className="bg-cyan-600 hover:bg-cyan-700 text-white">
                 <a href="https://hikie.space/link/checkout/j9p0eW1ITmovb8v0xE752kmcTTjyPZ3zSLnAuQlm" target="_blank" rel="noopener noreferrer">
                   Satın Al
                   <ExternalLink className="ml-2 w-4 h-4" />
                 </a>
               </Button>
+              <AudioPlayerButton
+                text={`${t('digitalTools.aiPromptLibrary.title')}. ${t('digitalTools.aiPromptLibrary.subtitle')}. ${t('digitalTools.aiPromptLibrary.description')}. Özellikler: ${['feature1','feature2','feature3','feature4','feature5','feature6'].map(k => t('digitalTools.aiPromptLibrary.' + k)).join('. ')}`}
+                duration="~2 dk"
+              />
             </div>
           </div>
         </section>
