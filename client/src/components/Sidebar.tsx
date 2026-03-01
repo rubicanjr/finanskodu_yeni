@@ -30,7 +30,7 @@ export default function Sidebar() {
         className={`
           fixed left-0 top-0 h-full w-[220px] z-50
           transform transition-transform duration-300 ease-in-out
-          lg:translate-x-0 lg:static
+          lg:translate-x-0
           ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}
           bg-background border-r border-border
         `}

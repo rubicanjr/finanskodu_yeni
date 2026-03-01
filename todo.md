@@ -2310,3 +2310,9 @@
 - [x] HeroSection header min-h-screen → min-h-[calc(100vh-46px)] kontrolü (zaten doğru)
 - [x] MarqueeTicker'a fetchMarketData fonksiyonu ekle (5 paralel fetch, Promise.allSettled)
 - [x] fetchCrypto ve fetchMarketData'yı Promise.all ile paralel çağır
+
+## Hero-Navbar Boşluk Düzeltme
+- [ ] HeroSection section'da items-center justify-center kaldır, içerik üstten başlasın
+- [ ] HeroSection section py-6 → pt-8 pb-0 yap
+- [ ] min-h-[calc(100vh-46px)] koru
+- [x] Sidebar.tsx'te lg:static kaldırıldı (her zaman fixed) - asıl boşluk sorunu çözüldü
