@@ -2319,3 +2319,9 @@
 
 ## Ticker Marquee Scrolling
 - [x] App.tsx'te TradingViewTickerTape yerine MarqueeTicker kullanıldı (CSS fk-marquee animasyonu)
+
+## Kod Odası Sohbet Layout Düzeltme
+- [x] Kod Odası sohbet bileşenini incele (KodOdasi.tsx veya ChatPage.tsx)
+- [x] Sohbet container'ına sabit yükseklik ver (height: calc(100vh - 46px), minHeight: 0)
+- [x] Mesaj listesi div'ine overflow-y-auto ekle (zaten vardı, flex: 1 + minHeight: 0 ile düzeltildi)
+- [x] Input alanını flex-shrink-0 ile alta sabitle

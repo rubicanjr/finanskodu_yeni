@@ -377,12 +377,12 @@ export default function KodOdasiNew() {
         <meta name="description" content={t("kodOdasi.subtitle")} />
       </Helmet>
 
-      <div style={{ minHeight: "100vh", background: "var(--background)", color: "var(--foreground)", display: "flex", flexDirection: "column" }}>
-        {/* NOTE: No TickerBand here — App.tsx renders TradingViewTickerTape globally */}
+      <div style={{ height: "calc(100vh - 46px)", background: "var(--background)", color: "var(--foreground)", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+        {/* NOTE: No TickerBand here — App.tsx renders MarqueeTicker globally */}
 
-        <div style={{ flex: 1, maxWidth: "900px", width: "100%", margin: "0 auto", padding: "24px 16px", display: "flex", flexDirection: "column" }}>
+        <div style={{ flex: 1, maxWidth: "900px", width: "100%", margin: "0 auto", padding: "16px 16px 12px", display: "flex", flexDirection: "column", minHeight: 0 }}>
           {/* Header */}
-          <div style={{ marginBottom: "20px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div style={{ marginBottom: "12px", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             <div>
               <h1 style={{
                 fontSize: "28px", fontWeight: 800,
@@ -420,7 +420,7 @@ export default function KodOdasiNew() {
           <div style={{
             flex: 1, display: "flex", flexDirection: "column",
             background: "var(--card)", borderRadius: "12px",
-            border: "1px solid var(--border)", minHeight: "500px", overflow: "hidden",
+            border: "1px solid var(--border)", minHeight: 0, overflow: "hidden",
           }}>
             {!user ? (
               <LoginGate onLogin={handleSignIn} loading={signingIn} />
@@ -466,6 +466,7 @@ export default function KodOdasiNew() {
                   padding: "14px 16px", background: "var(--secondary)",
                   borderTop: "1px solid var(--border)",
                   display: "flex", alignItems: "center", gap: "10px",
+                  flexShrink: 0,
                 }}>
                   <input
                     type="text"
