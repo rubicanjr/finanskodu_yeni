@@ -5,11 +5,11 @@ import ThemeToggle from './ThemeToggle';
 import LanguageToggle from './LanguageToggle';
 
 const navItems = [
-  { href: '/', label: 'nav.home', icon: Home },
-  { href: '/dijital-araclar', label: 'nav.products', icon: Package },
-  { href: '/analiz', label: 'nav.analysis', icon: BarChart3 },
-  { href: '/blog', label: 'nav.blog', icon: BookOpen },
-  { href: '/kod-odasi', label: 'nav.kodOdasi', icon: MessageSquare },
+  { href: '/', label: 'nav.home', icon: Home, external: false },
+  { href: '/dijital-araclar', label: 'nav.products', icon: Package, external: false },
+  { href: '/analiz', label: 'nav.analysis', icon: BarChart3, external: false },
+  { href: '/blog', label: 'nav.blog', icon: BookOpen, external: false },
+  { href: '/kod-odasi', label: 'nav.kodOdasi', icon: MessageSquare, external: true },
 ];
 
 interface SidebarContentProps {
@@ -32,6 +32,21 @@ export default function SidebarContent({ onLinkClick }: SidebarContentProps) {
       <nav className="flex flex-col gap-2">
         {navItems.map(item => {
           const isActive = location === item.href;
+          if (item.external) {
+            return (
+              <a
+                key={item.href}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={onLinkClick}
+                className="flex items-center gap-3 px-4 py-2 rounded-md transition-colors text-foreground/80 hover:bg-secondary hover:text-foreground"
+              >
+                <item.icon size={20} />
+                <span>{t(item.label)}</span>
+              </a>
+            );
+          }
           return (
             <Link 
               key={item.href} 

@@ -160,6 +160,8 @@ function ProductCard({ product, index, isInView }: { product: Product; index: nu
           {/* CTA */}
           <a
             href={product.link}
+            target="_blank"
+            rel="noopener noreferrer"
             itemProp="url"
             className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 hover:scale-[1.02]"
             style={{
