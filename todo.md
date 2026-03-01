@@ -2304,3 +2304,9 @@
 
 ## BIST 100 Sembol Düzeltme
 - [x] TradingViewTickerTape.tsx'te BIST:XU100 → BIST:XU030 olarak değiştir
+
+## HeroSection Padding ve MarqueeTicker API Güncellemeleri
+- [x] HeroSection content div pt-24/pt-20 → pt-6 olarak değiştir (section py-20 → py-6)
+- [x] HeroSection header min-h-screen → min-h-[calc(100vh-46px)] kontrolü (zaten doğru)
+- [x] MarqueeTicker'a fetchMarketData fonksiyonu ekle (5 paralel fetch, Promise.allSettled)
+- [x] fetchCrypto ve fetchMarketData'yı Promise.all ile paralel çağır
