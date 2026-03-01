@@ -1,14 +1,19 @@
 /**
  * KOD ODASI — Real-time chat powered by Firebase Firestore + Google Auth
  *
- * Changes from previous version:
- * - TickerBand removed (App.tsx already renders TradingViewTickerTape globally)
- * - Auth: signInWithPopup → signInWithRedirect (fixes "The requested action is invalid"
- *   error caused by finanskodu.com not being in Firebase authorized domains popup list)
- * - All user-facing strings use t() for i18n
- * - Theme: inline hex colors replaced with CSS variables
- * - XSS safe: user content via React textContent (no innerHTML with user data)
- * - Client-side rate limit: 3 messages / 5 seconds
+ * v2 Changes (pasted_content_12):
+ * 1. Mesaj görsel sistemi: kendi (sağ, bg-primary), diğer (sol, avatar+isim), sistem (orta, cyan pill)
+ * 2. Mesaj gruplama: aynı kullanıcı 2dk içinde ardışık → avatar/isim sadece ilk mesajda
+ * 3. Header iyileştirmesi: online sayacı + çıkış butonu
+ * 4. Pinned mesaj banner: Firebase'den çek
+ * 5. Hover aksiyonları: emoji reaksiyon bar + yanıtla butonu
+ * 6. Reaksiyonlar: Firebase reactions field, toggle fonksiyonu
+ * 7. Reply sistemi: replyTo state, input üstünde önizleme
+ * 8. Input alanı: textarea, auto-resize, yeni tasarım
+ * 9. Typing indicator: Firestore tabanlı, 3sn timeout, animasyonlu dots
+ * 10. Scroll-to-bottom butonu: yukarı scroll edince "↓ Yeni mesaj" pill
+ *
+ * Note: Typing indicator & online count use Firestore (no RTDB required)
  */
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
@@ -16,6 +21,7 @@ import { Helmet } from "react-helmet-async";
 import {
   collection, addDoc, query, orderBy, limit,
   onSnapshot, serverTimestamp, Timestamp,
+  doc, setDoc, updateDoc, getDoc, deleteDoc,
   type Unsubscribe,
 } from "firebase/firestore";
 import {
@@ -28,8 +34,7 @@ import {
   type User,
 } from "firebase/auth";
 import { auth, db } from "@/lib/firebase";
-import { doc, setDoc } from "firebase/firestore";
-import { Send, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { useI18n } from "@/contexts/I18nContext";
 
 /* ─── Types ─── */
@@ -40,11 +45,20 @@ interface ChatMessage {
   userName:  string;
   userPhoto: string;
   timestamp: Timestamp | null;
+  type?:     "user" | "system";
+  reactions?: Record<string, string[]>;
+  replyTo?:  { id: string; userName: string; text: string } | null;
+}
+
+interface ReplyPreview {
+  id: string;
+  userName: string;
+  text: string;
 }
 
 /* ─── Constants ─── */
 const ROOM        = "genel";
-const LIMIT       = 60;
+const LIMIT       = 80;
 const MAX_LEN     = 500;
 const RATE_MSGS   = 3;
 const RATE_WINDOW = 5000;
@@ -138,9 +152,19 @@ function LoginGate({ onLogin, loading }: { onLogin: () => void; loading: boolean
 }
 
 /* ─── MessageBubble ─── */
-interface MsgProps { msg: ChatMessage; isMe: boolean; grouped: boolean; showDate?: string; }
+interface MsgProps {
+  msg: ChatMessage;
+  isMe: boolean;
+  grouped: boolean;
+  showDate?: string;
+  currentUserId: string;
+  onReaction: (msgId: string, emoji: string) => void;
+  onReply: (msg: ChatMessage) => void;
+}
 
-function MessageBubble({ msg, isMe, grouped, showDate }: MsgProps) {
+function MessageBubble({ msg, isMe, grouped, showDate, currentUserId, onReaction, onReply }: MsgProps) {
+  const isSystem = msg.type === "system";
+
   return (
     <>
       {showDate && (
@@ -152,46 +176,119 @@ function MessageBubble({ msg, isMe, grouped, showDate }: MsgProps) {
         </div>
       )}
 
-      <div style={{
-        display: "flex", alignItems: "flex-end", gap: "8px",
-        flexDirection: isMe ? "row-reverse" : "row",
-        marginBottom: "3px", marginTop: !grouped ? "10px" : "0",
-        animation: "msgIn 0.2s ease-out",
-      }}>
-        {!isMe && (
-          <div style={{ width: "28px", height: "28px", visibility: grouped ? "hidden" : "visible", flexShrink: 0 }}>
-            {msg.userPhoto ? (
-              <img src={msg.userPhoto} alt={msg.userName} style={{ width: "28px", height: "28px", borderRadius: "50%", objectFit: "cover", border: "1px solid var(--border)" }} />
-            ) : (
-              <div style={{ width: "28px", height: "28px", borderRadius: "50%", background: "var(--secondary)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "11px", fontWeight: 700, color: "var(--muted-foreground)", border: "1px solid var(--border)" }}>
-                {getInitials(msg.userName)}
+      {/* ── Sistem bildirimi (Yönerge 1) ── */}
+      {isSystem ? (
+        <div className="flex justify-center my-3">
+          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-xs text-cyan-400 max-w-[80%] text-center">
+            <span>📌</span>
+            <span>{msg.text}</span>
+          </div>
+        </div>
+      ) : (
+        /* ── Kullanıcı mesajı (Yönerge 1 & 2) ── */
+        <div
+          className="group relative"
+          style={{
+            display: "flex", alignItems: "flex-end", gap: "8px",
+            flexDirection: isMe ? "row-reverse" : "row",
+            marginBottom: "3px", marginTop: !grouped ? "10px" : "0",
+            animation: "msgIn 0.2s ease-out",
+          }}
+        >
+          {/* Avatar */}
+          {!isMe && (
+            <div style={{ width: "28px", height: "28px", visibility: grouped ? "hidden" : "visible", flexShrink: 0 }}>
+              {msg.userPhoto ? (
+                <img src={msg.userPhoto} alt={msg.userName} style={{ width: "28px", height: "28px", borderRadius: "50%", objectFit: "cover", border: "1px solid var(--border)" }} />
+              ) : (
+                <div style={{ width: "28px", height: "28px", borderRadius: "50%", background: "var(--secondary)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "11px", fontWeight: 700, color: "var(--muted-foreground)", border: "1px solid var(--border)" }}>
+                  {getInitials(msg.userName)}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Bubble + reactions */}
+          <div style={{ maxWidth: "68%", display: "flex", flexDirection: "column", gap: "2px", alignItems: isMe ? "flex-end" : "flex-start", position: "relative" }}>
+            {!isMe && !grouped && (
+              <span style={{ fontSize: "11px", color: "var(--muted-foreground)", fontWeight: 600, paddingLeft: "4px" }}>
+                {msg.userName}
+              </span>
+            )}
+
+            {/* Reply preview in bubble */}
+            {msg.replyTo && (
+              <div style={{
+                padding: "6px 10px", borderRadius: "8px",
+                background: "var(--muted)", borderLeft: "3px solid #0ea5e9",
+                marginBottom: "2px", maxWidth: "100%",
+              }}>
+                <p style={{ fontSize: "11px", fontWeight: 600, color: "#0ea5e9", marginBottom: "2px" }}>{msg.replyTo.userName}</p>
+                <p style={{ fontSize: "11px", color: "var(--muted-foreground)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxWidth: "220px" }}>{msg.replyTo.text}</p>
               </div>
             )}
-          </div>
-        )}
 
-        <div style={{ maxWidth: "68%", display: "flex", flexDirection: "column", gap: "2px", alignItems: isMe ? "flex-end" : "flex-start" }}>
-          {!isMe && !grouped && (
-            <span style={{ fontSize: "11px", color: "var(--muted-foreground)", fontWeight: 600, paddingLeft: "4px" }}>
-              {msg.userName}
+            {/* Message bubble */}
+            <div
+              className={`rounded-2xl ${isMe ? "rounded-br-sm" : "rounded-bl-sm"}`}
+              style={{
+                padding: "10px 14px",
+                background: isMe ? "hsl(var(--primary))" : "var(--card)",
+                border: isMe ? "1px solid hsl(var(--primary) / 0.4)" : "1px solid var(--border)",
+                color: isMe ? "hsl(var(--primary-foreground))" : "var(--foreground)",
+                fontSize: "14px", lineHeight: "1.5", wordBreak: "break-word",
+              }}
+            >
+              {msg.text}
+            </div>
+
+            {/* Reactions (Yönerge 6) */}
+            {msg.reactions && Object.keys(msg.reactions).length > 0 && (
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "4px", paddingTop: "2px" }}>
+                {Object.entries(msg.reactions).map(([emoji, users]) =>
+                  users.length > 0 ? (
+                    <button
+                      key={emoji}
+                      onClick={() => onReaction(msg.id, emoji)}
+                      className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs border transition-all ${
+                        users.includes(currentUserId)
+                          ? "bg-cyan-500/15 border-cyan-500/30 text-cyan-400"
+                          : "bg-muted border-border text-muted-foreground hover:border-border"
+                      }`}
+                    >
+                      {emoji} <span className="font-mono">{users.length}</span>
+                    </button>
+                  ) : null
+                )}
+              </div>
+            )}
+
+            <span style={{ fontSize: "10px", color: "var(--muted-foreground)", fontFamily: "var(--font-mono)", padding: "0 4px" }}>
+              {formatTime(msg.timestamp)}
             </span>
-          )}
-          <div style={{
-            padding: "10px 14px", borderRadius: "12px",
-            borderBottomRightRadius: isMe ? "4px" : "12px",
-            borderBottomLeftRadius:  isMe ? "12px" : "4px",
-            background: isMe ? "#0f3d35" : "var(--secondary)",
-            border: `1px solid ${isMe ? "rgba(0,212,170,0.25)" : "var(--border)"}`,
-            color: isMe ? "#d4fdf5" : "var(--foreground)",
-            fontSize: "14px", lineHeight: "1.5", wordBreak: "break-word",
-          }}>
-            {msg.text}
+
+            {/* Hover action bar (Yönerge 5) */}
+            <div className="msg-actions absolute -top-8 right-0 hidden group-hover:flex items-center gap-1 bg-card border border-border rounded-xl px-1.5 py-1 shadow-lg z-10">
+              {["👍", "🔥", "💯", "😂"].map((emoji) => (
+                <button
+                  key={emoji}
+                  onClick={() => onReaction(msg.id, emoji)}
+                  className="text-sm hover:scale-125 transition-transform p-0.5"
+                >
+                  {emoji}
+                </button>
+              ))}
+              <div className="w-px h-4 bg-border mx-0.5" />
+              <button
+                onClick={() => onReply(msg)}
+                className="text-xs text-muted-foreground hover:text-foreground px-1.5 py-0.5 rounded hover:bg-muted transition-colors"
+              >
+                ↩ Yanıtla
+              </button>
+            </div>
           </div>
-          <span style={{ fontSize: "10px", color: "var(--muted-foreground)", fontFamily: "var(--font-mono)", padding: "0 4px" }}>
-            {formatTime(msg.timestamp)}
-          </span>
         </div>
-      </div>
+      )}
     </>
   );
 }
@@ -200,23 +297,36 @@ function MessageBubble({ msg, isMe, grouped, showDate }: MsgProps) {
 export default function KodOdasiNew() {
   const { t } = useI18n();
 
-  const [user,        setUser]        = useState<User | null>(null);
-  const [authLoading, setAuthLoading] = useState(true);
-  const [signingIn,   setSigningIn]   = useState(false);
-  const [messages,    setMessages]    = useState<ChatMessage[]>([]);
-  const [inputText,   setInputText]   = useState("");
-  const [sending,     setSending]     = useState(false);
-  const [chatLoading, setChatLoading] = useState(false);
-  const [toast,       setToast]       = useState<string | null>(null);
+  const [user,          setUser]          = useState<User | null>(null);
+  const [authLoading,   setAuthLoading]   = useState(true);
+  const [signingIn,     setSigningIn]     = useState(false);
+  const [messages,      setMessages]      = useState<ChatMessage[]>([]);
+  const [inputText,     setInputText]     = useState("");
+  const [sending,       setSending]       = useState(false);
+  const [chatLoading,   setChatLoading]   = useState(false);
+  const [toast,         setToast]         = useState<string | null>(null);
+  const [onlineCount,   setOnlineCount]   = useState(0);
+  const [pinnedMessage, setPinnedMessage] = useState<string | null>(null);
+  const [replyTo,       setReplyTo]       = useState<ReplyPreview | null>(null);
+  const [typingUsers,   setTypingUsers]   = useState<string[]>([]);
+  const [showScrollBtn, setShowScrollBtn] = useState(false);
 
-  const messagesEndRef  = useRef<HTMLDivElement>(null);
-  const rateTimestamps  = useRef<number[]>([]);
-  const renderedIds     = useRef<Set<string>>(new Set());
-  const unsubscribeRef  = useRef<Unsubscribe | null>(null);
+  const messagesEndRef   = useRef<HTMLDivElement>(null);
+  const messagesAreaRef  = useRef<HTMLDivElement>(null);
+  const textareaRef      = useRef<HTMLTextAreaElement>(null);
+  const rateTimestamps   = useRef<number[]>([]);
+  const renderedIds      = useRef<Set<string>>(new Set());
+  const unsubscribeRef   = useRef<Unsubscribe | null>(null);
+  const typingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const showToast = useCallback((msg: string) => {
     setToast(msg);
     setTimeout(() => setToast(null), 3500);
+  }, []);
+
+  const scrollToBottom = useCallback(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    setShowScrollBtn(false);
   }, []);
 
   /* ── Handle redirect result on mount ── */
@@ -250,6 +360,48 @@ export default function KodOdasiNew() {
     return unsub;
   }, []);
 
+  /* ── Pinned message ── */
+  useEffect(() => {
+    const unsub = onSnapshot(doc(db, "chatRooms", ROOM), (snap) => {
+      const data = snap.data();
+      setPinnedMessage(data?.pinnedMessage ?? null);
+    });
+    return unsub;
+  }, []);
+
+  /* ── Online count (Firestore presence) ── */
+  useEffect(() => {
+    if (!user) return;
+    const presenceRef = doc(db, "chatRooms", ROOM, "presence", user.uid);
+    setDoc(presenceRef, { name: user.displayName ?? "Anonim", online: true, updatedAt: serverTimestamp() });
+
+    const countUnsub = onSnapshot(collection(db, "chatRooms", ROOM, "presence"), (snap) => {
+      setOnlineCount(snap.size);
+    });
+
+    return () => {
+      deleteDoc(presenceRef).catch(() => {});
+      countUnsub();
+    };
+  }, [user]);
+
+  /* ── Typing indicator (Firestore) ── */
+  useEffect(() => {
+    if (!user) return;
+    const typingCol = collection(db, "chatRooms", ROOM, "typing");
+    const unsub = onSnapshot(typingCol, (snap) => {
+      const names: string[] = [];
+      snap.forEach((d) => {
+        if (d.id !== user.uid) {
+          const data = d.data();
+          if (data.typing && data.name) names.push(data.name);
+        }
+      });
+      setTypingUsers(names);
+    });
+    return unsub;
+  }, [user]);
+
   /* ── Messages subscription ── */
   useEffect(() => {
     if (!user) return;
@@ -271,11 +423,24 @@ export default function KodOdasiNew() {
           if (renderedIds.current.has(id)) return;
           renderedIds.current.add(id);
           newMsgs.push({ id, ...change.doc.data() } as ChatMessage);
+        } else if (change.type === "modified") {
+          const id = change.doc.id;
+          setMessages((prev) =>
+            prev.map((m) => (m.id === id ? { id, ...change.doc.data() } as ChatMessage : m))
+          );
         }
       });
       if (newMsgs.length > 0) {
         setMessages((prev) => [...prev, ...newMsgs]);
-        setTimeout(() => messagesEndRef.current?.scrollIntoView({ behavior: "smooth" }), 50);
+        const area = messagesAreaRef.current;
+        if (area) {
+          const nearBottom = area.scrollHeight - area.scrollTop - area.clientHeight < 120;
+          if (nearBottom) {
+            setTimeout(() => messagesEndRef.current?.scrollIntoView({ behavior: "smooth" }), 50);
+          } else {
+            setShowScrollBtn(true);
+          }
+        }
       }
     }, (err) => {
       setChatLoading(false);
@@ -286,30 +451,34 @@ export default function KodOdasiNew() {
     return () => { unsubscribeRef.current?.(); };
   }, [user]);
 
-  /* ── Sign in with popup, fallback to redirect if blocked ── */
+  /* ── Scroll detection ── */
+  const handleScroll = useCallback(() => {
+    const area = messagesAreaRef.current;
+    if (!area) return;
+    const nearBottom = area.scrollHeight - area.scrollTop - area.clientHeight < 120;
+    setShowScrollBtn(!nearBottom);
+  }, []);
+
+  /* ── Sign in ── */
   const handleSignIn = async () => {
     if (signingIn) return;
     setSigningIn(true);
-    
     try {
-      // Öncelikli olarak popup ile giriş yapmayı dene
       await signInWithPopup(auth, googleProvider);
-      // Başarılı giriş sonrası state'i sıfırla
       setSigningIn(false);
     } catch (error: any) {
-      // Popup engellendiyse veya ağ hatası varsa redirect metoduna geç
-      if (error.code === 'auth/popup-blocked' || 
-          error.code === 'auth/cancelled-popup-request' || 
-          error.code === 'auth/popup-closed-by-user') {
+      if (
+        error.code === "auth/popup-blocked" ||
+        error.code === "auth/cancelled-popup-request" ||
+        error.code === "auth/popup-closed-by-user"
+      ) {
         try {
           await signInWithRedirect(auth, googleProvider);
         } catch (redirectError: any) {
-          console.error("Redirect Sign-In Error:", redirectError);
           showToast("Giriş başlatılamadı: " + (redirectError?.message ?? ""));
           setSigningIn(false);
         }
       } else {
-        console.error("Popup Sign-In Error:", error);
         showToast("Giriş başlatılamadı: " + (error?.message ?? ""));
         setSigningIn(false);
       }
@@ -319,10 +488,51 @@ export default function KodOdasiNew() {
   /* ── Sign out ── */
   const handleSignOut = async () => {
     unsubscribeRef.current?.();
+    if (user) {
+      deleteDoc(doc(db, "chatRooms", ROOM, "presence", user.uid)).catch(() => {});
+      deleteDoc(doc(db, "chatRooms", ROOM, "typing", user.uid)).catch(() => {});
+    }
     setMessages([]);
     renderedIds.current.clear();
     await firebaseSignOut(auth);
   };
+
+  /* ── Typing indicator write ── */
+  const handleTyping = useCallback(() => {
+    if (!user) return;
+    const typingRef = doc(db, "chatRooms", ROOM, "typing", user.uid);
+    setDoc(typingRef, { typing: true, name: user.displayName ?? "Anonim", updatedAt: serverTimestamp() });
+    if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
+    typingTimeoutRef.current = setTimeout(() => {
+      deleteDoc(typingRef).catch(() => {});
+    }, 3000);
+  }, [user]);
+
+  /* ── Auto-resize textarea ── */
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInputText(e.target.value);
+    handleTyping();
+    const ta = e.target;
+    ta.style.height = "auto";
+    ta.style.height = Math.min(ta.scrollHeight, 128) + "px";
+  };
+
+  /* ── Reaction toggle (Yönerge 6) ── */
+  const handleReaction = useCallback(async (msgId: string, emoji: string) => {
+    if (!user) return;
+    const msgRef = doc(db, "chatRooms", ROOM, "messages", msgId);
+    const snap = await getDoc(msgRef);
+    if (!snap.exists()) return;
+    const data = snap.data();
+    const reactions: Record<string, string[]> = { ...(data.reactions ?? {}) };
+    const users = reactions[emoji] ?? [];
+    if (users.includes(user.uid)) {
+      reactions[emoji] = users.filter((u) => u !== user.uid);
+    } else {
+      reactions[emoji] = [...users, user.uid];
+    }
+    await updateDoc(msgRef, { reactions });
+  }, [user]);
 
   /* ── Send message ── */
   const handleSend = async () => {
@@ -330,7 +540,7 @@ export default function KodOdasiNew() {
     if (inputText.length > MAX_LEN) return;
 
     const now = Date.now();
-    rateTimestamps.current = rateTimestamps.current.filter((t) => now - t < RATE_WINDOW);
+    rateTimestamps.current = rateTimestamps.current.filter((ts) => now - ts < RATE_WINDOW);
     if (rateTimestamps.current.length >= RATE_MSGS) {
       showToast(t("kodOdasi.rateLimitError"));
       return;
@@ -341,6 +551,17 @@ export default function KodOdasiNew() {
     setInputText("");
     setSending(true);
 
+    // Clear typing indicator
+    if (user) {
+      deleteDoc(doc(db, "chatRooms", ROOM, "typing", user.uid)).catch(() => {});
+    }
+    if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
+
+    // Reset textarea height
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+    }
+
     try {
       await addDoc(collection(db, "chatRooms", ROOM, "messages"), {
         text,
@@ -348,7 +569,11 @@ export default function KodOdasiNew() {
         userName:  user.displayName ?? "Anonim",
         userPhoto: user.photoURL    ?? "",
         timestamp: serverTimestamp(),
+        type:      "user",
+        reactions: {},
+        replyTo:   replyTo ?? null,
       });
+      setReplyTo(null);
     } catch (err) {
       showToast(t("kodOdasi.sendError"));
     } finally {
@@ -356,7 +581,7 @@ export default function KodOdasiNew() {
     }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSend(); }
   };
 
@@ -364,7 +589,7 @@ export default function KodOdasiNew() {
 
   if (authLoading) {
     return (
-      <div style={{ minHeight: "100vh", background: "var(--background)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <div style={{ height: "calc(100vh - 46px)", background: "var(--background)", display: "flex", alignItems: "center", justifyContent: "center" }}>
         <Loader2 className="animate-spin" size={32} style={{ color: "#0EA5E9" }} />
       </div>
     );
@@ -378,56 +603,53 @@ export default function KodOdasiNew() {
       </Helmet>
 
       <div style={{ height: "calc(100vh - 46px)", background: "var(--background)", color: "var(--foreground)", display: "flex", flexDirection: "column", overflow: "hidden" }}>
-        {/* NOTE: No TickerBand here — App.tsx renders MarqueeTicker globally */}
+        <div style={{ flex: 1, maxWidth: "900px", width: "100%", margin: "0 auto", padding: "12px 16px", display: "flex", flexDirection: "column", minHeight: 0 }}>
 
-        <div style={{ flex: 1, maxWidth: "900px", width: "100%", margin: "0 auto", padding: "16px 16px 12px", display: "flex", flexDirection: "column", minHeight: 0 }}>
-          {/* Header */}
-          <div style={{ marginBottom: "12px", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-            <div>
-              <h1 style={{
-                fontSize: "28px", fontWeight: 800,
-                background: "linear-gradient(135deg, #0EA5E9 0%, #10B981 100%)",
-                WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
-                marginBottom: "4px",
-              }}>
-                💬 {t("kodOdasi.title")}
-              </h1>
-              <p style={{ color: "var(--muted-foreground)", fontSize: "13px" }}>
-                {t("kodOdasi.subtitle")}
-              </p>
-            </div>
+          {/* ── Chat box ── */}
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", background: "var(--card)", borderRadius: "12px", border: "1px solid var(--border)", minHeight: 0, overflow: "hidden" }}>
 
-            {user && (
-              <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                {user.photoURL ? (
-                  <img src={user.photoURL} alt={user.displayName ?? ""} style={{ width: "32px", height: "32px", borderRadius: "50%", border: "2px solid #0EA5E9" }} />
-                ) : (
-                  <div style={{ width: "32px", height: "32px", borderRadius: "50%", background: "rgba(14,165,233,0.15)", border: "2px solid #0EA5E9", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "13px", fontWeight: 700, color: "#0EA5E9" }}>
-                    {getInitials(user.displayName ?? "?")}
-                  </div>
-                )}
-                <button
-                  onClick={handleSignOut}
-                  style={{ background: "transparent", color: "var(--muted-foreground)", border: "1px solid var(--border)", padding: "5px 12px", borderRadius: "6px", cursor: "pointer", fontSize: "12px" }}
-                >
-                  {t("kodOdasi.signOut")}
-                </button>
-              </div>
-            )}
-          </div>
-
-          {/* Chat box */}
-          <div style={{
-            flex: 1, display: "flex", flexDirection: "column",
-            background: "var(--card)", borderRadius: "12px",
-            border: "1px solid var(--border)", minHeight: 0, overflow: "hidden",
-          }}>
             {!user ? (
               <LoginGate onLogin={handleSignIn} loading={signingIn} />
             ) : (
               <>
-                {/* Messages */}
-                <div style={{ flex: 1, overflowY: "auto", padding: "20px" }}>
+                {/* ── Header (Yönerge 3) ── */}
+                <div className="flex items-center justify-between px-5 border-b border-border" style={{ height: "56px", flexShrink: 0 }}>
+                  <div className="flex items-center gap-3">
+                    <span className="text-xl">💬</span>
+                    <div>
+                      <h1 className="font-bold text-foreground text-sm">Kod Odası</h1>
+                      <p className="text-xs text-muted-foreground">Finans topluluğu — Gerçek zamanlı sohbet</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">
+                      <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                      <span className="text-xs font-mono text-emerald-400">{onlineCount} çevrimiçi</span>
+                    </div>
+                    <button
+                      onClick={handleSignOut}
+                      className="text-sm text-muted-foreground hover:text-foreground transition-colors px-3 py-1.5 rounded-lg hover:bg-muted"
+                    >
+                      Çıkış
+                    </button>
+                  </div>
+                </div>
+
+                {/* ── Pinned mesaj banner (Yönerge 4) ── */}
+                {pinnedMessage && (
+                  <div className="flex items-center gap-2 px-4 py-2 border-b border-amber-500/15 text-sm cursor-pointer hover:bg-amber-500/12 transition-colors" style={{ background: "rgba(245,158,11,0.08)", flexShrink: 0 }}>
+                    <span className="text-amber-400 text-xs">📌</span>
+                    <span className="text-amber-400 text-xs font-semibold">Sabitlendi</span>
+                    <span className="text-muted-foreground text-xs flex-1 truncate">{pinnedMessage}</span>
+                  </div>
+                )}
+
+                {/* ── Messages (Yönerge 1 & 2) ── */}
+                <div
+                  ref={messagesAreaRef}
+                  onScroll={handleScroll}
+                  style={{ flex: 1, overflowY: "auto", padding: "16px 20px", position: "relative" }}
+                >
                   {chatLoading ? (
                     <div style={{ textAlign: "center", color: "var(--muted-foreground)", padding: "40px", fontFamily: "var(--font-mono)", fontSize: "13px" }}>
                       ⟳ {t("kodOdasi.loading")}
@@ -438,21 +660,32 @@ export default function KodOdasiNew() {
                     </div>
                   ) : (
                     (() => {
-                      let lastSenderId: string | null = null;
-                      let lastDate:     string | null = null;
+                      let lastSenderId:  string | null = null;
+                      let lastDate:      string | null = null;
+                      let lastTimestamp: number | null = null;
                       return messages.map((msg) => {
                         const dateLabel = formatDateLabel(msg.timestamp);
                         const showDate  = dateLabel !== lastDate ? dateLabel : undefined;
-                        const grouped   = !showDate && msg.userId === lastSenderId;
-                        lastSenderId = msg.userId;
-                        lastDate     = dateLabel;
+                        const msgTs     = msg.timestamp?.toMillis() ?? null;
+                        const isGrouped =
+                          !showDate &&
+                          msg.userId === lastSenderId &&
+                          msgTs !== null &&
+                          lastTimestamp !== null &&
+                          msgTs - lastTimestamp < 120000;
+                        lastSenderId  = msg.userId;
+                        lastDate      = dateLabel;
+                        lastTimestamp = msgTs;
                         return (
                           <MessageBubble
                             key={msg.id}
                             msg={msg}
                             isMe={msg.userId === user?.uid}
-                            grouped={grouped}
+                            grouped={isGrouped}
                             showDate={showDate}
+                            currentUserId={user?.uid ?? ""}
+                            onReaction={handleReaction}
+                            onReply={(m) => setReplyTo({ id: m.id, userName: m.userName, text: m.text })}
                           />
                         );
                       });
@@ -461,47 +694,83 @@ export default function KodOdasiNew() {
                   <div ref={messagesEndRef} />
                 </div>
 
-                {/* Input */}
-                <div style={{
-                  padding: "14px 16px", background: "var(--secondary)",
-                  borderTop: "1px solid var(--border)",
-                  display: "flex", alignItems: "center", gap: "10px",
-                  flexShrink: 0,
-                }}>
-                  <input
-                    type="text"
-                    value={inputText}
-                    onChange={(e) => setInputText(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                    placeholder={t("kodOdasi.messagePlaceholder")}
-                    maxLength={MAX_LEN}
-                    autoComplete="off"
-                    style={{
-                      flex: 1, background: "var(--input)", border: "1px solid var(--border)",
-                      color: "var(--foreground)", padding: "11px 16px", borderRadius: "10px",
-                      fontSize: "14px", fontFamily: "var(--font-body)", outline: "none",
-                    }}
-                    onFocus={(e) => { e.currentTarget.style.borderColor = "rgba(14,165,233,0.4)"; }}
-                    onBlur={(e)  => { e.currentTarget.style.borderColor = "var(--border)"; }}
-                    disabled={sending}
-                  />
-                  <span style={{ fontSize: "11px", fontFamily: "var(--font-mono)", color: remaining < 50 ? "#EF4444" : "var(--muted-foreground)", minWidth: "36px", textAlign: "right" }}>
-                    {remaining}
-                  </span>
-                  <button
-                    onClick={handleSend}
-                    disabled={!inputText.trim() || sending}
-                    style={{
-                      width: "40px", height: "40px", borderRadius: "10px", border: "none",
-                      background: inputText.trim() && !sending ? "#00d4aa" : "var(--input)",
-                      color:      inputText.trim() && !sending ? "#0a0e17" : "var(--muted-foreground)",
-                      cursor:     inputText.trim() && !sending ? "pointer" : "not-allowed",
-                      display: "flex", alignItems: "center", justifyContent: "center",
-                      flexShrink: 0,
-                    }}
-                  >
-                    {sending ? <Loader2 size={16} style={{ animation: "spin 1s linear infinite" }} /> : <Send size={16} />}
-                  </button>
+                {/* ── Scroll to bottom (Yönerge 10) ── */}
+                {showScrollBtn && (
+                  <div style={{ position: "relative", height: 0 }}>
+                    <button
+                      onClick={scrollToBottom}
+                      className="absolute right-6 flex items-center gap-2 px-3 py-2 bg-cyan-500 text-background text-xs font-semibold rounded-full shadow-lg hover:bg-cyan-400 transition-all"
+                      style={{ zIndex: 20, bottom: "8px" }}
+                    >
+                      ↓ Yeni mesaj
+                    </button>
+                  </div>
+                )}
+
+                {/* ── Typing indicator (Yönerge 9) ── */}
+                {typingUsers.length > 0 && (
+                  <div className="px-5 py-1 flex items-center gap-2" style={{ flexShrink: 0 }}>
+                    <div className="flex gap-0.5">
+                      {[0, 1, 2].map((i) => (
+                        <div
+                          key={i}
+                          className="w-1.5 h-1.5 rounded-full bg-muted-foreground animate-bounce"
+                          style={{ animationDelay: `${i * 0.15}s` }}
+                        />
+                      ))}
+                    </div>
+                    <span className="text-xs text-muted-foreground">
+                      {typingUsers.join(", ")} yazıyor…
+                    </span>
+                  </div>
+                )}
+
+                {/* ── Reply preview (Yönerge 7) ── */}
+                {replyTo && (
+                  <div className="flex items-center gap-2 px-4 py-2 bg-muted border-t border-border" style={{ flexShrink: 0 }}>
+                    <div className="w-0.5 h-8 bg-cyan-500 rounded-full" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs font-semibold text-cyan-400">{replyTo.userName}</p>
+                      <p className="text-xs text-muted-foreground truncate">{replyTo.text}</p>
+                    </div>
+                    <button onClick={() => setReplyTo(null)} className="text-muted-foreground hover:text-foreground text-lg leading-none">×</button>
+                  </div>
+                )}
+
+                {/* ── Input (Yönerge 8) ── */}
+                <div className="input-area px-4 py-3 border-t border-border bg-background" style={{ flexShrink: 0 }}>
+                  <div className="flex items-end gap-2 bg-card border border-border rounded-2xl px-4 py-3 focus-within:border-cyan-500/40 focus-within:ring-2 focus-within:ring-cyan-500/10 transition-all">
+                    <textarea
+                      ref={textareaRef}
+                      value={inputText}
+                      onChange={handleInputChange}
+                      onKeyDown={handleKeyDown}
+                      placeholder="Mesajınızı yazın… (Enter ile gönder)"
+                      rows={1}
+                      maxLength={MAX_LEN}
+                      className="flex-1 bg-transparent resize-none outline-none text-sm text-foreground placeholder:text-muted-foreground max-h-32"
+                      style={{ height: "auto" }}
+                      disabled={sending}
+                    />
+                    <div className="flex items-center gap-2 flex-shrink-0">
+                      <span className={`text-xs font-mono ${remaining < 50 ? "text-amber-400" : "text-muted-foreground"}`}>
+                        {remaining}
+                      </span>
+                      <button
+                        onClick={handleSend}
+                        disabled={!inputText.trim() || sending}
+                        className="w-8 h-8 rounded-xl bg-cyan-500 hover:bg-cyan-400 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center transition-all hover:scale-105 active:scale-95"
+                      >
+                        {sending ? (
+                          <Loader2 size={14} className="animate-spin" />
+                        ) : (
+                          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#0D1117" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M12 2L2 7l3.5 1.5L11 4l-5 4.5L7 12l5-10z"/>
+                          </svg>
+                        )}
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </>
             )}

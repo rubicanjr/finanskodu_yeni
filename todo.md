@@ -2325,3 +2325,15 @@
 - [x] Sohbet container'ına sabit yükseklik ver (height: calc(100vh - 46px), minHeight: 0)
 - [x] Mesaj listesi div'ine overflow-y-auto ekle (zaten vardı, flex: 1 + minHeight: 0 ile düzeltildi)
 - [x] Input alanını flex-shrink-0 ile alta sabitle
+
+## Kod Odası Chat UI Kapsamlı Yenileme (pasted_content_12)
+- [ ] 1. Mesaj görsel sistemi: kendi (sağ, bg-primary), diğer (sol, avatar+isim), sistem (orta, cyan pill)
+- [ ] 2. Mesaj gruplama: aynı kullanıcı 2dk içinde ardışık mesaj → avatar/isim sadece ilk mesajda
+- [ ] 3. Header iyileştirmesi: online sayacı + çıkış butonu, yeni tasarım
+- [ ] 4. Pinned mesaj banner: header altında, Firebase'den çek
+- [ ] 5. Hover aksiyonları: emoji reaksiyon bar + yanıtla butonu (group-hover)
+- [ ] 6. Reaksiyonlar: Firebase reactions field, toggle fonksiyonu
+- [ ] 7. Reply sistemi: replyTo state, input üstünde önizleme
+- [ ] 8. Input alanı: textarea, auto-resize, yeni tasarım
+- [ ] 9. Typing indicator: Firebase RTDB, 3sn timeout, animasyonlu dots
+- [ ] 10. Scroll-to-bottom butonu: yukarı scroll edince "↓ Yeni mesaj" pill
