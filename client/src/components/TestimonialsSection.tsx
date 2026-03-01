@@ -86,6 +86,17 @@ export default function TestimonialsSection() {
       <div className="section-divider mb-24" aria-hidden="true" />
 
       <div className="container" ref={ref}>
+        {/* Stats Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-10"
+        >
+          <div className="text-primary font-mono text-xs tracking-[0.15em] mb-3">// SONUÇLAR</div>
+          <h2 className="font-display font-bold text-2xl sm:text-3xl text-foreground">Rakamlar konuşuyor</h2>
+        </motion.div>
+
         {/* Stats - Semantic list */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -101,16 +112,13 @@ export default function TestimonialsSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.4, delay: 0.1 + index * 0.1 }}
-              className="text-center"
+              className="flex flex-col items-center p-5 sm:p-8 rounded-2xl bg-card border border-border"
               role="listitem"
             >
-              <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                <stat.icon className="w-7 h-7 text-primary" aria-hidden="true" />
-              </div>
-              <div className="font-display font-bold text-3xl sm:text-4xl text-primary mb-1">
+              <div className="font-mono font-bold text-3xl sm:text-4xl text-cyan-400 mb-2">
                 {stat.value}
               </div>
-              <div className="text-sm text-muted-foreground">{stat.label}</div>
+              <div className="text-sm text-muted-foreground text-center">{stat.label}</div>
             </motion.div>
           ))}
         </motion.div>
@@ -122,9 +130,7 @@ export default function TestimonialsSection() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-center mb-12"
         >
-          <span className="text-primary font-mono text-sm tracking-wider mb-4 block">
-            // SOSYAL KANIT
-          </span>
+
           <h2 id="testimonials-heading" className="font-display font-bold text-3xl sm:text-4xl md:text-5xl mb-6">
             Kullanıcılarımız <span className="gradient-text">Ne Diyor?</span>
           </h2>
@@ -142,9 +148,9 @@ export default function TestimonialsSection() {
         >
           {/* Main Card - Figure with blockquote */}
           <figure className="glass-card rounded-2xl p-8 md:p-12 relative overflow-hidden">
-            {/* Quote Icon */}
+            {/* Quote Icon - küçültüldü */}
             <div className="absolute top-6 left-6 opacity-20" aria-hidden="true">
-              <Quote className="w-16 h-16 text-primary" />
+              <Quote className="w-8 h-8 text-primary" />
             </div>
 
             {/* Content */}
@@ -164,13 +170,16 @@ export default function TestimonialsSection() {
                 <p>"{testimonials[currentIndex].quote}"</p>
               </blockquote>
 
-              {/* Figcaption - Author info */}
-              <figcaption className="text-center">
-                <cite className="not-italic">
-                  <strong className="font-display font-semibold text-foreground block">
+              {/* Figcaption - Author info with avatar */}
+              <figcaption className="flex items-center justify-center gap-3 mt-4">
+                <div className="w-10 h-10 rounded-full bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center text-sm font-bold text-cyan-400 flex-shrink-0">
+                  {testimonials[currentIndex].author.split(' ').map((w: string) => w[0]).join('').slice(0, 2)}
+                </div>
+                <cite className="not-italic text-left">
+                  <strong className="font-display font-semibold text-foreground block text-sm">
                     {testimonials[currentIndex].author}
                   </strong>
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-xs text-muted-foreground">
                     {testimonials[currentIndex].company}
                   </span>
                 </cite>

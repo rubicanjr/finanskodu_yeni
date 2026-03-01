@@ -104,23 +104,15 @@ export default function FAQSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium mb-4"
-            style={{
-              background: "linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(138, 43, 226, 0.1))",
-              border: "1px solid rgba(0, 212, 255, 0.2)",
-              color: "var(--primary)"
-            }}
-          >
-            Uzman Görüşleri
-          </span>
+          <div className="text-primary font-mono text-xs tracking-[0.15em] mb-4">// SIKÇA SORULAN SORULAR</div>
           <h2 
             id="faq-heading"
             className="font-display font-bold text-3xl sm:text-4xl md:text-5xl mb-6"
           >
-            Sıkça Sorulan <span className="gradient-text">Sorular</span>
+            Aklındaki soruların <span className="text-cyan-400">cevapları burada</span>
           </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">
-            Finansal kararlarınızı güçlendirmek için Sarp ve Vera'nın uzman yanıtlarını keşfedin.
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Finansal araçlarımız hakkında merak edilenleri derledik.
           </p>
         </motion.header>
 

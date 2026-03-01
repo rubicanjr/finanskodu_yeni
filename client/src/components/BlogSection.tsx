@@ -194,7 +194,7 @@ export default function BlogSection() {
   return (
     <section
       id="blog"
-      className="relative pt-16 pb-20 overflow-hidden"
+      className="relative py-24 overflow-hidden"
       aria-labelledby="blog-heading"
     >
       {/* BreadcrumbList Schema for Blog Section */}

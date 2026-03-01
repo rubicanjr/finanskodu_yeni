@@ -19,7 +19,7 @@ const orderItems = [
 
 export default function ComparisonSection() {
   return (
-    <section className="relative py-20 overflow-hidden" style={{ background: 'var(--background)' }}>
+    <section className="relative py-24 overflow-hidden" style={{ background: 'var(--background)' }}>
       {/* Content */}
       <div className="container relative z-10">
         <motion.div

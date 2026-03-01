@@ -101,11 +101,14 @@ export default function Footer() {
             <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-6">
               <Mail className="w-7 h-7 text-primary" aria-hidden="true" />
             </div>
-            <h3 id="newsletter-heading" className="font-display font-bold text-2xl sm:text-3xl mb-4">
-              Güncel Kalın
+            <h3 id="newsletter-heading" className="font-display font-bold text-2xl sm:text-3xl mb-2">
+              Haftalık Finans Özeti
             </h3>
-            <p className="text-muted-foreground mb-8">
-              Yeni ürünler, AI ipuçları ve verimlilik stratejileri için e-bültenimize katılın.
+            <p className="text-muted-foreground mb-1">
+              Her Pazartesi: piyasa analizi, AI araç önerileri ve strateji bülteni.
+            </p>
+            <p className="text-xs text-muted-foreground mb-6">
+              📩 500+ okuyucu · Haftada 1 mail · İstediğin zaman çık
             </p>
             <form 
               onSubmit={handleNewsletterSubmit} 
@@ -145,19 +148,13 @@ export default function Footer() {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.4, delay: 0.1 }}
           >
-            <h4 className="font-display font-semibold text-lg mb-4">
-              Kurucu Stratejistimizle tanışın:
-            </h4>
-            <a 
-              href="https://www.linkedin.com/in/rubi-can-icliyurek/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-primary hover:underline font-display font-bold text-xl flex items-center gap-2"
-            >
-              Rubi Can İçliyürek
-              <ExternalLink className="w-4 h-4" aria-hidden="true" />
-            </a>
-
+            <div className="flex items-center gap-2 mb-3">
+              <div className="w-7 h-7 bg-cyan-400 rounded-lg flex items-center justify-center text-xs font-bold" style={{ color: 'var(--background)' }}>fk</div>
+              <span className="font-bold text-foreground">finanskodu</span>
+            </div>
+            <p className="text-sm text-muted-foreground max-w-xs">
+              Finansal verimliliği AI araçları ve algoritmik metodoloji ile bir üst seviyeye taşıyoruz.
+            </p>
           </motion.div>
 
           {/* Quick Links - Navigation */}
@@ -201,18 +198,25 @@ export default function Footer() {
           >
             <h4 className="font-display font-semibold text-lg mb-4">Sosyal Medya</h4>
             <nav className="flex flex-wrap gap-3" aria-label="Sosyal medya bağlantıları">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.name}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group w-12 h-12 rounded-xl bg-secondary hover:bg-primary/10 border border-border hover:border-primary/30 flex items-center justify-center transition-all"
-                  aria-label={`${social.name} profilimizi ziyaret et`}
-                >
-                  <social.icon className="text-muted-foreground group-hover:text-primary transition-colors" />
-                </a>
-              ))}
+              {socialLinks.map((social) => {
+                const hoverClass =
+                  social.name === 'LinkedIn' ? 'hover:text-blue-400 hover:border-blue-400/30' :
+                  social.name === 'Instagram' ? 'hover:text-pink-400 hover:border-pink-400/30' :
+                  social.name === 'X' ? 'hover:text-sky-400 hover:border-sky-400/30' :
+                  social.name === 'TikTok' ? 'hover:text-white hover:border-white/20' : 'hover:text-primary hover:border-primary/30';
+                return (
+                  <a
+                    key={social.name}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`w-12 h-12 rounded-xl bg-secondary border border-border flex items-center justify-center transition-colors ${hoverClass}`}
+                    aria-label={`${social.name} profilimizi ziyaret et`}
+                  >
+                    <social.icon className="w-5 h-5 text-muted-foreground transition-colors" />
+                  </a>
+                );
+              })}
             </nav>
             <p className="text-muted-foreground text-sm mt-4">
               Bizi sosyal medyada takip edin!

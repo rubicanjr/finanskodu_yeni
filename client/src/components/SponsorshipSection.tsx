@@ -5,7 +5,7 @@ export default function SponsorshipSection() {
   return (
     <section 
       id="sponsorship" 
-      className="py-16 sm:py-20 md:py-24"
+      className="py-24"
       style={{ background: 'var(--background)' }}
       aria-label="Sponsorluk bölümü"
     >
@@ -20,7 +20,7 @@ export default function SponsorshipSection() {
             className="text-center mb-12"
           >
             <span className="text-xs font-mono tracking-[0.2em] text-primary mb-4 block">
-              // TRUSTED BY
+              // SPONSORUMUZ
             </span>
             <h2 className="text-3xl sm:text-4xl font-bold text-foreground">
               Sponsorumuz
