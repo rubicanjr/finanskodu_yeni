@@ -2337,3 +2337,8 @@
 - [ ] 8. Input alanı: textarea, auto-resize, yeni tasarım
 - [ ] 9. Typing indicator: Firebase RTDB, 3sn timeout, animasyonlu dots
 - [ ] 10. Scroll-to-bottom butonu: yukarı scroll edince "↓ Yeni mesaj" pill
+
+## Kod Odası Yeni Özellikler (Mart 2026)
+- [ ] Firestore kurallarını güncelle: presence ve typing koleksiyonlarına auth izni
+- [ ] Pinned mesaj özelliğini aktif et: chatRooms/genel dokümanına pinnedMessage alanı
+- [ ] Mesaj silme özelliği: hover menüye Sil butonu ekle, Firestore'dan sil

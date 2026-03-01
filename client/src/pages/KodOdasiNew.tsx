@@ -160,9 +160,10 @@ interface MsgProps {
   currentUserId: string;
   onReaction: (msgId: string, emoji: string) => void;
   onReply: (msg: ChatMessage) => void;
+  onDelete: (msgId: string) => void;
 }
 
-function MessageBubble({ msg, isMe, grouped, showDate, currentUserId, onReaction, onReply }: MsgProps) {
+function MessageBubble({ msg, isMe, grouped, showDate, currentUserId, onReaction, onReply, onDelete }: MsgProps) {
   const isSystem = msg.type === "system";
 
   return (
@@ -285,6 +286,18 @@ function MessageBubble({ msg, isMe, grouped, showDate, currentUserId, onReaction
               >
                 ↩ Yanıtla
               </button>
+              {isMe && (
+                <>
+                  <div className="w-px h-4 bg-border mx-0.5" />
+                  <button
+                    onClick={() => onDelete(msg.id)}
+                    className="text-xs text-red-400 hover:text-red-300 px-1.5 py-0.5 rounded hover:bg-red-500/10 transition-colors"
+                    title="Mesajı sil"
+                  >
+                    🗑️ Sil
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -362,10 +375,14 @@ export default function KodOdasiNew() {
 
   /* ── Pinned message ── */
   useEffect(() => {
-    const unsub = onSnapshot(doc(db, "chatRooms", ROOM), (snap) => {
-      const data = snap.data();
-      setPinnedMessage(data?.pinnedMessage ?? null);
-    });
+    const unsub = onSnapshot(
+      doc(db, "chatRooms", ROOM),
+      (snap) => {
+        const data = snap.data();
+        setPinnedMessage(data?.pinnedMessage ?? null);
+      },
+      () => { /* permission-denied: silently ignore */ }
+    );
     return unsub;
   }, []);
 
@@ -540,6 +557,18 @@ export default function KodOdasiNew() {
     await updateDoc(msgRef, { reactions });
   }, [user]);
 
+  /* ── Delete message ── */
+  const handleDelete = useCallback(async (msgId: string) => {
+    if (!user) return;
+    if (!window.confirm("Bu mesajı silmek istediğinizden emin misiniz?")) return;
+    try {
+      await deleteDoc(doc(db, "chatRooms", ROOM, "messages", msgId));
+      setMessages((prev) => prev.filter((m) => m.id !== msgId));
+    } catch (err) {
+      showToast("Mesaj silinemedi.");
+    }
+  }, [user, showToast]);
+
   /* ── Send message ── */
   const handleSend = async () => {
     if (!user || !inputText.trim() || sending) return;
@@ -692,6 +721,7 @@ export default function KodOdasiNew() {
                             currentUserId={user?.uid ?? ""}
                             onReaction={handleReaction}
                             onReply={(m) => setReplyTo({ id: m.id, userName: m.userName, text: m.text })}
+                            onDelete={handleDelete}
                           />
                         );
                       });
