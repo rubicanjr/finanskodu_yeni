@@ -373,11 +373,13 @@ export default function KodOdasiNew() {
   useEffect(() => {
     if (!user) return;
     const presenceRef = doc(db, "chatRooms", ROOM, "presence", user.uid);
-    setDoc(presenceRef, { name: user.displayName ?? "Anonim", online: true, updatedAt: serverTimestamp() });
+    setDoc(presenceRef, { name: user.displayName ?? "Anonim", online: true, updatedAt: serverTimestamp() }).catch(() => {});
 
-    const countUnsub = onSnapshot(collection(db, "chatRooms", ROOM, "presence"), (snap) => {
-      setOnlineCount(snap.size);
-    });
+    const countUnsub = onSnapshot(
+      collection(db, "chatRooms", ROOM, "presence"),
+      (snap) => { setOnlineCount(snap.size); },
+      () => { /* permission-denied: silently ignore */ }
+    );
 
     return () => {
       deleteDoc(presenceRef).catch(() => {});
@@ -389,16 +391,20 @@ export default function KodOdasiNew() {
   useEffect(() => {
     if (!user) return;
     const typingCol = collection(db, "chatRooms", ROOM, "typing");
-    const unsub = onSnapshot(typingCol, (snap) => {
-      const names: string[] = [];
-      snap.forEach((d) => {
-        if (d.id !== user.uid) {
-          const data = d.data();
-          if (data.typing && data.name) names.push(data.name);
-        }
-      });
-      setTypingUsers(names);
-    });
+    const unsub = onSnapshot(
+      typingCol,
+      (snap) => {
+        const names: string[] = [];
+        snap.forEach((d) => {
+          if (d.id !== user.uid) {
+            const data = d.data();
+            if (data.typing && data.name) names.push(data.name);
+          }
+        });
+        setTypingUsers(names);
+      },
+      () => { /* permission-denied: silently ignore */ }
+    );
     return unsub;
   }, [user]);
 
