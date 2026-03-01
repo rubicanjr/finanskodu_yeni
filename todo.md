@@ -2301,3 +2301,6 @@
 - [x] TradingViewTickerTape.tsx overflow:hidden kaldır
 - [x] displayMode "adaptive" → "scrolling" olarak değiştir
 - [x] Widget div'i script'ten önce DOM'a ekle (inject sırası düzelt)
+
+## BIST 100 Sembol Düzeltme
+- [x] TradingViewTickerTape.tsx'te BIST:XU100 → BIST:XU030 olarak değiştir
