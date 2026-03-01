@@ -796,7 +796,7 @@ export default function DualPersonaWidget() {
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             className={`fixed z-50 bg-gray-900/95 backdrop-blur-xl rounded-2xl shadow-2xl border overflow-hidden flex flex-col ${
               isMobile 
-                ? "inset-4" 
+                ? "inset-x-4 bottom-4 top-16" 
                 : "bottom-5 right-5 w-[380px] h-[550px]"
             }`}
             style={{ borderColor: `${persona.accentColor}30` }}

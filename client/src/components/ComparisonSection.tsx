@@ -106,21 +106,16 @@ export default function ComparisonSection() {
               boxShadow: '0 0 30px oklch(0.62 0.17 160)08',
             }}
           >
-            {/* Badge */}
-            <div 
-              className="absolute -top-3 right-6 px-3 py-1 rounded-full text-xs font-mono font-semibold"
-              style={{ background: 'oklch(0.62 0.17 160)20', color: 'oklch(0.62 0.17 160)', border: '1px solid oklch(0.62 0.17 160)40' }}
-            >
-              Finans Kodu
-            </div>
-
             {/* Header */}
             <div className="flex items-center gap-3 mb-6">
               <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ background: 'oklch(0.62 0.17 160)15' }}>
                 <CheckCircle size={20} style={{ color: 'var(--chart-2)' }} />
               </div>
               <div>
-                <h3 className="font-display font-bold text-lg" style={{ color: 'var(--chart-2)' }}>DÜZEN</h3>
+                <div className="flex items-center gap-2">
+                  <h3 className="font-display font-bold text-lg" style={{ color: 'var(--chart-2)' }}>DÜZEN</h3>
+                  <span className="text-xs font-mono px-2 py-0.5 rounded" style={{ background: 'oklch(0.62 0.17 160)15', color: 'oklch(0.62 0.17 160)', border: '1px solid oklch(0.62 0.17 160)30' }}>Finans Kodu</span>
+                </div>
                 <p className="text-xs font-mono" style={{ color: 'var(--muted-foreground)' }}>AI Destekli Yaklaşım</p>
               </div>
             </div>

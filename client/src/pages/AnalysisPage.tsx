@@ -6,7 +6,6 @@
   - Clean, focused UX for analysis workflow
 */
 
-import Navigation from "@/components/Navigation";
 import { AnalysisAuthGate } from "@/components/AnalysisAuthGate";
 import Footer from "@/components/Footer";
 
@@ -21,11 +20,8 @@ export default function AnalysisPage() {
         Ana içeriğe atla
       </a>
 
-      {/* Navigation - Sticky header */}
-      <Navigation />
-
       {/* Main Content Area */}
-      <main id="main-content" role="main" className="pt-24">
+      <main id="main-content" role="main" className="pt-4">
         {/* Finansal Analizi Başlat (Auth Gate + Analysis Section) */}
         <AnalysisAuthGate />
       </main>

@@ -625,7 +625,7 @@ export default function KodOdasiNew() {
 
   if (authLoading) {
     return (
-      <div style={{ height: "calc(100vh - 46px)", background: "var(--background)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <div style={{ height: "calc(100svh - 48px)", background: "var(--background)", display: "flex", alignItems: "center", justifyContent: "center" }}>
         <Loader2 className="animate-spin" size={32} style={{ color: "#0EA5E9" }} />
       </div>
     );
@@ -641,8 +641,8 @@ export default function KodOdasiNew() {
       {!user ? (
         <LoginScreen onSignIn={handleSignIn} />
       ) : (
-        <div style={{ height: "calc(100vh - 46px)", background: "var(--background)", color: "var(--foreground)", display: "flex", flexDirection: "column", overflow: "hidden" }}>
-          <div style={{ flex: 1, maxWidth: "900px", width: "100%", margin: "0 auto", padding: "12px 16px", display: "flex", flexDirection: "column", minHeight: 0 }}>
+        <div style={{ height: "calc(100svh - 48px)", background: "var(--background)", color: "var(--foreground)", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+          <div style={{ flex: 1, maxWidth: "900px", width: "100%", margin: "0 auto", padding: "8px 8px", display: "flex", flexDirection: "column", minHeight: 0 }}>
 
             {/* ── Chat box ── */}
             <div style={{ flex: 1, display: "flex", flexDirection: "column", background: "var(--card)", borderRadius: "12px", border: "1px solid var(--border)", minHeight: 0, overflow: "hidden" }}>
@@ -650,7 +650,7 @@ export default function KodOdasiNew() {
               {(
               <>
                 {/* ── Header (Yönerge 3) ── */}
-                <div className="flex items-center justify-between px-5 border-b border-border" style={{ height: "56px", flexShrink: 0 }}>
+                <div className="flex items-center justify-between px-3 sm:px-5 border-b border-border" style={{ height: "56px", flexShrink: 0 }}>
                   <div className="flex items-center gap-3">
                     <span className="text-xl">💬</span>
                     <div>

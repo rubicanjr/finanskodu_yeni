@@ -14,14 +14,14 @@ interface PriceData {
 }
 
 const SYMBOLS: Symbol[] = [
-  { id: 'BIST100', title: 'BIST 100', currency: '₺', decimals: 2 },
-  { id: 'USDTRY', title: 'USD/TRY', currency: '₺', decimals: 4 },
-  { id: 'EURTRY', title: 'EUR/TRY', currency: '₺', decimals: 4 },
-  { id: 'XAUUSD', title: 'Altın/Ons', currency: '$', decimals: 2 },
-  { id: 'XAGUSD', title: 'Gümüş/Ons', currency: '$', decimals: 3 },
+  { id: 'BIST100', title: 'BIST 100', currency: 'TL', decimals: 2 },
+  { id: 'USDTRY', title: 'USD/TRY', currency: 'TL', decimals: 4 },
+  { id: 'EURTRY', title: 'EUR/TRY', currency: 'TL', decimals: 4 },
+  { id: 'XAUUSD', title: 'Altin/Ons', currency: '$', decimals: 2 },
+  { id: 'XAGUSD', title: 'Gumus/Ons', currency: '$', decimals: 3 },
   { id: 'XPTUSD', title: 'Platin/Ons', currency: '$', decimals: 2 },
   { id: 'XPDUSD', title: 'Paladyum/Ons', currency: '$', decimals: 2 },
-  { id: 'HGUSD', title: 'Bakır/lb', currency: '$', decimals: 4 },
+  { id: 'HGUSD', title: 'Bakir/lb', currency: '$', decimals: 4 },
   { id: 'BTCUSDT', title: 'Bitcoin', currency: '$', decimals: 2 },
   { id: 'ETHUSDT', title: 'Ethereum', currency: '$', decimals: 2 },
 ];
@@ -259,7 +259,9 @@ export default function MarqueeTicker() {
                 }}
               >
                 {price !== null && price !== undefined
-                  ? `${symbol.currency}${price.toFixed(symbol.decimals)}`
+                  ? (symbol.currency === 'TL'
+                    ? `${price.toFixed(symbol.decimals)} TL`
+                    : `${symbol.currency}${price.toFixed(symbol.decimals)}`)
                   : '—'}
               </span>
 

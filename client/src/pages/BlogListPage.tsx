@@ -10,7 +10,6 @@
 
 import { Link } from "wouter";
 import { Helmet } from "react-helmet-async";
-import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
@@ -182,9 +181,7 @@ export default function BlogListPage() {
         <meta name="twitter:description" content="Finans, yatırım, otomasyon ve yapay zeka konularında güncel blog yazıları." />
       </Helmet>
 
-      <Navigation />
-
-      <main className="container mx-auto px-4 py-24">
+      <main className="container mx-auto px-4 py-8">
         {/* Page Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

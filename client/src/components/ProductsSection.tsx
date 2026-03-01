@@ -41,7 +41,7 @@ const products: Product[] = [
   },
   {
     id: 2,
-    title: "FİNANS KODU: Kaos İçinde Düzen",
+    title: "Kaos İçinde Düzen",
     description: "Finansal operasyonlarınızı dönüştürecek kapsamlı metodoloji ve araç seti.",
     icon: Layers,
     image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/tipqmgRCXZXEvHBH.png",
@@ -62,7 +62,7 @@ const products: Product[] = [
   },
   {
     id: 3,
-    title: "Pro - Algoritmik Strateji ve Analiz Bülteni",
+    title: "Pro — Algoritmik Strateji Bülteni",
     description: "Piyasa yönü, makro analizler ve algoritmik sinyaller içeren kapsamlı aylık bülten.",
     icon: LayoutDashboard,
     image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/KzrqHllOnTCvKWzx.png",
@@ -138,7 +138,7 @@ function ProductCard({ product, index, isInView }: { product: Product; index: nu
             <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: 'var(--secondary)' }}>
               <IconComponent size={18} style={{ color: 'var(--primary)' }} />
             </div>
-            <h3 className="font-bold text-[15px] leading-tight" style={{ color: 'var(--foreground)' }} itemProp="name">
+            <h3 className="font-bold text-[15px] leading-tight" style={{ color: 'var(--foreground)', minHeight: '40px' }} itemProp="name">
               {product.title}
             </h3>
           </div>

@@ -89,7 +89,8 @@ function App() {
                 <Sidebar />
                 
                 {/* Main Content Area - offset for sidebar on desktop and ticker tape */}
-                <main className="lg:ml-[220px] pt-[46px]">
+                {/* pt-12 on mobile to avoid hamburger button overlap, pt-[46px] on md for ticker tape */}
+                <main className="lg:ml-[220px] pt-12 md:pt-[46px]">
                   <Router />
                 </main>
                 

@@ -44,7 +44,7 @@ export default function Sidebar() {
           <X className="w-5 h-5 text-foreground" />
         </button>
 
-        <SidebarContent />
+        <SidebarContent onLinkClick={() => setMobileOpen(false)} />
       </aside>
     </>
   );

@@ -157,8 +157,9 @@ export default function LoginScreen({ onSignIn }: LoginScreenProps) {
   return (
     <div
       style={{
-        width: '100%',
-        height: '100vh',
+        position: 'fixed',
+        inset: 0,
+        zIndex: 200,
         display: 'flex',
         overflow: 'hidden',
         background: 'var(--background)',
@@ -762,6 +763,7 @@ export default function LoginScreen({ onSignIn }: LoginScreenProps) {
         }
         .login-right-panel {
           width: 520px;
+          overflow-y: auto;
         }
         @media (max-width: 900px) {
           .login-left-panel {
@@ -769,6 +771,7 @@ export default function LoginScreen({ onSignIn }: LoginScreenProps) {
           }
           .login-right-panel {
             width: 100% !important;
+            padding: 32px 24px !important;
           }
         }
       `}</style>

@@ -76,7 +76,7 @@ export default function ProcessModelSection() {
       className="relative overflow-hidden"
       style={{ 
         background: 'var(--background)',
-        padding: '120px 0 140px'
+        padding: 'clamp(40px, 6vw, 80px) 0 clamp(40px, 6vw, 80px)'
       }}
       aria-labelledby="process-model-heading"
       ref={ref}
@@ -204,7 +204,7 @@ export default function ProcessModelSection() {
 
         {/* Cards Grid */}
         <div 
-          className="grid lg:grid-cols-3 gap-5 max-w-6xl mx-auto"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-6xl mx-auto"
         >
           {processSteps.map((step, index) => {
             const Icon = step.icon;
@@ -364,7 +364,7 @@ export default function ProcessModelSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.65, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="relative max-w-4xl mx-auto mt-16 bg-card border border-border rounded-3xl p-12"
+          className="relative max-w-4xl mx-auto mt-16 bg-card border border-border rounded-3xl p-6 md:p-12"
         >
           {/* Left Gradient Line */}
           <div 
@@ -374,7 +374,7 @@ export default function ProcessModelSection() {
             }}
           />
 
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+          <div className="flex flex-col items-center lg:flex-row lg:items-center justify-between gap-6">
             {/* Left: Text Group */}
             <div className="flex-1">
               <div 

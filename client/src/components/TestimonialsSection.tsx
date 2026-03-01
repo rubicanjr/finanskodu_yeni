@@ -91,7 +91,7 @@ export default function TestimonialsSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="grid grid-cols-3 gap-6 mb-20"
+          className="grid grid-cols-3 gap-3 sm:gap-6 mb-12 sm:mb-20"
           role="list"
           aria-label="Platform istatistikleri"
         >

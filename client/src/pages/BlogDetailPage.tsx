@@ -285,7 +285,7 @@ export default function BlogDetailPage() {
         </script>
       </Helmet>
 
-      <main className="container mx-auto px-4 py-24 max-w-4xl">
+      <main className="container mx-auto px-4 py-8 max-w-4xl">
         {/* Back Link */}
         <a 
           href="/blog"
