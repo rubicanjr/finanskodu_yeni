@@ -10,6 +10,7 @@
 import { Link } from "wouter";
 import { Calendar, Clock, ArrowRight, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
+import LazyImage from "@/components/LazyImage";
 
 // Blog posts metadata (sorted by date, newest first)
 const blogPosts = [
@@ -90,10 +91,10 @@ export default function RecentBlogPosts() {
               {/* Cover Image */}
               <Link href={`/blog/${post.id}`}>
                 <a className="block relative overflow-hidden aspect-video">
-                  <img
+                  <LazyImage
                     src={post.image}
                     alt={post.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full group-hover:scale-105 transition-transform duration-300"
                   />
                   {/* NEW Badge */}
                   {isNew(post.dateISO) && (

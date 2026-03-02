@@ -201,7 +201,7 @@ function MessageBubble({ msg, isMe, grouped, showDate, currentUserId, onReaction
           {!isMe && (
             <div style={{ width: "28px", height: "28px", visibility: grouped ? "hidden" : "visible", flexShrink: 0 }}>
               {msg.userPhoto ? (
-                <img src={msg.userPhoto} alt={msg.userName} style={{ width: "28px", height: "28px", borderRadius: "50%", objectFit: "cover", border: "1px solid var(--border)" }} />
+                <img src={msg.userPhoto} alt={msg.userName} loading="lazy" decoding="async" style={{ width: "28px", height: "28px", borderRadius: "50%", objectFit: "cover", border: "1px solid var(--border)" }} />
               ) : (
                 <div style={{ width: "28px", height: "28px", borderRadius: "50%", background: "var(--secondary)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "11px", fontWeight: 700, color: "var(--muted-foreground)", border: "1px solid var(--border)" }}>
                   {getInitials(msg.userName)}

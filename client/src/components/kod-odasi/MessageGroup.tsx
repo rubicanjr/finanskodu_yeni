@@ -29,6 +29,7 @@ export default function MessageGroup({ messages, userName, userPhoto }: MessageG
         src={userPhoto || '/assets/default-avatar.png'}
         alt={userName}
         className="w-10 h-10 rounded-full flex-shrink-0"
+        loading="lazy"
       />
       <div className="flex-1 min-w-0">
         <div className="flex items-baseline gap-2 mb-1">

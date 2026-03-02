@@ -10,6 +10,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
+import LazyImage from "@/components/LazyImage";
 import { 
   Calendar, 
   Clock, 
@@ -320,11 +321,10 @@ export default function BlogSection() {
                 >
                   {/* Featured Image */}
                   <div className="relative h-40 overflow-hidden">
-                    <img
+                    <LazyImage
                       src={post.image}
                       alt={post.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      loading="lazy"
+                      className="w-full h-full transition-transform duration-700 group-hover:scale-105"
                     />
                     <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, transparent 40%, var(--card) 100%)' }} />
                     

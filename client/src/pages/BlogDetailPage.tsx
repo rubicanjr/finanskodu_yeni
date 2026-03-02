@@ -14,6 +14,7 @@ import { ArrowLeft, Calendar, Clock, User } from "lucide-react";
 import { motion } from "framer-motion";
 import { blogContents } from "@/data/blogContent";
 import { lazy, Suspense } from "react";
+import LazyImage from "@/components/LazyImage";
 
 // Lazy load Streamdown to reduce initial bundle size
 const Streamdown = lazy(() => import("streamdown").then(mod => ({ default: mod.Streamdown })));
@@ -302,10 +303,11 @@ export default function BlogDetailPage() {
           transition={{ duration: 0.6 }}
           className="mb-8"
         >
-          <img
+          <LazyImage
             src={post.image}
             alt={post.title}
-            className="w-full h-64 md:h-96 object-cover rounded-xl"
+            className="w-full h-64 md:h-96 rounded-xl"
+            eager={true}
           />
         </motion.div>
 

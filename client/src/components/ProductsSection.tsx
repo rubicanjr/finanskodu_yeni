@@ -1,6 +1,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Brain, Layers, LayoutDashboard, ArrowRight, type LucideIcon } from "lucide-react";
+import LazyImage from "@/components/LazyImage";
 
 interface Product {
   id: number;
@@ -104,12 +105,11 @@ function ProductCard({ product, index, isInView }: { product: Product; index: nu
         }}
       >
         {/* Image */}
-        <div className="relative overflow-hidden h-48">
-          <img
+          <div className="relative overflow-hidden h-48">
+          <LazyImage
             src={product.image}
             alt={product.title}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-            loading="lazy"
+            className="w-full h-full transition-transform duration-500 group-hover:scale-105"
           />
           {/* Gradient overlay */}
           <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, transparent 40%, var(--card) 100%)" }} />

@@ -481,6 +481,8 @@ export default function SarpGifAvatar() {
             alt="Sarp AI Asistan"
             className="w-full h-full object-cover object-top"
             style={{ objectPosition: "center 20%" }}
+            loading="lazy"
+            decoding="async"
           />
           
           {/* Listening indicator - Red glow border */}

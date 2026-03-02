@@ -15,6 +15,7 @@ import { Calendar, Clock, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState, useMemo } from "react";
 import { trackCategoryFilter } from "@/lib/analytics";
+import LazyImage from "@/components/LazyImage";
 
 // Blog posts metadata
 const blogPosts = [
@@ -247,10 +248,10 @@ export default function BlogListPage() {
                 rel="noopener noreferrer"
                 className="block relative overflow-hidden aspect-video"
               >
-                <img
+                <LazyImage
                   src={post.image}
                   alt={post.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-full group-hover:scale-105 transition-transform duration-300"
                 />
                 {/* Author Badge */}
                 <div className="absolute top-4 right-4 px-3 py-1 bg-black/70 backdrop-blur-sm rounded-full text-sm">

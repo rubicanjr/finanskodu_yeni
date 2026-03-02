@@ -146,6 +146,8 @@ export default function VeraAvatar({ isSpeaking, isListening, amplitude = 0 }: V
             src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/QAkTTqxvtQZTDARB.png"
             alt="Vera - Finans Kodu AI Asistan"
             className="w-48 h-auto rounded-2xl shadow-2xl"
+            loading="lazy"
+            decoding="async"
             style={{
               filter: isBlinking ? "brightness(0.95)" : "brightness(1)",
               transition: "filter 0.1s ease"

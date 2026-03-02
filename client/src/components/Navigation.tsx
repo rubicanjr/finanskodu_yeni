@@ -93,10 +93,11 @@ export default function Navigation() {
           aria-label="Finans Kodu - Ana sayfaya dön"
         >
           <img
-            src="/assets/fk-logo-new.png"
+            src="/assets/fk-logo-new.webp"
             alt="Finans Kodu Logo"
             className="h-10 w-auto object-contain"
-            loading="lazy"
+            loading="eager"
+            fetchPriority="high"
           />
         </a>
 
