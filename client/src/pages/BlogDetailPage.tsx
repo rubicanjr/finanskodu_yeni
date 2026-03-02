@@ -303,6 +303,16 @@ export default function BlogDetailPage() {
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}
         </script>
+        {/* BreadcrumbList Schema.org */}
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": "https://finanskodu.com" },
+            { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://finanskodu.com/blog" },
+            { "@type": "ListItem", "position": 3, "name": post.title, "item": canonicalUrl }
+          ]
+        })}</script>
       </Helmet>
 
       <main className="container mx-auto px-4 py-8 max-w-4xl">
@@ -457,6 +467,67 @@ export default function BlogDetailPage() {
             </Link>
           </div>
         </motion.div>
+
+        {/* İç Linkleme: Konuya göre ilgili ürün sayfasına yönlendirme */}
+        {(() => {
+          const tags = post.tags.map(t => t.toLowerCase());
+          const isAIOrExcel = tags.some(t => ['ai', 'yapay zeka', 'excel', 'otomasyon', 'araçlar'].includes(t));
+          const isAlgoOrTechAnalysis = tags.some(t => ['teknik analiz', 'algoritmik', 'göstergeler', 'sinyal', 'strateji'].includes(t));
+          const isProBulletin = tags.some(t => ['altın', 'makro analiz', 'portföy', 'risk yönetimi', 'kripto', 'blockchain', 'yatırım'].includes(t));
+
+          if (isAIOrExcel) return (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.7 }}
+              className="mt-6 p-5 border border-cyan-500/20 rounded-xl bg-cyan-500/5"
+            >
+              <p className="text-xs font-semibold text-cyan-400 uppercase tracking-wider mb-2">İlgili Ürün</p>
+              <h3 className="text-base font-semibold text-foreground mb-1">AI Prompt Kütüphanesi: 100+ Finansal Analiz Komutu</h3>
+              <p className="text-sm text-muted-foreground mb-3">Bu yazıda bahsedilen yapay zeka araçlarını finans analizinde kullanmak için hazır prompt şablonlarımızı inceleyin.</p>
+              <a href="/dijital-araclar/ai-prompt-kutuphanesi" target="_blank" rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-medium transition-colors">
+                Prompt Kütüphanesini Keşfet →
+              </a>
+            </motion.div>
+          );
+
+          if (isAlgoOrTechAnalysis) return (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.7 }}
+              className="mt-6 p-5 border border-green-500/20 rounded-xl bg-green-500/5"
+            >
+              <p className="text-xs font-semibold text-green-400 uppercase tracking-wider mb-2">İlgili Ürün</p>
+              <h3 className="text-base font-semibold text-foreground mb-1">FİNANS KODU: Kaos İçinde Düzen</h3>
+              <p className="text-sm text-muted-foreground mb-3">Bu yazıda ele alınan teknik analiz ve algoritmik stratejileri sistematik bir metodoloji ile uygulamak için kapsamlı araç setimizi inceleyin.</p>
+              <a href="/dijital-araclar/finans-kodu-kaos-icinde-duzen" target="_blank" rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-green-600 hover:bg-green-700 text-white text-sm font-medium transition-colors">
+                Sistemi İncele →
+              </a>
+            </motion.div>
+          );
+
+          if (isProBulletin) return (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.7 }}
+              className="mt-6 p-5 border border-amber-500/20 rounded-xl bg-amber-500/5"
+            >
+              <p className="text-xs font-semibold text-amber-400 uppercase tracking-wider mb-2">İlgili Ürün</p>
+              <h3 className="text-base font-semibold text-foreground mb-1">Pro - Algoritmik Strateji ve Analiz Bülteni</h3>
+              <p className="text-sm text-muted-foreground mb-3">Bu yazıda incelenen makro ve piyasa analizlerini aylık algoritmik strateji bültenimizle takip edin. Altın algoritması, akıllı fon sepetleri ve haftalık sesli brifing.</p>
+              <a href="/dijital-araclar/pro-algoritmik-strateji-ve-analiz-bulteni" target="_blank" rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-600 hover:bg-amber-700 text-white text-sm font-medium transition-colors">
+                Bültene Katıl →
+              </a>
+            </motion.div>
+          );
+
+          return null;
+        })()}
       </main>
 
       <Footer />

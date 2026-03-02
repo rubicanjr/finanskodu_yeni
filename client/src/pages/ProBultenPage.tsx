@@ -22,6 +22,15 @@ export default function ProBultenPage() {
         <meta property="og:url" content="https://finanskodu.com/dijital-araclar/pro-algoritmik-strateji-ve-analiz-bulteni" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": "https://finanskodu.com" },
+            { "@type": "ListItem", "position": 2, "name": "Dijital Araçlar", "item": "https://finanskodu.com/dijital-araclar" },
+            { "@type": "ListItem", "position": 3, "name": "Pro Algoritmik Strateji Bülteni", "item": "https://finanskodu.com/dijital-araclar/pro-algoritmik-strateji-ve-analiz-bulteni" }
+          ]
+        })}</script>
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
           "@type": "Product",
           "name": "Pro - Algoritmik Strateji ve Analiz Bülteni",
           "description": "Aylık algoritmik strateji bülteni. Altın algoritması, akıllı fon sepetleri, haftalık sesli brifing, kanıtlanmış model ve 1:1 finansal check-up.",

@@ -21,6 +21,15 @@ export default function FinansKoduPage() {
         <meta property="og:url" content="https://finanskodu.com/dijital-araclar/finans-kodu-kaos-icinde-duzen" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": "https://finanskodu.com" },
+            { "@type": "ListItem", "position": 2, "name": "Dijital Araçlar", "item": "https://finanskodu.com/dijital-araclar" },
+            { "@type": "ListItem", "position": 3, "name": "Finans Kodu: Kaos İçinde Düzen", "item": "https://finanskodu.com/dijital-araclar/finans-kodu-kaos-icinde-duzen" }
+          ]
+        })}</script>
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
           "@type": "Product",
           "name": "FİNANS KODU: Kaos İçinde Düzen",
           "description": "Finansal operasyonlarınızı dönüştürecek kapsamlı metodoloji ve araç seti. Mühendislik perspektifi, duygu-bozucu algoritmalar, risk/getiri mühendisliği.",

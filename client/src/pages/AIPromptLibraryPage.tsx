@@ -95,6 +95,15 @@ export default function AIPromptLibraryPage() {
         <meta property="og:url" content="https://finanskodu.com/dijital-araclar/ai-prompt-kutuphanesi" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": "https://finanskodu.com" },
+            { "@type": "ListItem", "position": 2, "name": "Dijital Araçlar", "item": "https://finanskodu.com/dijital-araclar" },
+            { "@type": "ListItem", "position": 3, "name": "AI Prompt Kütüphanesi", "item": "https://finanskodu.com/dijital-araclar/ai-prompt-kutuphanesi" }
+          ]
+        })}</script>
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
           "@type": "Product",
           "name": "AI Prompt Kütüphanesi",
           "description": "Finans profesyonelleri için 100+ yapay zeka prompt koleksiyonu. ChatGPT ve Claude ile finansal analiz, rapor hazırlama ve portföy yönetimi işlerini otomatikleştirin.",
