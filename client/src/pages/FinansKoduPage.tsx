@@ -11,8 +11,29 @@ export default function FinansKoduPage() {
   return (
     <>
       <Helmet>
-        <title>FİNANS KODU: Kaos İçinde Düzen | Finans Kodu</title>
-        <meta name="description" content="Mühendislik perspektifi, duygu-bozucu algoritmalar, risk/getiri mühendisliği, sürdürülebilir varlık döngüsü." />
+        <title>FİNANS KODU: Kaos İçinde Düzen | Finansal Metodoloji ve Araç Seti | Finans Kodu</title>
+        <meta name="description" content="Finansal operasyonlarınızı dönüştürecek kapsamlı metodoloji ve araç seti. Mühendislik perspektifi, duygu-bozucu algoritmalar, risk/getiri mühendisliği ve sürdürülebilir varlık döngüsü ile piyasalarda kaosı düzene çevirin." />
+        <meta name="keywords" content="finansal metodoloji, algoritmik ticaret sistemi, risk getiri mühendisliği, finansal otomasyon, piyasa analizi sistemi" />
+        <link rel="canonical" href="https://finanskodu.com/dijital-araclar/finans-kodu-kaos-icinde-duzen" />
+        <meta property="og:title" content="FİNANS KODU: Kaos İçinde Düzen | Finansal Metodoloji ve Araç Seti" />
+        <meta property="og:description" content="Finansal operasyonlarınızı dönüştürecek kapsamlı metodoloji ve araç seti. Mühendislik perspektifi ile piyasalarda kaosı düzene çevirin." />
+        <meta property="og:type" content="product" />
+        <meta property="og:url" content="https://finanskodu.com/dijital-araclar/finans-kodu-kaos-icinde-duzen" />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Product",
+          "name": "FİNANS KODU: Kaos İçinde Düzen",
+          "description": "Finansal operasyonlarınızı dönüştürecek kapsamlı metodoloji ve araç seti. Mühendislik perspektifi, duygu-bozucu algoritmalar, risk/getiri mühendisliği.",
+          "url": "https://finanskodu.com/dijital-araclar/finans-kodu-kaos-icinde-duzen",
+          "brand": { "@type": "Brand", "name": "Finans Kodu" },
+          "category": "Dijital Ürün",
+          "offers": {
+            "@type": "Offer",
+            "availability": "https://schema.org/InStock",
+            "priceCurrency": "TRY",
+            "seller": { "@type": "Organization", "name": "Finans Kodu" }
+          }
+        })}</script>
       </Helmet>
 
       <div className="min-h-screen bg-background">

@@ -227,24 +227,43 @@ export default function BlogDetailPage() {
     "@type": "Article",
     "headline": post.title,
     "description": metaDescription,
-    "image": post.image,
+    "image": {
+      "@type": "ImageObject",
+      "url": post.image,
+      "width": 1200,
+      "height": 630
+    },
     "datePublished": publishedDate,
     "dateModified": publishedDate,
     "author": {
       "@type": "Person",
-      "name": post.author
+      "name": post.author === 'Sarp' ? 'Sarp' : 'Vera',
+      "url": `https://finanskodu.com/blog?author=${post.author.toLowerCase()}`,
+      "jobTitle": post.author === 'Sarp' ? 'Finansal Mühendis & Algoritmik Ticaret Uzmanı' : 'Yapay Zeka & Finans Stratejisti'
     },
     "publisher": {
       "@type": "Organization",
       "name": "Finans Kodu",
+      "url": "https://finanskodu.com",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://finanskodu.com/logo.png"
+        "url": "https://finanskodu.com/assets/fk-logo-new.webp",
+        "width": 512,
+        "height": 512
       }
     },
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": canonicalUrl
+    },
+    "articleSection": post.tags[0] || "Finans",
+    "keywords": post.tags.join(", "),
+    "inLanguage": "tr-TR",
+    "isPartOf": {
+      "@type": "Blog",
+      "@id": "https://finanskodu.com/blog",
+      "name": "Finans Kodu Blog",
+      "publisher": { "@id": "https://finanskodu.com/#organization" }
     }
   };
 
@@ -384,6 +403,59 @@ export default function BlogDetailPage() {
               #{tag}
             </span>
           ))}
+        </motion.div>
+
+        {/* E-E-A-T: Yazar Kutusu - GEO ve SEO güven sinyali */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="mt-12 p-6 border border-border rounded-xl bg-card"
+          itemScope
+          itemType="https://schema.org/Person"
+        >
+          <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-4">Yazar Hakkında</h2>
+          <div className="flex items-start gap-4">
+            <div className="w-14 h-14 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0">
+              <span className="text-primary font-bold text-lg" itemProp="name">{post.author[0]}</span>
+            </div>
+            <div>
+              <p className="font-semibold text-foreground mb-1" itemProp="name">{post.author}</p>
+              <p className="text-xs text-muted-foreground mb-3" itemProp="jobTitle">
+                {post.author === 'Sarp' 
+                  ? 'Finansal Mühendis & Algoritmik Ticaret Uzmanı | Finans Kodu Kurucu Ortağı'
+                  : 'Yapay Zeka & Finans Stratejisti | Finans Kodu Analiz Ekibi'
+                }
+              </p>
+              <p className="text-muted-foreground text-sm leading-relaxed" itemProp="description">
+                {post.author === 'Sarp'
+                  ? '10+ yıllık finansal mühendislik deneyimiyle algoritmik ticaret stratejileri, risk yönetimi ve Excel otomasyon çözümleri üzerine uzmanlaşmıştır. BIST ve küresel piyasalarda kanıtlanmış metodolojiler geliştirmektedir.'
+                  : 'Yapay zeka araçlarının finans sektörüne entegrasyonu, makro analiz ve yatırım stratejileri konularında uzmanlaşmıştır. Finans profesyonellerinin yapay zekayı etkin kullanmasına yardımcı olmaktadır.'
+                }
+              </p>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* GEO: Okuyucuya yönlendirme - Siteye bağlılığı artır */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+          className="mt-8 p-6 border border-primary/20 rounded-xl bg-primary/5"
+        >
+          <h2 className="text-lg font-semibold text-foreground mb-2">Bu Yazıyı Yararlı Buldunuz mu?</h2>
+          <p className="text-muted-foreground text-sm mb-4">
+            Finans Kodu'nun haftalık analizlerini, algoritmik sinyallerini ve yapay zeka araç önerilerini doğrudan gelen kutunuza almak için topluluğumuza katılın.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3">
+            <Link href="/kod-odasi" className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors">
+              Kod Odası'na Katıl
+            </Link>
+            <Link href="/blog" className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg border border-border text-sm font-medium hover:bg-accent transition-colors">
+              Diğer Yazıları Gör
+            </Link>
+          </div>
         </motion.div>
       </main>
 

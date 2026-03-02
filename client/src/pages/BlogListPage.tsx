@@ -164,22 +164,23 @@ export default function BlogListPage() {
     <div className="min-h-screen bg-background text-foreground">
       {/* SEO Meta Tags */}
       <Helmet>
-        <title>Blog - Finans Kodu | Finans ve Yatırım Rehberi</title>
-        <meta name="description" content="Finans, yatırım, otomasyon ve yapay zeka konularında güncel blog yazıları. Sarp ve Vera'dan finans dünyasına dair içgörüler." />
+        <title>Finans ve Yatırım Blog’u | Borsa, AI ve Otomasyon Rehberi | Finans Kodu</title>
+        <meta name="description" content="Finans profesyonelleri için kapsamlı blog: BIST ve küresel borsa analizleri, yapay zeka araçları, Excel otomasyonu ve algoritmik ticaret stratejileri. Uzman yazarlar Sarp ve Vera'dan haftalık içerikler." />
+        <meta name="keywords" content="finans blog, borsa analizi, yatırım rehberi, yapay zeka finans, Excel otomasyon, algoritmik ticaret, BIST" />
         <link rel="canonical" href="https://finanskodu.com/blog" />
         <meta name="robots" content="index, follow" />
         
         {/* Open Graph */}
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Blog - Finans Kodu" />
-        <meta property="og:description" content="Finans, yatırım, otomasyon ve yapay zeka konularında güncel blog yazıları." />
+        <meta property="og:title" content="Finans ve Yatırım Blog’u | Borsa, AI ve Otomasyon Rehberi | Finans Kodu" />
+        <meta property="og:description" content="Finans profesyonelleri için kapsamlı blog: BIST analizleri, yapay zeka araçları ve algoritmik ticaret stratejileri." />
         <meta property="og:url" content="https://finanskodu.com/blog" />
         <meta property="og:site_name" content="Finans Kodu" />
         
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Blog - Finans Kodu" />
-        <meta name="twitter:description" content="Finans, yatırım, otomasyon ve yapay zeka konularında güncel blog yazıları." />
+        <meta name="twitter:title" content="Finans ve Yatırım Blog’u | Borsa, AI ve Otomasyon Rehberi | Finans Kodu" />
+        <meta name="twitter:description" content="Finans profesyonelleri için kapsamlı blog: BIST analizleri, yapay zeka araçları ve algoritmik ticaret stratejileri." />
       </Helmet>
 
       <main className="container mx-auto px-4 py-8">

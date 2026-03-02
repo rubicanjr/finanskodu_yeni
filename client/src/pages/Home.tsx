@@ -58,22 +58,59 @@ export default function Home() {
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       {/* SEO Meta Tags */}
       <Helmet>
-        <title>Finans Kodu | Yapay Zeka Destekli Borsa Analiz ve Portföy Yönetimi</title>
-        <meta name="description" content="Yapay zeka destekli finansal mühendislik, algoritmik ticaret ve Excel otomasyon çözümleri sunan finansal teknoloji platformu." />
+        <title>Finans Kodu | Yapay Zeka Destekli Finansal Analiz, Algoritmik Ticaret ve Portföy Yönetimi</title>
+        <meta name="description" content="Türkiye'nin finans profesyonelleri için yapay zeka destekli borsa analizi, algoritmik ticaret stratejileri ve Excel otomasyon araçları. BIST ve küresel piyasalarda bilinçli yatırım kararları alın." />
+        <meta name="keywords" content="yapay zeka borsa analizi, algoritmik ticaret, BIST analiz, finansal mühendislik, portföy yönetimi, Excel finans otomasyonu, finans kodu" />
         <link rel="canonical" href="https://finanskodu.com/" />
         <meta name="robots" content="index, follow" />
         
         {/* Open Graph */}
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Finans Kodu - AI Driven Financial Efficiency" />
-        <meta property="og:description" content="Yapay zeka destekli finansal mühendislik, algoritmik ticaret ve Excel otomasyon çözümleri sunan finansal teknoloji platformu." />
+        <meta property="og:title" content="Finans Kodu | Yapay Zeka Destekli Finansal Analiz ve Algoritmik Ticaret" />
+        <meta property="og:description" content="Türkiye'nin finans profesyonelleri için yapay zeka destekli borsa analizi, algoritmik ticaret stratejileri ve Excel otomasyon araçları." />
         <meta property="og:url" content="https://finanskodu.com/" />
-        <meta property="og:image" content="https://finanskodu.com/logo.png" />
+        <meta property="og:image" content="https://finanskodu.com/assets/fk-logo-new.webp" />
         
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Finans Kodu - AI Driven Financial Efficiency" />
-        <meta name="twitter:description" content="Yapay zeka destekli finansal mühendislik, algoritmik ticaret ve Excel otomasyon çözümleri sunan finansal teknoloji platformu." />
+        <meta name="twitter:title" content="Finans Kodu | Yapay Zeka Destekli Finansal Analiz ve Algoritmik Ticaret" />
+        <meta name="twitter:description" content="Türkiye'nin finans profesyonelleri için yapay zeka destekli borsa analizi, algoritmik ticaret stratejileri ve Excel otomasyon araçları." />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Organization",
+              "@id": "https://finanskodu.com/#organization",
+              "name": "Finans Kodu",
+              "url": "https://finanskodu.com",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://finanskodu.com/assets/fk-logo-new.webp",
+                "width": 512,
+                "height": 512
+              },
+              "description": "Türkiye'nin finans profesyonelleri için yapay zeka destekli borsa analizi, algoritmik ticaret stratejileri ve Excel otomasyon araçları.",
+              "sameAs": [
+                "https://x.com/finanskodu",
+                "https://instagram.com/finanskodu",
+                "https://linkedin.com/company/finanskodu"
+              ]
+            },
+            {
+              "@type": "WebSite",
+              "@id": "https://finanskodu.com/#website",
+              "url": "https://finanskodu.com",
+              "name": "Finans Kodu",
+              "description": "Yapay zeka destekli finansal analiz, algoritmik ticaret ve portföy yönetimi platformu.",
+              "publisher": { "@id": "https://finanskodu.com/#organization" },
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": "https://finanskodu.com/blog?q={search_term_string}",
+                "query-input": "required name=search_term_string"
+              }
+            }
+          ]
+        })}</script>
       </Helmet>
 
       {/* Skip to main content link for accessibility */}

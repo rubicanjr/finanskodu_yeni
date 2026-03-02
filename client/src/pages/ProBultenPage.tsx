@@ -12,8 +12,29 @@ export default function ProBultenPage() {
   return (
     <>
       <Helmet>
-        <title>Pro - Algoritmik Strateji ve Analiz Bülteni | Finans Kodu</title>
-        <meta name="description" content="Altın algoritması, akıllı fon sepetleri, haftalık sesli brifing, kanıtlanmış model, yüksek veri isabeti, 1:1 finansal check-up." />
+        <title>Pro Algoritmik Strateji ve Analiz Bülteni | Aylık Piyasa Analizi | Finans Kodu</title>
+        <meta name="description" content="Aylık algoritmik strateji bülteni: Altın algoritması, akıllı fon sepetleri, haftalık sesli brifing ve 1:1 finansal check-up. Kanıtlanmış model ve yüksek veri isabeti ile piyasalarda öne geçin." />
+        <meta name="keywords" content="algoritmik strateji bülteni, piyasa analizi, altın algoritması, fon sepeti, finansal brifing, borsa sinyali" />
+        <link rel="canonical" href="https://finanskodu.com/dijital-araclar/pro-algoritmik-strateji-ve-analiz-bulteni" />
+        <meta property="og:title" content="Pro Algoritmik Strateji ve Analiz Bülteni | Aylık Piyasa Analizi" />
+        <meta property="og:description" content="Aylık algoritmik strateji bülteni: Altın algoritması, akıllı fon sepetleri ve 1:1 finansal check-up ile piyasalarda öne geçin." />
+        <meta property="og:type" content="product" />
+        <meta property="og:url" content="https://finanskodu.com/dijital-araclar/pro-algoritmik-strateji-ve-analiz-bulteni" />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Product",
+          "name": "Pro - Algoritmik Strateji ve Analiz Bülteni",
+          "description": "Aylık algoritmik strateji bülteni. Altın algoritması, akıllı fon sepetleri, haftalık sesli brifing, kanıtlanmış model ve 1:1 finansal check-up.",
+          "url": "https://finanskodu.com/dijital-araclar/pro-algoritmik-strateji-ve-analiz-bulteni",
+          "brand": { "@type": "Brand", "name": "Finans Kodu" },
+          "category": "Dijital Ürün",
+          "offers": {
+            "@type": "Offer",
+            "availability": "https://schema.org/InStock",
+            "priceCurrency": "TRY",
+            "seller": { "@type": "Organization", "name": "Finans Kodu" }
+          }
+        })}</script>
       </Helmet>
 
       <div className="min-h-screen bg-background">

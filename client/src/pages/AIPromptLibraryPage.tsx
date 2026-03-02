@@ -85,8 +85,29 @@ export default function AIPromptLibraryPage() {
   return (
     <>
       <Helmet>
-        <title>AI Prompt Kütüphanesi | Finans Kodu</title>
-        <meta name="description" content="100+ profesyonel finansal analiz komutu. Sanal analist, hız ve verimlilik, tam kapsam." />
+        <title>AI Prompt Kütüphanesi: 100+ Finansal Analiz Komutu | Finans Kodu</title>
+        <meta name="description" content="Finans profesyonelleri için 100+ yapay zeka prompt koleksiyonu. ChatGPT ve Claude ile finansal analiz, rapor hazırlama ve portföy yönetimi işlerini otomatikleştirin. Sanal analist, hazır şablonlar ve tam kapsam." />
+        <meta name="keywords" content="finans AI prompt, ChatGPT finans, finansal analiz komutu, yapay zeka prompt kütüphanesi, finans otomasyon" />
+        <link rel="canonical" href="https://finanskodu.com/dijital-araclar/ai-prompt-kutuphanesi" />
+        <meta property="og:title" content="AI Prompt Kütüphanesi: 100+ Finansal Analiz Komutu | Finans Kodu" />
+        <meta property="og:description" content="Finans profesyonelleri için 100+ yapay zeka prompt koleksiyonu. ChatGPT ve Claude ile finansal analiz işlerini otomatikleştirin." />
+        <meta property="og:type" content="product" />
+        <meta property="og:url" content="https://finanskodu.com/dijital-araclar/ai-prompt-kutuphanesi" />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Product",
+          "name": "AI Prompt Kütüphanesi",
+          "description": "Finans profesyonelleri için 100+ yapay zeka prompt koleksiyonu. ChatGPT ve Claude ile finansal analiz, rapor hazırlama ve portföy yönetimi işlerini otomatikleştirin.",
+          "url": "https://finanskodu.com/dijital-araclar/ai-prompt-kutuphanesi",
+          "brand": { "@type": "Brand", "name": "Finans Kodu" },
+          "category": "Dijital Ürün",
+          "offers": {
+            "@type": "Offer",
+            "availability": "https://schema.org/InStock",
+            "priceCurrency": "TRY",
+            "seller": { "@type": "Organization", "name": "Finans Kodu" }
+          }
+        })}</script>
       </Helmet>
 
       <div className="min-h-screen bg-background">

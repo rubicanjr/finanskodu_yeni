@@ -1,4 +1,5 @@
 import { useI18n } from '@/contexts/I18nContext';
+import { Helmet } from 'react-helmet-async';
 import { Brain, BookOpen, TrendingUp, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import AudioPlayerButton from '@/components/AudioPlayerButton';
@@ -149,8 +150,51 @@ export default function DigitalToolsPage() {
   const { t } = useI18n();
 
 
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Finans Kodu Dijital Araçlar",
+    "description": "Finans profesyonelleri için yapay zeka destekli dijital araçlar, prompt kütüphanesi ve algoritmik strateji bülteni.",
+    "url": "https://finanskodu.com/dijital-araclar",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "AI Prompt Kütüphanesi",
+        "description": "100+ profesyonel finansal analiz komutu. Finans profesyonelleri için özel olarak tasarlanmış yapay zeka prompt koleksiyonu.",
+        "url": "https://finanskodu.com/dijital-araclar/ai-prompt-kutuphanesi"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "FİNANS KODU: Kaos İçinde Düzen",
+        "description": "Finansal operasyonlarınızı dönüştürecek kapsamlı metodoloji ve araç seti.",
+        "url": "https://finanskodu.com/dijital-araclar/finans-kodu-kaos-icinde-duzen"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Pro - Algoritmik Strateji ve Analiz Bülteni",
+        "description": "Piyasa yönü, makro analizler ve algoritmik sinyaller içeren kapsamlı aylık bülten.",
+        "url": "https://finanskodu.com/dijital-araclar/pro-algoritmik-strateji-ve-analiz-bulteni"
+      }
+    ]
+  };
+
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Dijital Araçlar: AI Prompt, Finans Metodolojisi ve Strateji Bülteni | Finans Kodu</title>
+        <meta name="description" content="Finans profesyonelleri için 100+ AI prompt, kapsamlı finansal metodoloji rehberi ve aylık algoritmik strateji bülteni. Yapay zeka ile finansal verimliliğinizi artırın." />
+        <meta name="keywords" content="finans AI prompt, finansal analiz araçları, algoritmik strateji bülteni, finans metodolojisi, yapay zeka finans" />
+        <link rel="canonical" href="https://finanskodu.com/dijital-araclar" />
+        <meta property="og:title" content="Dijital Araçlar: AI Prompt, Finans Metodolojisi ve Strateji Bülteni | Finans Kodu" />
+        <meta property="og:description" content="Finans profesyonelleri için 100+ AI prompt, kapsamlı finansal metodoloji rehberi ve aylık algoritmik strateji bülteni." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://finanskodu.com/dijital-araclar" />
+        <script type="application/ld+json">{JSON.stringify(schemaData)}</script>
+      </Helmet>
+
       {/* Hero Section */}
       <section className="py-16 px-4 text-center">
         <div className="container max-w-4xl mx-auto">
