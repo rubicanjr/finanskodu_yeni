@@ -24,7 +24,7 @@ interface SidebarContentProps {
 
 export default function SidebarContent({ onLinkClick }: SidebarContentProps) {
   const { t } = useI18n();
-  const [location] = useLocation();
+  const [location, navigate] = useLocation();
 
   const renderNavItem = (item: typeof navItems[0]) => {
     const isActive = location === item.href;
@@ -87,7 +87,7 @@ export default function SidebarContent({ onLinkClick }: SidebarContentProps) {
       <div className="mt-4 px-0 pb-0 flex-shrink-0">
         <a
           href="/kurucu-stratejist"
-          onClick={onLinkClick}
+          onClick={(e) => { e.preventDefault(); onLinkClick?.(); navigate('/kurucu-stratejist'); }}
           className="group relative block rounded-xl p-3 transition-all duration-200 overflow-hidden"
           style={{
             background: 'linear-gradient(135deg, rgba(0,212,255,0.07) 0%, rgba(0,200,150,0.04) 100%)',
@@ -164,8 +164,8 @@ export default function SidebarContent({ onLinkClick }: SidebarContentProps) {
             style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
           >
             {[
-              { label: 'LinkedIn', href: 'https://linkedin.com/in/rubicanicli' },
-              { label: 'Twitter', href: 'https://twitter.com/finanskodu' },
+        { label: 'LinkedIn', href: 'https://www.linkedin.com/in/rubi-can-icliyurek/' },
+        { label: 'Twitter', href: 'https://x.com/finansk0du' },
             ].map(s => (
               <a
                 key={s.label}
