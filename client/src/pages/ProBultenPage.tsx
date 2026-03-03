@@ -1,13 +1,52 @@
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { Link } from 'wouter';
 import { useI18n } from '@/contexts/I18nContext';
-import { TrendingUp, ExternalLink, AlertCircle, Calendar } from 'lucide-react';
+import { TrendingUp, ExternalLink, ChevronLeft, Check, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import AudioPlayerButton from '@/components/AudioPlayerButton';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+
+const product = {
+  shortTitle: 'Pro — Algoritmik Strateji Bülteni',
+  buyUrl: 'https://www.hikie.space/finanskodu/algoritmik-strateji-ve-analiz',
+  consultUrl: 'https://cal.com/rubi-can',
+  summaryItems: [
+    'Haftalık algoritmik altın alım-satım sinyalleri',
+    'Akıllı fon sepeti önerileri (hisse, tahvil, emtia)',
+    'Sesli brifing — Vera ve Sarp tarafından hazırlanmış',
+    'Kanıtlanmış model ile yüksek veri isabeti',
+    'Aylık 1:1 finansal check-up görüşmesi',
+    'VIP iletişim hattı (WhatsApp/Telegram)',
+  ],
+  thirtyDayItems: [
+    'Altın algoritmasını portföyüne entegre et',
+    'Akıllı fon sepeti ile çeşitlendirme yap',
+    'Haftalık sesli brifinglerle piyasaları takip et',
+    'Kişisel finansal reçeteni al ve uygula',
+    'Aylık check-up ile stratejini optimize et',
+  ],
+};
+
+const tabs = [
+  { id: 'about', label: 'Bu Ürün Hakkında' },
+  { id: 'includes', label: 'Neler İçeriyor' },
+  { id: 'bonus', label: 'Bonus' },
+  { id: 'faq', label: 'Sıkça Sorulan Sorular' },
+  { id: 'founder', label: 'Kurucu Stratejistimiz' },
+];
 
 export default function ProBultenPage() {
   const { t } = useI18n();
+  const [activeTab, setActiveTab] = useState('about');
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  const faqs = [
+    { q: t('digitalTools.proBulletin.faq1Question'), a: t('digitalTools.proBulletin.faq1Answer') },
+    { q: t('digitalTools.proBulletin.faq2Question'), a: t('digitalTools.proBulletin.faq2Answer') },
+    { q: t('digitalTools.proBulletin.faq3Question'), a: t('digitalTools.proBulletin.faq3Answer') },
+    { q: t('digitalTools.proBulletin.faq4Question'), a: t('digitalTools.proBulletin.faq4Answer') },
+    { q: t('digitalTools.proBulletin.faq5Question'), a: t('digitalTools.proBulletin.faq5Answer') },
+  ];
 
   return (
     <>
@@ -37,94 +76,175 @@ export default function ProBultenPage() {
           "url": "https://finanskodu.com/dijital-araclar/pro-algoritmik-strateji-ve-analiz-bulteni",
           "brand": { "@type": "Brand", "name": "Finans Kodu" },
           "category": "Dijital Ürün",
-          "offers": {
-            "@type": "Offer",
-            "availability": "https://schema.org/InStock",
-            "priceCurrency": "TRY",
-            "seller": { "@type": "Organization", "name": "Finans Kodu" }
-          }
+          "offers": { "@type": "Offer", "availability": "https://schema.org/InStock", "priceCurrency": "TRY", "seller": { "@type": "Organization", "name": "Finans Kodu" } }
         })}</script>
       </Helmet>
 
-      <div className="min-h-screen bg-background">
-        {/* Hero Section */}
-        <section className="container py-16 md:py-24">
-          <div className="max-w-4xl mx-auto text-center space-y-6">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/20">
-              <TrendingUp className="w-5 h-5 text-amber-600 dark:text-amber-400" />
-              <span className="text-sm font-medium text-amber-600 dark:text-amber-400">
-                {t('digitalTools.proBulletin.subtitle')}
-              </span>
+      <div className="min-h-screen bg-background pb-20">
+
+        {/* ── TOPBAR ── */}
+        <div className="bg-[var(--card)] border-b border-border px-6 py-2.5 flex items-center gap-2 text-sm">
+          <span className="text-muted-foreground/60">finanskodu</span>
+          <span className="text-muted-foreground/30">/</span>
+          <span className="font-bold text-foreground">Dijital Araçlar</span>
+          <Link to="/dijital-araclar" className="ml-auto flex items-center gap-1.5 text-muted-foreground/60 hover:text-foreground transition-colors text-xs">
+            <ChevronLeft className="w-3.5 h-3.5" />
+            Dijital Araçlar
+          </Link>
+        </div>
+
+        {/* ── HERO + CTA ── */}
+        <section className="max-w-4xl mx-auto px-6 pt-12 pb-8">
+          <div className="space-y-5">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20">
+              <TrendingUp className="w-4 h-4 text-amber-500" />
+              <span className="text-xs font-semibold text-amber-500 tracking-wide uppercase">// Algoritmik Strateji</span>
             </div>
-            
-            <Badge variant="outline" className="bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20 text-lg px-4 py-1">
-              Pro
-            </Badge>
-            
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground">
-              {t('digitalTools.proBulletin.title')}
-            </h1>
-            
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+
+            <div className="flex items-center gap-3">
+              <h1 className="text-4xl md:text-5xl font-bold text-foreground leading-tight">
+                {t('digitalTools.proBulletin.title')}
+              </h1>
+              <span className="px-2.5 py-1 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-500 font-bold text-sm flex-shrink-0">PRO</span>
+            </div>
+
+            <p className="text-base text-muted-foreground max-w-[640px]">
               {t('digitalTools.proBulletin.description')}
             </p>
 
-            <div className="flex flex-wrap justify-center items-center gap-4 pt-4">
-              <Button size="lg" asChild className="bg-amber-600 hover:bg-amber-700 text-white">
-                <a href="https://www.hikie.space/finanskodu/algoritmik-strateji-ve-analiz" target="_blank" rel="noopener noreferrer">
+            <div className="flex flex-wrap items-center gap-3 pt-2">
+              <Button size="lg" asChild className="bg-orange-500 hover:bg-orange-600 text-white font-semibold">
+                <a href={product.buyUrl} target="_blank" rel="noopener noreferrer">
                   Satın Al (1 Aylık Erişim)
                   <ExternalLink className="ml-2 w-4 h-4" />
                 </a>
               </Button>
-              <Button size="lg" variant="outline" asChild>
-                <a href="https://cal.com/rubi-can" target="_blank" rel="noopener noreferrer">
+              <Button size="lg" variant="outline" asChild className="border-foreground/20 text-foreground hover:bg-foreground/5">
+                <a href={product.consultUrl} target="_blank" rel="noopener noreferrer">
                   <Calendar className="mr-2 w-4 h-4" />
                   Ücretsiz Danışma
                 </a>
               </Button>
               <AudioPlayerButton
-                text={`${t('digitalTools.proBulletin.title')}. ${t('digitalTools.proBulletin.subtitle')}. ${t('digitalTools.proBulletin.description')}. Özellikler: ${['feature1','feature2','feature3','feature4','feature5','feature6','feature7','feature8'].map(k => t('digitalTools.proBulletin.' + k)).join('. ')}`}
+                text={`${t('digitalTools.proBulletin.title')}. ${t('digitalTools.proBulletin.description')}`}
                 duration="~3 dk"
               />
             </div>
+            <p className="text-xs text-muted-foreground/60">Ücretsiz · Bağlayıcı değil · 30 dakika</p>
           </div>
         </section>
 
-        {/* Features Grid */}
-        <section className="container py-12">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-2xl font-bold text-foreground mb-8 text-center">Özellikler</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {[
-                { icon: '🥇', text: t('digitalTools.proBulletin.feature1') },
-                { icon: '📈', text: t('digitalTools.proBulletin.feature2') },
-                { icon: '🎙️', text: t('digitalTools.proBulletin.feature3') },
-                { icon: '🚀', text: t('digitalTools.proBulletin.feature4') },
-                { icon: '🎯', text: t('digitalTools.proBulletin.feature5') },
-                { icon: '🔍', text: t('digitalTools.proBulletin.feature6') },
-                { icon: '🛣️', text: t('digitalTools.proBulletin.feature7') },
-                { icon: '📲', text: t('digitalTools.proBulletin.feature8') },
-              ].map((feature, index) => (
-                <Card key={index} className="bg-card border-border">
-                  <CardContent className="pt-6">
-                    <div className="flex flex-col items-center text-center gap-3">
-                      <span className="text-3xl">{feature.icon}</span>
-                      <p className="text-sm text-muted-foreground">{feature.text}</p>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+        {/* ── SUMMARY GRID ── */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto px-6 py-6">
+          {/* Öğrenme Özeti */}
+          <div className="bg-card rounded-2xl border border-border p-5">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-9 h-9 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-lg">📊</div>
+              <div>
+                <div className="font-bold text-sm text-foreground">Öğrenme Özeti</div>
+                <div className="text-xs text-muted-foreground">Bu pakette neler var?</div>
+              </div>
             </div>
+            <ul className="space-y-2">
+              {product.summaryItems.map(item => (
+                <li key={item} className="flex items-start gap-2.5 text-sm text-muted-foreground">
+                  <div className="w-4 h-4 rounded bg-amber-500/10 border border-amber-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <Check className="w-2.5 h-2.5 text-amber-500" />
+                  </div>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
           </div>
-        </section>
 
-        {/* What's Included */}
-        <section className="container py-12">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold text-foreground mb-8 text-center">Bültene Dahil Olanlar</h2>
-            <Card className="bg-card border-border">
-              <CardContent className="pt-6">
-                <ul className="space-y-4">
+          {/* 30 Günde */}
+          <div className="bg-card rounded-2xl border border-border p-5">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-9 h-9 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-lg">🎯</div>
+              <div>
+                <div className="font-bold text-sm text-foreground">30 Günde Yapabileceklerin</div>
+                <div className="text-xs text-muted-foreground">Somut çıktılar</div>
+              </div>
+            </div>
+            <ul className="space-y-2">
+              {product.thirtyDayItems.map(item => (
+                <li key={item} className="flex items-start gap-2.5 text-sm text-muted-foreground">
+                  <div className="w-4 h-4 rounded bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <Check className="w-2.5 h-2.5 text-emerald-500" />
+                  </div>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* ── STICKY TAB BAR ── */}
+        <div className="sticky top-0 z-20 bg-background/90 backdrop-blur-md border-b border-border">
+          <div className="max-w-4xl mx-auto px-6 flex gap-0 overflow-x-auto scrollbar-hide">
+            {tabs.map(tab => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex-shrink-0 px-4 py-3 text-sm font-medium border-b-2 transition-all whitespace-nowrap ${
+                  activeTab === tab.id
+                    ? 'border-amber-500 text-amber-500'
+                    : 'border-transparent text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* ── TAB PANELS ── */}
+        <div className="max-w-4xl mx-auto px-6 py-8">
+
+          {/* about */}
+          {activeTab === 'about' && (
+            <div className="space-y-6">
+              <p className="text-muted-foreground leading-relaxed">
+                {t('digitalTools.proBulletin.description')} Pro bülten, algoritmik analiz ve kişisel danışmanlığı bir arada sunan premium bir finansal istihbarat hizmetidir.
+              </p>
+              <p className="text-muted-foreground leading-relaxed">
+                Her ay, kanıtlanmış algoritmik modeller kullanılarak hazırlanan altın sinyalleri, fon sepeti önerileri ve sesli brifinglerle piyasalarda bir adım önde olun. Aylık 1:1 check-up görüşmesiyle stratejinizi kişiselleştirin.
+              </p>
+              <div className="border-l-4 border-amber-500 pl-5 py-2 bg-amber-500/5 rounded-r-lg">
+                <p className="text-foreground font-medium italic">
+                  "Algoritmik analiz, duygusal kararların önüne geçer. Pro bülten, bu disiplini herkes için erişilebilir kılıyor."
+                </p>
+                <p className="text-sm text-muted-foreground mt-1">— Rubi Can İçliyürek, Co-Founder & CIO</p>
+              </div>
+            </div>
+          )}
+
+          {/* includes */}
+          {activeTab === 'includes' && (
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {[
+                  { icon: '🥇', title: 'Altın Algoritması', desc: 'Haftalık algoritmik altın alım-satım sinyalleri' },
+                  { icon: '📈', title: 'Akıllı Fon Sepeti', desc: 'Hisse senedi, tahvil ve emtia önerileri' },
+                  { icon: '🎙️', title: 'Sesli Brifing', desc: 'Vera ve Sarp tarafından hazırlanan haftalık ses analizi' },
+                  { icon: '🚀', title: 'Kanıtlanmış Model', desc: 'Yüksek veri isabeti ile test edilmiş algoritmalar' },
+                  { icon: '🎯', title: '1:1 Check-up', desc: 'Aylık kişisel finansal değerlendirme görüşmesi' },
+                  { icon: '🔍', title: 'Kişisel Reçete', desc: 'Size özel finansal strateji ve öneriler' },
+                  { icon: '🛣️', title: 'Özel Raporlar', desc: 'Derinlemesine piyasa analiz raporları' },
+                  { icon: '📲', title: 'VIP İletişim', desc: 'WhatsApp/Telegram üzerinden öncelikli destek' },
+                ].map((f, i) => (
+                  <div key={i} className="bg-card border border-border rounded-xl p-4 flex items-start gap-3">
+                    <span className="text-2xl">{f.icon}</span>
+                    <div>
+                      <div className="font-semibold text-sm text-foreground">{f.title}</div>
+                      <div className="text-xs text-muted-foreground mt-0.5">{f.desc}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="bg-card border border-border rounded-xl p-5">
+                <h3 className="font-semibold text-foreground mb-4">Bültene Dahil Olanlar</h3>
+                <ul className="space-y-3">
                   {[
                     'Haftalık algoritmik altın alım-satım sinyalleri',
                     'Akıllı fon sepeti önerileri (hisse senedi, tahvil, emtia)',
@@ -134,93 +254,110 @@ export default function ProBultenPage() {
                     'Kişisel finansal reçete ve strateji önerileri',
                     'VIP iletişim hattı (WhatsApp/Telegram)',
                     'Özel raporlar ve piyasa analizleri',
-                  ].map((item, index) => (
-                    <li key={index} className="flex items-start gap-3">
-                      <span className="text-amber-600 dark:text-amber-400 mt-1">✓</span>
-                      <span className="text-muted-foreground">{item}</span>
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-start gap-2.5 text-sm text-muted-foreground">
+                      <Check className="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" />
+                      <span>{item}</span>
                     </li>
                   ))}
                 </ul>
-              </CardContent>
-            </Card>
-          </div>
-        </section>
+              </div>
+            </div>
+          )}
 
-        {/* FAQ Section */}
-        <section className="container py-12">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold text-foreground mb-8 text-center">Sıkça Sorulan Sorular</h2>
-            <Card className="bg-card border-border">
-              <CardContent className="pt-6">
-                <div className="space-y-4">
-                  {[
-                    {
-                      q: t('digitalTools.proBulletin.faq1Question'),
-                      a: t('digitalTools.proBulletin.faq1Answer'),
-                    },
-                    {
-                      q: t('digitalTools.proBulletin.faq2Question'),
-                      a: t('digitalTools.proBulletin.faq2Answer'),
-                    },
-                    {
-                      q: t('digitalTools.proBulletin.faq3Question'),
-                      a: t('digitalTools.proBulletin.faq3Answer'),
-                    },
-                    {
-                      q: t('digitalTools.proBulletin.faq4Question'),
-                      a: t('digitalTools.proBulletin.faq4Answer'),
-                    },
-                    {
-                      q: t('digitalTools.proBulletin.faq5Question'),
-                      a: t('digitalTools.proBulletin.faq5Answer'),
-                    },
-                  ].map((faq, index) => (
-                    <div key={index} className="border-b border-border last:border-0 pb-4 last:pb-0">
-                      <h3 className="font-semibold text-foreground mb-2 flex items-start gap-2">
-                        <AlertCircle className="w-5 h-5 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
-                        {faq.q}
-                      </h3>
-                      <p className="text-muted-foreground text-sm pl-7">{faq.a}</p>
+          {/* bonus */}
+          {activeTab === 'bonus' && (
+            <div className="space-y-4">
+              {[
+                { num: '01', title: 'Onboarding Görüşmesi', desc: 'Aboneliğinizin ilk haftasında 30 dakikalık ücretsiz tanışma görüşmesi. Finansal hedeflerinizi belirleyin ve kişiselleştirilmiş bir başlangıç planı alın.' },
+                { num: '02', title: 'Geçmiş Bülten Arşivi', desc: 'Son 3 aylık tüm bülten ve analizlere anında erişim. Geçmiş sinyallerin performansını inceleyin ve modelin doğruluğunu kendiniz doğrulayın.' },
+                { num: '03', title: 'Özel Telegram Kanalı', desc: 'Anlık piyasa güncellemeleri ve acil sinyaller için özel Telegram kanalına erişim. Kritik gelişmeleri gerçek zamanlı takip edin.' },
+                { num: '04', title: 'Yıllık Piyasa Takvimi', desc: 'Merkez bankası toplantıları, ekonomik veri açıklamaları ve kritik tarihler için hazırlanmış özel piyasa takvimi.' },
+              ].map((bonus, i) => (
+                <div
+                  key={i}
+                  className="rounded-xl p-5 flex gap-4"
+                  style={{ background: 'linear-gradient(135deg, rgba(245,158,11,0.05) 0%, rgba(249,115,22,0.05) 100%)', border: '1px solid rgba(245,158,11,0.15)' }}
+                >
+                  <div className="text-2xl font-black text-amber-500/30 font-mono leading-none flex-shrink-0 mt-0.5">{bonus.num}</div>
+                  <div>
+                    <div className="font-bold text-foreground mb-1">{bonus.title}</div>
+                    <div className="text-sm text-muted-foreground">{bonus.desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* faq */}
+          {activeTab === 'faq' && (
+            <div className="bg-card border border-border rounded-2xl overflow-hidden">
+              {faqs.map((faq, index) => (
+                <div key={index} className="border-b border-border last:border-0">
+                  <button
+                    onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                    className="w-full text-left px-5 py-4 flex items-center justify-between gap-4 hover:bg-muted/30 transition-colors"
+                  >
+                    <span className="font-medium text-foreground text-sm">{faq.q}</span>
+                    <span className="text-muted-foreground flex-shrink-0 text-lg leading-none">{openFaq === index ? '−' : '+'}</span>
+                  </button>
+                  {openFaq === index && (
+                    <div className="px-5 pb-4">
+                      <p className="text-sm text-muted-foreground leading-relaxed">{faq.a}</p>
                     </div>
-                  ))}
+                  )}
                 </div>
-              </CardContent>
-            </Card>
-          </div>
-        </section>
+              ))}
+            </div>
+          )}
 
-        {/* CTA Section */}
-        <section className="container py-16">
-          <div className="max-w-4xl mx-auto text-center">
-            <Card className="bg-gradient-to-br from-amber-500/10 to-orange-500/10 border-amber-500/20">
-              <CardContent className="pt-12 pb-12">
-                <h2 className="text-3xl font-bold text-foreground mb-4">
-                  Pro Seviyeye Geçin
-                </h2>
-                <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-                  Algoritmik strateji ve kişisel danışmanlıkla finansal hedeflerinize ulaşın.
-                </p>
-                <div className="flex flex-wrap justify-center gap-4">
-                  <Button size="lg" asChild className="bg-amber-600 hover:bg-amber-700 text-white">
-                    <a href="https://www.hikie.space/finanskodu/algoritmik-strateji-ve-analiz" target="_blank" rel="noopener noreferrer">
-                      Satın Al (1 Aylık Erişim)
-                      <ExternalLink className="ml-2 w-4 h-4" />
-                    </a>
-                  </Button>
-                  <Button size="lg" variant="outline" asChild>
-                    <a href="https://cal.com/rubi-can" target="_blank" rel="noopener noreferrer">
-                      <Calendar className="mr-2 w-4 h-4" />
-                      Ücretsiz Danışma
-                    </a>
-                  </Button>
+          {/* founder */}
+          {activeTab === 'founder' && (
+            <div className="space-y-6">
+              <div className="flex items-start gap-5">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500/20 to-amber-500/5 border border-amber-500/20 flex items-center justify-center flex-shrink-0">
+                  <span className="text-2xl font-black text-amber-500">RC</span>
                 </div>
-                <p className="text-xs text-muted-foreground mt-4">
-                  Ücretsiz · Bağlayıcı değil · 30 dakika
+                <div>
+                  <div className="font-bold text-foreground text-lg">Rubi Can İçliyürek</div>
+                  <div className="text-sm text-muted-foreground">Co-Founder & CIO, Finans Kodu</div>
+                  <div className="flex gap-2 mt-2">
+                    <a href="https://www.linkedin.com/in/rubi-can-icliyurek/" target="_blank" rel="noopener noreferrer" className="text-xs px-3 py-1 rounded-full bg-blue-500/10 text-blue-500 border border-blue-500/20 hover:bg-blue-500/20 transition-colors">LinkedIn</a>
+                    <a href="https://x.com/finansk0du" target="_blank" rel="noopener noreferrer" className="text-xs px-3 py-1 rounded-full bg-foreground/5 text-foreground border border-border hover:bg-foreground/10 transition-colors">X / Twitter</a>
+                  </div>
+                </div>
+              </div>
+              <p className="text-muted-foreground leading-relaxed">
+                Endüstri Mühendisliği, Finansal Operasyonlar ve Yapay Zeka teknolojilerini birleştiren Rubi Can İçliyürek, finansal kaosunuzu kod yazmadan düzenli bir mühendislik harikasına dönüştürmek için Finans Kodu'nu kurdu.
+              </p>
+              <p className="text-muted-foreground leading-relaxed">
+                Pro bülten, Rubi Can'ın yıllar içinde geliştirdiği algoritmik modellerin ve piyasa analiz metodolojisinin doğrudan abonelere sunulduğu premium hizmettir. Her sinyal, gerçek portföy yönetimi deneyimiyle desteklenmektedir.
+              </p>
+              <div className="border-l-4 border-amber-500 pl-5 py-2 bg-amber-500/5 rounded-r-lg">
+                <p className="text-foreground font-medium italic">
+                  "Algoritmalar duygu tanımaz. Bu bülten, piyasalara duygusuz ama akıllıca yaklaşmanın somut bir örneğidir."
                 </p>
-              </CardContent>
-            </Card>
-          </div>
-        </section>
+                <p className="text-sm text-muted-foreground mt-1">— Rubi Can İçliyürek</p>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* ── STICKY CTA BAR ── */}
+      <div className="fixed bottom-0 left-0 right-0 z-30 bg-background/95 backdrop-blur-md border-t border-border px-6 py-3 flex items-center justify-between gap-3">
+        <div>
+          <div className="font-semibold text-sm text-foreground">{product.shortTitle}</div>
+          <div className="text-xs text-muted-foreground">1 Aylık Erişim · Ücretsiz danışma mevcut</div>
+        </div>
+        <div className="flex gap-2">
+          <Button size="sm" variant="outline" asChild className="border-foreground/20 text-foreground hover:bg-foreground/5 text-xs">
+            <a href={product.consultUrl} target="_blank" rel="noopener noreferrer">Ücretsiz Danışma</a>
+          </Button>
+          <Button size="sm" asChild className="bg-orange-500 hover:bg-orange-600 text-white text-xs font-semibold">
+            <a href={product.buyUrl} target="_blank" rel="noopener noreferrer">Satın Al</a>
+          </Button>
+        </div>
       </div>
     </>
   );

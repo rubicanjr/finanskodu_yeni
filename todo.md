@@ -2360,3 +2360,15 @@
 - [x] Değişiklik 4: Feature listesi (3 madde, cyan bg)
 - [x] Değişiklik 5: Başlık "Kod Odası'na Giriş" text-2xl, alt metin güncelle
 - [x] Değişiklik 6: Arka plan radial gradient atmosfer
+
+## pasted_content_8.txt: Dijital Ürün Sayfaları Yeniden Yapılandırma
+
+- [x] AIPromptLibraryPage.tsx: Topbar (breadcrumb + geri dön linki) eklendi
+- [x] AIPromptLibraryPage.tsx: Hero + 3 buton (Satın Al turuncu, Ücretsiz Danışma beyaz çerçeveli, Sesli Dinle cyan) eklendi
+- [x] AIPromptLibraryPage.tsx: Summary Grid (Öğrenme Özeti + 30 Günde Yapabileceklerin) eklendi
+- [x] AIPromptLibraryPage.tsx: Sticky Tab Bar (5 sekme: Hakkında, Neler İçeriyor, Bonus, SSS, Kurucu) eklendi
+- [x] AIPromptLibraryPage.tsx: Tab Panels (about/includes/bonus/faq/founder) eklendi
+- [x] AIPromptLibraryPage.tsx: Sticky CTA bar (fixed bottom) eklendi
+- [x] AIPromptLibraryPage.tsx: Eski Özellikler/SSS/CTA block kaldırıldı
+- [x] FinansKoduPage.tsx: Aynı yapı uygulandı (emerald renk teması)
+- [x] ProBultenPage.tsx: Aynı yapı uygulandı (amber renk teması)
