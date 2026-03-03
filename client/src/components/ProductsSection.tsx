@@ -30,7 +30,7 @@ const products: Product[] = [
     badgeColor: "#8B5CF6",
     journeyBadge: "BAŞLA",
     journeyColor: "#10B981",
-    buttonText: "Prompt'ları Keşfet",
+    buttonText: "Şimdi anında erişim sağlayın",
     features: [
       "🧠 100+ Profesyonel Komut",
       "👔 Sanal Analist",
@@ -51,7 +51,7 @@ const products: Product[] = [
     badgeColor: "#0EA5E9",
     journeyBadge: "DEVAM ET",
     journeyColor: "#0EA5E9",
-    buttonText: "Sistemi İncele",
+    buttonText: "Şimdi anında satın alın",
     features: [
       "🏭 Mühendislik Perspektifi",
       "🧠 Duygu-Bozucu Algoritmalar",
@@ -72,7 +72,7 @@ const products: Product[] = [
     badgeColor: "#D4A853",
     journeyBadge: "İLERLE",
     journeyColor: "#8899AA",
-    buttonText: "Bültene Katıl",
+    buttonText: "Şimdi anında erişim sağlayın",
     features: [
       "🥇 Altın Algoritması",
       "📈 Akıllı Fon Sepetleri",

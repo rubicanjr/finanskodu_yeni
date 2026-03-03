@@ -625,7 +625,7 @@ export default function KodOdasiNew() {
 
   if (authLoading) {
     return (
-      <div style={{ height: "calc(100svh - 48px)", background: "var(--background)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <div style={{ minHeight: "calc(100svh - 48px)", background: "var(--background)", display: "flex", alignItems: "center", justifyContent: "center" }}>
         <Loader2 className="animate-spin" size={32} style={{ color: "#0EA5E9" }} />
       </div>
     );
@@ -647,7 +647,7 @@ export default function KodOdasiNew() {
       {!user ? (
         <LoginScreen onSignIn={handleSignIn} />
       ) : (
-        <div style={{ height: "calc(100svh - 48px)", background: "var(--background)", color: "var(--foreground)", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+        <div style={{ minHeight: "calc(100svh - 48px)", background: "var(--background)", color: "var(--foreground)", display: "flex", flexDirection: "column", overflow: "hidden" }}>
           <div style={{ flex: 1, maxWidth: "900px", width: "100%", margin: "0 auto", padding: "8px 8px", display: "flex", flexDirection: "column", minHeight: 0 }}>
 
             {/* ── Chat box ── */}

@@ -10,10 +10,8 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
-import { useRef, useState } from "react";
-import { Linkedin, Instagram, Mail, ArrowRight, ExternalLink } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
+import { useRef } from "react";
+import { Linkedin, Instagram } from "lucide-react";
 
 // Custom X (Twitter) icon
 const XIcon = () => (
@@ -53,7 +51,6 @@ const socialLinks = [
 ];
 
 const quickLinks = [
-  { label: "Manifesto", href: "#manifesto" },
   { label: "Ürünler", href: "#urunler" },
   { label: "Blog", href: "/blog", isRoute: true },
 ];
@@ -61,15 +58,6 @@ const quickLinks = [
 export default function Footer() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
-  const [email, setEmail] = useState("");
-
-  const handleNewsletterSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email) {
-      toast.success("E-bülten kaydınız alındı! Yakında sizinle iletişime geçeceğiz.");
-      setEmail("");
-    }
-  };
 
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
@@ -89,56 +77,7 @@ export default function Footer() {
       <div className="section-divider mb-16" aria-hidden="true" />
 
       <div className="container" ref={ref}>
-        {/* Newsletter Section */}
-        <motion.section
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="glass-card rounded-2xl p-8 md:p-12 mb-16 text-center"
-          aria-labelledby="newsletter-heading"
-        >
-          <div className="max-w-2xl mx-auto">
-            <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-6">
-              <Mail className="w-7 h-7 text-primary" aria-hidden="true" />
-            </div>
-            <h3 id="newsletter-heading" className="font-display font-bold text-2xl sm:text-3xl mb-2">
-              Haftalık Finans Özeti
-            </h3>
-            <p className="text-muted-foreground mb-1">
-              Her Pazartesi: piyasa analizi, AI araç önerileri ve strateji bülteni.
-            </p>
-            <p className="text-xs text-muted-foreground mb-6">
-              📩 500+ okuyucu · Haftada 1 mail · İstediğin zaman çık
-            </p>
-            <form 
-              onSubmit={handleNewsletterSubmit} 
-              className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
-              aria-label="E-bülten kayıt formu"
-            >
-              <label htmlFor="newsletter-email" className="sr-only">E-posta adresiniz</label>
-              <input
-                id="newsletter-email"
-                type="email"
-                name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="E-posta adresiniz"
-                className="flex-1 px-4 py-3 rounded-lg bg-input border border-border focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary text-foreground placeholder:text-muted-foreground"
-                required
-                autoComplete="email"
-                aria-required="true"
-              />
-              <Button
-                type="submit"
-                className="bg-primary text-primary-foreground hover:bg-primary/90 neon-glow font-display font-semibold px-6"
-                aria-label="E-bültene katıl"
-              >
-                Katıl
-                <ArrowRight className="ml-2 w-4 h-4" aria-hidden="true" />
-              </Button>
-            </form>
-          </div>
-        </motion.section>
+  
 
         {/* Main Footer Content */}
         <div className="grid md:grid-cols-3 gap-12 mb-12">

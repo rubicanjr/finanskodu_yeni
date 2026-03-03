@@ -6,10 +6,10 @@ import LanguageToggle from './LanguageToggle';
 
 const navItems = [
   { href: '/', label: 'nav.home', icon: Home, external: false },
-  { href: '/dijital-araclar', label: 'nav.products', icon: Package, external: false },
+  { href: '/dijital-araclar', label: 'nav.products', icon: Package, external: false, scrollTarget: 'urunler' },
   { href: '/kurumsal', label: 'nav.kurumsal', icon: Building2, external: false },
   { href: '/blog', label: 'nav.blog', icon: BookOpen, external: false },
-  { href: '/kod-odasi', label: 'nav.kodOdasi', icon: MessageSquare, external: true },
+  { href: '/kod-odasi', label: 'nav.kodOdasi', icon: MessageSquare, external: false },
 ];
 
 const bottomNavItems = [
@@ -26,23 +26,39 @@ export default function SidebarContent({ onLinkClick }: SidebarContentProps) {
   const { t } = useI18n();
   const [location, navigate] = useLocation();
 
+  const handleScrollNavItem = (item: typeof navItems[0]) => {
+    onLinkClick?.();
+    if (location === '/') {
+      // Already on home page — just scroll
+      const el = document.getElementById(item.scrollTarget!);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      // Navigate to home first, then scroll after mount
+      navigate('/');
+      setTimeout(() => {
+        const el = document.getElementById(item.scrollTarget!);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 400);
+    }
+  };
+
   const renderNavItem = (item: typeof navItems[0]) => {
     const isActive = location === item.href;
-    if (item.external) {
+
+    // Smooth-scroll items (e.g. Dijital Araçlar → #urunler)
+    if (item.scrollTarget) {
       return (
-        <a
+        <button
           key={item.href}
-          href={item.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={onLinkClick}
-          className="flex items-center gap-3 px-4 py-2 rounded-md transition-colors text-foreground/80 hover:bg-secondary hover:text-foreground"
+          onClick={() => handleScrollNavItem(item)}
+          className="flex items-center gap-3 px-4 py-2 rounded-md transition-colors w-full text-left text-foreground/80 hover:bg-secondary hover:text-foreground"
         >
           <item.icon size={20} />
           <span>{t(item.label)}</span>
-        </a>
+        </button>
       );
     }
+
     return (
       <Link
         key={item.href}

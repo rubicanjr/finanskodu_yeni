@@ -2372,3 +2372,28 @@
 - [x] AIPromptLibraryPage.tsx: Eski Özellikler/SSS/CTA block kaldırıldı
 - [x] FinansKoduPage.tsx: Aynı yapı uygulandı (emerald renk teması)
 - [x] ProBultenPage.tsx: Aynı yapı uygulandı (amber renk teması)
+
+## pasted_content_9.txt: Son Revizyonlar
+
+### Görev 1: Dijital Ürün Sayfaları İçerik Güncellemesi
+- [x] AIPromptLibraryPage.tsx: "Bu pakette neler var?" listesi güncellendi (6 yeni madde)
+- [x] AIPromptLibraryPage.tsx: "30 Günde Yapabileceklerin" listesi güncellendi (5 yeni madde)
+- [x] FinansKoduPage.tsx: "Bu pakette neler var?" listesi güncellendi (6 yeni madde)
+- [x] FinansKoduPage.tsx: "30 Günde Yapabileceklerin" listesi güncellendi (5 yeni madde)
+- [x] ProBultenPage.tsx: "Bu pakette neler var?" listesi güncellendi (6 yeni madde)
+- [x] ProBultenPage.tsx: "30 Günde Yapabileceklerin" listesi güncellendi (5 yeni madde)
+
+### Görev 2: Ana Sayfa ve Footer Temizliği
+- [x] ProductsSection.tsx: "AI Prompt Kütüphanesi" buton metni → "Şimdi anında erişim sağlayın"
+- [x] ProductsSection.tsx: "Kaos İçinde Düzen" buton metni → "Şimdi anında satın alın"
+- [x] ProductsSection.tsx: "Pro Bülten" buton metni → "Şimdi anında erişim sağlayın"
+- [x] Footer.tsx: "Manifesto" linki Hızlı Linkler'den kaldırıldı
+- [x] Footer.tsx: "Haftalık Finans Özeti" e-posta abonelik formu (başlık, açıklama, input, buton) tamamen kaldırıldı
+- [x] Footer.tsx: Kullanılmayan import'lar (useState, toast, Button, ArrowRight, Mail, ExternalLink) temizlendi
+
+### Görev 3: Sidebar Navigasyon Düzeltmeleri
+- [x] SidebarContent.tsx: "Dijital Araçlar" linki href yerine smooth scroll'a dönüştürüldü (#urunler)
+- [x] SidebarContent.tsx: Ana sayfada değilse önce navigate('/') sonra scroll yapılıyor
+- [x] SidebarContent.tsx: "Kod Odası" external:true → external:false yapıldı (aynı pencerede açılıyor)
+- [x] LoginScreen.tsx: position:fixed + z-index:200 kaldırıldı, sidebar artık görünür kalıyor
+- [x] KodOdasiNew.tsx: height:100svh → minHeight:calc(100svh-48px) düzeltildi

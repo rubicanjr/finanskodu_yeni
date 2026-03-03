@@ -157,13 +157,11 @@ export default function LoginScreen({ onSignIn }: LoginScreenProps) {
   return (
     <div
       style={{
-        position: 'fixed',
-        inset: 0,
-        zIndex: 200,
         display: 'flex',
         overflow: 'hidden',
         background: 'var(--background)',
         fontFamily: 'Inter, sans-serif',
+        minHeight: 'calc(100svh - 48px)',
       }}
     >
       {/* ══════════════════════════════════════
