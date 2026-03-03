@@ -12,7 +12,12 @@
     "goToSection": "go to section",
     "closeMenu": "Close menu",
     "openMenu": "Open menu",
-    "mobileMenu": "Mobile navigation menu"
+    "mobileMenu": "Mobile navigation menu",
+    "kurucuStratejist": "Meet Our Founding Strategist",
+    "kurumsal": "Corporate",
+    "projeler": "Projects",
+    "kaynakKutuphanesi": "Resource Library",
+    "iletisim": "Contact"
   },
   "hero": {
     "eyebrow": "// FOR FINANCIAL EFFICIENCY",

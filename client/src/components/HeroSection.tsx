@@ -41,9 +41,13 @@ export default function HeroSection() {
   }, [showCursor]);
 
   const scrollToProducts = () => {
-    const productsSection = document.getElementById('dijital-araclar');
+    const productsSection = document.getElementById('urunler');
     if (productsSection) {
       productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      // Fallback: scroll to products section by class
+      const fallback = document.querySelector('[id="urunler"], [id="dijital-araclar"], [id="products"]');
+      if (fallback) fallback.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
@@ -147,9 +151,7 @@ export default function HeroSection() {
             }}
           >
             Finansınızı{' '}
-            <span className="text-cyan-600 dark:text-cyan-300">finanskodu</span>{' '}
-            dijital ürünleri ile{' '}
-            <span className="text-emerald-600 dark:text-emerald-300">bir üst seviyeye taşıyın.</span>
+            <span className="text-emerald-600 dark:text-emerald-300">İleriye Taşıyın</span>
           </motion.h1>
 
           {/* Subtitle */}
@@ -165,7 +167,7 @@ export default function HeroSection() {
               fontFamily: 'var(--font-figtree)'
             }}
           >
-            100+ test edilmiş AI aracı, finansal metodoloji ve algoritmik analiz. Sen pilotsun; navigasyonu biz üstleniyoruz.
+            100+ test edilmiş AI aracı, finansal metodoloji ve algoritmik analizle finansal ve zamansal olarak mükemmelleşin. Dijital ürünleri bugün satın alın!
           </motion.p>
 
           {/* Terminal Widget */}

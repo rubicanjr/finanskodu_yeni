@@ -44,7 +44,6 @@ import HeroSection from "@/components/HeroSection";
 import ProductsSection from "@/components/ProductsSection";
 import ComparisonSection from "@/components/ComparisonSection";
 
-import ProcessModelSection from "@/components/ProcessModelSection";
 import BlogSection from "@/components/BlogSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 
@@ -138,10 +137,6 @@ export default function Home() {
         <ComparisonSection />
 
         {/* 4. Finansal Analizi Başlat - MOVED TO /analiz PAGE */}
-
-        {/* 5. Manifesto - Problem & Solution */}
-        {/* CRO: Story & Vision - Build emotional connection */}
-        <ProcessModelSection />
 
         {/* 6. Blog & Analizler - Articles and insights */}
         {/* CRO: Content & Authority - Demonstrate expertise */}

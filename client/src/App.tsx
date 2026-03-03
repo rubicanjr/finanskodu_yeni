@@ -21,6 +21,11 @@ const AnalysisPage = lazy(() => import('@/pages/AnalysisPage'));
 const BlogListPage = lazy(() => import('@/pages/BlogListPage'));
 const BlogDetailPage = lazy(() => import('@/pages/BlogDetailPage'));
 const KodOdasiNew = lazy(() => import('@/pages/KodOdasiNew'));
+const KurucuStratejistPage = lazy(() => import('@/pages/KurucuStratejistPage'));
+const KurumsalPage = lazy(() => import('@/pages/KurumsalPage'));
+const IletisimPage = lazy(() => import('@/pages/IletisimPage'));
+const ProjelerPage = lazy(() => import('@/pages/ProjelerPage'));
+const KaynakKutuphanesiPage = lazy(() => import('@/pages/KaynakKutuphanesiPage'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 
 // Loading fallback component
@@ -55,6 +60,11 @@ function Router() {
         <Route path="/blog" component={BlogListPage} />
         <Route path="/blog/:slug" component={BlogDetailPage} />
         <Route path="/kod-odasi" component={KodOdasiNew} />
+        <Route path="/kurucu-stratejist" component={KurucuStratejistPage} />
+        <Route path="/kurumsal" component={KurumsalPage} />
+        <Route path="/iletisim" component={IletisimPage} />
+        <Route path="/projeler" component={ProjelerPage} />
+        <Route path="/kaynak-kutuphanesi" component={KaynakKutuphanesiPage} />
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />
       </Switch>

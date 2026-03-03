@@ -22,7 +22,7 @@ const products: Product[] = [
   {
     id: 1,
     title: "AI Prompt Kütüphanesi",
-    description: "Finans profesyonelleri için özel olarak tasarlanmış 100+ yapay zeka prompt koleksiyonu.",
+     description: "Yapay zekaı etkili kullanarak verimliliğinizi ve aramalardaki kalitenizi artırın; AI Prompt kütüphanesi ile özellikle finans alanındaki işinizde fark yaratın.",
     icon: Brain,
     image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/eExAEklLAjIAZkEK.png",
     link: "/dijital-araclar/ai-prompt-kutuphanesi",
@@ -43,7 +43,7 @@ const products: Product[] = [
   {
     id: 2,
     title: "Kaos İçinde Düzen",
-    description: "Finansal operasyonlarınızı dönüştürecek kapsamlı metodoloji ve araç seti.",
+    description: "Finansal kararlarınızı duygulardan değil, mühendislik mantığından alın. Kaos İçinde Düzen ile panik ve açgözlük döngüsünü kırın; sistematik düşünce, karar matrisleri ve risk/getiri formülleriyle sürdürülebilir bir portföy mimarisi kurun.",
     icon: Layers,
     image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/tipqmgRCXZXEvHBH.png",
     link: "/dijital-araclar/finans-kodu-kaos-icinde-duzen",
@@ -64,7 +64,7 @@ const products: Product[] = [
   {
     id: 3,
     title: "Pro — Algoritmik Strateji Bülteni",
-    description: "Piyasa yönü, makro analizler ve algoritmik sinyaller içeren kapsamlı aylık bülten.",
+    description: "Piyasanın nereye gittiğini bilmek yetmez — siz o piyasada nerede duruyorsunuz? Algoritmik altın ve fon sinyalleri, haftalık sesli brifing ve aylık 1:1 finansal check-up ile portföyünüzdeki mantık hatalarını temizleyin; duygu yok, tahmin yok, sadece matematik.",
     icon: LayoutDashboard,
     image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/KzrqHllOnTCvKWzx.png",
     link: "/dijital-araclar/pro-algoritmik-strateji-ve-analiz-bulteni",
@@ -147,15 +147,6 @@ function ProductCard({ product, index, isInView }: { product: Product; index: nu
           <p className="text-sm leading-relaxed mb-4" style={{ color: 'var(--muted-foreground)' }} itemProp="description">
             {product.description}
           </p>
-
-          {/* Features List */}
-          <ul className="space-y-2 mb-5 flex-1">
-            {product.features.map((feature, idx) => (
-              <li key={idx} className="text-xs flex items-start gap-2" style={{ color: 'var(--muted-foreground)' }}>
-                <span className="flex-shrink-0">{feature}</span>
-              </li>
-            ))}
-          </ul>
 
           {/* CTA */}
           <a

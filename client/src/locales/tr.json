@@ -12,7 +12,12 @@
     "goToSection": "bölümüne git",
     "closeMenu": "Menüyü kapat",
     "openMenu": "Menüyü aç",
-    "mobileMenu": "Mobil navigasyon menüsü"
+    "mobileMenu": "Mobil navigasyon menüsü",
+    "kurucuStratejist": "Kurucu Stratejistimizle Tanışın",
+    "kurumsal": "Kurumsal",
+    "projeler": "Projeler",
+    "kaynakKutuphanesi": "Kaynak Kütüphanesi",
+    "iletisim": "İletişim"
   },
   "hero": {
     "eyebrow": "// FİNANSAL VERİMLİLİK İÇİN",
