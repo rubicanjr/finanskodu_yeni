@@ -15,6 +15,7 @@ const plugins = [
   vitePluginManusRuntime(),
   VitePWA({
     registerType: 'autoUpdate',
+    injectRegister: 'auto',
     includeAssets: ['favicon.ico', 'logo.png', 'robots.txt'],
     manifest: {
       name: 'Finans Kodu',
@@ -37,7 +38,18 @@ const plugins = [
       ]
     },
     workbox: {
-      globPatterns: ['**/*.{js,css,html,ico,png,svg,webp,woff,woff2}'],
+      // HTML dosyalarını SW önbelleğine ALMA — her zaman ağdan çek.
+      // JS/CSS zaten içerik hash'iyle gelir, güvenle önbelleğe alınabilir.
+      globPatterns: ['**/*.{js,css,ico,png,svg,webp,woff,woff2}'],
+
+      // Yeni SW kurulur kurulmaz eski SW'yi geç, tüm sekmeleri devral.
+      // Böylece deploy sonrası kullanıcılar sayfayı yenilemeden yeni sürümü görür.
+      skipWaiting: true,
+      clientsClaim: true,
+
+      // SPA navigasyonları için HTML'yi ağdan çek (SW önbelleğine alma)
+      navigateFallback: null,
+
       runtimeCaching: [
         {
           urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,

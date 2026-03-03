@@ -58,10 +58,35 @@ export function serveStatic(app: Express) {
     );
   }
 
-  app.use(express.static(distPath));
+  // Hashed assets (JS/CSS bundles with content hash in filename) → long-lived cache
+  // Everything else (index.html, robots.txt, etc.) → no-cache so browsers always
+  // fetch the latest HTML and discover new hashed bundles.
+  app.use(
+    express.static(distPath, {
+      setHeaders(res, filePath) {
+        const isHashedAsset = /\.[0-9a-f]{8,}\.(js|css|woff2?|ttf|otf|png|jpg|jpeg|svg|ico|webp)$/i.test(
+          filePath
+        );
+        if (isHashedAsset) {
+          // Immutable: safe to cache for 1 year because filename changes on every build
+          res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+        } else {
+          // index.html and other non-hashed files must never be cached
+          res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+          res.setHeader("Pragma", "no-cache");
+          res.setHeader("Expires", "0");
+        }
+      },
+    })
+  );
 
-  // fall through to index.html if the file doesn't exist
+  // SPA fallback — always serve index.html with no-cache headers
   app.use("*", (_req, res) => {
+    res.set({
+      "Cache-Control": "no-cache, no-store, must-revalidate",
+      "Pragma": "no-cache",
+      "Expires": "0",
+    });
     res.sendFile(path.resolve(distPath, "index.html"));
   });
 }
