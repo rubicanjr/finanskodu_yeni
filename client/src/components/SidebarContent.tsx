@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'wouter';
-import { Home, BookOpen, MessageSquare, Package, Building2, FolderOpen, Library, Mail } from 'lucide-react';
+import { Home, BookOpen, MessageSquare, Package, Building2, FolderOpen, Library, Mail, Handshake } from 'lucide-react';
 import { useI18n } from '@/contexts/I18nContext';
 import ThemeToggle from './ThemeToggle';
 import LanguageToggle from './LanguageToggle';
@@ -8,6 +8,7 @@ const navItems = [
   { href: '/', label: 'nav.home', icon: Home, external: false },
   { href: '/dijital-araclar', label: 'nav.products', icon: Package, external: false, scrollTarget: 'urunler' },
   { href: '/kurumsal', label: 'nav.kurumsal', icon: Building2, external: false },
+  { href: '/ortaklik', label: 'nav.ortaklik', icon: Handshake, external: false },
   { href: '/blog', label: 'nav.blog', icon: BookOpen, external: false },
   { href: '/kod-odasi', label: 'nav.kodOdasi', icon: MessageSquare, external: false },
 ];

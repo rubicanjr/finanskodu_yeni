@@ -2397,3 +2397,12 @@
 - [x] SidebarContent.tsx: "Kod Odası" external:true → external:false yapıldı (aynı pencerede açılıyor)
 - [x] LoginScreen.tsx: position:fixed + z-index:200 kaldırıldı, sidebar artık görünür kalıyor
 - [x] KodOdasiNew.tsx: height:100svh → minHeight:calc(100svh-48px) düzeltildi
+
+## pasted_content_10 + pasted_content_11: Ortaklık Sayfası
+
+- [x] OrtaklikPage.tsx oluşturuldu (pasted_content_11.txt cyber-finance UX/UI + pasted_content_10.txt içeriği)
+- [x] SidebarContent.tsx: Kurumsal'dan sonra "Ortaklık" nav item eklendi (Handshake ikonu)
+- [x] App.tsx: /ortaklik rotası ve lazy import eklendi
+- [x] tr.json: nav.ortaklik = "Ortaklık" eklendi
+- [x] en.json: nav.ortaklik = "Partnership" eklendi
+- [x] Kontrol listesi: Sidebar'da görünüyor, /ortaklik route çalışıyor, tüm içerik doğru, cal.com butonu yeni sekmede açılıyor, mailto butonu çalışıyor

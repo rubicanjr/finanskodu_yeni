@@ -23,6 +23,7 @@ const BlogDetailPage = lazy(() => import('@/pages/BlogDetailPage'));
 const KodOdasiNew = lazy(() => import('@/pages/KodOdasiNew'));
 const KurucuStratejistPage = lazy(() => import('@/pages/KurucuStratejistPage'));
 const KurumsalPage = lazy(() => import('@/pages/KurumsalPage'));
+const OrtaklikPage = lazy(() => import('@/pages/OrtaklikPage'));
 const IletisimPage = lazy(() => import('@/pages/IletisimPage'));
 const ProjelerPage = lazy(() => import('@/pages/ProjelerPage'));
 const KaynakKutuphanesiPage = lazy(() => import('@/pages/KaynakKutuphanesiPage'));
@@ -62,6 +63,7 @@ function Router() {
         <Route path="/kod-odasi" component={KodOdasiNew} />
         <Route path="/kurucu-stratejist" component={KurucuStratejistPage} />
         <Route path="/kurumsal" component={KurumsalPage} />
+        <Route path="/ortaklik" component={OrtaklikPage} />
         <Route path="/iletisim" component={IletisimPage} />
         <Route path="/projeler" component={ProjelerPage} />
         <Route path="/kaynak-kutuphanesi" component={KaynakKutuphanesiPage} />
