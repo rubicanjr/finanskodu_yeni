@@ -87,10 +87,10 @@ export default function Footer() {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.4, delay: 0.1 }}
           >
-            <div className="flex items-center gap-2 mb-3">
-              <div className="w-7 h-7 bg-cyan-400 rounded-lg flex items-center justify-center text-xs font-bold" style={{ color: 'var(--background)' }}>fk</div>
+            <p className="flex items-center gap-2 mb-3">
+              <span className="w-7 h-7 bg-cyan-400 rounded-lg flex items-center justify-center text-xs font-bold" style={{ color: 'var(--background)' }}>fk</span>
               <span className="font-bold text-foreground">finanskodu</span>
-            </div>
+            </p>
             <p className="text-sm text-muted-foreground max-w-xs">
               Finansal verimliliği AI araçları ve algoritmik metodoloji ile bir üst seviyeye taşıyoruz.
             </p>

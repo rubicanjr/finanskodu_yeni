@@ -107,19 +107,14 @@ export default function TestimonialsSection() {
           aria-label="Platform istatistikleri"
         >
           {stats.map((stat, index) => (
-            <motion.div
+            <div
               key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.4, delay: 0.1 + index * 0.1 }}
               className="flex flex-col items-center p-5 sm:p-8 rounded-2xl bg-card border border-border"
               role="listitem"
             >
-              <div className="font-mono font-bold text-3xl sm:text-4xl text-cyan-400 mb-2">
-                {stat.value}
-              </div>
-              <div className="text-sm text-muted-foreground text-center">{stat.label}</div>
-            </motion.div>
+              <span className="font-mono font-bold text-3xl sm:text-4xl text-cyan-400 mb-2">{stat.value}</span>
+              <span className="text-sm text-muted-foreground text-center">{stat.label}</span>
+            </div>
           ))}
         </motion.div>
 
@@ -153,38 +148,29 @@ export default function TestimonialsSection() {
               <Quote className="w-8 h-8 text-primary" />
             </div>
 
-            {/* Content */}
-            <div className="relative z-10">
-              {/* Rating */}
-              <div className="flex gap-1 mb-6 justify-center" role="img" aria-label={`${testimonials[currentIndex].rating} yıldız değerlendirme`}>
-                {[...Array(testimonials[currentIndex].rating)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 fill-primary text-primary" aria-hidden="true" />
-                ))}
-              </div>
-
-              {/* Blockquote - Semantic */}
-              <blockquote 
-                className="text-xl md:text-2xl text-center font-display leading-relaxed mb-8"
-                cite="https://finanskodu.manus.space"
-              >
-                <p>"{testimonials[currentIndex].quote}"</p>
-              </blockquote>
-
-              {/* Figcaption - Author info with avatar */}
-              <figcaption className="flex items-center justify-center gap-3 mt-4">
-                <div className="w-10 h-10 rounded-full bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center text-sm font-bold text-cyan-400 flex-shrink-0">
-                  {testimonials[currentIndex].author.split(' ').map((w: string) => w[0]).join('').slice(0, 2)}
-                </div>
-                <cite className="not-italic text-left">
-                  <strong className="font-display font-semibold text-foreground block text-sm">
-                    {testimonials[currentIndex].author}
-                  </strong>
-                  <span className="text-xs text-muted-foreground">
-                    {testimonials[currentIndex].company}
-                  </span>
-                </cite>
-              </figcaption>
+            {/* Rating */}
+            <div className="flex gap-1 mb-6 justify-center" role="img" aria-label={`${testimonials[currentIndex].rating} yıldız değerlendirme`}>
+              {[...Array(testimonials[currentIndex].rating)].map((_, i) => (
+                <Star key={i} className="w-5 h-5 fill-primary text-primary" aria-hidden="true" />
+              ))}
             </div>
+
+            <blockquote 
+              className="text-xl md:text-2xl text-center font-display leading-relaxed mb-8"
+              cite="https://finanskodu.manus.space"
+            >
+              <p>"{testimonials[currentIndex].quote}"</p>
+            </blockquote>
+
+            <figcaption className="flex items-center justify-center gap-3 mt-4">
+              <span className="w-10 h-10 rounded-full bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center text-sm font-bold text-cyan-400 flex-shrink-0">
+                {testimonials[currentIndex].author.split(' ').map((w: string) => w[0]).join('').slice(0, 2)}
+              </span>
+              <cite className="not-italic text-left">
+                <strong className="font-display font-semibold text-foreground block text-sm">{testimonials[currentIndex].author}</strong>
+                <span className="text-xs text-muted-foreground">{testimonials[currentIndex].company}</span>
+              </cite>
+            </figcaption>
           </figure>
 
           {/* Navigation */}

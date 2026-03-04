@@ -26,47 +26,19 @@ export default function SocialProofStrip() {
       }}
       aria-label="Güven göstergeleri"
     >
-      {/* Subtle top border */}
-      <div 
-        className="absolute top-0 left-0 right-0 h-px"
-        style={{ 
-          background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)" 
-        }}
-      />
-
       <div className="container">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 md:gap-16"
-        >
+        <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 md:gap-16">
           {trustSignals.map((signal, index) => (
-            <motion.div
+            <span
               key={index}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
               className="flex items-center gap-2 text-gray-500 hover:text-gray-400 transition-colors"
             >
               <signal.icon className="w-4 h-4" aria-hidden="true" />
-              <span className="text-xs sm:text-sm font-medium whitespace-nowrap">
-                {signal.text}
-              </span>
-            </motion.div>
+              <span className="text-xs sm:text-sm font-medium whitespace-nowrap">{signal.text}</span>
+            </span>
           ))}
-        </motion.div>
+        </div>
       </div>
-
-      {/* Subtle bottom border */}
-      <div 
-        className="absolute bottom-0 left-0 right-0 h-px"
-        style={{ 
-          background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)" 
-        }}
-      />
     </section>
   );
 }

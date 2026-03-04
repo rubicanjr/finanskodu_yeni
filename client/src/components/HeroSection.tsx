@@ -62,41 +62,16 @@ export default function HeroSection() {
       style={{ background: 'var(--background)' }}
       aria-labelledby="hero-heading"
     >
-      {/* 52px Grid Background */}
-      <div 
-        className="absolute inset-0"
-        style={{
-          backgroundImage: `
-            linear-gradient(rgba(0, 212, 255, 0.035) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(0, 212, 255, 0.035) 1px, transparent 1px)
-          `,
-          backgroundSize: '52px 52px'
-        }}
-      />
-
-      {/* Radial Vignette */}
+      {/* Decorative backgrounds via single overlay div */}
       <div 
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse at center, transparent 0%, var(--background) 100%)'
-        }}
-      />
-
-      {/* Glow Blob - Top Left */}
-      <div 
-        className="absolute -top-32 -left-32 w-96 h-96 rounded-full pointer-events-none"
-        style={{
-          background: 'radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%)',
-          filter: 'blur(80px)'
-        }}
-      />
-
-      {/* Glow Blob - Bottom Right */}
-      <div 
-        className="absolute -bottom-32 -right-32 w-96 h-96 rounded-full pointer-events-none"
-        style={{
-          background: 'radial-gradient(circle, rgba(0, 200, 150, 0.12) 0%, transparent 70%)',
-          filter: 'blur(80px)'
+          backgroundImage: `
+            radial-gradient(ellipse at center, transparent 0%, var(--background) 100%),
+            linear-gradient(rgba(0, 212, 255, 0.035) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 212, 255, 0.035) 1px, transparent 1px)
+          `,
+          backgroundSize: '100% 100%, 52px 52px, 52px 52px'
         }}
       />
 
@@ -304,22 +279,12 @@ export default function HeroSection() {
               color: 'var(--muted-foreground)'
             }}
           >
-            <span>100+ AI Prompt</span>
-            <div 
-              className="w-1 h-1 rounded-full"
-              style={{ background: 'var(--fk-cyan)' }}
-            />
-            <span>Finansal Metodoloji</span>
-            <div 
-              className="w-1 h-1 rounded-full"
-              style={{ background: 'var(--fk-cyan)' }}
-            />
-            <span>Algoritmik Analiz</span>
-            <div 
-              className="w-1 h-1 rounded-full"
-              style={{ background: 'var(--fk-cyan)' }}
-            />
-            <span>Aylık Strateji Bülteni</span>
+            {['100+ AI Prompt', 'Finansal Metodoloji', 'Algoritmik Analiz', 'Aylık Strateji Bülteni'].map((item, i) => (
+              <span key={i} className="flex items-center gap-3">
+                {i > 0 && <span className="w-1 h-1 rounded-full inline-block" style={{ background: 'var(--fk-cyan)' }} />}
+                {item}
+              </span>
+            ))}
           </motion.div>
         </div>
       </div>

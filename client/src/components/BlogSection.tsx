@@ -346,14 +346,8 @@ export default function BlogSection() {
                   <div className="p-5 flex flex-col flex-grow">
                     {/* Meta Info */}
                     <div className="flex items-center gap-3 text-xs mb-3" style={{ color: 'var(--muted-foreground)' }}>
-                      <div className="flex items-center gap-1">
-                        <Calendar className="w-3 h-3" />
-                        <span>{post.date}</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Clock className="w-3 h-3" />
-                        <span>{post.readTime}</span>
-                      </div>
+                      <span className="flex items-center gap-1"><Calendar className="w-3 h-3" />{post.date}</span>
+                      <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{post.readTime}</span>
                     </div>
 
                     {/* Title */}

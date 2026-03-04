@@ -135,9 +135,9 @@ function ProductCard({ product, index, isInView }: { product: Product; index: nu
         <div className="p-5 flex flex-col flex-1">
           {/* Icon + Title */}
           <div className="flex items-start gap-3 mb-3">
-            <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: 'var(--secondary)' }}>
+            <span className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: 'var(--secondary)' }}>
               <IconComponent size={18} style={{ color: 'var(--primary)' }} />
-            </div>
+            </span>
             <h3 className="font-bold text-[15px] leading-tight" style={{ color: 'var(--foreground)', minHeight: '40px' }} itemProp="name">
               {product.title}
             </h3>

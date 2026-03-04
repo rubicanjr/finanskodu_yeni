@@ -111,27 +111,18 @@ export default function ManifestoSection() {
               </header>
 
               {/* Semantic Description List for Problems */}
-              <dl className="space-y-6" aria-label="Finansal sorunlar listesi">
+              <dl className="space-y-4" aria-label="Finansal sorunlar listesi">
                 {problems.map((problem, index) => (
-                  <motion.div
+                  <div
                     key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={isInView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
                     className="flex items-start gap-4 p-4 rounded-xl bg-destructive/5 border border-destructive/10"
                   >
-                    <div className="w-10 h-10 rounded-lg bg-destructive/10 flex items-center justify-center shrink-0">
-                      <problem.icon className="w-5 h-5 text-destructive/80" aria-hidden="true" />
-                    </div>
+                    <problem.icon className="w-5 h-5 text-destructive/80 shrink-0 mt-0.5" aria-hidden="true" />
                     <div>
-                      <dt className="font-display font-semibold text-foreground mb-1">
-                        {problem.term}
-                      </dt>
-                      <dd className="text-sm text-muted-foreground">
-                        {problem.definition}
-                      </dd>
+                      <dt className="font-display font-semibold text-foreground mb-1">{problem.term}</dt>
+                      <dd className="text-sm text-muted-foreground">{problem.definition}</dd>
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
               </dl>
             </div>
@@ -165,27 +156,18 @@ export default function ManifestoSection() {
               </header>
 
               {/* Semantic Description List for Solutions */}
-              <dl className="space-y-6" aria-label="Finans Kodu çözümleri listesi">
+              <dl className="space-y-4" aria-label="Finans Kodu çözümleri listesi">
                 {solutions.map((solution, index) => (
-                  <motion.div
+                  <div
                     key={index}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={isInView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
                     className="flex items-start gap-4 p-4 rounded-xl bg-primary/5 border border-primary/10"
                   >
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                      <solution.icon className="w-5 h-5 text-primary" aria-hidden="true" />
-                    </div>
+                    <solution.icon className="w-5 h-5 text-primary shrink-0 mt-0.5" aria-hidden="true" />
                     <div>
-                      <dt className="font-display font-semibold text-foreground mb-1">
-                        {solution.term}
-                      </dt>
-                      <dd className="text-sm text-muted-foreground">
-                        {solution.definition}
-                      </dd>
+                      <dt className="font-display font-semibold text-foreground mb-1">{solution.term}</dt>
+                      <dd className="text-sm text-muted-foreground">{solution.definition}</dd>
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
               </dl>
             </div>

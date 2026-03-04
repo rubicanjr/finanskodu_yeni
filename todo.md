@@ -2438,3 +2438,7 @@
 - [x] JS Optimizasyonu: Home.tsx below-fold bileşenleri lazy import'a alındı (ComparisonSection, BlogSection, TestimonialsSection, FAQSection, SponsorshipSection, FeedbackSection, Footer)
 - [x] JS Optimizasyonu: vendor-three chunk kaldırıldı (Three.js hiçbir aktif bileşende kullanılmıyor)
 - [x] JS Optimizasyonu: esbuild minify, tree-shaking, console.log drop
+- [x] DOM optimizasyonu: gereksiz wrapper div'leri kaldırıldı (HeroSection, ManifestoSection, TestimonialsSection, FAQSection, BlogSection, ProductsSection, SocialProofStrip, Footer)
+- [x] motion.div item wrapper'ları kaldırıldı, span/div'e çevrildi
+- [x] HeroSection: 4 dekoratif div → 1 birleşik overlay div
+- [x] Trust strip separator div'leri → CSS gap ile map içinde

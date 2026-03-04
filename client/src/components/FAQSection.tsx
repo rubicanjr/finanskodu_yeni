@@ -152,17 +152,13 @@ export default function FAQSection() {
               </button>
 
               {/* Answer Content */}
-              <div
-                className={`overflow-hidden transition-all duration-300 ${
-                  openIndex === index ? "max-h-96" : "max-h-0"
+              <p
+                className={`overflow-hidden transition-all duration-300 text-gray-300 leading-relaxed px-6 pt-2 ${
+                  openIndex === index ? "max-h-96 pb-6" : "max-h-0 pb-0"
                 }`}
               >
-                <div className="px-6 pb-6 pt-2">
-                  <p className="text-gray-300 leading-relaxed">
-                    {item.answer}
-                  </p>
-                </div>
-              </div>
+                {item.answer}
+              </p>
             </div>
           ))}
         </motion.div>
