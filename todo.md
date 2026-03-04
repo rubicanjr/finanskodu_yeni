@@ -2406,3 +2406,14 @@
 - [x] tr.json: nav.ortaklik = "Ortaklık" eklendi
 - [x] en.json: nav.ortaklik = "Partnership" eklendi
 - [x] Kontrol listesi: Sidebar'da görünüyor, /ortaklik route çalışıyor, tüm içerik doğru, cal.com butonu yeni sekmede açılıyor, mailto butonu çalışıyor
+
+## Kaynak Kütüphanesi Canlıya Alma
+
+- [x] KaynakKutuphanesiPage.tsx yeniden yazıldı: 20 dosya kartı grid yapısı
+- [x] Dosya tipi rozeti (PDF/XLSX) ve ikon ayrımı eklendi
+- [x] Backdrop-blur indirme modal'ı oluşturuldu (Ad Soyad + E-posta formu)
+- [x] Firebase Firestore: kaynak_indirenler koleksiyonuna kayıt
+- [x] Firebase Storage: getDownloadURL ile dosya indirme
+- [x] Yükleniyor durumu (spinner + disabled buton) eklendi
+- [x] Başarı durumu (CheckCircle + otomatik modal kapanma) eklendi
+- [x] firebase.ts'e storage export eklendi
