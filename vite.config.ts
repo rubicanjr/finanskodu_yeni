@@ -110,42 +110,41 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
-    // Terser ile agresif minify
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,   // console.log'ları production'da kaldır
-        drop_debugger: true,
-        pure_funcs: ['console.log', 'console.info', 'console.debug'],
-        passes: 2,
-      },
-      mangle: true,
-    },
+    // esbuild: terser'a göre çok daha az bellek kullanır, deployment OOM (exit 137) önler
+    minify: 'esbuild',
+    // ES2020 hedef: modern tarayıcılar için optimize, daha küçük çıktı
+    target: 'es2020',
     // CSS code splitting
     cssCodeSplit: true,
     // Chunk boyutu uyarı eşiği
-    chunkSizeWarningLimit: 600,
+    chunkSizeWarningLimit: 500,
     rollupOptions: {
       output: {
         entryFileNames: 'assets/[name]-[hash].js',
         chunkFileNames: 'assets/[name]-[hash].js',
         assetFileNames: 'assets/[name]-[hash].[ext]',
         manualChunks: {
-          // Core React - her sayfada gerekli
-          'vendor-react': ['react', 'react-dom', 'wouter'],
-          'vendor-react-extras': ['react-helmet-async'],
-          // Animasyon - lazy load edilebilir
+          // Core vendor - her sayfada gerekli
+          'vendor': ['react', 'react-dom'],
+          // Router + helmet - hafif
+          'vendor-router': ['wouter', 'react-helmet-async'],
+          // Animasyon - büyük, ayrı chunk
           'vendor-motion': ['framer-motion'],
-          // 3D - sadece belirli sayfalarda kullanılıyor, lazy chunk
+          // 3D - çok büyük, ayrı chunk (sadece belirli sayfalarda)
           'vendor-three': ['three', '@react-three/fiber', '@react-three/drei'],
-          // Firebase - ayrı chunk, sadece auth/db sayfalarında yüklenir
-          'vendor-firebase-core': ['firebase/app', 'firebase/auth'],
-          'vendor-firebase-db': ['firebase/firestore', 'firebase/storage'],
-          // UI bileşenleri
-          'vendor-ui': ['lucide-react', '@radix-ui/react-dialog', '@radix-ui/react-tabs'],
+          // Firebase - ayrı chunk
+          'vendor-firebase': ['firebase/app', 'firebase/auth', 'firebase/firestore', 'firebase/storage'],
+          // UI ikonları - büyük olabilir
+          'vendor-ui': ['lucide-react'],
         },
       },
     },
+  },
+  // esbuild tree-shaking
+  esbuild: {
+    treeShaking: true,
+    // Production'da console.log'ları kaldır
+    drop: ['console', 'debugger'],
   },
   server: {
     host: true,
