@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import { trackCTAClick } from "@/lib/analytics";
 import { useI18n } from "@/contexts/I18nContext";
 
@@ -45,7 +44,6 @@ export default function HeroSection() {
     if (productsSection) {
       productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     } else {
-      // Fallback: scroll to products section by class
       const fallback = document.querySelector('[id="urunler"], [id="dijital-araclar"], [id="products"]');
       if (fallback) fallback.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
@@ -58,7 +56,7 @@ export default function HeroSection() {
 
   return (
     <section 
-      className="relative min-h-[calc(100svh-46px)] flex items-start justify-center px-4 pt-8 pb-12 overflow-hidden"
+      className="fk-hero relative flex items-start justify-center px-4 pt-8 pb-12 overflow-hidden"
       style={{ background: 'var(--background)' }}
       aria-labelledby="hero-heading"
     >
@@ -78,16 +76,14 @@ export default function HeroSection() {
       {/* Content Container */}
       <div className="relative z-10 w-full max-w-[820px] mx-auto text-center">
         <div className="space-y-8">
-          {/* Pill Eyebrow */}
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="flex items-center justify-center gap-2 mx-auto w-fit px-4 py-2"
+          {/* Pill Eyebrow — CSS fade-in (no framer-motion) */}
+          <div
+            className="fk-anim-fade-up flex items-center justify-center gap-2 mx-auto w-fit px-4 py-2"
             style={{
               background: 'rgba(0, 212, 255, 0.09)',
               border: '1px solid rgba(0, 212, 255, 0.18)',
-              borderRadius: '100px'
+              borderRadius: '100px',
+              animationDelay: '0ms'
             }}
           >
             {/* Pulse Dot */}
@@ -110,53 +106,47 @@ export default function HeroSection() {
             >
               // FİNANSAL VERİMLİLİK İÇİN
             </span>
-          </motion.div>
+          </div>
 
-          {/* H1 Heading */}
-          <motion.h1
+          {/* H1 Heading — CSS fade-in */}
+          <h1
             id="hero-heading"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="leading-tight text-foreground"
+            className="fk-anim-fade-up leading-tight text-foreground"
             style={{
               fontFamily: 'var(--font-syne)',
               fontWeight: 800,
-              fontSize: 'clamp(28px, 5vw, 54px)'
+              fontSize: 'clamp(28px, 5vw, 54px)',
+              animationDelay: '120ms'
             }}
           >
             Finansınızı{' '}
             <span className="text-emerald-600 dark:text-emerald-300">İleriye Taşıyın</span>
-          </motion.h1>
+          </h1>
 
-          {/* Subtitle */}
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="mx-auto"
+          {/* Subtitle — CSS fade-in */}
+          <p
+            className="fk-anim-fade-up mx-auto"
             style={{
               fontSize: 'clamp(15px, 2vw, 17px)',
               color: 'var(--muted-foreground)',
               maxWidth: '560px',
-              fontFamily: 'var(--font-figtree)'
+              fontFamily: 'var(--font-figtree)',
+              animationDelay: '200ms'
             }}
           >
             100+ test edilmiş AI aracı, finansal metodoloji ve algoritmik analizle finansal ve zamansal olarak mükemmelleşin. Dijital ürünleri bugün satın alın!
-          </motion.p>
+          </p>
 
-          {/* Terminal Widget */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="mx-auto"
+          {/* Terminal Widget — CSS fade-in */}
+          <div
+            className="fk-anim-fade-up mx-auto"
             style={{
               maxWidth: '680px',
               background: 'var(--card)',
               border: '1px solid rgba(0, 212, 255, 0.18)',
               borderRadius: '12px',
-              overflow: 'hidden'
+              overflow: 'hidden',
+              animationDelay: '280ms'
             }}
           >
             {/* Titlebar */}
@@ -210,14 +200,12 @@ export default function HeroSection() {
                 </div>
               ))}
             </div>
-          </motion.div>
+          </div>
 
-          {/* CTA Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+          {/* CTA Buttons — CSS fade-in */}
+          <div
+            className="fk-anim-fade-up flex flex-col sm:flex-row gap-4 justify-center items-center"
+            style={{ animationDelay: '400ms' }}
           >
             <Button
               onClick={scrollToProducts}
@@ -265,18 +253,16 @@ export default function HeroSection() {
             >
               {t('hero.cta2')}
             </Button>
-          </motion.div>
+          </div>
 
-          {/* Trust Strip */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
-            className="flex flex-wrap items-center justify-center gap-3 pt-8"
+          {/* Trust Strip — CSS fade-in */}
+          <div
+            className="fk-anim-fade-up flex flex-wrap items-center justify-center gap-3 pt-8"
             style={{
               fontFamily: 'var(--font-figtree)',
               fontSize: '14px',
-              color: 'var(--muted-foreground)'
+              color: 'var(--muted-foreground)',
+              animationDelay: '500ms'
             }}
           >
             {['100+ AI Prompt', 'Finansal Metodoloji', 'Algoritmik Analiz', 'Aylık Strateji Bülteni'].map((item, i) => (
@@ -285,7 +271,7 @@ export default function HeroSection() {
                 {item}
               </span>
             ))}
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

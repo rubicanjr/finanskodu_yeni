@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { Mail, ExternalLink } from "lucide-react";
 
 export default function SponsorshipSection() {
@@ -12,27 +11,17 @@ export default function SponsorshipSection() {
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           {/* Section Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
+          <div className="text-center mb-12">
             <span className="text-xs font-mono tracking-[0.2em] text-primary mb-4 block">
               // SPONSORUMUZ
             </span>
             <h2 className="text-3xl sm:text-4xl font-bold text-foreground">
               Sponsorumuz
             </h2>
-          </motion.div>
+          </div>
 
           {/* SalaryInsights Sponsor Card */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            viewport={{ once: true }}
+          <div
             className="rounded-xl border border-[var(--border)] p-8 sm:p-10 md:p-12"
             style={{ background: 'var(--card)' }}
           >
@@ -81,16 +70,10 @@ export default function SponsorshipSection() {
                 </blockquote>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Become a Sponsor CTA */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="mt-8 text-center"
-          >
+          <div className="mt-8 text-center">
             <p className="text-muted-foreground text-sm font-mono">
               Sponsor olmak ister misiniz?{" "}
               <a
@@ -101,7 +84,7 @@ export default function SponsorshipSection() {
                 info@finanskodu.com
               </a>
             </p>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

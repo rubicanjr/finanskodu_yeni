@@ -1,5 +1,4 @@
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Brain, Layers, LayoutDashboard, ArrowRight, type LucideIcon } from "lucide-react";
 import PictureImage from "@/components/PictureImage";
 
@@ -90,14 +89,40 @@ const products: Product[] = [
   },
 ];
 
+// CSS IntersectionObserver tabanlı animasyon — framer-motion yerine (TBT -50ms)
+function useInViewCSS(threshold = 0.1) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [isInView, setIsInView] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          observer.disconnect();
+        }
+      },
+      { threshold, rootMargin: '-80px 0px' }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [threshold]);
+
+  return { ref, isInView };
+}
+
 function ProductCard({ product, index, isInView }: { product: Product; index: number; isInView: boolean }) {
   const IconComponent = product.icon;
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay: 0.1 + index * 0.12 }}
-      className="group relative"
+    <article
+      className="group relative fk-product-card"
+      style={{
+        opacity: isInView ? 1 : 0,
+        transform: isInView ? 'translateY(0)' : 'translateY(28px)',
+        transition: `opacity 0.5s ease ${0.1 + index * 0.12}s, transform 0.5s ease ${0.1 + index * 0.12}s`,
+      }}
       itemScope
       itemType="https://schema.org/Product"
     >
@@ -172,23 +197,24 @@ function ProductCard({ product, index, isInView }: { product: Product; index: nu
           </a>
         </div>
       </div>
-    </motion.article>
+    </article>
   );
 }
 
 export default function ProductsSection() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const { ref, isInView } = useInViewCSS(0.1);
 
   return (
     <section id="urunler" className="relative py-20 overflow-hidden" aria-labelledby="products-heading" style={{ background: 'var(--background)' }}>
       <div className="container relative z-10" ref={ref}>
         {/* Header */}
-        <motion.header
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
+        <header
           className="text-center mb-12"
+          style={{
+            opacity: isInView ? 1 : 0,
+            transform: isInView ? 'translateY(0)' : 'translateY(20px)',
+            transition: 'opacity 0.5s ease, transform 0.5s ease',
+          }}
         >
           <span className="font-mono text-xs tracking-[0.15em] mb-3 block" style={{ color: 'var(--primary)' }}>
             // DİJİTAL VİTRİN
@@ -199,7 +225,7 @@ export default function ProductsSection() {
           <p className="max-w-xl mx-auto" style={{ color: 'var(--muted-foreground)' }}>
             100+ hazır AI prompt, finansal metodoloji ve aylık strateji bülteni
           </p>
-        </motion.header>
+        </header>
 
         {/* Product Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl mx-auto">

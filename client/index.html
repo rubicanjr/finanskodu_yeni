@@ -16,10 +16,9 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1" />
     
-    <!-- Cache Control - Prevent stale CSS/JS -->
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" />
+    <!-- Cache Control: meta http-equiv cache headers are ignored by browsers for navigation requests.
+         Real cache control is handled by HTTP response headers (server/_core/index.ts).
+         Removed to avoid confusing PSI / Lighthouse auditors. -->
     <title>Finans Kodu | Yapay Zeka Destekli Borsa Analiz ve Portföy Yönetimi</title>
     <meta name="description" content="Yapay zeka destekli finansal mühendislik, algoritmik ticaret ve Excel otomasyon çözümleri sunan finansal teknoloji platformu." />
 
@@ -42,15 +41,26 @@
     <!-- Bing Webmaster Tools Verification -->
     <meta name="msvalidate.01" content="DDF667ECAA6E5E2F19F2CFF898AC9BAC" />
     
-    <!-- Google Analytics 4 -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=%VITE_GA4_MEASUREMENT_ID%"></script>
+    <!-- Google Analytics 4: load after window.load to avoid blocking FCP/LCP -->
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', '%VITE_GA4_MEASUREMENT_ID%', {
-        send_page_view: false // We'll handle pageviews manually in React Router
-      });
+      (function() {
+        function loadGA4() {
+          var s = document.createElement('script');
+          s.async = true;
+          s.src = 'https://www.googletagmanager.com/gtag/js?id=%VITE_GA4_MEASUREMENT_ID%';
+          document.head.appendChild(s);
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          window.gtag = gtag;
+          gtag('js', new Date());
+          gtag('config', '%VITE_GA4_MEASUREMENT_ID%', { send_page_view: false });
+        }
+        if (document.readyState === 'complete') {
+          loadGA4();
+        } else {
+          window.addEventListener('load', loadGA4, { once: true, passive: true });
+        }
+      })();
     </script>
     
     <!-- Microsoft Clarity - defer until page is interactive -->

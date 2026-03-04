@@ -273,6 +273,39 @@
   }
 }
 
+/* ── Finans Kodu Hero CSS Animasyonları (framer-motion yerine) ─────────────
+   TBT'yi düşürmek için JS animasyonları CSS'e taşındı.
+   @keyframes + animation-fill-mode: both → JS çalışmadan önce bile görünür.
+──────────────────────────────────────────────────────────────────────────── */
+@keyframes fk-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fk-anim-fade-up {
+  animation: fk-fade-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Hero section: mobilde viewport yüksekliğini azalt → LCP iyileşir */
+.fk-hero {
+  min-height: calc(100svh - 46px);
+}
+
+@media (max-width: 768px) {
+  /* Mobilde hero daha kısa → LCP elemanı daha erken görünür */
+  .fk-hero {
+    min-height: auto;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+}
+
 /* Smooth Scrolling */
 html {
   scroll-behavior: smooth;

@@ -78,9 +78,13 @@ export function serveStatic(app: Express) {
   app.use(
     express.static(distPath, {
       setHeaders(res, filePath) {
-        const isHashedAsset = /\.[0-9a-f]{8,}\.(js|css|woff2?|ttf|otf|png|jpg|jpeg|svg|ico|webp)$/i.test(
+        const isHashedAsset = /\.[0-9a-f]{8,}\.(js|css|woff2?|ttf|otf|png|jpg|jpeg|svg|ico|webp|avif)$/i.test(
           filePath
         );
+        // AVIF MIME type (Express doesn't know it by default)
+        if (filePath.endsWith('.avif')) {
+          res.setHeader('Content-Type', 'image/avif');
+        }
         if (isHashedAsset) {
           // Immutable: safe to cache for 1 year because filename changes on every build
           res.setHeader("Cache-Control", "public, max-age=31536000, immutable");

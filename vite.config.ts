@@ -242,6 +242,18 @@ export default defineConfig({
             if (id.includes('node_modules/firebase/')) {
               return 'vendor-firebase';
             }
+            // Supabase - ayrı chunk (auth için, lazy yüklenir)
+            if (id.includes('node_modules/@supabase/')) {
+              return 'vendor-supabase';
+            }
+            // tRPC + TanStack Query - ayrı chunk (API katmanı)
+            if (id.includes('node_modules/@trpc/') || id.includes('node_modules/@tanstack/react-query')) {
+              return 'vendor-trpc';
+            }
+            // superjson - küçük, trpc ile birlikte
+            if (id.includes('node_modules/superjson')) {
+              return 'vendor-trpc';
+            }
             // Streamdown + syntax highlighter'lar - sadece chat/blog sayfalarında lazım
             // Bu chunk'lar lazy import sayesinde sadece gerektiğinde yüklenir
             if (id.includes('node_modules/streamdown')) {

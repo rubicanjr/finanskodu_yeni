@@ -2462,3 +2462,20 @@
 - [x] LQIP blur placeholder (blur-up animasyonu, scale(1.03)→scale(1) geçiş)
 - [x] decoding="async" tüm img elementlerine eklendi
 - [x] BlogSection, ProductsSection, RecentBlogPosts, SponsorshipSection, DualPersonaWidget, SarpWidget, SarpMobileFirst, SarpGifAvatar güncellendi
+
+## PageSpeed Insights Optimizasyonu (Mobil 40→80+, Masaüstü 56→90+)
+### TBT Düşürme (Hedef: 880ms → <100ms)
+- [x] HeroSection: framer-motion → CSS animasyonları (fk-anim-fade-up @keyframes)
+- [x] ProductsSection: framer-motion → CSS IntersectionObserver animasyonları
+- [x] Supabase SDK ayrı vendor-supabase chunk (164KB lazy)
+- [x] Sidebar lazy import - App.tsx güncellendi
+- [x] vite.config.ts: @tanstack/react-query + tRPC vendor-trpc chunk (101KB lazy)
+- [x] vite.config.ts: superjson vendor-trpc chunk - index 404KB→139KB (%66)
+### FCP/LCP İyileştirme (Hedef: FCP 5.4s→<1.8s, LCP 10s→<2.5s)
+- [x] index.html: font preload zaten mevcut (rel=preload as=style + media=print trick)
+- [x] index.html: Cache-Control meta tagları kaldırıldı (HTTP header'larla çakışıyordu)
+- [x] index.html: GA4 script window.load'a ertelendi (FCP'yi bloklamaz)
+- [x] HeroSection: mobilde min-height:auto, padding azaltıldı (fk-hero media query)
+### CLS Düzeltme (Hedef: 0.059 → 0)
+- [x] SponsorshipSection img: width=144 height=144 eklendi; PictureImage prop desteği mevcut
+- [x] Font CLS: font-display:swap + system font fallback stack mevcut
