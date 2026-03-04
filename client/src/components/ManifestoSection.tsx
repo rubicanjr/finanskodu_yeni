@@ -93,7 +93,7 @@ export default function ManifestoSection() {
           >
             <div
               className="absolute inset-0 rounded-2xl bg-cover bg-center opacity-20"
-              style={{ backgroundImage: "url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/FkKeQxdluHuLVcpf.jpg')" }}
+              style={{ backgroundImage: "url('https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/manifesto-1-1200w_c29e7b4c.webp')" }}
               role="img"
               aria-label="Problem bölümü arka planı"
             />
@@ -147,7 +147,7 @@ export default function ManifestoSection() {
           >
             <div
               className="absolute inset-0 rounded-2xl bg-cover bg-center opacity-20"
-              style={{ backgroundImage: "url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/dLfzwcekwqlakvAq.jpg')" }}
+              style={{ backgroundImage: "url('https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/manifesto-2-1200w_b137ee1d.webp')" }}
               role="img"
               aria-label="Çözüm bölümü arka planı"
             />

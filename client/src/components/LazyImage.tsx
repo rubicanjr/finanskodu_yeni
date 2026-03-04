@@ -7,6 +7,10 @@ interface LazyImageProps {
   style?: React.CSSProperties;
   width?: number;
   height?: number;
+  /** srcset for responsive images, e.g. "img-400w.webp 400w, img-800w.webp 800w" */
+  srcSet?: string;
+  /** sizes for responsive images, e.g. "(max-width: 600px) 400px, 800px" */
+  sizes?: string;
   /** Set to true for above-the-fold images (hero, etc.) — skips lazy loading */
   eager?: boolean;
 }
@@ -26,6 +30,8 @@ export default function LazyImage({
   style,
   width,
   height,
+  srcSet,
+  sizes,
   eager = false,
 }: LazyImageProps) {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -66,10 +72,12 @@ export default function LazyImage({
         />
       )}
 
-      {/* Real image */}
+      {/* Real image with srcset support */}
       <img
         ref={imgRef}
         src={isInView ? src : undefined}
+        srcSet={isInView && srcSet ? srcSet : undefined}
+        sizes={sizes}
         alt={alt}
         width={width}
         height={height}

@@ -2426,3 +2426,11 @@
 - [x] Performans optimizasyonu: Vite build terser minify + chunk splitting genişletildi
 - [x] Performans optimizasyonu: Gzip/Brotli sıkıştırma (compression middleware)
 - [x] Performans optimizasyonu: Mobil UX - input font-size 16px, touch target 44px, overflow-x hidden
+- [x] Görsel optimizasyonu: Tüm görseller WebP'ye dönüştürüldü (32 dosya, CDN'e yüklendi)
+- [x] Toplam görsel boyutu: ~3.2MB → 402KB (hedef 500KB altı ✓)
+- [x] Tüm manuscdn.com referansları CloudFront CDN URL'leriyle değiştirildi (0 kalan)
+- [x] LazyImage bileşenine srcSet + sizes prop desteği eklendi
+- [x] SarpGifAvatar, DualPersonaWidget, SarpMobileFirst, SarpWidget, VeraAvatar güncellendi
+- [x] BlogSection, BlogDetailPage, BlogListPage, RecentBlogPosts güncellendi
+- [x] ProductsSection, AboutSection, ManifestoSection, SponsorshipSection güncellendi
+- [x] compression paketi kuruldu (Gzip sunucu sıkıştırma)

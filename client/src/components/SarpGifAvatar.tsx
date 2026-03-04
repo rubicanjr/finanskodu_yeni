@@ -61,16 +61,16 @@ declare global {
 
 // GIF Assets - Emotion-based states
 const SARP_GIFS = {
-  idle: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/ufVTNxBxxgzbWyZW.gif",
-  talking: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/uLVsvkiAScpdbGTB.gif",
-  listening: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/mWGNDVwHExDumYQc.gif",
-  thinking: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/LfOwMShQKAZYYtXp.gif",
-  glad: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/BQbHbGagUuEEfrRx.gif",
-  thumbsUp: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/VYBCnLttKMoaVTpY.gif",
-  surprised: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/OZKdebZESvLNAEtw.gif",
-  confused: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/qjbYONPaTgWoNDbe.gif",
-  ok: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/mygbbpDKHMTHqHIa.gif",
-  excited: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/mZLSWrxusMVYnxZn.gif",
+  idle: "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/sarp-idle_0a38a832.webp",
+  talking: "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/sarp-talking_0565523f.webp",
+  listening: "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/sarp-listening_f39c1286.webp",
+  thinking: "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/sarp-thinking_6029ac00.webp",
+  glad: "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/sarp-glad_fc10cdac.webp",
+  thumbsUp: "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/sarp-thumbsup_86d24686.webp",
+  surprised: "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/sarp-surprised_d0f4d562.webp",
+  confused: "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/sarp-confused_ba6864f4.webp",
+  ok: "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/sarp-ok_aa5437c4.webp",
+  excited: "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/sarp-excited_229a643f.webp",
 };
 
 // Knowledge Base & Response Logic - Sarp Persona

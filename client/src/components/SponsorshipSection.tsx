@@ -46,7 +46,7 @@ export default function SponsorshipSection() {
                   className="block hover:opacity-90 transition-opacity"
                 >
                   <img 
-                    src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/eWIpFzMiHsfytxtR.jfif"
+                    src="https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/sponsorship-bg_57a443f2.webp"
                     alt="SalaryInsights Logo"
                     className="w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-xl object-cover"
                     loading="lazy"

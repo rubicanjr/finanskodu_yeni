@@ -143,7 +143,7 @@ export default function VeraAvatar({ isSpeaking, isListening, amplitude = 0 }: V
           className="relative"
         >
           <img
-            src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/QAkTTqxvtQZTDARB.png"
+            src="https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/vera-avatar_3171c555.webp"
             alt="Vera - Finans Kodu AI Asistan"
             className="w-48 h-auto rounded-2xl shadow-2xl"
             loading="lazy"

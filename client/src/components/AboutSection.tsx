@@ -45,7 +45,7 @@ export default function AboutSection() {
       {/* Background */}
       <div
         className="absolute inset-0 bg-cover bg-center opacity-20"
-        style={{ backgroundImage: "url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663094430864/SCFgBNYSWaWwaemk.jpg')" }}
+        style={{ backgroundImage: "url('https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/about-bg-1200w_5c00fe73.webp')" }}
         role="img"
         aria-label="Ekip bölümü arka planı"
       />
