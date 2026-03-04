@@ -76,10 +76,10 @@
   --color-fk-text-secondary: oklch(0.82 0.02 230);/* #C8D6E5 */
   --color-fk-text-muted: oklch(0.60 0.03 230);    /* #8899AA */
   
-  /* Typography */
-  --font-display: 'IBM Plex Sans', 'Space Grotesk', sans-serif;
-  --font-body: 'IBM Plex Sans', 'Inter', sans-serif;
-  --font-mono: 'IBM Plex Mono', 'JetBrains Mono', monospace;
+  /* Typography - system font fallback ensures text visible before web fonts load */
+  --font-display: 'IBM Plex Sans', 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-body: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'Courier New', monospace;
   
   /* Piksel-Perfect Design System */
   --fk-bg: #0D1117;
@@ -88,9 +88,10 @@
   --fk-cyan: #00D4FF;
   --fk-green: #00C896;
   --fk-gold: #F0B429;
+  /* Legacy font vars kept for backward compat */
   --font-syne: 'Syne', sans-serif;
-  --font-jetbrains: 'JetBrains Mono', monospace;
-  --font-figtree: 'Figtree', sans-serif;
+  --font-jetbrains: 'IBM Plex Mono', ui-monospace, monospace;
+  --font-figtree: 'IBM Plex Sans', sans-serif;
 }
 
 :root {

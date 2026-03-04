@@ -114,8 +114,10 @@ export default defineConfig({
     minify: 'esbuild',
     // ES2020 hedef: modern tarayıcılar için optimize, daha küçük çıktı
     target: 'es2020',
-    // CSS code splitting
+    // CSS code splitting - her sayfa sadece kendi CSS'ini yükler
     cssCodeSplit: true,
+    // CSS minification - esbuild ile hızlı ve bellek dostu
+    cssMinify: 'esbuild',
     // Chunk boyutu uyarı eşiği
     chunkSizeWarningLimit: 500,
     rollupOptions: {

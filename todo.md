@@ -2446,3 +2446,7 @@
 - [x] DualPersonaWidget sadece ana sayfada yükleniyor
 - [x] Microsoft Clarity window.load'a ertelendi
 - [x] vite.config.ts manualChunks fonksiyon tabanlı hale getirildi
+- [x] Font optimizasyonu: Türkçe subset (latin-ext), JetBrains Mono kaldırıldı, system font fallback
+- [x] Critical CSS inline: body/html/nav/img above-the-fold CSS index.html'e eklendi
+- [x] CSS minification: cssMinify: 'esbuild' vite.config.ts'e eklendi
+- [x] System font fallback stack: --font-display, --font-body, --font-mono güncellendi
