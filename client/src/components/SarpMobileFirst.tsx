@@ -60,6 +60,7 @@ declare global {
 
 // Avatar GIF URL
 const SARP_AVATAR_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/sarp-mobile-avatar_7c9f2a4d.webp";
+const SARP_AVATAR_AVIF = "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/sarp-mobile-avatar_fcd9e1e7.avif";
 
 // Knowledge Base - Comprehensive (NO "I DON'T KNOW")
 const DISCLAIMER = "\n\nBunlar piyasa yorumudur, yatırım tavsiyesi değildir.";
@@ -487,15 +488,19 @@ export default function SarpMobileFirst() {
               className="relative mb-8"
             >
               <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-primary/50 shadow-2xl shadow-primary/30">
-                <img 
-                  src={SARP_AVATAR_URL} 
-                  alt="Sarp Avatar" 
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                  decoding="async"
-                  width="128"
-                  height="128"
-                />
+                <picture>
+                  <source srcSet={SARP_AVATAR_AVIF} type="image/avif" />
+                  <source srcSet={SARP_AVATAR_URL} type="image/webp" />
+                  <img
+                    src={SARP_AVATAR_URL}
+                    alt="Sarp Avatar"
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                    decoding="async"
+                    width="128"
+                    height="128"
+                  />
+                </picture>
               </div>
               <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary/90 rounded-full">
                 <span className="text-sm font-bold text-white">SARP</span>
@@ -586,15 +591,19 @@ export default function SarpMobileFirst() {
               onClick={() => setIsOpen(true)}
               className="w-16 h-16 rounded-full shadow-lg shadow-primary/30 flex items-center justify-center hover:scale-110 transition-transform overflow-hidden border-2 border-primary/50"
             >
-              <img 
-                src={SARP_AVATAR_URL} 
-                alt="Sarp" 
-                className="w-full h-full object-cover"
-                loading="lazy"
-                decoding="async"
-                width="64"
-                height="64"
-              />
+              <picture>
+                <source srcSet={SARP_AVATAR_AVIF} type="image/avif" />
+                <source srcSet={SARP_AVATAR_URL} type="image/webp" />
+                <img
+                  src={SARP_AVATAR_URL}
+                  alt="Sarp"
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                  width="64"
+                  height="64"
+                />
+              </picture>
             </motion.button>
           )}
 
@@ -633,15 +642,19 @@ export default function SarpMobileFirst() {
                     transition={{ duration: 0.1 }}
                     className="relative w-full h-full rounded-full overflow-hidden border-4 border-primary/50 bg-slate-900"
                   >
-                    <img 
-                      src={SARP_AVATAR_URL} 
-                      alt="Sarp Avatar" 
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                      decoding="async"
-                      width="180"
-                      height="180"
-                    />
+                    <picture>
+                      <source srcSet={SARP_AVATAR_AVIF} type="image/avif" />
+                      <source srcSet={SARP_AVATAR_URL} type="image/webp" />
+                      <img
+                        src={SARP_AVATAR_URL}
+                        alt="Sarp Avatar"
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                        decoding="async"
+                        width="180"
+                        height="180"
+                      />
+                    </picture>
                     
                     {/* Listening Overlay */}
                     {isListening && (

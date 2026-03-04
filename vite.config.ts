@@ -16,6 +16,7 @@ const plugins = [
   VitePWA({
     registerType: 'autoUpdate',
     injectRegister: 'auto',
+    // Precache: ana sayfa, kritik CSS/JS, logo ve temel görseller
     includeAssets: ['favicon.ico', 'logo.png', 'robots.txt'],
     manifest: {
       name: 'Finans Kodu',
@@ -38,9 +39,10 @@ const plugins = [
       ]
     },
     workbox: {
+      // ── Precache ────────────────────────────────────────────────────────────
       // HTML dosyalarını SW önbelleğine ALMA — her zaman ağdan çek.
       // JS/CSS zaten içerik hash'iyle gelir, güvenle önbelleğe alınabilir.
-      globPatterns: ['**/*.{js,css,ico,png,svg,webp,woff,woff2}'],
+      globPatterns: ['**/*.{js,css,ico,png,svg,webp,avif,woff,woff2}'],
 
       // Yeni SW kurulur kurulmaz eski SW'yi geç, tüm sekmeleri devral.
       // Böylece deploy sonrası kullanıcılar sayfayı yenilemeden yeni sürümü görür.
@@ -50,48 +52,146 @@ const plugins = [
       // SPA navigasyonları için HTML'yi ağdan çek (SW önbelleğine alma)
       navigateFallback: null,
 
+      // ── Cache Cleanup ────────────────────────────────────────────────────────
+      // Eski önbellekleri temizle (yeni SW devreye girince otomatik)
+      cleanupOutdatedCaches: true,
+
+      // ── Runtime Cache Stratejileri ───────────────────────────────────────────
       runtimeCaching: [
+        // ── 1. Google Fonts CSS — Cache First (1 yıl) ─────────────────────────
         {
           urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
           handler: 'CacheFirst',
           options: {
-            cacheName: 'google-fonts-cache',
+            cacheName: 'google-fonts-stylesheets',
             expiration: {
               maxEntries: 10,
-              maxAgeSeconds: 60 * 60 * 24 * 365 // 1 year
+              maxAgeSeconds: 60 * 60 * 24 * 365, // 1 yıl
             },
-            cacheableResponse: {
-              statuses: [0, 200]
-            }
-          }
+            cacheableResponse: { statuses: [0, 200] },
+          },
         },
+
+        // ── 2. Google Fonts Dosyaları — Cache First (1 yıl) ───────────────────
         {
           urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
           handler: 'CacheFirst',
           options: {
-            cacheName: 'gstatic-fonts-cache',
+            cacheName: 'google-fonts-webfonts',
             expiration: {
-              maxEntries: 10,
-              maxAgeSeconds: 60 * 60 * 24 * 365 // 1 year
+              maxEntries: 30,
+              maxAgeSeconds: 60 * 60 * 24 * 365, // 1 yıl
             },
-            cacheableResponse: {
-              statuses: [0, 200]
-            }
-          }
+            cacheableResponse: { statuses: [0, 200] },
+          },
         },
+
+        // ── 3. CDN Görselleri (AVIF + WebP) — Cache First (1 yıl) ────────────
+        // CloudFront CDN'den gelen tüm görseller — içerik hash'li URL'ler
         {
-          urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp)$/,
+          urlPattern: /^https:\/\/d2xsxph8kpxj0f\.cloudfront\.net\/.*\.(?:avif|webp|png|jpg|jpeg|svg|gif)$/i,
           handler: 'CacheFirst',
           options: {
-            cacheName: 'images-cache',
+            cacheName: 'cdn-images-v1',
+            expiration: {
+              maxEntries: 100,
+              maxAgeSeconds: 60 * 60 * 24 * 365, // 1 yıl — CDN URL'leri hash'li
+            },
+            cacheableResponse: { statuses: [0, 200] },
+          },
+        },
+
+        // ── 4. Yerel Görseller — Cache First (30 gün) ─────────────────────────
+        {
+          urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp|avif|ico)$/,
+          handler: 'CacheFirst',
+          options: {
+            cacheName: 'local-images-v1',
+            expiration: {
+              maxEntries: 60,
+              maxAgeSeconds: 60 * 60 * 24 * 30, // 30 gün
+            },
+            cacheableResponse: { statuses: [0, 200] },
+          },
+        },
+
+        // ── 5. JS/CSS Chunk'ları — Stale While Revalidate (1 ay) ─────────────
+        // Hash'li asset'ler için SWR: önce cache'den sun, arka planda güncelle
+        {
+          urlPattern: /\.(?:js|css)$/,
+          handler: 'StaleWhileRevalidate',
+          options: {
+            cacheName: 'static-assets-v1',
+            expiration: {
+              maxEntries: 60,
+              maxAgeSeconds: 60 * 60 * 24 * 30, // 1 ay
+            },
+            cacheableResponse: { statuses: [0, 200] },
+          },
+        },
+
+        // ── 6. Web Fontları (woff/woff2) — Cache First (1 yıl) ───────────────
+        {
+          urlPattern: /\.(?:woff|woff2|ttf|eot)$/,
+          handler: 'CacheFirst',
+          options: {
+            cacheName: 'font-files-v1',
+            expiration: {
+              maxEntries: 20,
+              maxAgeSeconds: 60 * 60 * 24 * 365, // 1 yıl
+            },
+            cacheableResponse: { statuses: [0, 200] },
+          },
+        },
+
+        // ── 7. API Çağrıları — Network First (güncel data) ────────────────────
+        // tRPC ve diğer API endpoint'leri: önce ağdan dene, hata olursa cache
+        {
+          urlPattern: /^\/api\/.*/,
+          handler: 'NetworkFirst',
+          options: {
+            cacheName: 'api-cache-v1',
+            networkTimeoutSeconds: 5, // 5 saniye sonra cache'e düş
             expiration: {
               maxEntries: 50,
-              maxAgeSeconds: 60 * 60 * 24 * 30 // 30 days
-            }
-          }
-        }
-      ]
-    }
+              maxAgeSeconds: 60 * 5, // 5 dakika — API yanıtları kısa süreli
+            },
+            cacheableResponse: { statuses: [0, 200] },
+          },
+        },
+
+        // ── 8. Harici API'ler (borsa fiyatları vb.) — Network First ──────────
+        {
+          urlPattern: /^https:\/\/(?:query1\.finance\.yahoo\.com|api\.exchangerate|finnhub\.io)\/.*/i,
+          handler: 'NetworkFirst',
+          options: {
+            cacheName: 'external-api-v1',
+            networkTimeoutSeconds: 3,
+            expiration: {
+              maxEntries: 20,
+              maxAgeSeconds: 60 * 2, // 2 dakika — finansal veriler çok güncel olmalı
+            },
+            cacheableResponse: { statuses: [0, 200] },
+          },
+        },
+
+        // ── 9. Sayfa Navigasyonu — Network First (SPA) ────────────────────────
+        // Kullanıcı gezindikçe sayfaları cache'le, offline çalışma imkanı
+        {
+          urlPattern: /^https?:\/\/[^/]+\/((?!api)[^?#]*)$/,
+          handler: 'NetworkFirst',
+          options: {
+            cacheName: 'pages-cache-v1',
+            networkTimeoutSeconds: 3,
+            expiration: {
+              maxEntries: 30,
+              maxAgeSeconds: 60 * 60 * 24, // 1 gün
+            },
+            cacheableResponse: { statuses: [0, 200] },
+          },
+        },
+      ],
+    },
   })
 ];
 

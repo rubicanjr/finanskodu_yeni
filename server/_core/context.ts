@@ -1,6 +1,6 @@
 import type { CreateExpressContextOptions } from "@trpc/server/adapters/express";
 import type { User } from "../../drizzle/schema";
-import { createClient } from '@supabase/supabase-js';
+import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import { ENV } from './env';
 
 const supabaseUrl = ENV.supabaseUrl;
@@ -10,7 +10,8 @@ if (!supabaseUrl || !supabaseServiceKey) {
   console.warn('[Context] Missing Supabase credentials. Auth will not work.');
 }
 
-const supabase = supabaseUrl && supabaseServiceKey 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const supabase: SupabaseClient<any, any, any> | null = supabaseUrl && supabaseServiceKey
   ? createClient(supabaseUrl, supabaseServiceKey)
   : null;
 
@@ -18,7 +19,8 @@ export type TrpcContext = {
   req: CreateExpressContextOptions["req"];
   res: CreateExpressContextOptions["res"];
   user: User | null;
-  supabase: ReturnType<typeof createClient> | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  supabase: SupabaseClient<any, any, any> | null;
 };
 
 /**

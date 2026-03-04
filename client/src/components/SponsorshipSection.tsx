@@ -45,13 +45,19 @@ export default function SponsorshipSection() {
                   rel="noopener noreferrer"
                   className="block hover:opacity-90 transition-opacity"
                 >
-                  <img 
-                    src="https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/sponsorship-bg_57a443f2.webp"
-                    alt="SalaryInsights Logo"
-                    className="w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-xl object-cover"
-                    loading="lazy"
-                    decoding="async"
-                  />
+                  <picture>
+                    <source srcSet="https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/sponsorship-bg_ad151dae.avif" type="image/avif" />
+                    <source srcSet="https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/sponsorship-bg_57a443f2.webp" type="image/webp" />
+                    <img
+                      src="https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/sponsorship-bg_57a443f2.webp"
+                      alt="SalaryInsights Logo"
+                      className="w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-xl object-cover"
+                      loading="lazy"
+                      decoding="async"
+                      width="144"
+                      height="144"
+                    />
+                  </picture>
                 </a>
               </div>
 

@@ -59,18 +59,36 @@ declare global {
   }
 }
 
-// GIF Assets - Emotion-based states
-const SARP_GIFS = {
-  idle: "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/sarp-idle_0a38a832.webp",
-  talking: "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/sarp-talking_0565523f.webp",
-  listening: "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/sarp-listening_f39c1286.webp",
-  thinking: "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/sarp-thinking_6029ac00.webp",
-  glad: "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/sarp-glad_fc10cdac.webp",
-  thumbsUp: "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/sarp-thumbsup_86d24686.webp",
-  surprised: "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/sarp-surprised_d0f4d562.webp",
-  confused: "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/sarp-confused_ba6864f4.webp",
-  ok: "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/sarp-ok_aa5437c4.webp",
-  excited: "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/sarp-excited_229a643f.webp",
+// GIF Assets
+type GifState = 'idle' | 'talking' | 'listening' | 'thinking' | 'glad' | 'thumbsUp' | 'surprised' | 'confused' | 'ok' | 'excited';
+
+const CDN = "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku";
+
+const SARP_GIFS: Record<GifState, string> = {
+  idle: `${CDN}/sarp-idle_0a38a832.webp`,
+  talking: `${CDN}/sarp-talking_0565523f.webp`,
+  listening: `${CDN}/sarp-listening_f39c1286.webp`,
+  thinking: `${CDN}/sarp-thinking_6029ac00.webp`,
+  glad: `${CDN}/sarp-glad_fc10cdac.webp`,
+  thumbsUp: `${CDN}/sarp-thumbsup_86d24686.webp`,
+  surprised: `${CDN}/sarp-surprised_d0f4d562.webp`,
+  confused: `${CDN}/sarp-confused_ba6864f4.webp`,
+  ok: `${CDN}/sarp-ok_aa5437c4.webp`,
+  excited: `${CDN}/sarp-excited_229a643f.webp`,
+};
+
+// AVIF versiyonları (Chrome 85+, Firefox 93+, Safari 16+)
+const SARP_GIFS_AVIF: Record<GifState, string> = {
+  idle: `${CDN}/sarp-idle_c0551f7b.avif`,
+  talking: `${CDN}/sarp-talking_3b608ae1.avif`,
+  listening: `${CDN}/sarp-listening_9bc7af73.avif`,
+  thinking: `${CDN}/sarp-thinking_82e3771c.avif`,
+  glad: `${CDN}/sarp-glad_15ebda6d.avif`,
+  thumbsUp: `${CDN}/sarp-thumbsup_41908526.avif`,
+  surprised: `${CDN}/sarp-surprised_4dc35cf0.avif`,
+  confused: `${CDN}/sarp-confused_d9ce34ed.avif`,
+  ok: `${CDN}/sarp-ok_222ad8ec.avif`,
+  excited: `${CDN}/sarp-excited_c305c37b.avif`,
 };
 
 // Knowledge Base & Response Logic - Sarp Persona
@@ -476,14 +494,20 @@ export default function SarpGifAvatar() {
       >
         {/* GIF Image - Head & Shoulders */}
         <div className="relative w-[180px] h-[180px] rounded-2xl overflow-hidden bg-gradient-to-b from-slate-900/90 to-slate-800/90 backdrop-blur-sm border-2 border-primary/30 shadow-xl shadow-primary/20">
-          <img
-            src={SARP_GIFS[currentGif]}
-            alt="Sarp AI Asistan"
-            className="w-full h-full object-cover object-top"
-            style={{ objectPosition: "center 20%" }}
-            loading="lazy"
-            decoding="async"
-          />
+          <picture>
+            <source srcSet={SARP_GIFS_AVIF[currentGif]} type="image/avif" />
+            <source srcSet={SARP_GIFS[currentGif]} type="image/webp" />
+            <img
+              src={SARP_GIFS[currentGif]}
+              alt="Sarp AI Asistan"
+              className="w-full h-full object-cover object-top"
+              style={{ objectPosition: "center 20%" }}
+              loading="lazy"
+              decoding="async"
+              width="180"
+              height="180"
+            />
+          </picture>
           
           {/* Listening indicator - Red glow border */}
           {isListening && (

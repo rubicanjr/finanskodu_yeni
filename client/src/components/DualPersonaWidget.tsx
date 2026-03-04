@@ -38,6 +38,7 @@ interface Persona {
   archetype: string;
   motto: string;
   avatarUrl: string;
+  avifAvatarUrl?: string;
   accentColor: string;
   voiceSettings: {
     searchTerms: string[];
@@ -59,6 +60,7 @@ const SARP: Persona = {
   archetype: "Quantitative Analyst (Quant) - THE BRAKE",
   motto: "Matematik yalan söylemez, insanlar söyler.",
   avatarUrl: "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/sarp-avatar_3581df97.webp",
+  avifAvatarUrl: "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/sarp-avatar_a7818dcf.avif",
   accentColor: "#00D4FF", // Cyan
   voiceSettings: {
     searchTerms: ["male", "erkek", "cem", "alper", "murat", "google"],
@@ -80,6 +82,7 @@ const VERA: Persona = {
   archetype: "Macro Strategist & Behavioral Psychologist - THE STEERING WHEEL",
   motto: "Fiyatı piyasa belirler, değeri sen belirlersin.",
   avatarUrl: "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/vera-avatar_3171c555.webp",
+  avifAvatarUrl: "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/vera-avatar_cba5d38f.avif",
   accentColor: "#A855F7", // Purple
   voiceSettings: {
     searchTerms: [], // Use native default
@@ -771,15 +774,19 @@ export default function DualPersonaWidget() {
               boxShadow: `0 0 20px ${persona.accentColor}40`
             }}
           >
-            <img 
-              src={persona.avatarUrl} 
-              alt={persona.name}
-              className="w-full h-full object-cover"
-              loading="lazy"
-              decoding="async"
-              width="64"
-              height="64"
-            />
+            <picture>
+              {persona.avifAvatarUrl && <source srcSet={persona.avifAvatarUrl} type="image/avif" />}
+              <source srcSet={persona.avatarUrl} type="image/webp" />
+              <img
+                src={persona.avatarUrl}
+                alt={persona.name}
+                className="w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
+                width="64"
+                height="64"
+              />
+            </picture>
             {/* Pulse ring */}
             <motion.div
               animate={{ scale: [1, 1.3, 1], opacity: [0.5, 0, 0.5] }}
@@ -822,15 +829,19 @@ export default function DualPersonaWidget() {
                   boxShadow: isSpeaking ? `0 0 15px ${persona.accentColor}` : 'none'
                 }}
               >
-                <img 
-                  src={persona.avatarUrl} 
-                  alt={persona.name}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                  decoding="async"
-                  width="48"
-                  height="48"
-                />
+                <picture>
+                  {persona.avifAvatarUrl && <source srcSet={persona.avifAvatarUrl} type="image/avif" />}
+                  <source srcSet={persona.avatarUrl} type="image/webp" />
+                  <img
+                    src={persona.avatarUrl}
+                    alt={persona.name}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                    decoding="async"
+                    width="48"
+                    height="48"
+                  />
+                </picture>
               </motion.div>
               
               <div className="flex-1">

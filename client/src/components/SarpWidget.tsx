@@ -60,6 +60,7 @@ declare global {
 
 // Avatar URL
 const SARP_AVATAR_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/sarp-mobile-avatar_7c9f2a4d.webp";
+const SARP_AVATAR_AVIF = "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/sarp-mobile-avatar_fcd9e1e7.avif";
 
 // Knowledge Base - Disclaimer is ONLY added programmatically in TTS, NOT in text responses
 // This prevents double disclaimer issue
@@ -553,11 +554,18 @@ export default function SarpWidget() {
             className="absolute inset-0 bg-primary/30 rounded-full"
           />
           
-          <img 
-            src={SARP_AVATAR_URL} 
-            alt="Sarp" 
-            className="relative w-full h-full object-cover"
-          />
+          <picture>
+            <source srcSet={SARP_AVATAR_AVIF} type="image/avif" />
+            <source srcSet={SARP_AVATAR_URL} type="image/webp" />
+            <img
+              src={SARP_AVATAR_URL}
+              alt="Sarp"
+              className="relative w-full h-full object-cover"
+              decoding="async"
+              width="64"
+              height="64"
+            />
+          </picture>
           
           {/* Notification badge */}
           <div className="absolute -top-1 -right-1 w-5 h-5 bg-primary rounded-full flex items-center justify-center">
@@ -587,15 +595,22 @@ export default function SarpWidget() {
                 transition={{ duration: 0.1 }}
                 className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-primary/50"
               >
-                <motion.img 
-                  src={SARP_AVATAR_URL} 
-                  alt="Sarp" 
-                  className="w-full h-full object-cover"
-                  animate={{
-                    scale: isSpeaking ? 1 + pulseIntensity * 0.08 : 1
-                  }}
-                  transition={{ duration: 0.1 }}
-                />
+                <picture>
+                  <source srcSet={SARP_AVATAR_AVIF} type="image/avif" />
+                  <source srcSet={SARP_AVATAR_URL} type="image/webp" />
+                  <motion.img
+                    src={SARP_AVATAR_URL}
+                    alt="Sarp"
+                    className="w-full h-full object-cover"
+                    animate={{
+                      scale: isSpeaking ? 1 + pulseIntensity * 0.08 : 1
+                    }}
+                    transition={{ duration: 0.1 }}
+                    decoding="async"
+                    width="48"
+                    height="48"
+                  />
+                </picture>
               </motion.div>
               
               <div className="flex-1">

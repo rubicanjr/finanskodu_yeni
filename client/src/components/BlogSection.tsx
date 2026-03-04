@@ -10,7 +10,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import LazyImage from "@/components/LazyImage";
+import PictureImage from "@/components/PictureImage";
 import { 
   Calendar, 
   Clock, 
@@ -26,6 +26,7 @@ interface BlogPost {
   title: string;
   excerpt: string;
   image: string;
+  avifImage?: string;
   date: string;
   readTime: string;
   link: string;
@@ -41,6 +42,7 @@ const blogPosts: BlogPost[] = [
     title: "Finans Raporu Otomasyonu: Veri Girişinden Stratejik Liderliğe Geçiş",
     excerpt: "Manuel veri girişinden kurtulun. Finans raporu otomasyonu ile bilançoları saniyeler içinde analiz edin, hataları sıfıra indirin ve stratejik kararlara odaklanın.",
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/blog-1-800w_9b90dab8.webp",
+    avifImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/blog-1-800w_6e1b35fd.avif",
     date: "13 Şubat 2026",
     readTime: "8 dk",
     link: "https://www.hikie.space/finanskodu/forum/a8adebd8f9ef4c3b8051a425eb18481a",
@@ -53,6 +55,7 @@ const blogPosts: BlogPost[] = [
     title: "Yeni Yılda Finançıların Kullanması Gereken 10 AI Aracı",
     excerpt: "Yapay zeka, finans dünyasını yeniden yazıyor. Veri analizi, risk yönetimi ve raporlama süreçlerinizi dönüştürecek 10 AI aracını keşfedin.",
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/blog-2-800w_34874b5b.webp",
+    avifImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/blog-2-800w_512fddba.avif",
     date: "13 Şubat 2026",
     readTime: "10 dk",
     link: "https://www.hikie.space/finanskodu/forum/a8adebd8f9ef4c3b8051a425eb18481a",
@@ -65,6 +68,7 @@ const blogPosts: BlogPost[] = [
     title: "Excel'de AI Devrimi: Finançılar İçin Yapay Zeka Kullanma Rehberi",
     excerpt: "Excel artık sadece tablo değil. Yapay zeka entegrasyonlarıyla finansal analizlerinizi otomatikleştirin, tahmin modellerinizi güçlendirin.",
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/blog-3-800w_929fe132.webp",
+    avifImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/blog-3-800w_d6ee2936.avif",
     date: "13 Şubat 2026",
     readTime: "7 dk",
     link: "https://www.hikie.space/finanskodu/forum/a8adebd8f9ef4c3b8051a425eb18481a",
@@ -321,10 +325,11 @@ export default function BlogSection() {
                 >
                   {/* Featured Image */}
                   <div className="relative h-40 overflow-hidden">
-                    <LazyImage
+                    <PictureImage
                       src={post.image}
+                      avifSrc={post.avifImage}
                       alt={post.title}
-                      className="w-full h-full transition-transform duration-700 group-hover:scale-105"
+                      className="transition-transform duration-700 group-hover:scale-105"
                     />
                     <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, transparent 40%, var(--card) 100%)' }} />
                     

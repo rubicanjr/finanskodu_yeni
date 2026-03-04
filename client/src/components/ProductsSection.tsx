@@ -1,7 +1,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Brain, Layers, LayoutDashboard, ArrowRight, type LucideIcon } from "lucide-react";
-import LazyImage from "@/components/LazyImage";
+import PictureImage from "@/components/PictureImage";
 
 interface Product {
   id: number;
@@ -9,6 +9,7 @@ interface Product {
   description: string;
   icon: LucideIcon;
   image: string;
+  avifImage?: string;
   link: string;
   badge: string;
   badgeColor: string;
@@ -25,6 +26,7 @@ const products: Product[] = [
      description: "Yapay zekaı etkili kullanarak verimliliğinizi ve aramalardaki kalitenizi artırın; AI Prompt kütüphanesi ile özellikle finans alanındaki işinizde fark yaratın.",
     icon: Brain,
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/product-ai-prompt-562w_1a853b57.webp",
+    avifImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/product-ai-prompt-562w_1ed62be2.avif",
     link: "/dijital-araclar/ai-prompt-kutuphanesi",
     badge: "Hemen Kullan",
     badgeColor: "#8B5CF6",
@@ -46,6 +48,7 @@ const products: Product[] = [
     description: "Finansal kararlarınızı duygulardan değil, mühendislik mantığından alın. Kaos İçinde Düzen ile panik ve açgözlük döngüsünü kırın; sistematik düşünce, karar matrisleri ve risk/getiri formülleriyle sürdürülebilir bir portföy mimarisi kurun.",
     icon: Layers,
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/product-finans-kodu-562w_28e65c3f.webp",
+    avifImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/product-finans-kodu-562w_eee8781b.avif",
     link: "/dijital-araclar/finans-kodu-kaos-icinde-duzen",
     badge: "Çok Satan",
     badgeColor: "#0EA5E9",
@@ -67,6 +70,7 @@ const products: Product[] = [
     description: "Piyasanın nereye gittiğini bilmek yetmez — siz o piyasada nerede duruyorsunuz? Algoritmik altın ve fon sinyalleri, haftalık sesli brifing ve aylık 1:1 finansal check-up ile portföyünüzdeki mantık hatalarını temizleyin; duygu yok, tahmin yok, sadece matematik.",
     icon: LayoutDashboard,
     image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/product-pro-bulten-565w_c1ddc987.webp",
+    avifImage: "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/product-pro-bulten-565w_60a9a35f.avif",
     link: "/dijital-araclar/pro-algoritmik-strateji-ve-analiz-bulteni",
     badge: "Aylık Sinyal",
     badgeColor: "#D4A853",
@@ -106,10 +110,11 @@ function ProductCard({ product, index, isInView }: { product: Product; index: nu
       >
         {/* Image */}
           <div className="relative overflow-hidden h-48">
-          <LazyImage
+          <PictureImage
             src={product.image}
+            avifSrc={product.avifImage}
             alt={product.title}
-            className="w-full h-full transition-transform duration-500 group-hover:scale-105"
+            className="transition-transform duration-500 group-hover:scale-105"
           />
           {/* Gradient overlay */}
           <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, transparent 40%, var(--card) 100%)" }} />

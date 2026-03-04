@@ -2450,3 +2450,15 @@
 - [x] Critical CSS inline: body/html/nav/img above-the-fold CSS index.html'e eklendi
 - [x] CSS minification: cssMinify: 'esbuild' vite.config.ts'e eklendi
 - [x] System font fallback stack: --font-display, --font-body, --font-mono güncellendi
+
+### Service Worker & Cache Optimizasyonu
+- [x] Workbox cache stratejileri: Images Cache First (1 yıl), CSS/JS SWR (1 ay), API Network First
+- [x] Precache: ana sayfa, kritik CSS/JS, logo ve temel görseller (451 entry, 15.5MB)
+- [x] Runtime cache: gezilen sayfaları cache'le, offline çalışma (NetworkFirst + 1 gün TTL)
+- [x] Cache cleanup: eski cache'leri temizle, yeni deploy'da invalidate (cleanupOutdatedCaches: true)
+## İleri Seviye Görsel Optimizasyonu
+- [x] AVIF+WebP+JPG picture element (modern tarayıcı AVIF, fallback WebP) - 32 görsel AVIF'e dönüştürüldü
+- [x] PictureImage bileşeni oluşturuldu (AVIF→WebP zinciri + LQIP blur placeholder + IntersectionObserver)
+- [x] LQIP blur placeholder (blur-up animasyonu, scale(1.03)→scale(1) geçiş)
+- [x] decoding="async" tüm img elementlerine eklendi
+- [x] BlogSection, ProductsSection, RecentBlogPosts, SponsorshipSection, DualPersonaWidget, SarpWidget, SarpMobileFirst, SarpGifAvatar güncellendi
