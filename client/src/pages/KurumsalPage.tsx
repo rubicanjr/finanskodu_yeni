@@ -12,9 +12,23 @@ export default function KurumsalPage() {
         <meta name="description" content="Finans ihtiyaçlarınız standart ürünlerimizin dışına çıkıyorsa, size özel çözüm için buradayız. Finans Kodu kurumsal hizmetleri ve süreç modeli." />
         <meta name="keywords" content="kurumsal finans çözümleri, özel finansal danışmanlık, algoritmik finans, kurumsal yatırım" />
         <link rel="canonical" href="https://finanskodu.com/kurumsal" />
+        <meta name="robots" content="index, follow" />
+        <meta property="og:type" content="website" />
         <meta property="og:title" content="Kurumsal | Finans Kodu" />
         <meta property="og:description" content="Finans ihtiyaçlarınız standart ürünlerimizin dışına çıkıyorsa, size özel çözüm için buradayız." />
         <meta property="og:url" content="https://finanskodu.com/kurumsal" />
+        <meta property="og:image" content="https://finanskodu.com/og-image.png" />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "@id": "https://finanskodu.com/kurumsal",
+          "url": "https://finanskodu.com/kurumsal",
+          "name": "Kurumsal | Finans Kodu — Özel Finansal Çözümler",
+          "description": "Finans ihtiyaçlarınız standart ürünlerimizin dışına çıkıyorsa, size özel çözüm için buradayız.",
+          "isPartOf": { "@id": "https://finanskodu.com/#website" },
+          "publisher": { "@id": "https://finanskodu.com/#organization" },
+          "inLanguage": "tr-TR"
+        })}</script>
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",

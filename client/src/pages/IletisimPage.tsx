@@ -11,9 +11,12 @@ export default function IletisimPage() {
         <meta name="description" content="Finans Kodu ile iletişime geçin. Ürün soruları, kurumsal işbirlikleri veya teknik destek için e-posta, LinkedIn veya Kod Odası üzerinden ulaşabilirsiniz." />
         <meta name="keywords" content="Finans Kodu iletişim, destek, kurumsal işbirliği, finans danışmanlık iletişim" />
         <link rel="canonical" href="https://finanskodu.com/iletisim" />
+        <meta name="robots" content="index, follow" />
+        <meta property="og:type" content="website" />
         <meta property="og:title" content="İletişim | Finans Kodu" />
         <meta property="og:description" content="Finans Kodu ile iletişime geçin. Ürün soruları, kurumsal işbirlikleri veya teknik destek için ulaşın." />
         <meta property="og:url" content="https://finanskodu.com/iletisim" />
+        <meta property="og:image" content="https://finanskodu.com/og-image.png" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",

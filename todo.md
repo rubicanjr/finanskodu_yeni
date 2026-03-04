@@ -2479,3 +2479,30 @@
 ### CLS Düzeltme (Hedef: 0.059 → 0)
 - [x] SponsorshipSection img: width=144 height=144 eklendi; PictureImage prop desteği mevcut
 - [x] Font CLS: font-display:swap + system font fallback stack mevcut
+
+## Kapsamlı SEO Sorunları Çözümü (pasted_content_13.txt)
+
+### KRİTİK: URL/Canonical Hataları
+- [x] index.html: viewport maximum-scale=1 kaldırıldı (WCAG 2.1 AA uyumlu)
+- [x] index.html: favicon link etiketleri eklendi (ico, 32x32, 16x16, apple-touch-icon)
+- [x] index.html: preconnect eklendi (GA4, Clarity, CloudFront CDN)
+- [x] index.html: OG image güncellendi (1200x630 og-image.png)
+- [x] index.html: Organization schema zenginleştirildi (E-E-A-T: founder, contactPoint, logo)
+
+### Teknik SEO
+- [x] Favicon dosyaları oluşturuldu (favicon.ico, favicon-32x32.png, favicon-16x16.png, apple-touch-icon.png)
+- [x] Web App Manifest (site.webmanifest) oluşturuldu
+- [x] NotFound.tsx'e Helmet eklendi (noindex, Türkçe içerik)
+
+### KVKK/GDPR
+- [x] CookieConsent bileşeni oluşturuldu (KVKK/GDPR uyumlu, kabul/red/kapat)
+- [x] Çerez onayı olmadan analitik yüklenmez (localStorage fk-cookie-consent kontrolü)
+- [x] App.tsx'e CookieConsent entegre edildi
+
+### CSP (Content Security Policy)
+- [x] server/_core/vite.ts'e CSP, HSTS, X-Frame-Options, Permissions-Policy eklendi
+- [x] CSP: unsafe-inline (Vite/React uyumlu, production-ready)
+
+### Dinamik Schema
+- [x] BlogDetailPage: Article schema zaten mevcut ve kapsamlı (E-E-A-T)
+- [x] İç sayfalar: WebPage schema eklendi (KurumsalPage, IletisimPage, OrtaklikPage)

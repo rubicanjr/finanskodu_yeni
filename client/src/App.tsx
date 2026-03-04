@@ -8,6 +8,7 @@ import { Route, Switch, useLocation } from 'wouter';
 import { useEffect, lazy, Suspense } from 'react';
 import { trackPageView } from '@/lib/analytics';
 import ErrorBoundary from './components/ErrorBoundary';
+import CookieConsent from '@/components/CookieConsent';
 
 // Heavy components: lazy load to keep initial bundle small
 const MarqueeTicker = lazy(() => import('@/components/MarqueeTicker'));
@@ -120,6 +121,9 @@ function App() {
                     <DualPersonaWidget />
                   </Suspense>
                 )}
+
+                {/* KVKK/GDPR Çerez Onay Banner'ı - tüm sayfalarda göster */}
+                <CookieConsent />
               </div>
             </TooltipProvider>
           </I18nProvider>

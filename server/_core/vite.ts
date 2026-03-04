@@ -48,6 +48,56 @@ export async function setupVite(app: Express, server: Server) {
   });
 }
 
+/**
+ * Güvenlik HTTP Header'ları
+ * Production ortamında tüm yanıtlara eklenir.
+ * CSP: XSS saldırılarına karşı koruma
+ * HSTS: HTTPS zorunluluğu
+ * X-Frame-Options: Clickjacking koruması
+ * X-Content-Type-Options: MIME sniffing koruması
+ */
+function setSecurityHeaders(res: express.Response) {
+  // Content Security Policy
+  // - default-src 'self': Sadece kendi domain'den kaynak yükle
+  // - script-src: GA4, Clarity, Umami, Vite HMR için izin
+  // - style-src: Google Fonts ve inline style için
+  // - img-src: CDN, data URI ve harici görseller için
+  // - connect-src: API ve analitik endpoint'leri için
+  // - font-src: Google Fonts için
+  // - frame-src: TradingView widget için
+  const csp = [
+    "default-src 'self'",
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://www.clarity.ms https://static.clarity.ms https://cdn.jsdelivr.net",
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+    "img-src 'self' data: blob: https: http:",
+    "font-src 'self' https://fonts.gstatic.com",
+    "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://www.clarity.ms https://api.manus.im https://supabase.co https://*.supabase.co wss://*.supabase.co https://d2xsxph8kpxj0f.cloudfront.net",
+    "frame-src 'self' https://s.tradingview.com https://www.tradingview.com",
+    "media-src 'self' blob: https:",
+    "worker-src 'self' blob:",
+    "manifest-src 'self'",
+    "base-uri 'self'",
+    "form-action 'self'",
+  ].join('; ');
+
+  res.setHeader('Content-Security-Policy', csp);
+
+  // HSTS: HTTPS'i 1 yıl boyunca zorla (includeSubDomains + preload)
+  res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
+
+  // Clickjacking koruması
+  res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+
+  // MIME sniffing koruması
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+
+  // Referrer Policy: Gizlilik için
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+
+  // Permissions Policy: Gereksiz tarayıcı özelliklerini kapat
+  res.setHeader('Permissions-Policy', 'camera=(), microphone=(self), geolocation=(), payment=()');
+}
+
 export function serveStatic(app: Express) {
   // Brotli/Gzip sıkıştırma — tüm text/html, text/css, application/js yanıtlarını sıkıştır
   app.use(compression({
@@ -93,18 +143,21 @@ export function serveStatic(app: Express) {
           res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
           res.setHeader("Pragma", "no-cache");
           res.setHeader("Expires", "0");
+          // Güvenlik header'larını HTML yanıtlarına ekle
+          setSecurityHeaders(res);
         }
       },
     })
   );
 
-  // SPA fallback — always serve index.html with no-cache headers
+  // SPA fallback — always serve index.html with security headers
   app.use("*", (_req, res) => {
     res.set({
       "Cache-Control": "no-cache, no-store, must-revalidate",
       "Pragma": "no-cache",
       "Expires": "0",
     });
+    setSecurityHeaders(res);
     res.sendFile(path.resolve(distPath, "index.html"));
   });
 }

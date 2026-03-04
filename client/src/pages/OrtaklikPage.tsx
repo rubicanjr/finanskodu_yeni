@@ -33,6 +33,31 @@ export default function OrtaklikPage() {
           content="Türkiye'nin Yapay Zeka & Finans alanındaki güvenilir sesi Finans Kodu ile ortak olun. Yatırım kararı veren, finansal araç arayan ve AI'ı işine entegre etmek isteyen Türk finans profesyonellerine ulaşın."
         />
         <link rel="canonical" href="https://finanskodu.com/ortaklik" />
+        <meta name="robots" content="index, follow" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Ortaklık | Finans Kodu ile İş Birliği Yapın" />
+        <meta property="og:description" content="Türkiye'nin Yapay Zeka & Finans alanındaki güvenilir sesi Finans Kodu ile ortak olun." />
+        <meta property="og:url" content="https://finanskodu.com/ortaklik" />
+        <meta property="og:image" content="https://finanskodu.com/og-image.png" />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "@id": "https://finanskodu.com/ortaklik",
+          "url": "https://finanskodu.com/ortaklik",
+          "name": "Ortaklık | Finans Kodu ile İş Birliği Yapın",
+          "description": "Türkiye'nin Yapay Zeka & Finans alanındaki güvenilir sesi Finans Kodu ile ortak olun.",
+          "isPartOf": { "@id": "https://finanskodu.com/#website" },
+          "publisher": { "@id": "https://finanskodu.com/#organization" },
+          "inLanguage": "tr-TR"
+        })}</script>
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": "https://finanskodu.com" },
+            { "@type": "ListItem", "position": 2, "name": "Ortaklık", "item": "https://finanskodu.com/ortaklik" }
+          ]
+        })}</script>
       </Helmet>
 
       <motion.div
