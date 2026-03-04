@@ -491,6 +491,10 @@ export default function SarpMobileFirst() {
                   src={SARP_AVATAR_URL} 
                   alt="Sarp Avatar" 
                   className="w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                  width="128"
+                  height="128"
                 />
               </div>
               <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary/90 rounded-full">
@@ -586,6 +590,10 @@ export default function SarpMobileFirst() {
                 src={SARP_AVATAR_URL} 
                 alt="Sarp" 
                 className="w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
+                width="64"
+                height="64"
               />
             </motion.button>
           )}
@@ -629,6 +637,10 @@ export default function SarpMobileFirst() {
                       src={SARP_AVATAR_URL} 
                       alt="Sarp Avatar" 
                       className="w-full h-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                      width="180"
+                      height="180"
                     />
                     
                     {/* Listening Overlay */}

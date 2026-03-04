@@ -2,7 +2,7 @@
 @import "tw-animate-css";
 
 /* Finans Kodu Piksel-Perfect Design System Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@800&family=JetBrains+Mono:wght@400;500;600&family=Figtree:wght@400;500;600;700&display=swap');
+/* Font yükleme index.html'de optimize edildi (preload + media=print trick) */
 
 @custom-variant dark (&:is(.dark *));
 
@@ -173,10 +173,20 @@
 @layer base {
   * {
     @apply border-border outline-ring/50 transition-colors duration-200;
+    /* CLS önleme: box-sizing tutarlılığı */
+    box-sizing: border-box;
+  }
+  html {
+    /* Yatay scroll engelleme */
+    overflow-x: hidden;
   }
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-body);
+    /* Yatay scroll engelleme */
+    overflow-x: hidden;
+    /* Font size 16px minimum - iOS zoom engelleme */
+    font-size: 16px;
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
@@ -184,6 +194,11 @@
   code, pre {
     font-family: var(--font-mono);
   }
+  /* Input'larda iOS zoom engelleme: font-size 16px minimum */
+  input, textarea, select {
+    font-size: 16px !important;
+  }
+  /* Touch hedefleri: 48x48px minimum (WCAG 2.5.5) */
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
   [type="button"]:not(:disabled),
@@ -194,6 +209,12 @@
   input[type="checkbox"]:not(:disabled),
   input[type="radio"]:not(:disabled) {
     @apply cursor-pointer;
+  }
+  /* Mobil touch hedefi minimum boyutu */
+  @media (max-width: 768px) {
+    button, [role="button"], a[href] {
+      min-height: 44px;
+    }
   }
 }
 

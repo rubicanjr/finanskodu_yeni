@@ -775,6 +775,10 @@ export default function DualPersonaWidget() {
               src={persona.avatarUrl} 
               alt={persona.name}
               className="w-full h-full object-cover"
+              loading="lazy"
+              decoding="async"
+              width="64"
+              height="64"
             />
             {/* Pulse ring */}
             <motion.div
@@ -822,6 +826,10 @@ export default function DualPersonaWidget() {
                   src={persona.avatarUrl} 
                   alt={persona.name}
                   className="w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                  width="48"
+                  height="48"
                 />
               </motion.div>
               

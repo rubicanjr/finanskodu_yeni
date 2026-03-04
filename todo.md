@@ -2417,3 +2417,12 @@
 - [x] Yükleniyor durumu (spinner + disabled buton) eklendi
 - [x] Başarı durumu (CheckCircle + otomatik modal kapanma) eklendi
 - [x] firebase.ts'e storage export eklendi
+
+- [x] Performans optimizasyonu: kurucu.png → WebP (192KB → 9.8KB)
+- [x] Performans optimizasyonu: DualPersonaWidget img lazy loading + width/height
+- [x] Performans optimizasyonu: SarpMobileFirst img lazy loading + width/height
+- [x] Performans optimizasyonu: Font yükleme optimize (5 aile → 4, tek URL, media=print trick)
+- [x] Performans optimizasyonu: index.css'ten duplicate font import kaldırıldı
+- [x] Performans optimizasyonu: Vite build terser minify + chunk splitting genişletildi
+- [x] Performans optimizasyonu: Gzip/Brotli sıkıştırma (compression middleware)
+- [x] Performans optimizasyonu: Mobil UX - input font-size 16px, touch target 44px, overflow-x hidden

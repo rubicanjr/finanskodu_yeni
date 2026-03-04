@@ -110,16 +110,39 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
+    // Terser ile agresif minify
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,   // console.log'ları production'da kaldır
+        drop_debugger: true,
+        pure_funcs: ['console.log', 'console.info', 'console.debug'],
+        passes: 2,
+      },
+      mangle: true,
+    },
+    // CSS code splitting
+    cssCodeSplit: true,
+    // Chunk boyutu uyarı eşiği
+    chunkSizeWarningLimit: 600,
     rollupOptions: {
       output: {
         entryFileNames: 'assets/[name]-[hash].js',
         chunkFileNames: 'assets/[name]-[hash].js',
         assetFileNames: 'assets/[name]-[hash].[ext]',
         manualChunks: {
-          'vendor-react': ['react', 'react-dom', 'react-helmet-async', 'wouter'],
+          // Core React - her sayfada gerekli
+          'vendor-react': ['react', 'react-dom', 'wouter'],
+          'vendor-react-extras': ['react-helmet-async'],
+          // Animasyon - lazy load edilebilir
           'vendor-motion': ['framer-motion'],
+          // 3D - sadece belirli sayfalarda kullanılıyor, lazy chunk
           'vendor-three': ['three', '@react-three/fiber', '@react-three/drei'],
-          'vendor-firebase': ['firebase/app', 'firebase/auth', 'firebase/firestore'],
+          // Firebase - ayrı chunk, sadece auth/db sayfalarında yüklenir
+          'vendor-firebase-core': ['firebase/app', 'firebase/auth'],
+          'vendor-firebase-db': ['firebase/firestore', 'firebase/storage'],
+          // UI bileşenleri
+          'vendor-ui': ['lucide-react', '@radix-ui/react-dialog', '@radix-ui/react-tabs'],
         },
       },
     },

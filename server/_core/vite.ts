@@ -5,6 +5,7 @@ import { nanoid } from "nanoid";
 import path from "path";
 import { createServer as createViteServer } from "vite";
 import viteConfig from "../../vite.config";
+import compression from "compression";
 
 export async function setupVite(app: Express, server: Server) {
   const serverOptions = {
@@ -48,6 +49,19 @@ export async function setupVite(app: Express, server: Server) {
 }
 
 export function serveStatic(app: Express) {
+  // Brotli/Gzip sıkıştırma — tüm text/html, text/css, application/js yanıtlarını sıkıştır
+  app.use(compression({
+    level: 6,          // 1-9 arası; 6 hız/boyut dengesi için optimal
+    threshold: 1024,   // 1KB altı yanıtları sıkıştırma
+    filter: (req: express.Request, res: express.Response) => {
+      // Zaten sıkıştırılmış görseller/fontlar için atla
+      const contentType = res.getHeader('Content-Type') as string || '';
+      if (/image\/(png|jpg|jpeg|webp|gif|ico)|font\/(woff|woff2)/.test(contentType)) {
+        return false;
+      }
+      return compression.filter(req, res);
+    }
+  }));
   const distPath =
     process.env.NODE_ENV === "development"
       ? path.resolve(import.meta.dirname, "../..", "dist", "public")
