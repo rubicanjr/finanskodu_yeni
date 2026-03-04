@@ -2434,3 +2434,7 @@
 - [x] BlogSection, BlogDetailPage, BlogListPage, RecentBlogPosts güncellendi
 - [x] ProductsSection, AboutSection, ManifestoSection, SponsorshipSection güncellendi
 - [x] compression paketi kuruldu (Gzip sunucu sıkıştırma)
+- [x] JS Optimizasyonu: DualPersonaWidget ve MarqueeTicker lazy import'a alındı
+- [x] JS Optimizasyonu: Home.tsx below-fold bileşenleri lazy import'a alındı (ComparisonSection, BlogSection, TestimonialsSection, FAQSection, SponsorshipSection, FeedbackSection, Footer)
+- [x] JS Optimizasyonu: vendor-three chunk kaldırıldı (Three.js hiçbir aktif bileşende kullanılmıyor)
+- [x] JS Optimizasyonu: esbuild minify, tree-shaking, console.log drop

@@ -4,12 +4,14 @@ import { HelmetProvider } from 'react-helmet-async';
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Sidebar from '@/components/Sidebar';
-import MarqueeTicker from '@/components/MarqueeTicker';
 import { Route, Switch, useLocation } from 'wouter';
 import { useEffect, lazy, Suspense } from 'react';
 import { trackPageView } from '@/lib/analytics';
 import ErrorBoundary from './components/ErrorBoundary';
-import DualPersonaWidget from './components/DualPersonaWidget';
+
+// Heavy components: lazy load to keep initial bundle small
+const MarqueeTicker = lazy(() => import('@/components/MarqueeTicker'));
+const DualPersonaWidget = lazy(() => import('./components/DualPersonaWidget'));
 
 // Route-based code splitting: Lazy load pages
 const Home = lazy(() => import('@/pages/Home'));
@@ -94,7 +96,9 @@ function App() {
                     WebkitBackdropFilter: 'blur(12px)',
                   }}
                 >
-                  <MarqueeTicker />
+                  <Suspense fallback={null}>
+                    <MarqueeTicker />
+                  </Suspense>
                 </div>
                 
                 {/* Sidebar Navigation */}
@@ -106,8 +110,10 @@ function App() {
                   <Router />
                 </main>
                 
-                {/* Dual Persona Widget */}
-                <DualPersonaWidget />
+                {/* Dual Persona Widget - lazy loaded (Three.js inside) */}
+                <Suspense fallback={null}>
+                  <DualPersonaWidget />
+                </Suspense>
               </div>
             </TooltipProvider>
           </I18nProvider>

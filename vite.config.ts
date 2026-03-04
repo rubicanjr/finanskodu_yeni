@@ -130,8 +130,6 @@ export default defineConfig({
           'vendor-router': ['wouter', 'react-helmet-async'],
           // Animasyon - büyük, ayrı chunk
           'vendor-motion': ['framer-motion'],
-          // 3D - çok büyük, ayrı chunk (sadece belirli sayfalarda)
-          'vendor-three': ['three', '@react-three/fiber', '@react-three/drei'],
           // Firebase - ayrı chunk
           'vendor-firebase': ['firebase/app', 'firebase/auth', 'firebase/firestore', 'firebase/storage'],
           // UI ikonları - büyük olabilir

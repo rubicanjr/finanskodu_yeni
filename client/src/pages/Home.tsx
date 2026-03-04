@@ -39,18 +39,25 @@
 */
 
 import { Helmet } from "react-helmet-async";
+import { lazy, Suspense } from "react";
 // Navigation is now handled by Sidebar in App.tsx
+// Above-fold: eager load (critical for LCP)
 import HeroSection from "@/components/HeroSection";
 import ProductsSection from "@/components/ProductsSection";
-import ComparisonSection from "@/components/ComparisonSection";
 
-import BlogSection from "@/components/BlogSection";
-import TestimonialsSection from "@/components/TestimonialsSection";
+// Below-fold: lazy load (improves initial bundle size)
+const ComparisonSection = lazy(() => import("@/components/ComparisonSection"));
+const BlogSection = lazy(() => import("@/components/BlogSection"));
+const TestimonialsSection = lazy(() => import("@/components/TestimonialsSection"));
+const FAQSection = lazy(() => import("@/components/FAQSection"));
+const SponsorshipSection = lazy(() => import("@/components/SponsorshipSection"));
+const FeedbackSection = lazy(() => import("@/components/FeedbackSection"));
+const Footer = lazy(() => import("@/components/Footer"));
 
-import FAQSection from "@/components/FAQSection";
-import SponsorshipSection from "@/components/SponsorshipSection";
-import FeedbackSection from "@/components/FeedbackSection";
-import Footer from "@/components/Footer";
+// Minimal skeleton for below-fold sections
+function SectionSkeleton() {
+  return <div className="h-32 bg-muted/20 animate-pulse rounded-lg mx-4 my-2" />;
+}
 
 export default function Home() {
   return (
@@ -134,33 +141,43 @@ export default function Home() {
 
         {/* 3. "Kaos'tan Düzen'e" Bölümü (Comparison Section) */}
         {/* CRO: Technology & Methodology Comparison */}
-        <ComparisonSection />
+        <Suspense fallback={<SectionSkeleton />}>
+          <ComparisonSection />
+        </Suspense>
 
         {/* 4. Finansal Analizi Başlat - MOVED TO /analiz PAGE */}
 
         {/* 6. Blog & Analizler - Articles and insights */}
         {/* CRO: Content & Authority - Demonstrate expertise */}
-        <BlogSection />
+        <Suspense fallback={<SectionSkeleton />}>
+          <BlogSection />
+        </Suspense>
 
         {/* 7. Özellikler Bölümü (Testimonials / Social Proof) */}
         {/* CRO: Social Proof - Build trust through others */}
-        <TestimonialsSection />
-
-
+        <Suspense fallback={<SectionSkeleton />}>
+          <TestimonialsSection />
+        </Suspense>
 
         {/* 8. SSS (FAQ) - Frequently Asked Questions */}
         {/* CRO: Address objections and build authority */}
-        <FAQSection />
+        <Suspense fallback={<SectionSkeleton />}>
+          <FAQSection />
+        </Suspense>
 
         {/* 9. Sponsorlar */}
         {/* CRO: Brand Partnerships & Collaboration */}
-        <SponsorshipSection />
+        <Suspense fallback={<SectionSkeleton />}>
+          <SponsorshipSection />
+        </Suspense>
       </main>
 
       {/* 10. Footer (with Feedback area) */}
       {/* CRO: Engagement & Final Conversion Point */}
-      <FeedbackSection />
-      <Footer />
+      <Suspense fallback={<SectionSkeleton />}>
+        <FeedbackSection />
+        <Footer />
+      </Suspense>
     </div>
   );
 }
