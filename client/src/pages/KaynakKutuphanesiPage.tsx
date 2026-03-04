@@ -193,27 +193,25 @@ function IndirmeModal({ dosya, onClose }: ModalProps) {
 
     try {
       // 1. Firestore'a kaydet
-      await addDoc(collection(db, "kaynak_indirenler"), {
-        ad_soyad: adSoyad.trim(),
-        email: email.trim().toLowerCase(),
-        dosya_adi: dosya.storageFileName,
-        dosya_basligi: dosya.baslik,
-        tarih: serverTimestamp(),
-      });
+      try {
+        await addDoc(collection(db, "kaynak_indirenler"), {
+          ad_soyad: adSoyad.trim(),
+          email: email.trim().toLowerCase(),
+          dosya_adi: dosya.storageFileName,
+          dosya_basligi: dosya.baslik,
+          tarih: serverTimestamp(),
+        });
+      } catch (firestoreErr: unknown) {
+        // Firestore hatası indirmeyi durdurmasın — logluyoruz ama devam ediyoruz
+        console.warn("Firestore kayıt hatası (indirme devam ediyor):", firestoreErr);
+      }
 
       // 2. Firebase Storage'dan download URL çek
       const fileRef = ref(storage, dosya.storageFileName);
       const downloadURL = await getDownloadURL(fileRef);
 
-      // 3. İndirmeyi başlat
-      const link = document.createElement("a");
-      link.href = downloadURL;
-      link.download = dosya.storageFileName;
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      // 3. İndirmeyi başlat — window.open daha güvenilir (popup blocker'a takılmaz)
+      window.open(downloadURL, "_blank", "noopener,noreferrer");
 
       setBasarili(true);
       setTimeout(() => {
@@ -221,14 +219,22 @@ function IndirmeModal({ dosya, onClose }: ModalProps) {
       }, 2000);
     } catch (err: unknown) {
       console.error("İndirme hatası:", err);
-      if (err instanceof Error) {
-        if (err.message.includes("storage/object-not-found")) {
-          setHata("Dosya henüz yüklenmemiş. Lütfen daha sonra tekrar deneyin.");
-        } else {
-          setHata("Bir hata oluştu. Lütfen tekrar deneyin.");
-        }
+      // Firebase hata kodunu kullanıcıya göster
+      const firebaseErr = err as { code?: string; message?: string };
+      const code = firebaseErr?.code ?? "";
+      const msg = firebaseErr?.message ?? "";
+
+      if (code.includes("object-not-found") || msg.includes("object-not-found")) {
+        setHata("İndirmek istediğiniz dosya henüz yüklenmemiş. Lütfen daha sonra tekrar deneyin.");
+      } else if (code.includes("unauthorized") || code.includes("permission-denied") || msg.includes("permission")) {
+        setHata("Erişim izni hatası. Lütfen bizimle iletişime geçin: info@finanskodu.com");
+      } else if (code.includes("unauthenticated")) {
+        setHata("Kimlik doğrulama hatası. Lütfen sayfayı yenileyip tekrar deneyin.");
+      } else if (msg.includes("CORS") || msg.includes("cors") || msg.includes("network")) {
+        setHata("Ağ bağlantısı hatası. Lütfen internet bağlantınızı kontrol edin.");
       } else {
-        setHata("Bir hata oluştu. Lütfen tekrar deneyin.");
+        // Tam hata kodunu göster - debug için
+        setHata(`Hata: ${code || msg || "Bilinmeyen hata"} — Lütfen info@finanskodu.com adresine bildirin.`);
       }
     } finally {
       setYukleniyor(false);
