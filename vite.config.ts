@@ -123,18 +123,33 @@ export default defineConfig({
         entryFileNames: 'assets/[name]-[hash].js',
         chunkFileNames: 'assets/[name]-[hash].js',
         assetFileNames: 'assets/[name]-[hash].[ext]',
-        manualChunks: {
-          // Core vendor - her sayfada gerekli
-          'vendor': ['react', 'react-dom'],
-          // Router + helmet - hafif
-          'vendor-router': ['wouter', 'react-helmet-async'],
-          // Animasyon - büyük, ayrı chunk
-          'vendor-motion': ['framer-motion'],
-          // Firebase - ayrı chunk
-          'vendor-firebase': ['firebase/app', 'firebase/auth', 'firebase/firestore', 'firebase/storage'],
-          // UI ikonları - büyük olabilir
-          'vendor-ui': ['lucide-react'],
-        },
+          manualChunks(id) {
+            // Core vendor - her sayfada gerekli
+            if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/')) {
+              return 'vendor';
+            }
+            // Router + helmet - hafif
+            if (id.includes('node_modules/wouter') || id.includes('node_modules/react-helmet-async')) {
+              return 'vendor-router';
+            }
+            // Animasyon - büyük, ayrı chunk
+            if (id.includes('node_modules/framer-motion')) {
+              return 'vendor-motion';
+            }
+            // Firebase - ayrı chunk (sadece /kod-odasi ve /kaynak-kutuphanesi'nde lazım)
+            if (id.includes('node_modules/firebase/')) {
+              return 'vendor-firebase';
+            }
+            // Streamdown + syntax highlighter'lar - sadece chat/blog sayfalarında lazım
+            // Bu chunk'lar lazy import sayesinde sadece gerektiğinde yüklenir
+            if (id.includes('node_modules/streamdown')) {
+              return 'vendor-streamdown';
+            }
+            // UI ikonları
+            if (id.includes('node_modules/lucide-react')) {
+              return 'vendor-ui';
+            }
+          },
       },
     },
   },

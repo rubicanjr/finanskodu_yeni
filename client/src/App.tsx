@@ -77,6 +77,10 @@ function Router() {
 }
 
 function App() {
+  const [location] = useLocation();
+  // DualPersonaWidget sadece ana sayfada göster — diğer sayfalarda yükleme maliyeti sıfır
+  const isHomePage = location === '/';
+
   return (
     <ErrorBoundary>
       <HelmetProvider>
@@ -110,10 +114,12 @@ function App() {
                   <Router />
                 </main>
                 
-                {/* Dual Persona Widget - lazy loaded (Three.js inside) */}
-                <Suspense fallback={null}>
-                  <DualPersonaWidget />
-                </Suspense>
+                {/* Dual Persona Widget - only on home page, lazy loaded */}
+                {isHomePage && (
+                  <Suspense fallback={null}>
+                    <DualPersonaWidget />
+                  </Suspense>
+                )}
               </div>
             </TooltipProvider>
           </I18nProvider>

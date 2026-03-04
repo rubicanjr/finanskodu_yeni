@@ -2442,3 +2442,7 @@
 - [x] motion.div item wrapper'ları kaldırıldı, span/div'e çevrildi
 - [x] HeroSection: 4 dekoratif div → 1 birleşik overlay div
 - [x] Trust strip separator div'leri → CSS gap ile map içinde
+- [x] JS code splitting: streamdown lazy import (index chunk 892KB → 404KB)
+- [x] DualPersonaWidget sadece ana sayfada yükleniyor
+- [x] Microsoft Clarity window.load'a ertelendi
+- [x] vite.config.ts manualChunks fonksiyon tabanlı hale getirildi
