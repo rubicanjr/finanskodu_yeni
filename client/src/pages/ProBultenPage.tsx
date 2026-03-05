@@ -112,6 +112,15 @@ export default function ProBultenPage() {
               {t('digitalTools.proBulletin.description')}
             </p>
 
+            {/* Fiyat Gösterimi */}
+            <div className="flex items-baseline gap-3 pt-1">
+              <span className="text-3xl font-bold text-orange-400">9.999 TL</span>
+              <span className="text-lg text-muted-foreground line-through">12.999 TL</span>
+              <span className="text-xs font-semibold bg-orange-500/15 text-orange-400 px-2 py-0.5 rounded-full">
+                %23 İndirim
+              </span>
+            </div>
+
             <div className="flex flex-wrap items-center gap-3 pt-2">
               <Button size="lg" asChild className="bg-orange-500 hover:bg-orange-600 text-white font-semibold">
                 <a href={product.buyUrl} target="_blank" rel="noopener noreferrer">
