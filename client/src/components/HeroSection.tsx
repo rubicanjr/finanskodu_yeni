@@ -119,7 +119,7 @@ export default function HeroSection() {
               animationDelay: '120ms'
             }}
           >
-            finans
+            Finansınızı Bir Üst Seviyeye Taşıyın
           </h1>
 
           {/* Subtitle — CSS fade-in */}
