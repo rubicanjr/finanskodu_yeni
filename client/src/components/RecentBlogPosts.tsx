@@ -72,7 +72,7 @@ export default function RecentBlogPosts() {
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
             Son Blog Yazıları
           </h2>
-          <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Finans, yatırım ve otomasyon dünyasından güncel içerikler
           </p>
         </motion.div>
@@ -86,7 +86,7 @@ export default function RecentBlogPosts() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="group bg-gray-900/50 rounded-xl overflow-hidden border border-gray-800 hover:border-primary/50 transition-all duration-300"
+              className="group bg-gray-900/50 rounded-xl overflow-hidden border border-border hover:border-primary/50 transition-all duration-300"
             >
               {/* Cover Image */}
               <Link href={`/blog/${post.id}`}>
@@ -113,7 +113,7 @@ export default function RecentBlogPosts() {
               {/* Card Content */}
               <div className="p-6">
                 {/* Meta Info */}
-                <div className="flex items-center gap-4 text-gray-400 text-sm mb-3">
+                <div className="flex items-center gap-4 text-muted-foreground text-sm mb-3">
                   <div className="flex items-center gap-1">
                     <Calendar className="w-4 h-4" />
                     <span>{post.date}</span>
@@ -134,7 +134,7 @@ export default function RecentBlogPosts() {
                 </Link>
 
                 {/* Excerpt */}
-                <p className="text-gray-400 mb-4 line-clamp-2">
+                <p className="text-muted-foreground mb-4 line-clamp-2">
                   {post.excerpt}
                 </p>
 

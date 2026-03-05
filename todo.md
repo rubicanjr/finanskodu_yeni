@@ -2506,3 +2506,10 @@
 ### Dinamik Schema
 - [x] BlogDetailPage: Article schema zaten mevcut ve kapsamlı (E-E-A-T)
 - [x] İç sayfalar: WebPage schema eklendi (KurumsalPage, IletisimPage, OrtaklikPage)
+
+## Tema (Açık/Koyu Mod) Tutarsızlık Düzeltmesi
+- [x] Adım 1: index.html FOUC engelleyici script güncellendi (data-theme, classList.remove)
+- [x] Adım 2-3: ThemeContext.tsx yeniden yazıldı (createContext default, data-theme, matchMedia kaldırıldı)
+- [x] Adım 4: .dark ve :root'a color-scheme property eklendi, CSS değişkenleri html elementinde (zaten doğruydu)
+- [x] Adım 5: text-gray-400 → text-muted-foreground (17 adet), border-gray-800 → border-border (4 adet), bg-[#0D1117] → bg-card (2 adet)
+- [x] Adım 6: Vite build cache busting zaten mevcut (entryFileNames/chunkFileNames/assetFileNames hash'li)

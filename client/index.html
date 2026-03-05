@@ -2,14 +2,20 @@
 <html lang="tr">
 
   <head>
-    <!-- FOUC engelleyici - React yüklenme den önce tema class'ı uygular -->
+    <!-- TEMA FLASH ENGELLEYİCİ — bu script en üstte, diğer her şeyden önce olmalı -->
     <script>
-(function(){
-  try {
-    var t = localStorage.getItem('fk-theme') || 'dark';
-    document.documentElement.classList.add(t);
-  } catch(e){}
-})();
+      (function() {
+        try {
+          var saved = localStorage.getItem('fk-theme');
+          var theme = saved === 'light' || saved === 'dark' ? saved : 'dark';
+          document.documentElement.classList.remove('light', 'dark');
+          document.documentElement.classList.add(theme);
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch(e) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
     </script>
     <meta charset="UTF-8" />
     <!-- WCAG 2.1 AA uyumlu: maximum-scale kaldırıldı — kullanıcılar zoom yapabilir -->

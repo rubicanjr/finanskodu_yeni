@@ -96,6 +96,7 @@
 
 :root {
   --radius: 0.5rem;
+  color-scheme: light;
   
   /* ─── Finans Kodu 2.0 LIGHT Theme ─────────────────────────────────
      Root = Light. Dark class overrides below.
@@ -136,8 +137,9 @@
 }
 
 .dark {
-  /* ─── Finans Kodu 2.0 DARK Theme ──────────────────────────────── */
-  --background: oklch(0.06 0.02 260);     /* #050810 */
+  /* ─── Finans Kodu 2.0 DARK Theme ──────────────────────────────────── */
+  color-scheme: dark;
+  --background: oklch(0.06 0.02 260);   /* #050810 */
   --foreground: oklch(0.95 0.01 240);     /* #F0F4F8 */
   --card: oklch(0.11 0.02 250);           /* #0D1117 */
   --card-foreground: oklch(0.95 0.01 240);

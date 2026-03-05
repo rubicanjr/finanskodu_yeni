@@ -56,7 +56,7 @@ export default function StatsColumn() {
               >
                 {stat.value}
               </p>
-              <p className="text-sm text-gray-400">{stat.label}</p>
+              <p className="text-sm text-muted-foreground">{stat.label}</p>
             </div>
           </div>
         </motion.div>

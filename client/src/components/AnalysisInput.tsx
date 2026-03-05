@@ -71,7 +71,7 @@ export default function AnalysisInput({ onAnalyze }: AnalysisInputProps) {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="text-center text-gray-400 text-sm"
+          className="text-center text-muted-foreground text-sm"
         >
           <div className="flex items-center justify-center gap-2 mb-3">
             <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce" />

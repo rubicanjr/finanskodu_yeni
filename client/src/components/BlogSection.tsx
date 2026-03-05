@@ -392,7 +392,7 @@ export default function BlogSection() {
         >
           <a 
             href="/blog"
-            className="inline-flex items-center gap-2 text-gray-400 hover:text-primary transition-colors text-sm"
+            className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-sm"
           >
             Tüm yazıları görüntüle
             <ArrowRight className="w-4 h-4" />

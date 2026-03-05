@@ -1,50 +1,46 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 
-type Theme = 'light' | 'dark';
+type Theme = 'dark' | 'light';
+const STORAGE_KEY = 'fk-theme';
+const DEFAULT_THEME: Theme = 'dark';
 
-interface ThemeContextType {
+const ThemeContext = createContext<{
   theme: Theme;
   toggleTheme: () => void;
-  setTheme: (theme: Theme) => void;
+  setTheme: (t: Theme) => void;
+}>({ theme: DEFAULT_THEME, toggleTheme: () => {}, setTheme: () => {} });
+
+function getInitialTheme(): Theme {
+  if (typeof window === 'undefined') return DEFAULT_THEME;
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved === 'light' || saved === 'dark') return saved;
+  } catch {}
+  // Sistem tercihi göz ardı edildi — localStorage her zaman öncelikli, varsayılan dark
+  return DEFAULT_THEME;
 }
 
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
-
-export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [theme, setThemeState] = useState<Theme>(() => {
-    // İlk render'da localStorage'dan tema al, yoksa varsayılan olarak 'dark' kullan
-    if (typeof window !== 'undefined') {
-      const savedTheme = localStorage.getItem('fk-theme') as Theme;
-      if (savedTheme && ['light', 'dark'].includes(savedTheme)) {
-        return savedTheme;
-      }
-      // Varsayılan tema: dark (system preference göz ardı edildi)
-      return 'dark';
-    }
-    return 'dark';
-  });
+export function ThemeProvider({ children }: { children: ReactNode }) {
+  const [theme, setThemeState] = useState<Theme>(getInitialTheme);
 
   useEffect(() => {
-    // Tema değiştiğinde DOM'u güncelle
-    document.documentElement.classList.remove('light', 'dark');
-    document.documentElement.classList.add(theme);
-    localStorage.setItem('fk-theme', theme);
+    const root = document.documentElement;
+    root.classList.remove('light', 'dark');
+    root.classList.add(theme);
+    root.setAttribute('data-theme', theme);
+    try {
+      localStorage.setItem(STORAGE_KEY, theme);
+    } catch {}
   }, [theme]);
 
-  const toggleTheme = () => setThemeState(prev => (prev === 'dark' ? 'light' : 'dark'));
-  const setTheme = (newTheme: Theme) => setThemeState(newTheme);
+  const setTheme = (t: Theme) => setThemeState(t);
+  const toggleTheme = () => setThemeState(prev => prev === 'dark' ? 'light' : 'dark');
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme, setTheme }}>
       {children}
     </ThemeContext.Provider>
   );
-};
+}
 
-export const useTheme = () => {
-  const context = useContext(ThemeContext);
-  if (context === undefined) {
-    throw new Error('useTheme must be used within a ThemeProvider');
-  }
-  return context;
-};
+export const useTheme = () => useContext(ThemeContext);

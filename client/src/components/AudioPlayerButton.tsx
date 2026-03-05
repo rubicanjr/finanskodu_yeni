@@ -64,8 +64,8 @@ export default function AudioPlayerButton({
       >
         {isPlaying ? (
           <div className="flex gap-0.5">
-            <div className="w-1.5 h-2.5 bg-[#0D1117] rounded-sm" />
-            <div className="w-1.5 h-2.5 bg-[#0D1117] rounded-sm" />
+            <div className="w-1.5 h-2.5 bg-card rounded-sm" />
+            <div className="w-1.5 h-2.5 bg-card rounded-sm" />
           </div>
         ) : (
           <div

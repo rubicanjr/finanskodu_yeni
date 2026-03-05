@@ -162,7 +162,7 @@ export default function BlogDetailPage() {
       <div className="min-h-screen bg-background text-foreground flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-gray-400">Yükleniyor...</p>
+          <p className="text-muted-foreground">Yükleniyor...</p>
         </div>
       </div>
     );
@@ -178,7 +178,7 @@ export default function BlogDetailPage() {
         <main className="container mx-auto px-4 py-24">
           <div className="max-w-2xl mx-auto text-center">
             <h1 className="text-4xl font-bold mb-4">Blog yazısı bulunamadı</h1>
-            <p className="text-gray-400 mb-6">Aradığınız blog yazısı mevcut değil veya kaldırılmış olabilir.</p>
+            <p className="text-muted-foreground mb-6">Aradığınız blog yazısı mevcut değil veya kaldırılmış olabilir.</p>
             <a 
               href="/blog"
               className="inline-flex items-center gap-2 text-primary hover:underline"
@@ -319,7 +319,7 @@ export default function BlogDetailPage() {
         {/* Back Link */}
         <a 
           href="/blog"
-          className="inline-flex items-center gap-2 text-gray-400 hover:text-primary transition-colors mb-8"
+          className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-8"
         >
           <ArrowLeft className="w-4 h-4" />
           Blog listesine dön
@@ -355,7 +355,7 @@ export default function BlogDetailPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex flex-wrap items-center gap-6 text-gray-400 text-sm mb-8 pb-8 border-b border-gray-800"
+          className="flex flex-wrap items-center gap-6 text-muted-foreground text-sm mb-8 pb-8 border-b border-border"
         >
           <div className="flex items-center gap-2">
             <User className="w-4 h-4" />
@@ -382,11 +382,11 @@ export default function BlogDetailPage() {
             prose-a:text-primary prose-a:no-underline hover:prose-a:underline
             prose-strong:text-foreground
             prose-code:text-primary prose-code:bg-gray-800 prose-code:px-1 prose-code:py-0.5 prose-code:rounded
-            prose-pre:bg-gray-900 prose-pre:border prose-pre:border-gray-800
+            prose-pre:bg-gray-900 prose-pre:border prose-pre:border-border
             prose-ul:text-gray-300
             prose-ol:text-gray-300
             prose-li:text-gray-300
-            prose-blockquote:border-l-primary prose-blockquote:text-gray-400
+            prose-blockquote:border-l-primary prose-blockquote:text-muted-foreground
           "
         >
           <Suspense fallback={
@@ -403,7 +403,7 @@ export default function BlogDetailPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="flex flex-wrap gap-2 mt-12 pt-8 border-t border-gray-800"
+          className="flex flex-wrap gap-2 mt-12 pt-8 border-t border-border"
         >
           {post.tags.map((tag) => (
             <span

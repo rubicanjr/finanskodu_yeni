@@ -82,7 +82,7 @@ export default function TestimonialsColumn() {
             </div>
             <div>
               <p className="text-sm font-semibold text-white">{current.author}</p>
-              <p className="text-xs text-gray-400">{current.role}</p>
+              <p className="text-xs text-muted-foreground">{current.role}</p>
             </div>
           </div>
 
