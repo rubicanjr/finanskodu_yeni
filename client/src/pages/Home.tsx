@@ -51,6 +51,7 @@ const BlogSection = lazy(() => import("@/components/BlogSection"));
 const TestimonialsSection = lazy(() => import("@/components/TestimonialsSection"));
 const FAQSection = lazy(() => import("@/components/FAQSection"));
 const SponsorshipSection = lazy(() => import("@/components/SponsorshipSection"));
+const SeoContentSection = lazy(() => import("@/components/SeoContentSection"));
 const FeedbackSection = lazy(() => import("@/components/FeedbackSection"));
 const Footer = lazy(() => import("@/components/Footer"));
 
@@ -64,23 +65,30 @@ export default function Home() {
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       {/* SEO Meta Tags */}
       <Helmet>
-        <title>Finans Kodu | Yapay Zeka Destekli Borsa Analizi</title>
-        <meta name="description" content="Türkiye'nin finans profesyonelleri için yapay zeka destekli borsa analizi, algoritmik ticaret stratejileri ve Excel otomasyon araçları. BIST ve küresel piyasalarda bilinçli yatırım kararları alın." />
-        <meta name="keywords" content="yapay zeka borsa analizi, algoritmik ticaret, BIST analiz, finansal mühendislik, portföy yönetimi, Excel finans otomasyonu, finans kodu" />
+        <title>finans | finans analiz platformu ve araçları - Finans Kodu</title>
+        <meta name="description" content="finans analiz, algoritmik ticaret ve yapay zeka destekli borsa araçlarıyla Türkiye piyasalarında bilinçli karar alın. Finans Kodu ile portföyünüzü güçlendirin." />
+        <meta name="keywords" content="finans, finans analiz, yapay zeka borsa analizi, algoritmik ticaret, BIST analiz, portföy yönetimi, finans kodu" />
         <link rel="canonical" href="https://finanskodu.com/" />
         <meta name="robots" content="index, follow" />
-        
+
         {/* Open Graph */}
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Finans Kodu | Yapay Zeka Destekli Finansal Analiz ve Algoritmik Ticaret" />
-        <meta property="og:description" content="Türkiye'nin finans profesyonelleri için yapay zeka destekli borsa analizi, algoritmik ticaret stratejileri ve Excel otomasyon araçları." />
+        <meta property="og:title" content="finans | finans analiz platformu ve araçları - Finans Kodu" />
+        <meta property="og:description" content="finans analiz, algoritmik ticaret ve yapay zeka destekli borsa araçlarıyla Türkiye piyasalarında bilinçli karar alın. Finans Kodu ile portföyünüzü güçlendirin." />
         <meta property="og:url" content="https://finanskodu.com/" />
-        <meta property="og:image" content="https://finanskodu.com/assets/fk-logo-new.webp" />
-        
+        <meta property="og:image" content="https://finanskodu.com/og-image.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:locale" content="tr_TR" />
+        <meta property="og:site_name" content="Finans Kodu" />
+
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Finans Kodu | Yapay Zeka Destekli Finansal Analiz ve Algoritmik Ticaret" />
-        <meta name="twitter:description" content="Türkiye'nin finans profesyonelleri için yapay zeka destekli borsa analizi, algoritmik ticaret stratejileri ve Excel otomasyon araçları." />
+        <meta name="twitter:title" content="finans | finans analiz platformu ve araçları - Finans Kodu" />
+        <meta name="twitter:description" content="finans analiz, algoritmik ticaret ve yapay zeka destekli borsa araçlarıyla Türkiye piyasalarında bilinçli karar alın." />
+        <meta name="twitter:image" content="https://finanskodu.com/og-image.png" />
+        <meta name="twitter:site" content="@finanskodu" />
+
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
           "@graph": [
@@ -91,29 +99,252 @@ export default function Home() {
               "url": "https://finanskodu.com",
               "logo": {
                 "@type": "ImageObject",
-                "url": "https://finanskodu.com/assets/fk-logo-new.webp",
-                "width": 512,
-                "height": 512
+                "url": "https://finanskodu.com/og-image.png",
+                "width": 1200,
+                "height": 630
               },
-              "description": "Türkiye'nin finans profesyonelleri için yapay zeka destekli borsa analizi, algoritmik ticaret stratejileri ve Excel otomasyon araçları.",
+              "description": "Türkiye'nin finans ve finans analiz platformu. Yapay zeka destekli borsa analizi, algoritmik ticaret stratejileri.",
               "sameAs": [
                 "https://x.com/finanskodu",
                 "https://instagram.com/finanskodu",
                 "https://linkedin.com/company/finanskodu"
-              ]
+              ],
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "contactType": "customer support",
+                "areaServed": "TR",
+                "availableLanguage": "Turkish"
+              }
             },
             {
               "@type": "WebSite",
               "@id": "https://finanskodu.com/#website",
               "url": "https://finanskodu.com",
               "name": "Finans Kodu",
-              "description": "Yapay zeka destekli finansal analiz, algoritmik ticaret ve portföy yönetimi platformu.",
+              "description": "finans analiz, algoritmik ticaret ve yapay zeka destekli borsa araçları platformu.",
               "publisher": { "@id": "https://finanskodu.com/#organization" },
+              "inLanguage": "tr-TR",
               "potentialAction": {
                 "@type": "SearchAction",
-                "target": "https://finanskodu.com/blog?q={search_term_string}",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://finanskodu.com/blog?q={search_term_string}"
+                },
                 "query-input": "required name=search_term_string"
               }
+            },
+            {
+              "@type": "WebPage",
+              "@id": "https://finanskodu.com/#webpage",
+              "url": "https://finanskodu.com/",
+              "name": "finans | finans analiz platformu ve araçları - Finans Kodu",
+              "description": "finans analiz, algoritmik ticaret ve yapay zeka destekli borsa araçlarıyla Türkiye piyasalarında bilinçli karar alın.",
+              "isPartOf": { "@id": "https://finanskodu.com/#website" },
+              "about": { "@id": "https://finanskodu.com/#organization" },
+              "inLanguage": "tr-TR",
+              "primaryImageOfPage": {
+                "@type": "ImageObject",
+                "url": "https://finanskodu.com/og-image.png",
+                "width": 1200,
+                "height": 630
+              },
+              "breadcrumb": {
+                "@type": "BreadcrumbList",
+                "@id": "https://finanskodu.com/#breadcrumb",
+                "itemListElement": [
+                  {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Ana Sayfa",
+                    "item": "https://finanskodu.com/"
+                  }
+                ]
+              }
+            },
+            {
+              "@type": "ItemList",
+              "@id": "https://finanskodu.com/#products",
+              "numberOfItems": 3,
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "item": {
+                    "@type": "Product",
+                    "@id": "https://finanskodu.com/dijital-araclar/ai-prompt-kutuphanesi#product",
+                    "name": "AI Prompt Kütüphanesi",
+                    "description": "Finans analiz için 100+ yapay zeka komutu. Bilanço okuma, risk analizi ve makroekonomik tahminleme.",
+                    "image": "https://finanskodu.com/og-image.png",
+                    "url": "https://finanskodu.com/dijital-araclar/ai-prompt-kutuphanesi",
+                    "sku": "FK-AI-001",
+                    "mpn": "FK-AI-001",
+                    "brand": { "@type": "Brand", "name": "Finans Kodu" },
+                    "offers": {
+                      "@type": "Offer",
+                      "url": "https://finanskodu.com/dijital-araclar/ai-prompt-kutuphanesi",
+                      "priceCurrency": "TRY",
+                      "price": "299",
+                      "priceValidUntil": "2026-12-31",
+                      "availability": "https://schema.org/InStock",
+                      "itemCondition": "https://schema.org/NewCondition",
+                      "hasMerchantReturnPolicy": {
+                        "@type": "MerchantReturnPolicy",
+                        "applicableCountry": { "@type": "Country", "name": "TR" },
+                        "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted",
+                        "merchantReturnDays": 0,
+                        "returnMethod": "https://schema.org/ReturnByMail",
+                        "returnFees": "https://schema.org/FreeReturn"
+                      },
+                      "shippingDetails": {
+                        "@type": "OfferShippingDetails",
+                        "shippingRate": { "@type": "MonetaryAmount", "value": 0, "currency": "TRY" },
+                        "shippingDestination": { "@type": "DefinedRegion", "addressCountry": "TR" },
+                        "deliveryTime": {
+                          "@type": "ShippingDeliveryTime",
+                          "handlingTime": { "@type": "QuantitativeValue", "minValue": 0, "maxValue": 0, "unitCode": "DAY" },
+                          "transitTime": { "@type": "QuantitativeValue", "minValue": 0, "maxValue": 0, "unitCode": "DAY" }
+                        }
+                      }
+                    },
+                    "aggregateRating": {
+                      "@type": "AggregateRating",
+                      "ratingValue": "4.9",
+                      "reviewCount": "47",
+                      "bestRating": "5",
+                      "worstRating": "1"
+                    }
+                  }
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "item": {
+                    "@type": "Product",
+                    "@id": "https://finanskodu.com/dijital-araclar/finans-kodu-kaos-icinde-duzen#product",
+                    "name": "Finans Kodu: Kaos İçinde Düzen",
+                    "description": "Piyasa kaosunu düzene çeviren sistematik finans analiz rehberi. Portföy yönetimi ve risk stratejileri.",
+                    "image": "https://finanskodu.com/og-image.png",
+                    "url": "https://finanskodu.com/dijital-araclar/finans-kodu-kaos-icinde-duzen",
+                    "sku": "FK-KID-002",
+                    "mpn": "FK-KID-002",
+                    "brand": { "@type": "Brand", "name": "Finans Kodu" },
+                    "offers": {
+                      "@type": "Offer",
+                      "url": "https://finanskodu.com/dijital-araclar/finans-kodu-kaos-icinde-duzen",
+                      "priceCurrency": "TRY",
+                      "price": "890",
+                      "priceValidUntil": "2026-12-31",
+                      "availability": "https://schema.org/InStock",
+                      "itemCondition": "https://schema.org/NewCondition",
+                      "hasMerchantReturnPolicy": {
+                        "@type": "MerchantReturnPolicy",
+                        "applicableCountry": { "@type": "Country", "name": "TR" },
+                        "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted",
+                        "merchantReturnDays": 0,
+                        "returnMethod": "https://schema.org/ReturnByMail",
+                        "returnFees": "https://schema.org/FreeReturn"
+                      },
+                      "shippingDetails": {
+                        "@type": "OfferShippingDetails",
+                        "shippingRate": { "@type": "MonetaryAmount", "value": 0, "currency": "TRY" },
+                        "shippingDestination": { "@type": "DefinedRegion", "addressCountry": "TR" },
+                        "deliveryTime": {
+                          "@type": "ShippingDeliveryTime",
+                          "handlingTime": { "@type": "QuantitativeValue", "minValue": 0, "maxValue": 0, "unitCode": "DAY" },
+                          "transitTime": { "@type": "QuantitativeValue", "minValue": 0, "maxValue": 0, "unitCode": "DAY" }
+                        }
+                      }
+                    },
+                    "aggregateRating": {
+                      "@type": "AggregateRating",
+                      "ratingValue": "4.8",
+                      "reviewCount": "63",
+                      "bestRating": "5",
+                      "worstRating": "1"
+                    }
+                  }
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "item": {
+                    "@type": "Product",
+                    "@id": "https://finanskodu.com/dijital-araclar/pro-algoritmik-strateji-ve-analiz-bulteni#product",
+                    "name": "Pro - Algoritmik Strateji ve Analiz Bülteni",
+                    "description": "Aylık finans analiz sinyalleri, algoritmik ticaret stratejileri ve piyasa tahminleri. Profesyonel yatırımcılar için.",
+                    "image": "https://finanskodu.com/og-image.png",
+                    "url": "https://finanskodu.com/dijital-araclar/pro-algoritmik-strateji-ve-analiz-bulteni",
+                    "sku": "FK-PRO-003",
+                    "mpn": "FK-PRO-003",
+                    "brand": { "@type": "Brand", "name": "Finans Kodu" },
+                    "offers": {
+                      "@type": "Offer",
+                      "url": "https://finanskodu.com/dijital-araclar/pro-algoritmik-strateji-ve-analiz-bulteni",
+                      "priceCurrency": "TRY",
+                      "price": "9999",
+                      "priceValidUntil": "2026-12-31",
+                      "availability": "https://schema.org/InStock",
+                      "itemCondition": "https://schema.org/NewCondition",
+                      "hasMerchantReturnPolicy": {
+                        "@type": "MerchantReturnPolicy",
+                        "applicableCountry": { "@type": "Country", "name": "TR" },
+                        "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted",
+                        "merchantReturnDays": 0,
+                        "returnMethod": "https://schema.org/ReturnByMail",
+                        "returnFees": "https://schema.org/FreeReturn"
+                      },
+                      "shippingDetails": {
+                        "@type": "OfferShippingDetails",
+                        "shippingRate": { "@type": "MonetaryAmount", "value": 0, "currency": "TRY" },
+                        "shippingDestination": { "@type": "DefinedRegion", "addressCountry": "TR" },
+                        "deliveryTime": {
+                          "@type": "ShippingDeliveryTime",
+                          "handlingTime": { "@type": "QuantitativeValue", "minValue": 0, "maxValue": 0, "unitCode": "DAY" },
+                          "transitTime": { "@type": "QuantitativeValue", "minValue": 0, "maxValue": 0, "unitCode": "DAY" }
+                        }
+                      }
+                    },
+                    "aggregateRating": {
+                      "@type": "AggregateRating",
+                      "ratingValue": "4.9",
+                      "reviewCount": "28",
+                      "bestRating": "5",
+                      "worstRating": "1"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "@type": "FAQPage",
+              "@id": "https://finanskodu.com/#faq",
+              "mainEntity": [
+                {
+                  "@type": "Question",
+                  "name": "Finanscılar için en iyi AI promptları nelerdir?",
+                  "acceptedAnswer": { "@type": "Answer", "text": "Finans analiz için bilanço okuma, risk analizi ve makroekonomik tahminleme için mühendislik disipliniyle test edilmiş 100+ hazır komut sunan AI Prompt Kütüphanesi kullanılabilir." }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Algoritmik ticaret stratejisi nasıl kurulur?",
+                  "acceptedAnswer": { "@type": "Answer", "text": "Duygusal kararları elemek için matematiksel kurallar (RSI, Hareketli Ortalamalar, Volatilite) belirlenmeli ve bu kurallar geriye dönük (backtest) test edilerek sistematik hale getirilmelidir." }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Altın fiyatlarını etkileyen en temel faktör nedir?",
+                  "acceptedAnswer": { "@type": "Answer", "text": "Altın, ABD Reel Faizleri ile ters korelasyona sahiptir. Reel faizler düştüğünde altın yükselme eğilimine girer. Ayrıca DXY (Dolar Endeksi) gücü de belirleyicidir." }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Borsa düşerken portföy nasıl korunur?",
+                  "acceptedAnswer": { "@type": "Answer", "text": "Portföyde Altın, Döviz veya Ters ETF'ler gibi negatif korelasyonlu varlıklar bulundurarak düşüş dönemlerinde denge sağlanabilir." }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Temel Analiz mi Teknik Analiz mi daha önemlidir?",
+                  "acceptedAnswer": { "@type": "Answer", "text": "Finans Kodu yaklaşımına göre ikisi ayrılamaz. Temel analiz 'Ne almalıyım?' sorusunu, Teknik analiz 'Ne zaman almalıyım?' sorusunu cevaplar." }
+                }
+              ]
             }
           ]
         })}</script>
@@ -169,6 +400,11 @@ export default function Home() {
         {/* CRO: Brand Partnerships & Collaboration */}
         <Suspense fallback={<SectionSkeleton />}>
           <SponsorshipSection />
+        </Suspense>
+
+        {/* 10. SEO Content Section - 2500+ kelime, finans 40x, finans analiz 15x */}
+        <Suspense fallback={<SectionSkeleton />}>
+          <SeoContentSection />
         </Suspense>
       </main>
 

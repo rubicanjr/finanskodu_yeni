@@ -119,8 +119,7 @@ export default function HeroSection() {
               animationDelay: '120ms'
             }}
           >
-            Finansınızı{' '}
-            <span className="text-emerald-600 dark:text-emerald-300">İleriye Taşıyın</span>
+            finans
           </h1>
 
           {/* Subtitle — CSS fade-in */}
