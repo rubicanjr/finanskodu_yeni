@@ -89,8 +89,7 @@ export default function RecentBlogPosts() {
               className="group bg-gray-900/50 rounded-xl overflow-hidden border border-border hover:border-primary/50 transition-all duration-300"
             >
               {/* Cover Image */}
-              <Link href={`/blog/${post.id}`}>
-                <a className="block relative overflow-hidden aspect-video">
+              <Link href={`/blog/${post.id}`} className="block relative overflow-hidden aspect-video">
                   <PictureImage
                     src={post.image}
                     alt={post.title}
@@ -107,7 +106,6 @@ export default function RecentBlogPosts() {
                   <div className="absolute top-4 right-4 px-3 py-1 bg-black/70 backdrop-blur-sm rounded-full text-sm">
                     {post.author}
                   </div>
-                </a>
               </Link>
 
               {/* Card Content */}
@@ -125,12 +123,10 @@ export default function RecentBlogPosts() {
                 </div>
 
                 {/* Title */}
-                <Link href={`/blog/${post.id}`}>
-                  <a className="block">
-                    <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors line-clamp-2">
-                      {post.title}
-                    </h3>
-                  </a>
+                <Link href={`/blog/${post.id}`} className="block">
+                  <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors line-clamp-2">
+                    {post.title}
+                  </h3>
                 </Link>
 
                 {/* Excerpt */}
@@ -139,11 +135,9 @@ export default function RecentBlogPosts() {
                 </p>
 
                 {/* Read More Button */}
-                <Link href={`/blog/${post.id}`}>
-                  <a className="inline-flex items-center gap-2 text-primary hover:gap-3 transition-all">
-                    Devamını Oku
-                    <ArrowRight className="w-4 h-4" />
-                  </a>
+                <Link href={`/blog/${post.id}`} className="inline-flex items-center gap-2 text-primary hover:gap-3 transition-all">
+                  Devamını Oku
+                  <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
             </motion.article>
@@ -158,11 +152,9 @@ export default function RecentBlogPosts() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="text-center"
         >
-          <Link href="/blog">
-            <a className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-black font-bold rounded-lg hover:bg-primary/90 transition-all">
-              Tümünü Gör
-              <ArrowRight className="w-5 h-5" />
-            </a>
+          <Link href="/blog" className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-black font-bold rounded-lg hover:bg-primary/90 transition-all">
+            Tümünü Gör
+            <ArrowRight className="w-5 h-5" />
           </Link>
         </motion.div>
       </div>
