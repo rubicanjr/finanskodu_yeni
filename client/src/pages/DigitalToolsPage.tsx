@@ -184,7 +184,7 @@ export default function DigitalToolsPage() {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Dijital Araçlar: AI Prompt, Finans Metodolojisi ve Strateji Bülteni | Finans Kodu</title>
+        <title>Dijital Araçlar | AI Prompt ve Finans Araçları | Finans Kodu</title>
         <meta name="description" content="Finans profesyonelleri için 100+ AI prompt, kapsamlı finansal metodoloji rehberi ve aylık algoritmik strateji bülteni. Yapay zeka ile finansal verimliliğinizi artırın." />
         <meta name="keywords" content="finans AI prompt, finansal analiz araçları, algoritmik strateji bülteni, finans metodolojisi, yapay zeka finans" />
         <link rel="canonical" href="https://finanskodu.com/dijital-araclar" />
@@ -210,6 +210,7 @@ export default function DigitalToolsPage() {
       {/* Products Section */}
       <section className="py-12 px-4">
         <div className="container max-w-6xl mx-auto space-y-16">
+          <h2 className="sr-only">Dijital Finansal Araçlar ve Ürünler</h2>
           {products.map((product, index) => {
             const Icon = product.icon;
             const productText = [

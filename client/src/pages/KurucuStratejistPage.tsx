@@ -9,7 +9,7 @@ export default function KurucuStratejistPage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Helmet>
-        <title>Kurucu Stratejistimizle Tanışın | Finans Kodu — Rubi Can İçliyürek</title>
+        <title>Kurucu Stratejist | Rubi Can İçliyürek | Finans Kodu</title>
         <meta name="description" content="Rubi Can İçliyürek — LC Waikiki Planlama Yöneticisi'nden Finans Kodu Co-Founder & CIO'ya. Mühendislik ve finans geçmişiyle bireysel yatırımcılar için algoritmik altyapı kuruyor." />
         <meta name="keywords" content="Rubi Can İçliyürek, Finans Kodu kurucu, CIO, algoritmik finans, yatırım stratejisti" />
         <link rel="canonical" href="https://finanskodu.com/kurucu-stratejist" />
@@ -147,6 +147,7 @@ export default function KurucuStratejistPage() {
 
               {/* Sağ: Metin */}
               <div className="flex-1 space-y-6">
+                <h2 className="sr-only">Rubi Can İçliyürek — Co-Founder & CIO Hikayesi</h2>
                 {/* Eyebrow */}
                 <div className="flex items-center gap-3">
                   <div className="h-px w-8" style={{ background: 'rgba(0,212,255,0.3)' }} />

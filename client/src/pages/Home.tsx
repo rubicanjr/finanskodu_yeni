@@ -64,7 +64,7 @@ export default function Home() {
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       {/* SEO Meta Tags */}
       <Helmet>
-        <title>Finans Kodu | Yapay Zeka Destekli Finansal Analiz, Algoritmik Ticaret ve Portföy Yönetimi</title>
+        <title>Finans Kodu | Yapay Zeka Destekli Borsa Analizi</title>
         <meta name="description" content="Türkiye'nin finans profesyonelleri için yapay zeka destekli borsa analizi, algoritmik ticaret stratejileri ve Excel otomasyon araçları. BIST ve küresel piyasalarda bilinçli yatırım kararları alın." />
         <meta name="keywords" content="yapay zeka borsa analizi, algoritmik ticaret, BIST analiz, finansal mühendislik, portföy yönetimi, Excel finans otomasyonu, finans kodu" />
         <link rel="canonical" href="https://finanskodu.com/" />

@@ -131,6 +131,9 @@ export default function KurumsalPage() {
       </section>
 
       {/* Süreç Modeli - ProcessModelSection içeriği */}
+      <section className="sr-only" aria-label="Süreç Modeli">
+        <h2>Kurumsal Finansal Danışmanlık Süreç Modeli</h2>
+      </section>
       <ProcessModelSection />
     </div>
   );

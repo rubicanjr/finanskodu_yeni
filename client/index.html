@@ -71,9 +71,9 @@
     <meta name="twitter:description" content="Yapay zeka destekli finansal mühendislik, algoritmik ticaret ve Excel otomasyon çözümleri sunan finansal teknoloji platformu." />
     <meta name="twitter:image" content="https://finanskodu.com/og-image.png" />
 
-    <!-- Canonical: Dinamik olarak React Helmet ile her sayfada override edilir.
-         Bu fallback sadece JS yüklenemediğinde devreye girer. -->
-    <link rel="canonical" href="https://finanskodu.com/" />
+    <!-- Canonical: Her sayfa kendi canonical'ını React Helmet ile dinamik olarak tanımlar.
+         Statik fallback kasıtlı olarak kaldırıldı — yanlış canonical tüm sayfalarda
+         tekrarlanmasın diye. Her sayfanın Helmet'inde doğru canonical mevcuttur. -->
 
     <!-- Bing Webmaster Tools Verification -->
     <meta name="msvalidate.01" content="DDF667ECAA6E5E2F19F2CFF898AC9BAC" />

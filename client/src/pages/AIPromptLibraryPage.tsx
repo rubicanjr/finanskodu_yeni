@@ -77,7 +77,7 @@ export default function AIPromptLibraryPage() {
   return (
     <>
       <Helmet>
-        <title>AI Prompt Kütüphanesi: 100+ Finansal Analiz Komutu | Finans Kodu</title>
+        <title>AI Prompt Kütüphanesi | 100+ Finansal Komut | Finans Kodu</title>
         <meta name="description" content="Finans profesyonelleri için 100+ yapay zeka prompt koleksiyonu. ChatGPT ve Claude ile finansal analiz, rapor hazırlama ve portföy yönetimi işlerini otomatikleştirin." />
         <meta name="keywords" content="finans AI prompt, ChatGPT finans, finansal analiz komutu, yapay zeka prompt kütüphanesi, finans otomasyon" />
         <link rel="canonical" href="https://finanskodu.com/dijital-araclar/ai-prompt-kutuphanesi" />

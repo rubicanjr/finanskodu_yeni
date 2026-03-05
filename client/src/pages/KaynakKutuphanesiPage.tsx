@@ -397,7 +397,7 @@ export default function KaynakKutuphanesiPage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Helmet>
-        <title>Kaynak Kütüphanesi | Finans Kodu — Ücretsiz Finansal Araçlar ve Şablonlar</title>
+        <title>Kaynak Kütüphanesi | Ücretsiz Finans Araçları | Finans Kodu</title>
         <meta
           name="description"
           content="Finans Kodu kaynak kütüphanesi: 20 ücretsiz finansal araç, Excel şablonu ve PDF rehberi. Portföy takibi, risk hesaplama, AI prompt şablonları ve daha fazlası."

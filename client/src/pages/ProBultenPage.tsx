@@ -51,7 +51,7 @@ export default function ProBultenPage() {
   return (
     <>
       <Helmet>
-        <title>Pro Algoritmik Strateji ve Analiz Bülteni | Aylık Piyasa Analizi | Finans Kodu</title>
+        <title>Pro Algoritmik Strateji Bülteni | Finans Kodu</title>
         <meta name="description" content="Aylık algoritmik strateji bülteni: Altın algoritması, akıllı fon sepetleri, haftalık sesli brifing ve 1:1 finansal check-up. Kanıtlanmış model ve yüksek veri isabeti ile piyasalarda öne geçin." />
         <meta name="keywords" content="algoritmik strateji bülteni, piyasa analizi, altın algoritması, fon sepeti, finansal brifing, borsa sinyali" />
         <link rel="canonical" href="https://finanskodu.com/dijital-araclar/pro-algoritmik-strateji-ve-analiz-bulteni" />

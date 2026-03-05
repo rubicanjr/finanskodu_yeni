@@ -174,7 +174,7 @@ export default function BlogListPage() {
     <div className="min-h-screen bg-background text-foreground">
       {/* SEO Meta Tags */}
       <Helmet>
-        <title>Blog & Analizler | Borsa, AI ve Otomasyon Rehberi | Finans Kodu</title>
+        <title>Blog & Analizler | Borsa ve AI Rehberi | Finans Kodu</title>
         <meta name="description" content="Finans profesyonelleri için kapsamlı blog: BIST ve küresel borsa analizleri, yapay zeka araçları, Excel otomasyonu ve algoritmik ticaret stratejileri. Uzman yazarlar Sarp ve Vera'dan haftalık içerikler." />
         <meta name="keywords" content="finans blog, borsa analizi, yatırım rehberi, yapay zeka finans, Excel otomasyon, algoritmik ticaret, BIST" />
         <link rel="canonical" href="https://finanskodu.com/blog" />

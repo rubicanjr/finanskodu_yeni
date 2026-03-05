@@ -51,7 +51,7 @@ export default function FinansKoduPage() {
   return (
     <>
       <Helmet>
-        <title>FİNANS KODU: Kaos İçinde Düzen | Finansal Metodoloji ve Araç Seti | Finans Kodu</title>
+        <title>Finans Kodu: Kaos İçinde Düzen | Metodoloji Seti</title>
         <meta name="description" content="Finansal operasyonlarınızı dönüştürecek kapsamlı metodoloji ve araç seti. Mühendislik perspektifi, duygu-bozucu algoritmalar, risk/getiri mühendisliği ve sürdürülebilir varlık döngüsü ile piyasalarda kaosı düzene çevirin." />
         <meta name="keywords" content="finansal metodoloji, algoritmik ticaret sistemi, risk getiri mühendisliği, finansal otomasyon, piyasa analizi sistemi" />
         <link rel="canonical" href="https://finanskodu.com/dijital-araclar/finans-kodu-kaos-icinde-duzen" />

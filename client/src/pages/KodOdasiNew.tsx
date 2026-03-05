@@ -634,7 +634,7 @@ export default function KodOdasiNew() {
   return (
     <>
       <Helmet>
-        <title>Kod Odası | Finans Topluluğu ile Canlı Piyasa Sohbetleri | Finans Kodu</title>
+        <title>Kod Odası | Canlı Finans Topluluğu | Finans Kodu</title>
         <meta name="description" content="Türkiye'nin finans topluluğu. Borsa, kripto, dolar ve altın hakkında uzmanlarla canlı sohbet edin. 1.000+ finans profesyoneli ile piyasaları birlikte analiz edin." />
         <meta name="keywords" content="finans topluluğu, borsa sohbet, piyasa analizi, canlı finans chat, BIST topluluk, yatırım forum" />
         <link rel="canonical" href="https://finanskodu.com/kod-odasi" />

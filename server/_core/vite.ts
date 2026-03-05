@@ -99,6 +99,28 @@ function setSecurityHeaders(res: express.Response) {
 }
 
 export function serveStatic(app: Express) {
+  // www → non-www canonical yönlendirmesi (301 Permanent)
+  // SEO: www.finanskodu.com → finanskodu.com
+  app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
+    const host = req.hostname;
+    if (host && host.startsWith('www.')) {
+      const nonWwwHost = host.slice(4);
+      const redirectUrl = `${req.protocol}://${nonWwwHost}${req.originalUrl}`;
+      return res.redirect(301, redirectUrl);
+    }
+    next();
+  });
+
+  // Manifest dosyaları için X-Robots-Tag: noindex
+  // SEO tarayıcıları manifest JSON dosyalarını HTML gibi tarıyor, noindex ile engelle
+  app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
+    const url = req.path;
+    if (url.endsWith('.webmanifest') || url.endsWith('manifest.json') || url.endsWith('site.webmanifest')) {
+      res.setHeader('X-Robots-Tag', 'noindex, nofollow');
+    }
+    next();
+  });
+
   // Brotli/Gzip sıkıştırma — tüm text/html, text/css, application/js yanıtlarını sıkıştır
   app.use(compression({
     level: 6,          // 1-9 arası; 6 hız/boyut dengesi için optimal
