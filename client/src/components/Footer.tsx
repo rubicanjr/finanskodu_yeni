@@ -53,6 +53,7 @@ const socialLinks = [
 const quickLinks = [
   { label: "Ürünler", href: "#urunler" },
   { label: "Blog", href: "/blog", isRoute: true },
+  { label: "Gizlilik Politikası", href: "/kvkk", isRoute: true },
 ];
 
 export default function Footer() {
@@ -173,6 +174,13 @@ export default function Footer() {
           <p className="text-muted-foreground text-sm">
             <small>© {new Date().getFullYear()} Finans Kodu. Tüm hakları saklıdır.</small>
           </p>
+          <a
+            href="/kvkk"
+            className="text-muted-foreground hover:text-primary transition-colors text-sm"
+            aria-label="Gizlilik Politikası ve KVKK sayfasına git"
+          >
+            <small>Gizlilik Politikası</small>
+          </a>
 
         </motion.div>
       </div>

@@ -2535,3 +2535,8 @@
 - [x] App.tsx'e /kvkk rotası eklendi (lazy import)
 - [x] generate-sitemap.js'e /kvkk rotası eklendi (priority: 0.4, changefreq: yearly)
 - [x] Sitemap yeniden oluşturuldu (15 URL)
+
+## Sidebar ve Footer KVKK Linki
+- [x] SidebarContent.tsx bottomNavItems'a "Gizlilik Politikası" linki ekle (Shield ikonu, /kvkk rotası)
+- [x] Footer.tsx quickLinks'e "Gizlilik Politikası" linki ekle (isRoute: true, /kvkk)
+- [x] Footer bottom bar'a KVKK linki ekle

@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'wouter';
-import { Home, BookOpen, MessageSquare, Package, Building2, FolderOpen, Library, Mail, Handshake } from 'lucide-react';
+import { Home, BookOpen, MessageSquare, Package, Building2, FolderOpen, Library, Mail, Handshake, Shield } from 'lucide-react';
 import { useI18n } from '@/contexts/I18nContext';
 import ThemeToggle from './ThemeToggle';
 import LanguageToggle from './LanguageToggle';
@@ -17,6 +17,7 @@ const bottomNavItems = [
   { href: '/projeler', label: 'nav.projeler', icon: FolderOpen, external: false },
   { href: '/kaynak-kutuphanesi', label: 'nav.kaynakKutuphanesi', icon: Library, external: false },
   { href: '/iletisim', label: 'nav.iletisim', icon: Mail, external: false },
+  { href: '/kvkk', label: 'nav.kvkk', icon: Shield, external: false },
 ];
 
 interface SidebarContentProps {
