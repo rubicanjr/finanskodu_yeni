@@ -30,6 +30,7 @@ const OrtaklikPage = lazy(() => import('@/pages/OrtaklikPage'));
 const IletisimPage = lazy(() => import('@/pages/IletisimPage'));
 const ProjelerPage = lazy(() => import('@/pages/ProjelerPage'));
 const KaynakKutuphanesiPage = lazy(() => import('@/pages/KaynakKutuphanesiPage'));
+const KvkkPage = lazy(() => import('@/pages/KvkkPage'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 
 // Loading fallback component
@@ -70,6 +71,7 @@ function Router() {
         <Route path="/iletisim" component={IletisimPage} />
         <Route path="/projeler" component={ProjelerPage} />
         <Route path="/kaynak-kutuphanesi" component={KaynakKutuphanesiPage} />
+        <Route path="/kvkk" component={KvkkPage} />
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />
       </Switch>

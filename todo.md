@@ -2527,3 +2527,11 @@
 - [x] "Devamını Oku" anchor spam düzeltildi - RecentBlogPosts ve BlogSection'da blog başlıklarına özgü anchor text
 - [x] Blog + BlogPosting schema eklendi (3 blog yazısı, @graph'a dahil)
 - [x] PreviewerModeAlert: Manus platform UI'ına ait, production'da zaten görünmüyor
+
+## KVKK / Gizlilik Politikası Sayfası
+- [x] KvkkPage.tsx bileşeni oluşturuldu (12 bölüm, tam KVKK/GDPR içeriği)
+- [x] WebPage + BreadcrumbList schema.org markup eklendi
+- [x] Helmet: title (58 kar), meta description (159 kar), canonical, og tags
+- [x] App.tsx'e /kvkk rotası eklendi (lazy import)
+- [x] generate-sitemap.js'e /kvkk rotası eklendi (priority: 0.4, changefreq: yearly)
+- [x] Sitemap yeniden oluşturuldu (15 URL)
