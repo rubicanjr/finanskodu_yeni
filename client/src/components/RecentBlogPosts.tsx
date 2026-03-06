@@ -134,10 +134,10 @@ export default function RecentBlogPosts() {
                   {post.excerpt}
                 </p>
 
-                {/* Read More Button */}
-                <Link href={`/blog/${post.id}`} className="inline-flex items-center gap-2 text-primary hover:gap-3 transition-all">
-                  Devamını Oku
-                  <ArrowRight className="w-4 h-4" />
+                {/* Read More Button - SEO: blog başlığına özgü anchor text (anchor spam önleme) */}
+                <Link href={`/blog/${post.id}`} className="inline-flex items-center gap-2 text-primary hover:gap-3 transition-all" aria-label={`${post.title} yazısını oku`}>
+                  <span className="line-clamp-1 max-w-[200px] text-sm">{post.title.split(':')[0].trim()} Yazısını Oku</span>
+                  <ArrowRight className="w-4 h-4 flex-shrink-0" />
                 </Link>
               </div>
             </motion.article>

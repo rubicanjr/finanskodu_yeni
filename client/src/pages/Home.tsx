@@ -65,16 +65,16 @@ export default function Home() {
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       {/* SEO Meta Tags */}
       <Helmet>
-        <title>finans | finans analiz platformu ve araçları - Finans Kodu</title>
-        <meta name="description" content="finans analiz, algoritmik ticaret ve yapay zeka destekli borsa araçlarıyla Türkiye piyasalarında bilinçli karar alın. Finans Kodu ile portföyünüzü güçlendirin." />
+        <title>Finans | Finans Analiz Platformu ve Araçları - Finans Kodu</title>
+        <meta name="description" content="Finans analiz, algoritmik ticaret ve yapay zeka borsa araçlarıyla Türkiye piyasalarında bilinçli kararlar alın. Finans Kodu ile portföyünüzü bugün güçlendirin." />
         <meta name="keywords" content="finans, finans analiz, yapay zeka borsa analizi, algoritmik ticaret, BIST analiz, portföy yönetimi, finans kodu" />
         <link rel="canonical" href="https://finanskodu.com/" />
         <meta name="robots" content="index, follow" />
 
         {/* Open Graph */}
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="finans | finans analiz platformu ve araçları - Finans Kodu" />
-        <meta property="og:description" content="finans analiz, algoritmik ticaret ve yapay zeka destekli borsa araçlarıyla Türkiye piyasalarında bilinçli karar alın. Finans Kodu ile portföyünüzü güçlendirin." />
+        <meta property="og:title" content="Finans | Finans Analiz Platformu ve Araçları - Finans Kodu" />
+        <meta property="og:description" content="Finans analiz, algoritmik ticaret ve yapay zeka borsa araçlarıyla Türkiye piyasalarında bilinçli kararlar alın. Finans Kodu ile portföyünüzü bugün güçlendirin." />
         <meta property="og:url" content="https://finanskodu.com/" />
         <meta property="og:image" content="https://finanskodu.com/og-image.png" />
         <meta property="og:image:width" content="1200" />
@@ -84,8 +84,8 @@ export default function Home() {
 
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="finans | finans analiz platformu ve araçları - Finans Kodu" />
-        <meta name="twitter:description" content="finans analiz, algoritmik ticaret ve yapay zeka destekli borsa araçlarıyla Türkiye piyasalarında bilinçli karar alın." />
+        <meta name="twitter:title" content="Finans | Finans Analiz Platformu ve Araçları - Finans Kodu" />
+        <meta name="twitter:description" content="Finans analiz, algoritmik ticaret ve yapay zeka borsa araçlarıyla Türkiye piyasalarında bilinçli kararlar alın. Finans Kodu ile portföyünüzü bugün güçlendirin." />
         <meta name="twitter:image" content="https://finanskodu.com/og-image.png" />
         <meta name="twitter:site" content="@finanskodu" />
 
@@ -137,8 +137,8 @@ export default function Home() {
               "@type": "WebPage",
               "@id": "https://finanskodu.com/#webpage",
               "url": "https://finanskodu.com/",
-              "name": "finans | finans analiz platformu ve araçları - Finans Kodu",
-              "description": "finans analiz, algoritmik ticaret ve yapay zeka destekli borsa araçlarıyla Türkiye piyasalarında bilinçli karar alın.",
+              "name": "Finans | Finans Analiz Platformu ve Araçları - Finans Kodu",
+              "description": "Finans analiz, algoritmik ticaret ve yapay zeka borsa araçlarıyla Türkiye piyasalarında bilinçli kararlar alın. Finans Kodu ile portföyünüzü bugün güçlendirin.",
               "isPartOf": { "@id": "https://finanskodu.com/#website" },
               "about": { "@id": "https://finanskodu.com/#organization" },
               "inLanguage": "tr-TR",
@@ -312,6 +312,56 @@ export default function Home() {
                       "worstRating": "1"
                     }
                   }
+                }
+              ]
+            },
+            {
+              "@type": "Blog",
+              "@id": "https://finanskodu.com/#blog",
+              "name": "Finans Kodu Blog",
+              "description": "Finans analiz, algoritmik ticaret ve yapay zeka destekli borsa stratejileri üzerine uzman içerikler.",
+              "url": "https://finanskodu.com/blog",
+              "publisher": { "@id": "https://finanskodu.com/#organization" },
+              "inLanguage": "tr-TR",
+              "blogPost": [
+                {
+                  "@type": "BlogPosting",
+                  "@id": "https://finanskodu.com/blog/finans-raporu-otomasyonu#blogpost",
+                  "headline": "Finans Raporu Otomasyonu: Veri Girişinden Stratejik Liderliğe Geçiş",
+                  "description": "Finans raporlarını otomatikleştirerek veri girişinden stratejik liderliğe nasıl geçiş yapabilirsiniz?",
+                  "url": "https://finanskodu.com/blog/finans-raporu-otomasyonu",
+                  "datePublished": "2026-02-13",
+                  "dateModified": "2026-02-13",
+                  "author": { "@id": "https://finanskodu.com/#organization" },
+                  "publisher": { "@id": "https://finanskodu.com/#organization" },
+                  "image": "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/blog-1-800w_9b90dab8.webp",
+                  "inLanguage": "tr-TR"
+                },
+                {
+                  "@type": "BlogPosting",
+                  "@id": "https://finanskodu.com/blog/yeni-yilda-finanscilarin-10-ai-araci#blogpost",
+                  "headline": "Yeni Yılda Finançıların Kullanması Gereken 10 AI Aracı",
+                  "description": "2026'da finançıların işlerini kolaylaştıracak 10 yapay zeka aracı.",
+                  "url": "https://finanskodu.com/blog/yeni-yilda-finanscilarin-10-ai-araci",
+                  "datePublished": "2026-02-13",
+                  "dateModified": "2026-02-13",
+                  "author": { "@id": "https://finanskodu.com/#organization" },
+                  "publisher": { "@id": "https://finanskodu.com/#organization" },
+                  "image": "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/blog-2-800w_34874b5b.webp",
+                  "inLanguage": "tr-TR"
+                },
+                {
+                  "@type": "BlogPosting",
+                  "@id": "https://finanskodu.com/blog/excelde-ai-devrimi-finanscilar-icin-rehber#blogpost",
+                  "headline": "Excel'de AI Devrimi: Finançılar İçin Yapay Zeka Kullanma Rehberi",
+                  "description": "Excel'de yapay zeka nasıl kullanılır? Finançılar için AI destekli Excel formülleri.",
+                  "url": "https://finanskodu.com/blog/excelde-ai-devrimi-finanscilar-icin-rehber",
+                  "datePublished": "2026-02-13",
+                  "dateModified": "2026-02-13",
+                  "author": { "@id": "https://finanskodu.com/#organization" },
+                  "publisher": { "@id": "https://finanskodu.com/#organization" },
+                  "image": "https://d2xsxph8kpxj0f.cloudfront.net/310519663094430864/kUgdQwjoJVBUMRt45Jb2ku/blog-3-800w_929fe132.webp",
+                  "inLanguage": "tr-TR"
                 }
               ]
             },

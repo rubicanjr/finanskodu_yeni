@@ -365,16 +365,17 @@ export default function BlogSection() {
                       {post.excerpt}
                     </p>
 
-                    {/* Read More Link - Opens in New Tab */}
+                    {/* Read More Link - SEO: blog başlığına özgü anchor text (anchor spam önleme) */}
                     <a 
                       href={`/blog/${post.id}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 font-medium text-sm transition-colors group/btn"
                       style={{ color: 'var(--primary)' }}
+                      aria-label={`${post.title} yazısını oku`}
                     >
-                      <span>Devamını Oku</span>
-                      <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
+                      <span className="line-clamp-1 max-w-[180px]">{post.title.split(':')[0].trim()} Yazısını Oku</span>
+                      <ArrowRight className="w-4 h-4 flex-shrink-0 transition-transform group-hover/btn:translate-x-1" />
                     </a>
                   </div>
                 </div>

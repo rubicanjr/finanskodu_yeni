@@ -2520,3 +2520,10 @@
 - [x] Manifest dosyaları için X-Robots-Tag: noindex eklendi (site.webmanifest, manifest.json)
 - [x] H2 eksikliği düzeltildi: KurumsalPage, KurucuStratejistPage, DigitalToolsPage
 - [x] Uzun başlıklar (60+ karakter) kısaltıldı: AIPromptLibrary, BlogList, DigitalTools, FinansKodu, KurucuStratejist, ProBulten, KaynakKutuphanesi
+
+## SEO Raporu Düzeltmeleri (kapsamli-rapor + seo-report PDF)
+- [x] Title: "Finans | Finans Analiz Platformu ve Araçları - Finans Kodu" (58 karakter)
+- [x] Meta description: 159 karakter, tekil (index.html'deki duplicate kaldırıldı)
+- [x] "Devamını Oku" anchor spam düzeltildi - RecentBlogPosts ve BlogSection'da blog başlıklarına özgü anchor text
+- [x] Blog + BlogPosting schema eklendi (3 blog yazısı, @graph'a dahil)
+- [x] PreviewerModeAlert: Manus platform UI'ına ait, production'da zaten görünmüyor
