@@ -5,7 +5,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Sidebar from '@/components/Sidebar';
 import { Route, Switch, useLocation } from 'wouter';
-import { useEffect, lazy, Suspense } from 'react';
+import { useEffect, lazy, Suspense, useState } from 'react';
 import { trackPageView } from '@/lib/analytics';
 import ErrorBoundary from './components/ErrorBoundary';
 import CookieConsent from '@/components/CookieConsent';
@@ -79,10 +79,25 @@ function Router() {
   );
 }
 
+// Mobil breakpoint hook — SSR-safe, sadece md+ ekranlarda ticker render edilir
+function useIsDesktop() {
+  const [isDesktop, setIsDesktop] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 768px)');
+    setIsDesktop(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
+  return isDesktop;
+}
+
 function App() {
   const [location] = useLocation();
   // DualPersonaWidget sadece ana sayfada göster — diğer sayfalarda yükleme maliyeti sıfır
   const isHomePage = location === '/';
+  // MarqueeTicker sadece desktop'ta DOM'a eklenir (mobil TBT azaltır)
+  const isDesktop = useIsDesktop();
 
   return (
     <ErrorBoundary>
@@ -92,21 +107,23 @@ function App() {
             <TooltipProvider>
               <Toaster />
               <div className="min-h-screen bg-background text-foreground">
-                {/* TradingView Ticker Tape - Fixed at top, hidden on mobile */}
-                <div
-                  className="hidden md:block fixed top-0 left-0 right-0 lg:left-[220px]"
-                  style={{
-                    zIndex: 100,
-                    background: 'var(--background)',
-                    borderBottom: '1px solid var(--border)',
-                    backdropFilter: 'blur(12px)',
-                    WebkitBackdropFilter: 'blur(12px)',
-                  }}
-                >
-                  <Suspense fallback={null}>
-                    <MarqueeTicker />
-                  </Suspense>
-                </div>
+                {/* MarqueeTicker: sadece desktop'ta DOM'a eklenir — mobilde render maliyeti sıfır */}
+                {isDesktop && (
+                  <div
+                    className="fixed top-0 left-0 right-0 lg:left-[220px]"
+                    style={{
+                      zIndex: 100,
+                      background: 'var(--background)',
+                      borderBottom: '1px solid var(--border)',
+                      backdropFilter: 'blur(12px)',
+                      WebkitBackdropFilter: 'blur(12px)',
+                    }}
+                  >
+                    <Suspense fallback={null}>
+                      <MarqueeTicker />
+                    </Suspense>
+                  </div>
+                )}
                 
                 {/* Sidebar Navigation */}
                 <Sidebar />

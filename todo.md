@@ -2540,3 +2540,33 @@
 - [x] SidebarContent.tsx bottomNavItems'a "Gizlilik Politikası" linki ekle (Shield ikonu, /kvkk rotası)
 - [x] Footer.tsx quickLinks'e "Gizlilik Politikası" linki ekle (isRoute: true, /kvkk)
 - [x] Footer bottom bar'a KVKK linki ekle
+
+## Mobil Performans Optimizasyonu (Hedef: Skor 38→70+)
+
+### Görev 1: JavaScript Optimizasyonu
+- [x] Kullanılmayan bağımlılıkları tespit et ve temizle (react-ts-tradingview-widgets, @google/generative-ai client'ta kullanılmıyor; server'da kullanılan paketler korundu)
+- [x] Code splitting mevcut durumu doğrula (React.lazy + Suspense zaten uygulanmış)
+- [x] TradingView widget script async=true ile yükleniyor (TradingViewTickerTape.tsx)
+- [x] Eski JavaScript (legacy polyfill) kontrol edildi — target: es2020, modern tarayıcı hedefi
+
+### Görev 2: Görsel Optimizasyonu
+- [x] Tüm img etiketlerine width/height attribute ekle (ProductsSection, BlogSection, RecentBlogPosts — 800x400/450)
+- [x] Hero arka plan boyutunu kontrol et — CSS gradient kullanılıyor, görsel yok
+- [x] PictureImage bileşeni mevcut durumu doğrula (AVIF→WebP zinciri + LQIP blur-up zaten uygulanmış)
+
+### Görev 3: Preconnect ve DNS Prefetch
+- [x] index.html'e Firebase preconnect ekle (firebaseapp.com, firestore.googleapis.com)
+- [x] TradingView preconnect ekle (s3.tradingview.com)
+- [x] Font preconnect zaten vardı (fonts.googleapis.com, fonts.gstatic.com)
+- [x] DNS prefetch ekle (analytics.google.com, static.clarity.ms, www.gstatic.com)
+
+### Görev 4: DOM Optimizasyonu
+- [x] MarqueeTicker mobilde DOM'dan kaldırıldı (useIsDesktop hook ile conditional render — mobil TBT azaltır)
+- [x] Kritik CSS inline zaten vardı (index.html'de above-the-fold CSS)
+- [x] GA4 ve Clarity window.load sonrası defer ile yükleniyor
+
+### Görev 5: Vite Config ve Monitoring
+- [x] manualChunks güncellemesi: vendor-radix, vendor-charts, vendor-three chunk'ları eklendi
+- [x] drop_console: true zaten vardı (esbuild.drop: ['console', 'debugger'])
+- [x] web-vitals monitoring entegrasyonu (client/src/lib/webVitals.ts — CLS, FCP, INP, LCP, TTFB)
+- [x] Service Worker cache stratejisi kontrol edildi (Workbox ile 9 strateji zaten uygulanmış)

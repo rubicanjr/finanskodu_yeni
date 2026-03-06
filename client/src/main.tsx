@@ -8,6 +8,7 @@ import superjson from "superjson";
 import { HelmetProvider } from "react-helmet-async";
 import App from "./App";
 import "./index.css";
+import { initWebVitals } from "@/lib/webVitals";
 
 const queryClient = new QueryClient();
 
@@ -74,3 +75,6 @@ createRoot(document.getElementById("root")!).render(
     </trpc.Provider>
   </HelmetProvider>
 );
+
+// Web Vitals izlemeyi başlat (render sonrası — ana thread'i bloklamaz)
+initWebVitals();

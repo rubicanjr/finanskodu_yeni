@@ -329,6 +329,8 @@ export default function BlogSection() {
                       src={post.image}
                       avifSrc={post.avifImage}
                       alt={post.title}
+                      width={800}
+                      height={400}
                       className="transition-transform duration-700 group-hover:scale-105"
                     />
                     <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, transparent 40%, var(--card) 100%)' }} />

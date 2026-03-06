@@ -139,6 +139,8 @@ function ProductCard({ product, index, isInView }: { product: Product; index: nu
             src={product.image}
             avifSrc={product.avifImage}
             alt={product.title}
+            width={800}
+            height={400}
             className="transition-transform duration-500 group-hover:scale-105"
           />
           {/* Gradient overlay */}

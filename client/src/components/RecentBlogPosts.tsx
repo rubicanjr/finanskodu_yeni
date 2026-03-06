@@ -93,6 +93,8 @@ export default function RecentBlogPosts() {
                   <PictureImage
                     src={post.image}
                     alt={post.title}
+                    width={800}
+                    height={450}
                     className="group-hover:scale-105 transition-transform duration-300"
                   />
                   {/* NEW Badge */}

@@ -263,6 +263,18 @@ export default defineConfig({
             if (id.includes('node_modules/lucide-react')) {
               return 'vendor-ui';
             }
+            // Radix UI bileşenleri — ağır, ayrı chunk
+            if (id.includes('node_modules/@radix-ui/')) {
+              return 'vendor-radix';
+            }
+            // Recharts — sadece analiz sayfasında lazim
+            if (id.includes('node_modules/recharts')) {
+              return 'vendor-charts';
+            }
+            // Three.js — sadece 3D avatar bileşenlerinde
+            if (id.includes('node_modules/three') || id.includes('node_modules/@react-three')) {
+              return 'vendor-three';
+            }
           },
       },
     },
