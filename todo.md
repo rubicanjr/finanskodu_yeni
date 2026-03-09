@@ -2570,3 +2570,11 @@
 - [x] drop_console: true zaten vardı (esbuild.drop: ['console', 'debugger'])
 - [x] web-vitals monitoring entegrasyonu (client/src/lib/webVitals.ts — CLS, FCP, INP, LCP, TTFB)
 - [x] Service Worker cache stratejisi kontrol edildi (Workbox ile 9 strateji zaten uygulanmış)
+
+## HeroSection İçerik Güncellemesi
+- [x] Badge metni "// FİNANSAL VERİMLİLİK İÇİN" → "// TÜRK YATIRIMCISI İÇİN" değiştir
+- [x] H1 başlığı yeni metinle değiştir
+- [x] Açıklama paragrafı yeni metinle değiştir
+- [x] CTA butonları "Ücretsiz Başla" ve "Ürünleri Gör" olarak değiştir
+- [x] Terminal animasyonu (finans-kodu-terminal) tamamen kaldır
+- [x] İkinci görseldeki alan (ComparisonSection — Kaos vs Düzen) Home.tsx'ten kaldırıldı

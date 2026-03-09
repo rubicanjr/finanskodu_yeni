@@ -46,7 +46,6 @@ import HeroSection from "@/components/HeroSection";
 import ProductsSection from "@/components/ProductsSection";
 
 // Below-fold: lazy load (improves initial bundle size)
-const ComparisonSection = lazy(() => import("@/components/ComparisonSection"));
 const BlogSection = lazy(() => import("@/components/BlogSection"));
 const TestimonialsSection = lazy(() => import("@/components/TestimonialsSection"));
 const FAQSection = lazy(() => import("@/components/FAQSection"));
@@ -419,12 +418,6 @@ export default function Home() {
         {/* 2. Dijital Araçlar / Ürünler (Featured Section) */}
         {/* CRO: Immediate Value Proposition - Show products */}
         <ProductsSection />
-
-        {/* 3. "Kaos'tan Düzen'e" Bölümü (Comparison Section) */}
-        {/* CRO: Technology & Methodology Comparison */}
-        <Suspense fallback={<SectionSkeleton />}>
-          <ComparisonSection />
-        </Suspense>
 
         {/* 4. Finansal Analizi Başlat - MOVED TO /analiz PAGE */}
 
