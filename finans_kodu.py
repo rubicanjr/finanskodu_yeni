@@ -86,6 +86,8 @@ def fetch_data(ticker_yf: str, days: int = 180) -> pd.DataFrame:
     start_date = end_date - timedelta(days=days)
     try:
         data = yf.download(ticker_yf, start=start_date, end=end_date, progress=False, auto_adjust=True)
+        # Henüz kapanmamış bugünkü satırı (NaN içeren) temizle
+        data = data.dropna(how='any')
         return data
     except Exception as e:
         logger.warning(f"{ticker_yf} veri çekme hatası: {e}")
