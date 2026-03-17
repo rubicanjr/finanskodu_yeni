@@ -1,0 +1,264 @@
+{
+  "nav": {
+    "home": "Home",
+    "products": "Digital Tools",
+    "manifesto": "Manifesto",
+    "blog": "Blog",
+    "analysis": "Financial Analysis",
+    "contact": "Contact",
+    "kodOdasi": "Code Room",
+    "ariaLabel": "Main navigation",
+    "goToPage": "go to page",
+    "goToSection": "go to section",
+    "closeMenu": "Close menu",
+    "openMenu": "Open menu",
+    "mobileMenu": "Mobile navigation menu",
+    "kurucuStratejist": "Meet Our Founding Strategist",
+    "kurumsal": "Corporate",
+    "projeler": "Projects",
+    "kaynakKutuphanesi": "Resource Library",
+    "iletisim": "Contact",
+    "ortaklik": "Partnership",
+    "kvkk": "Privacy Policy"
+  },
+  "hero": {
+    "eyebrow": "// FOR FINANCIAL EFFICIENCY",
+    "heading1": "Chaos Is Not Your Job.",
+    "heading2": "The Decision Is Yours,",
+    "heading3": "We Filter the Noise.",
+    "subtitle": "100+ tested AI tools, financial methodology and algorithmic analysis. You're the pilot; we handle the navigation.",
+    "newSubtitle": "Elevate your personal and/or corporate finance with finanskodu digital products.",
+    "cta1": "Explore Digital Tools",
+    "cta2": "Go to Code Room",
+    "terminal": {
+      "ready": "System Ready...",
+      "analyzing": "Analysis Starting...",
+      "loading": "Loading Data...",
+      "scanning": "Scanning Portfolio...",
+      "calculating": "Calculating Strategy..."
+    }
+  },
+  "products": {
+    "eyebrow": "// DIGITAL SHOWCASE",
+    "title": "Digital",
+    "titleHighlight": "Tools",
+    "subtitle": "100+ ready AI prompts, financial methodology and monthly strategy newsletter",
+    "viewDetails": "View Details",
+    "comingSoon": "Coming Soon",
+    "goTo": "go to page",
+    "speechNotSupported": "Your browser does not support text-to-speech.",
+    "startSpeech": "Start text-to-speech",
+    "stopSpeech": "Stop text-to-speech",
+    "hero": {
+      "title": "Digital Tools",
+      "subtitle": "AI-powered digital solutions to boost your financial efficiency"
+    },
+    "finansalPerformans": {
+      "title": "Financial Performance Tracking System",
+      "description": "Monitor, analyze and optimize your personal and corporate finances in real-time. Get ready for the future with AI-powered insights.",
+      "feature1": "Real-time financial dashboard and reporting",
+      "feature2": "AI-powered spending analysis and recommendations",
+      "feature3": "Budget planning and goal tracking",
+      "feature4": "Multi-account and portfolio management",
+      "price": "$99/mo",
+      "cta": "Get Started"
+    },
+    "yapayZekaAsistan": {
+      "title": "AI Financial Assistant",
+      "description": "Strengthen your financial decisions with your 24/7 AI assistant. Market analysis, investment recommendations and risk assessments.",
+      "feature1": "Natural language financial queries",
+      "feature2": "Automated market analysis and signal generation",
+      "feature3": "Personalized investment strategies",
+      "feature4": "Risk management and portfolio optimization",
+      "price": "$149/mo",
+      "cta": "Try Assistant"
+    },
+    "kurumsalCozumler": {
+      "title": "Enterprise Financial Solutions",
+      "description": "Digitize your company's financial operations. Full control with team management, reporting, compliance and integration support.",
+      "feature1": "Multi-user and permission management",
+      "feature2": "API integration and custom reports",
+      "feature3": "Compliance and audit support",
+      "feature4": "Priority support and training",
+      "price": "Custom Pricing",
+      "cta": "Get Quote"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "q1": "How do digital tools work?",
+      "a1": "All our digital tools are cloud-based and require no installation. After creating your account, you can access them instantly through your web browser.",
+      "q2": "Is my data secure?",
+      "a2": "Yes, all your data is protected with 256-bit SSL encryption and regularly backed up. We comply with GDPR standards.",
+      "q3": "Can I cancel my subscription?",
+      "a3": "Yes, you can cancel your subscription at any time. After cancellation, you can continue using our services until the end of the current period.",
+      "q4": "Is there a trial period?",
+      "a4": "Yes, we offer a 14-day free trial on all our products. No credit card required.",
+      "q5": "Can I get enterprise support?",
+      "a5": "Our enterprise packages include priority support, custom training and consulting services. Contact us for details."
+    },
+    "cta": {
+      "title": "Start Your Financial Transformation Today",
+      "subtitle": "Try free for 14 days, no credit card required",
+      "button": "Try For Free"
+    },
+    "item1": {
+      "title": "AI Prompt Library",
+      "desc": "A collection of 100+ AI prompts specifically designed for finance professionals.",
+      "badge": "Use Now",
+      "journey": "START",
+      "cta": "Explore Prompts"
+    },
+    "item2": {
+      "title": "FINANS KODU: Order in Chaos",
+      "desc": "A comprehensive methodology and toolset to transform your financial operations.",
+      "badge": "Best Seller",
+      "journey": "CONTINUE",
+      "cta": "Explore the System"
+    },
+    "item3": {
+      "title": "Pro - Algorithmic Strategy & Analysis Newsletter",
+      "desc": "A comprehensive monthly newsletter with market direction, macro analysis and algorithmic signals.",
+      "badge": "Monthly Signal",
+      "journey": "ADVANCE",
+      "cta": "Join Newsletter"
+    }
+  },
+  "comparison": {
+    "eyebrow": "// CHAOS vs ORDER",
+    "title": "From Market Noise to",
+    "titleHighlight": "Strategy",
+    "subtitle": "Most investors get lost in chaos. Finans Kodu filters the noise and gives you a clear roadmap.",
+    "chaos": {
+      "title": "CHAOS",
+      "subtitle": "Traditional Approach",
+      "result": "Result: Loss & Stress",
+      "items": [
+        "News-driven trading",
+        "Emotional decisions",
+        "Herd mentality",
+        "Information overload",
+        "Mistimed entries & exits"
+      ]
+    },
+    "order": {
+      "title": "ORDER",
+      "subtitle": "AI-Powered Approach",
+      "result": "Result: Discipline & Profit",
+      "items": [
+        "AI-driven data analysis",
+        "Risk management algorithms",
+        "Automated signal generation",
+        "Technical + Fundamental analysis",
+        "Disciplined strategy"
+      ]
+    },
+    "cta": "Switch to Order"
+  },
+  "manifesto": {
+    "eyebrow": "// MANIFESTO",
+    "title": "From Chaos to",
+    "titleHighlight": "Order",
+    "titleSuffix": "",
+    "subtitle": "We understand the daily struggle of finance professionals. Because we've been there too.",
+    "problem": {
+      "title": "Current State",
+      "subtitle": "Financial Chaos"
+    },
+    "solution": {
+      "title": "Finans Kodu Solution",
+      "subtitle": "Engineering Excellence"
+    },
+    "quote": "We save you time and speed. Because solving the complexity of finance requires",
+    "quoteHighlight": "engineering thinking",
+    "quoteEnd": ".",
+    "quoteAuthor": "— The Finans Kodu Team"
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "In-depth content on algorithmic finance, artificial intelligence and productivity strategies",
+    "readMore": "Read More",
+    "backToBlog": "Back to Blog",
+    "allPosts": "View all posts",
+    "titleHighlight": "Analysis",
+    "pageSubtitle": "Latest articles on finance, investment, automation and artificial intelligence",
+    "noResults": "No content found in this category.",
+    "allCategories": "All",
+    "loading": "Loading...",
+    "notFound": "Blog post not found",
+    "notFoundDesc": "The blog post you're looking for doesn't exist or has been removed.",
+    "backToList": "Back to blog list"
+  },
+  "testimonials": {
+    "title": "Testimonials",
+    "subtitle": "Experiences of those who embarked on the journey to financial freedom with Finans Kodu"
+  },
+  "about": {
+    "title": "About Us",
+    "subtitle": "The team to guide you on your journey to financial freedom"
+  },
+  "footer": {
+    "meetFounder": "Meet our Founding Strategist:",
+    "quickLinks": "Quick Links",
+    "social": "Social Media",
+    "followUs": "Follow us on social media!",
+    "newsletter": {
+      "title": "Stay Updated",
+      "subtitle": "Join our newsletter for new products, AI tips and productivity strategies.",
+      "placeholder": "Your email address",
+      "cta": "Join",
+      "success": "Newsletter subscription received! We will be in touch soon."
+    },
+    "copyright": "All rights reserved."
+  },
+  "kodOdasi": {
+    "title": "Code Room",
+    "subtitle": "Finance community — Real-time chat",
+    "loginTitle": "Welcome to Code Room",
+    "loginDesc": "Sign in with your Google account to discuss investments, stock market and economy together.",
+    "loginButton": "Sign in with Google",
+    "loginTerms": "By signing in you accept the terms of use.",
+    "messagePlaceholder": "Type your message... (Enter to send)",
+    "send": "Send",
+    "sending": "Sending...",
+    "loading": "Loading messages...",
+    "noMessages": "No messages yet. Be the first to send one!",
+    "signOut": "Sign Out",
+    "rateLimitError": "⚠️ You're sending messages too fast. Please wait.",
+    "sendError": "Could not send message. Please try again.",
+    "loadError": "Could not load messages. Please refresh the page.",
+    "tabs": {
+      "general": "General",
+      "bugs": "Bugs",
+      "performance": "Performance",
+      "ui": "UI Design"
+    },
+    "newPost": "New Post",
+    "postPlaceholder": "Share your thoughts..."
+  },
+  "theme": {
+    "light": "Light Theme",
+    "dark": "Dark Theme",
+    "toggle": "Toggle Theme"
+  },
+  "language": {
+    "tr": "Türkçe",
+    "en": "English",
+    "toggle": "Change Language"
+  },
+  "mobile": {
+    "assistant": "Assistant",
+    "navigation": "Mobile navigation"
+  },
+  "analysis": {
+    "maintenance": {
+      "title": "Under Maintenance",
+      "subtitle": "Our Financial Analysis tool is currently under maintenance.",
+      "description": "We are upgrading our systems to provide more powerful and accurate analyses. We will be back in service shortly.",
+      "eta": "Estimated return: Soon",
+      "backHome": "Back to Home"
+    }
+  },
+  "accessibility": {
+    "skipToContent": "Skip to main content"
+  }
+}
