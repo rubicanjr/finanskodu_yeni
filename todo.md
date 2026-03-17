@@ -2578,3 +2578,8 @@
 - [x] CTA butonları "Ücretsiz Başla" ve "Ürünleri Gör" olarak değiştir
 - [x] Terminal animasyonu (finans-kodu-terminal) tamamen kaldır
 - [x] İkinci görseldeki alan (ComparisonSection — Kaos vs Düzen) Home.tsx'ten kaldırıldı
+
+## Ödeme URL Güncellemeleri (Hikie)
+- [x] AIPromptLibraryPage.tsx buyUrl → https://hikie.space/link/checkout/6Y2ZQUYednVQUUBsRWpoGRINSRVjtx7FJCHxv0mc
+- [x] FinansKoduPage.tsx buyUrl → https://hikie.space/link/checkout/wSUWqMlyV3n7eOJIAEBk7yq9FuOL92FKXHRk8sk
+- [x] ProBultenPage.tsx buyUrl → https://www.hikie.space/link/checkout/ziMmDD9kHLYIRKOfgUoB0ItfdIparaCZdVlOpLhm?session=f7551ffa-398a-41a9-a0cc-664279f846dc

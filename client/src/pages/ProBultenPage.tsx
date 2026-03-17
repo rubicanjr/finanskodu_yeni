@@ -8,7 +8,7 @@ import AudioPlayerButton from '@/components/AudioPlayerButton';
 
 const product = {
   shortTitle: 'Pro — Algoritmik Strateji Bülteni',
-  buyUrl: 'https://www.hikie.space/finanskodu/algoritmik-strateji-ve-analiz',
+  buyUrl: 'https://www.hikie.space/link/checkout/ziMmDD9kHLYIRKOfgUoB0ItfdIparaCZdVlOpLhm?session=f7551ffa-398a-41a9-a0cc-664279f846dc',
   consultUrl: 'https://cal.com/rubi-can',
   summaryItems: [
     'Haftalık algoritmik altın alım-satım sinyalleri: Duygu yok, tahmin yok, sadece matematik',

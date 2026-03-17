@@ -34,7 +34,7 @@ const difficultyColors = {
 
 const product = {
   shortTitle: 'AI Prompt Kütüphanesi',
-  buyUrl: 'https://hikie.space/link/checkout/j9p0eW1ITmovb8v0xE752kmcTTjyPZ3zSLnAuQlm',
+  buyUrl: 'https://hikie.space/link/checkout/6Y2ZQUYednVQUUBsRWpoGRINSRVjtx7FJCHxv0mc',
   consultUrl: 'https://cal.com/rubi-can',
   summaryItems: [
     'Finansal analiz, portföy yönetimi ve piyasa yorumlama için özel olarak tasarlanmış 100+ prompt',

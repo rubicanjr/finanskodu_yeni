@@ -8,7 +8,7 @@ import AudioPlayerButton from '@/components/AudioPlayerButton';
 
 const product = {
   shortTitle: 'Kaos İçinde Düzen',
-  buyUrl: 'https://hikie.space/link/checkout/dzxB5G6fSEOYxRYgC2xkpcKJ3C1no8jHiPOl6iCY',
+  buyUrl: 'https://hikie.space/link/checkout/wSUWqMlyV3n7eOJIAEBk7yq9FuOL92FKXHRk8sk',
   consultUrl: 'https://cal.com/rubi-can',
   summaryItems: [
     'Finansal kararları mühendislik perspektifiyle ele alan, duygusal hata oranını sıfıra indiren çerçeve',
