@@ -2583,3 +2583,10 @@
 - [x] AIPromptLibraryPage.tsx buyUrl → https://hikie.space/link/checkout/6Y2ZQUYednVQUUBsRWpoGRINSRVjtx7FJCHxv0mc
 - [x] FinansKoduPage.tsx buyUrl → https://hikie.space/link/checkout/wSUWqMlyV3n7eOJIAEBk7yq9FuOL92FKXHRk8sk
 - [x] ProBultenPage.tsx buyUrl → https://www.hikie.space/link/checkout/ziMmDD9kHLYIRKOfgUoB0ItfdIparaCZdVlOpLhm?session=f7551ffa-398a-41a9-a0cc-664279f846dc
+
+## Cache Yönetimi Düzeltmeleri
+- [x] Express: index.html için no-cache zaten vardı; sw.js + workbox-*.js + registerSW.js için de no-cache middleware eklendi (vite.ts)
+- [x] Service Worker: skipWaiting: true ve clientsClaim: true zaten vardı (vite.config.ts)
+- [x] Frontend: SwUpdateToast bileşeni oluşturuldu (virtual:pwa-register/react — useRegisterSW hook); App.tsx'e eklendi
+- [x] registerType 'autoUpdate' → 'prompt' olarak değiştirildi (kullanıcı onayıyla güncelleme)
+- [x] tsconfig.json'a vite-plugin-pwa/client tip tanımları eklendi

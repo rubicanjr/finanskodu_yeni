@@ -14,7 +14,9 @@ const plugins = [
   jsxLocPlugin(),
   vitePluginManusRuntime(),
   VitePWA({
-    registerType: 'autoUpdate',
+    // 'prompt': Yeni SW hazır olduğunda frontend'e bildirim gönderir.
+    // useRegisterSW hook'u ile kullanıcıya "Yeni sürüm mevcut" toast'u gösterilebilir.
+    registerType: 'prompt',
     injectRegister: 'auto',
     // Precache: ana sayfa, kritik CSS/JS, logo ve temel görseller
     includeAssets: ['favicon.ico', 'logo.png', 'robots.txt'],

@@ -121,6 +121,20 @@ export function serveStatic(app: Express) {
     next();
   });
 
+  // Service Worker ve workbox dosyaları için kesinlikle önbellekleme yapılmamalı.
+  // Tarayıcı her zaman en güncel SW'yi çekmeli ki yeni deploy'lar aninda algılansın.
+  app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
+    const url = req.path;
+    const isServiceWorker = url === '/sw.js' || url.startsWith('/workbox-') || url === '/registerSW.js';
+    if (isServiceWorker) {
+      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+      res.setHeader('Pragma', 'no-cache');
+      res.setHeader('Expires', '0');
+      res.setHeader('Service-Worker-Allowed', '/');
+    }
+    next();
+  });
+
   // Brotli/Gzip sıkıştırma — tüm text/html, text/css, application/js yanıtlarını sıkıştır
   app.use(compression({
     level: 6,          // 1-9 arası; 6 hız/boyut dengesi için optimal

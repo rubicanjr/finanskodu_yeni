@@ -9,6 +9,7 @@ import { useEffect, lazy, Suspense, useState } from 'react';
 import { trackPageView } from '@/lib/analytics';
 import ErrorBoundary from './components/ErrorBoundary';
 import CookieConsent from '@/components/CookieConsent';
+import SwUpdateToast from '@/components/SwUpdateToast';
 
 // Heavy components: lazy load to keep initial bundle small
 const MarqueeTicker = lazy(() => import('@/components/MarqueeTicker'));
@@ -143,6 +144,9 @@ function App() {
 
                 {/* KVKK/GDPR Çerez Onay Banner'ı - tüm sayfalarda göster */}
                 <CookieConsent />
+
+                {/* Service Worker Güncelleme Toast'u - yeni deploy algılandığında göster */}
+                <SwUpdateToast />
               </div>
             </TooltipProvider>
           </I18nProvider>
