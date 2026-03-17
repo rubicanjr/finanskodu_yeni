@@ -158,11 +158,41 @@ export function serveStatic(app: Express) {
     );
   }
 
+  // ╔══════════════════════════════════════════════════════════════════════════════╗
+  // ║ STALE CHUNK GUARD                                                          ║
+  // ║ /assets/* altındaki bir dosya diskten bulunamazsa (eski build hash'i),    ║
+  // ║ SPA fallback devreye girip index.html döndürür — bu da tarayıcıda        ║
+  // ║ "text/html MIME type" hatasına yol açar. Bu guard bunu engeller.          ║
+  // ╚══════════════════════════════════════════════════════════════════════════════╝
+  app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
+    const url = req.path;
+    // /assets/ altındaki tüm statik dosya isteklerini yakala
+    if (url.startsWith('/assets/')) {
+      const filePath = path.join(distPath, url);
+      if (!fs.existsSync(filePath)) {
+        // Dosya diskten bulunamadı — eski hash. SPA fallback'e düşmesine izin verme.
+        res.status(404).set({
+          'Content-Type': 'application/json',
+          'Cache-Control': 'no-store',
+        }).json({
+          error: 'Asset not found. This chunk belongs to an older build. Please hard-refresh (Ctrl+Shift+R).',
+          path: url,
+        });
+        return;
+      }
+    }
+    next();
+  });
+
   // Hashed assets (JS/CSS bundles with content hash in filename) → long-lived cache
   // Everything else (index.html, robots.txt, etc.) → no-cache so browsers always
   // fetch the latest HTML and discover new hashed bundles.
   app.use(
     express.static(distPath, {
+      // ETag kapat: no-cache ile birlikte kullanıldığında tarayıcı 304 yanıtıyla
+      // eski index.html'i kullanmaya devam edebilir. Tamamen devre dışı bırak.
+      etag: false,
+      lastModified: false,
       setHeaders(res, filePath) {
         const isHashedAsset = /\.[0-9a-f]{8,}\.(js|css|woff2?|ttf|otf|png|jpg|jpeg|svg|ico|webp|avif)$/i.test(
           filePath
@@ -175,7 +205,8 @@ export function serveStatic(app: Express) {
           // Immutable: safe to cache for 1 year because filename changes on every build
           res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
         } else {
-          // index.html and other non-hashed files must never be cached
+          // index.html and other non-hashed files must NEVER be cached.
+          // ETag/Last-Modified kapalı olduğundan 304 yanıtı da gelmez.
           res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
           res.setHeader("Pragma", "no-cache");
           res.setHeader("Expires", "0");
@@ -186,8 +217,17 @@ export function serveStatic(app: Express) {
     })
   );
 
-  // SPA fallback — always serve index.html with security headers
-  app.use("*", (_req, res) => {
+  // SPA fallback — /assets/ dışındaki tüm rotalar için index.html döndür
+  // Not: /assets/* guard'u yukarıda olduğundan buraya eski chunk istekleri ulaşamaz.
+  app.use("*", (req: express.Request, res: express.Response) => {
+    // /assets/ altında bilinmeyen bir istek gelirse (guard'dan kaçarsa) 404 dön
+    if (req.path.startsWith('/assets/')) {
+      res.status(404).set('Content-Type', 'application/json').json({
+        error: 'Asset not found.',
+        path: req.path,
+      });
+      return;
+    }
     res.set({
       "Cache-Control": "no-cache, no-store, must-revalidate",
       "Pragma": "no-cache",

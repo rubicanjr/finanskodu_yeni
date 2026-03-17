@@ -116,17 +116,19 @@ const plugins = [
             cacheableResponse: { statuses: [0, 200] },
           },
         },
-
-        // ── 5. JS/CSS Chunk'ları — Stale While Revalidate (1 ay) ─────────────
-        // Hash'li asset'ler için SWR: önce cache'den sun, arka planda güncelle
+        // ── 5. JS/CSS Chunk'ı — Network First (önce ağdan çek) ─────────────────
+        // Eski hash'li chunk'ların cache'de kalıp MIME type hatasına yol açmasını
+        // önlemek için NetworkFirst kullanılıyor. Hash'li dosyalar zaten immutable
+        // olduğundan sunucu yanıtı her zaman doğru içeriği verir.
         {
-          urlPattern: /\.(?:js|css)$/,
-          handler: 'StaleWhileRevalidate',
+          urlPattern: /\/assets\/.*\.(?:js|css)$/,
+          handler: 'NetworkFirst',
           options: {
-            cacheName: 'static-assets-v1',
+            cacheName: 'static-assets-v2',
+            networkTimeoutSeconds: 5,
             expiration: {
-              maxEntries: 60,
-              maxAgeSeconds: 60 * 60 * 24 * 30, // 1 ay
+              maxEntries: 80,
+              maxAgeSeconds: 60 * 60 * 24 * 7, // 7 gün (yeni build'de cache otomatik temizlenir)
             },
             cacheableResponse: { statuses: [0, 200] },
           },
@@ -177,21 +179,11 @@ const plugins = [
           },
         },
 
-        // ── 9. Sayfa Navigasyonu — Network First (SPA) ────────────────────────
-        // Kullanıcı gezindikçe sayfaları cache'le, offline çalışma imkanı
-        {
-          urlPattern: /^https?:\/\/[^/]+\/((?!api)[^?#]*)$/,
-          handler: 'NetworkFirst',
-          options: {
-            cacheName: 'pages-cache-v1',
-            networkTimeoutSeconds: 3,
-            expiration: {
-              maxEntries: 30,
-              maxAgeSeconds: 60 * 60 * 24, // 1 gün
-            },
-            cacheableResponse: { statuses: [0, 200] },
-          },
-        },
+        // ── 9. Sayfa Navigasyonu — KALDIRILDI ──────────────────────────────────
+        // HTML sayfalarını (index.html) SW cache'lemek MIME type hatasına yol açar.
+        // SPA'da tüm navigasyonlar zaten index.html üzerinden çalışır;
+        // navigateFallback: null ile HTML hiçbir zaman cache'lenmez.
+        // Bu strateji kaldırıldı.
       ],
     },
   })

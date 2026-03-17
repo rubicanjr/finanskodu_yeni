@@ -2590,3 +2590,11 @@
 - [x] Frontend: SwUpdateToast bileşeni oluşturuldu (virtual:pwa-register/react — useRegisterSW hook); App.tsx'e eklendi
 - [x] registerType 'autoUpdate' → 'prompt' olarak değiştirildi (kullanıcı onayıyla güncelleme)
 - [x] tsconfig.json'a vite-plugin-pwa/client tip tanımları eklendi
+
+## MIME Type / Stale Chunk Hatası Düzeltmesi
+- [x] Express: /assets/* istekleri için Stale Chunk Guard eklendi — dosya diskten bulunamazsa 404+JSON döndürür (HTML fallback'i engeller)
+- [x] Express: ETag ve Last-Modified kapatıldı (304 yanıtıyla eski index.html'in kullanılmasını engeller)
+- [x] Express: SPA fallback'e ikinci /assets/ guard eklendi (olası kaçış için)
+- [x] Workbox: navigateFallback: null zaten vardı, doğrulandı
+- [x] Workbox: pages-cache-v1 stratejisi kaldırıldı (HTML artık hiçbir zaman cache'lenmez)
+- [x] Workbox: JS/CSS stratejisi StaleWhileRevalidate → NetworkFirst yapıldı, cache adı static-assets-v2 olarak güncellendi
