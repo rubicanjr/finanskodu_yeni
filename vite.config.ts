@@ -14,9 +14,10 @@ const plugins = [
   jsxLocPlugin(),
   vitePluginManusRuntime(),
   VitePWA({
-    // 'prompt': Yeni SW hazır olduğunda frontend'e bildirim gönderir.
-    // useRegisterSW hook'u ile kullanıcıya "Yeni sürüm mevcut" toast'u gösterilebilir.
-    registerType: 'prompt',
+    // 'autoUpdate': Yeni SW hazır olduğunda skipWaiting+clientsClaim ile aninda devreye girer.
+    // Eski chunk'ları kullanan sekmeler SW'nin clientsClaim'i sayesinde yeni siteye geçer.
+    // ChunkLoadError yakalayıcısı (main.tsx) sayfa yenilemesini garantiler.
+    registerType: 'autoUpdate',
     injectRegister: 'auto',
     // Precache: ana sayfa, kritik CSS/JS, logo ve temel görseller
     includeAssets: ['favicon.ico', 'logo.png', 'robots.txt'],

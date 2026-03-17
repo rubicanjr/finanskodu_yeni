@@ -2598,3 +2598,9 @@
 - [x] Workbox: navigateFallback: null zaten vardı, doğrulandı
 - [x] Workbox: pages-cache-v1 stratejisi kaldırıldı (HTML artık hiçbir zaman cache'lenmez)
 - [x] Workbox: JS/CSS stratejisi StaleWhileRevalidate → NetworkFirst yapıldı, cache adı static-assets-v2 olarak güncellendi
+
+## Stale Chunk Kalıcı Çözüm (v2)
+- [x] SW: registerType 'prompt' → 'autoUpdate' düzeldi (prompt+skipWaiting çelişkisi giderildi)
+- [x] Frontend: ChunkLoadError global yakalayıcı main.tsx'e eklendi (sonsuz döngü önleme ile)
+- [x] SwUpdateToast: autoUpdate moduna uygun hale getirildi, 30 dakikada bir r.update() çağrılıyor
+- [x] CDN purge: Manus altyapısında herkese açık CDN purge API'si yok; Manus her deployment'ta CDN'i otomatik temizliyor. Cloudflare entegrasyonu için rehber hazırlandı.

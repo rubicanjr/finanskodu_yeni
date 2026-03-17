@@ -78,3 +78,43 @@ createRoot(document.getElementById("root")!).render(
 
 // Web Vitals izlemeyi başlat (render sonrası — ana thread'i bloklamaz)
 initWebVitals();
+
+// ╔════════════════════════════════════════════════════════════════════════════╗
+// ║ STALE CHUNK KURTARICI                                                        ║
+// ║ Eski SW cache'indeki bir JS chunk bulunamazsa Vite/React "ChunkLoadError"   ║
+// ║ fırlatır ve uygulama siyah ekrana düşer. Bu yakalayıcı sayfayı bir kez      ║
+// ║ otomatik yeniler — yeni index.html yeni hash'li chunk'ları çağırır.         ║
+// ╚════════════════════════════════════════════════════════════════════════════╝
+const CHUNK_RELOAD_KEY = 'fk_chunk_reload_at';
+
+function handleChunkLoadError(error: unknown): void {
+  const isChunkError =
+    error instanceof Error &&
+    (error.name === 'ChunkLoadError' ||
+      /loading chunk \d+ failed/i.test(error.message) ||
+      /failed to fetch dynamically imported module/i.test(error.message) ||
+      /error loading.*\.js/i.test(error.message));
+
+  if (!isChunkError) return;
+
+  // Sonsuz döngü önleme: son 10 saniye içinde zaten yenilendiyse dur
+  const lastReload = parseInt(sessionStorage.getItem(CHUNK_RELOAD_KEY) || '0', 10);
+  const now = Date.now();
+  if (now - lastReload < 10_000) {
+    console.error('[ChunkLoadError] Otomatik yenileme başarısız — kullanıcı müdahalesi gerekiyor.', error);
+    return;
+  }
+
+  console.warn('[ChunkLoadError] Eski chunk tespit edildi, sayfa yenileniyor…', error);
+  sessionStorage.setItem(CHUNK_RELOAD_KEY, String(now));
+  window.location.reload();
+}
+
+// Global hata yakalayıcılar
+window.addEventListener('error', (event) => {
+  handleChunkLoadError(event.error);
+});
+
+window.addEventListener('unhandledrejection', (event) => {
+  handleChunkLoadError(event.reason);
+});
