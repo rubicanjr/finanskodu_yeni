@@ -2604,3 +2604,7 @@
 - [x] Frontend: ChunkLoadError global yakalayıcı main.tsx'e eklendi (sonsuz döngü önleme ile)
 - [x] SwUpdateToast: autoUpdate moduna uygun hale getirildi, 30 dakikada bir r.update() çağrılıyor
 - [x] CDN purge: Manus altyapısında herkese açık CDN purge API'si yok; Manus her deployment'ta CDN'i otomatik temizliyor. Cloudflare entegrasyonu için rehber hazırlandı.
+## No-Cache Başlık Güçlendirmesi
+- [x] vite.ts: SW no-cache setHeaders'a taşındı (isServiceWorkerFile guard, return ile diğer mantığı atlar)
+- [x] Hash regex düzeldi: /[0-9a-f]{8,}/ → /-[A-Za-z0-9]{8,}/ (Vite base64url hash formatı)
+- [x] Production curl testi geçti: index.html no-cache ✔, sw.js no-cache+Service-Worker-Allowed ✔, workbox-*.js no-cache ✔, hashed JS public/immutable/1y ✔

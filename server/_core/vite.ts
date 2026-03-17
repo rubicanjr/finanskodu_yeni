@@ -194,7 +194,29 @@ export function serveStatic(app: Express) {
       etag: false,
       lastModified: false,
       setHeaders(res, filePath) {
-        const isHashedAsset = /\.[0-9a-f]{8,}\.(js|css|woff2?|ttf|otf|png|jpg|jpeg|svg|ico|webp|avif)$/i.test(
+        const basename = path.basename(filePath);
+
+        // ╔════════════════════════════════════════════════════════════════════════════╗
+        // ║ SW / WORKBOX DOSYALARI — KESİNLİKLE ÖNBELLEKLEME                         ║
+        // ║ Tarayıcı her zaman en güncel sw.js'i çekmeli ki yeni deploy'lar       ║
+        // ║ anında algılansın. Service-Worker-Allowed: / zorunlu.                ║
+        // ╚════════════════════════════════════════════════════════════════════════════╝
+        const isServiceWorkerFile =
+          basename === 'sw.js' ||
+          basename === 'registerSW.js' ||
+          basename.startsWith('workbox-');
+
+        if (isServiceWorkerFile) {
+          res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+          res.setHeader('Pragma', 'no-cache');
+          res.setHeader('Expires', '0');
+          res.setHeader('Service-Worker-Allowed', '/');
+          return; // Diğer setHeaders mantığını atla
+        }
+
+        // Vite hash formatı: -[A-Za-z0-9]{8}.ext (base64url, büyük+küçük harf karışık)
+        // Örnek: AIPromptLibraryPage-DNc1ZCea.js, index-BVFbWmJo.js
+        const isHashedAsset = /-[A-Za-z0-9]{8,}\.(js|css|woff2?|ttf|otf|png|jpg|jpeg|svg|ico|webp|avif)$/i.test(
           filePath
         );
         // AVIF MIME type (Express doesn't know it by default)
