@@ -81,6 +81,13 @@
          Statik fallback kasıtlı olarak kaldırıldı — yanlış canonical tüm sayfalarda
          tekrarlanmasın diye. Her sayfanın Helmet'inde doğru canonical mevcuttur. -->
 
+    <!-- ============================================================
+         HREFLANG: Dil/bölge hedefleme — arama motorlarına doğru dili bildir
+         ============================================================ -->
+    <link rel="alternate" hreflang="tr-TR" href="https://finanskodu.com/" />
+    <link rel="alternate" hreflang="tr" href="https://finanskodu.com/" />
+    <link rel="alternate" hreflang="x-default" href="https://finanskodu.com/" />
+
     <!-- Bing Webmaster Tools Verification -->
     <meta name="msvalidate.01" content="DDF667ECAA6E5E2F19F2CFF898AC9BAC" />
 
@@ -260,10 +267,21 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <script
-      defer
-      src="%VITE_ANALYTICS_ENDPOINT%/umami"
-      data-website-id="%VITE_ANALYTICS_WEBSITE_ID%"></script>
+    <script>
+      // Umami Analytics: sadece VITE_ANALYTICS_ENDPOINT env değişkeni build'de
+      // yerleştirilmişse yükle. Değişken çözümlenmemişse (%VITE_...% literal
+      // kalırsa) script hiç yüklenmez ve konsol hatası oluşmaz.
+      (function() {
+        var endpoint = '%VITE_ANALYTICS_ENDPOINT%';
+        var siteId   = '%VITE_ANALYTICS_WEBSITE_ID%';
+        if (!endpoint || endpoint.indexOf('%VITE_') === 0) return;
+        var s = document.createElement('script');
+        s.defer = true;
+        s.src = endpoint + '/umami';
+        s.setAttribute('data-website-id', siteId);
+        document.body.appendChild(s);
+      })();
+    </script>
   </body>
 
 </html>

@@ -427,7 +427,7 @@ export default function SarpGifAvatar() {
     
     // Authoritative male voice settings
     utterance.pitch = 0.9; // Slightly deeper
-    utterance.rate = 0.95; // Clear and confident
+    utterance.rate = 1.25;
     utterance.volume = 1.0;
     
     utterance.onstart = () => {

@@ -589,7 +589,7 @@ export default function Chatbot() {
     
     const utterance = new SpeechSynthesisUtterance(fullText);
     utterance.lang = "tr-TR";
-    utterance.rate = 0.9; // Slightly slower for authority
+    utterance.rate = 1.25;
     utterance.pitch = 0.95; // Slightly lower for trust
     utterance.volume = 1.0;
     

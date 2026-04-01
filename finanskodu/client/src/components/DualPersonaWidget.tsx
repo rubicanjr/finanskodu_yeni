@@ -493,7 +493,7 @@ export default function DualPersonaWidget() {
     
     utterance.lang = "tr-TR";
     utterance.pitch = persona.name === "Sarp" ? 0.9 : 1.0;
-    utterance.rate = 0.92;
+    utterance.rate = 1.25;
     
     utterance.onstart = () => {
       setIsSpeaking(true);

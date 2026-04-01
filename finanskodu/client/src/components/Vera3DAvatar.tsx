@@ -656,16 +656,16 @@ export default function Vera3DAvatar() {
       if (isKnownFemale) {
         // Known female voice - slight pitch adjustment
         utterance.pitch = 1.1;
-        utterance.rate = 0.95;
+        utterance.rate = 1.25;
       } else {
         // THE FAILSAFE: Force female tone with high pitch
         utterance.pitch = 1.5; // High pitch - forces female tone
-        utterance.rate = 0.95; // Slightly slower to prevent chipmunk effect
+        utterance.rate = 1.25; // Slightly slower to prevent chipmunk effect
       }
     } else {
       // No voice found - use maximum pitch hack
       utterance.pitch = 1.5;
-      utterance.rate = 0.95;
+      utterance.rate = 1.25;
     }
     
     utterance.volume = 1.0;

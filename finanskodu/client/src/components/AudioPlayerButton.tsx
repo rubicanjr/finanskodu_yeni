@@ -34,7 +34,7 @@ export default function AudioPlayerButton({
 
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = lang;
-    utterance.rate = 0.9;
+    utterance.rate = 1.25;
     utterance.pitch = 1;
 
     utterance.onstart = () => setIsPlaying(true);

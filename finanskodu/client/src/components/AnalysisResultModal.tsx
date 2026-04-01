@@ -84,7 +84,7 @@ export function AnalysisResultModal({
 
     const utterance = new SpeechSynthesisUtterance(script);
     utterance.lang = "tr-TR";
-    utterance.rate = 0.9;
+    utterance.rate = 1.25;
     utterance.pitch = 1;
 
     utterance.onstart = () => setIsSpeaking(true);

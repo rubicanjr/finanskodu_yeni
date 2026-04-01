@@ -424,7 +424,7 @@ export default function BlogDetailPage() {
           itemScope
           itemType="https://schema.org/Person"
         >
-          <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-4">Yazar Hakkında</h2>
+          <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-4">Yazar Hakkında</p>
           <div className="flex items-start gap-4">
             <div className="w-14 h-14 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0">
               <span className="text-primary font-bold text-lg" itemProp="name">{post.author[0]}</span>
@@ -454,7 +454,7 @@ export default function BlogDetailPage() {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="mt-8 p-6 border border-primary/20 rounded-xl bg-primary/5"
         >
-          <h2 className="text-lg font-semibold text-foreground mb-2">Bu Yazıyı Yararlı Buldunuz mu?</h2>
+          <h3 className="text-lg font-semibold text-foreground mb-2">Bu Yazıyı Yararlı Buldunuz mu?</h3>
           <p className="text-muted-foreground text-sm mb-4">
             Finans Kodu'nun haftalık analizlerini, algoritmik sinyallerini ve yapay zeka araç önerilerini doğrudan gelen kutunuza almak için topluluğumuza katılın.
           </p>
@@ -483,7 +483,7 @@ export default function BlogDetailPage() {
               className="mt-6 p-5 border border-cyan-500/20 rounded-xl bg-cyan-500/5"
             >
               <p className="text-xs font-semibold text-cyan-400 uppercase tracking-wider mb-2">İlgili Ürün</p>
-              <h3 className="text-base font-semibold text-foreground mb-1">AI Prompt Kütüphanesi: 100+ Finansal Analiz Komutu</h3>
+              <p className="text-base font-semibold text-foreground mb-1">AI Prompt Kütüphanesi: 100+ Finansal Analiz Komutu</p>
               <p className="text-sm text-muted-foreground mb-3">Bu yazıda bahsedilen yapay zeka araçlarını finans analizinde kullanmak için hazır prompt şablonlarımızı inceleyin.</p>
               <a href="/dijital-araclar/ai-prompt-kutuphanesi" target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-medium transition-colors">
@@ -500,7 +500,7 @@ export default function BlogDetailPage() {
               className="mt-6 p-5 border border-green-500/20 rounded-xl bg-green-500/5"
             >
               <p className="text-xs font-semibold text-green-400 uppercase tracking-wider mb-2">İlgili Ürün</p>
-              <h3 className="text-base font-semibold text-foreground mb-1">FİNANS KODU: Kaos İçinde Düzen</h3>
+              <p className="text-base font-semibold text-foreground mb-1">FİNANS KODU: Kaos İçinde Düzen</p>
               <p className="text-sm text-muted-foreground mb-3">Bu yazıda ele alınan teknik analiz ve algoritmik stratejileri sistematik bir metodoloji ile uygulamak için kapsamlı araç setimizi inceleyin.</p>
               <a href="/dijital-araclar/finans-kodu-kaos-icinde-duzen" target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-green-600 hover:bg-green-700 text-white text-sm font-medium transition-colors">
@@ -517,7 +517,7 @@ export default function BlogDetailPage() {
               className="mt-6 p-5 border border-amber-500/20 rounded-xl bg-amber-500/5"
             >
               <p className="text-xs font-semibold text-amber-400 uppercase tracking-wider mb-2">İlgili Ürün</p>
-              <h3 className="text-base font-semibold text-foreground mb-1">Pro - Algoritmik Strateji ve Analiz Bülteni</h3>
+              <p className="text-base font-semibold text-foreground mb-1">Pro - Algoritmik Strateji ve Analiz Bülteni</p>
               <p className="text-sm text-muted-foreground mb-3">Bu yazıda incelenen makro ve piyasa analizlerini aylık algoritmik strateji bültenimizle takip edin. Altın algoritması, akıllı fon sepetleri ve haftalık sesli brifing.</p>
               <a href="/dijital-araclar/pro-algoritmik-strateji-ve-analiz-bulteni" target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-600 hover:bg-amber-700 text-white text-sm font-medium transition-colors">

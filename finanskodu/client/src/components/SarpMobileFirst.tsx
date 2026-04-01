@@ -386,7 +386,7 @@ export default function SarpMobileFirst() {
     
     // Authoritative male voice settings
     utterance.pitch = 0.9;
-    utterance.rate = 0.95;
+    utterance.rate = 1.25;
     utterance.volume = 1.0;
     
     utterance.onstart = () => {

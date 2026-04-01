@@ -437,12 +437,12 @@ export default function SarpWidget() {
     if (isNativeMaleVoice) {
       // Native male voice - use natural settings (slightly deep)
       utterance.pitch = 0.95;  // Hafif derin (doğal erkek tonu)
-      utterance.rate = 0.92;   // Hafif yavaş (okunabilirlik)
+      utterance.rate = 1.25;
       console.log("[Sarp Voice] ✅ Native male voice - natural pitch 0.95");
     } else {
       // iOS/Female voice - AGGRESSIVE pitch fix (deeper than before)
       utterance.pitch = 0.55;  // 0.6'dan daha düşük (daha derin)
-      utterance.rate = 0.88;   // Daha yavaş (erkek konuşma ritmi)
+      utterance.rate = 1.25;
       console.log("[Sarp Voice] ⚠️ iOS Mode - aggressive pitch 0.55, rate 0.88");
     }
     utterance.volume = 1.0;

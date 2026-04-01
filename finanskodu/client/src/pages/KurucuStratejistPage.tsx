@@ -165,8 +165,8 @@ export default function KurucuStratejistPage() {
                   <p className="text-base leading-relaxed" style={{ color: 'var(--muted-foreground)' }}>
                     LC Waikiki'de <strong style={{ color: 'var(--foreground)' }}>Planlama Yöneticisi</strong> olarak
                     milyonlarca SKU'nun stok hareketini talep tahminleme algoritmaları ile yönetiyordu.
-                    Uluslararası pazarlarda big data. Gerçek zamanlı karar alma. Hata payının sıfıra yakın olması
-                    gereken operasyonlar.
+                    Uluslararası pazarlarda büyük veri yönetimi, gerçek zamanlı karar alma ve hata payının sıfıra yakın olması
+                    gereken işlemler üzerinde çalıştırıldı.
                   </p>
 
                   <div
@@ -181,7 +181,7 @@ export default function KurucuStratejistPage() {
                       className="text-base font-medium italic"
                       style={{ color: 'var(--foreground)', fontFamily: 'var(--font-figtree)' }}
                     >
-                      "Orada şunu öğrendi: <strong>Duygusal karar, matematiksel kararı her zaman kaybeder.</strong>"
+                      "Orada şunu öğrendi: <strong>Duygusal karar, matematiksel karar karşısında her zaman değişir.</strong>"
                     </p>
                   </div>
 
