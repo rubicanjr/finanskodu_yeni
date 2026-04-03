@@ -13,21 +13,23 @@ const supabaseUrl = ENV.supabaseUrl;
 const supabaseAnonKey = ENV.supabaseAnonKey;
 
 if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error(
-    'Missing Supabase credentials. Please set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in Management UI Secrets panel.'
+  console.warn(
+    '[Supabase] Missing credentials (VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY). Supabase features will be unavailable.'
   );
 }
 
-export const supabase = createClient(
-  supabaseUrl,
-  supabaseAnonKey,
-  {
-    auth: {
-      autoRefreshToken: true,
-      persistSession: false, // Server-side doesn't need session persistence
-    },
-  }
-);
+export const supabase = supabaseUrl && supabaseAnonKey
+  ? createClient(
+      supabaseUrl,
+      supabaseAnonKey,
+      {
+        auth: {
+          autoRefreshToken: true,
+          persistSession: false, // Server-side doesn't need session persistence
+        },
+      }
+    )
+  : null;
 
 /**
  * Database Types for Kod Odası

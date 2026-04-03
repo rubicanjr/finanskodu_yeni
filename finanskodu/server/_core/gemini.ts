@@ -6,8 +6,11 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // Initialize Gemini API
-const apiKey = process.env.GEMINI_API_KEY || "AIzaSyB747gc6pUEbVeQlM3ZxhkPp4J-MF_Z-h0";
-const genAI = new GoogleGenerativeAI(apiKey);
+const apiKey = process.env.GEMINI_API_KEY;
+if (!apiKey) {
+  console.warn("[Gemini] GEMINI_API_KEY is not configured. Stock analysis will be unavailable.");
+}
+const genAI = new GoogleGenerativeAI(apiKey ?? "");
 const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
 export interface StockAnalysisDetail {
@@ -32,6 +35,10 @@ export async function analyzeStock(
   ticker: string,
   currentPrice: number
 ): Promise<StockAnalysisResult> {
+  if (!apiKey) {
+    throw new Error("GEMINI_API_KEY is not configured");
+  }
+
   try {
     // Cache Buster: Add timestamp to prevent AI from returning cached responses
     const now = new Date().toISOString();
@@ -72,9 +79,9 @@ Her bölümü açık bir şekilde başlığıyla birlikte yaz.`;
     const text = response.text();
 
     // Parse the response into 3 sections
-    const technicalMatch = text.match(/TEKNIK GÖRÜNÜM[:\s]*(.*?)(?=SOSYAL|$)/i);
-    const socialMatch = text.match(/SOSYAL MEDYA[:\s]*(.*?)(?=TEMEL|$)/i);
-    const fundamentalMatch = text.match(/TEMEL ANALIZ[:\s]*(.*?)$/i);
+    const technicalMatch = text.match(/TEKN[İI]K G[ÖO]R[ÜU]N[ÜU]M[:\s]*([\s\S]*?)(?=SOSYAL|$)/i);
+    const socialMatch = text.match(/SOSYAL MEDYA[:\s]*([\s\S]*?)(?=TEMEL|$)/i);
+    const fundamentalMatch = text.match(/TEMEL ANAL[İI]Z[:\s]*([\s\S]*?)$/i);
 
     const details: StockAnalysisDetail = {
       technical: technicalMatch ? technicalMatch[1].trim() : "Teknik analiz verisi yükleniyor...",

@@ -44,7 +44,27 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
   // Fallback response for unknown types
   sendResponse({ error: "Unknown request type" });
-  return false;
+  return true;
+});
+
+// Re-inject content scripts after extension update/reload
+// This prevents "Could not establish connection" on already-open tabs
+chrome.runtime.onInstalled.addListener(async (details) => {
+  if (details.reason === "install" || details.reason === "update") {
+    const tabs = await chrome.tabs.query({ url: "<all_urls>" });
+    for (const tab of tabs) {
+      if (tab.id && tab.url && !tab.url.startsWith("chrome://")) {
+        try {
+          await chrome.scripting.executeScript({
+            target: { tabId: tab.id },
+            files: ["content.js"],
+          });
+        } catch {
+          // Tab may not be scriptable (e.g. Chrome Web Store pages)
+        }
+      }
+    }
+  }
 });
 
 // Self-healing: if SW suspends, re-bind listeners on start

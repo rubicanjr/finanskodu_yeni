@@ -12,12 +12,16 @@ function sendToGA4(metric: Metric) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const gtag = (window as any).gtag;
   if (typeof gtag !== 'function') return;
-  gtag('event', metric.name, {
-    event_category: 'Web Vitals',
-    event_label: metric.id,
-    value: Math.round(metric.name === 'CLS' ? metric.value * 1000 : metric.value),
-    non_interaction: true,
-  });
+  try {
+    gtag('event', metric.name, {
+      event_category: 'Web Vitals',
+      event_label: metric.id,
+      value: Math.round(metric.name === 'CLS' ? metric.value * 1000 : metric.value),
+      non_interaction: true,
+    });
+  } catch {
+    // AdBlock may block the underlying network request
+  }
 }
 
 function reportMetric(metric: Metric, targets: ReportTarget[] = ['console', 'ga4']) {

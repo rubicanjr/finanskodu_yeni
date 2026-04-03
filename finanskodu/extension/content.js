@@ -14,9 +14,8 @@ const INITIAL_RETRY_DELAY = 100; // ms
  * 3. Prevents "Receiving end does not exist" from terminating the thread.
  */
 async function safeSendMessage(message, retries = 0) {
-  // 1. Context validation (prevents "Extension context invalidated" error on reload)
   if (!chrome.runtime?.id) {
-    throw new Error("Extension context is no longer valid. Please refresh the page.");
+    return Promise.resolve(null);
   }
 
   return new Promise((resolve, reject) => {
@@ -31,7 +30,7 @@ async function safeSendMessage(message, retries = 0) {
                                   
         if (isConnectionError && retries < MAX_RETRIES) {
           const delay = INITIAL_RETRY_DELAY * Math.pow(2, retries);
-          console.warn(`[Content] Background SW disconnected. Retrying in ${delay}ms... (Attempt ${retries + 1}/${MAX_RETRIES})`);
+          console.debug(`[Content] Background SW disconnected. Retrying in ${delay}ms... (Attempt ${retries + 1}/${MAX_RETRIES})`);
           
           setTimeout(() => {
             resolve(safeSendMessage(message, retries + 1));
@@ -60,7 +59,7 @@ async function ensureConnection() {
     const pong = await safeSendMessage({ type: "PING" });
     console.log("[Content] Connection verified:", pong);
   } catch (err) {
-    console.error(`[Content] Failed to ensure connection: ${err.message}`);
+    console.debug(`[Content] Connection not available: ${err.message}`);
   }
 }
 
@@ -89,7 +88,7 @@ async function runAnalysis() {
       console.log("content.js:1 Analiz sonuçları storage'da saklandı");
     }
   } catch (error) {
-    console.error(`[Content] Error during analysis dispatch:`, error.message);
+    console.debug(`[Content] Analysis dispatch unavailable:`, error.message);
   }
 }
 

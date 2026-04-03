@@ -24,17 +24,18 @@ declare global {
  */
 export const trackPageView = (path: string, title?: string) => {
   if (typeof window.gtag !== 'function') {
-    console.warn('[Analytics] gtag is not loaded yet');
     return;
   }
 
-  window.gtag('event', 'page_view', {
-    page_path: path,
-    page_title: title || document.title,
-    page_location: window.location.href,
-  });
-
-  console.log('[Analytics] Page view tracked:', path);
+  try {
+    window.gtag('event', 'page_view', {
+      page_path: path,
+      page_title: title || document.title,
+      page_location: window.location.href,
+    });
+  } catch {
+    // AdBlock veya ağ hatası — sessizce yoksay
+  }
 };
 
 /**
@@ -47,13 +48,14 @@ export const trackEvent = (
   eventParams?: Record<string, any>
 ) => {
   if (typeof window.gtag !== 'function') {
-    console.warn('[Analytics] gtag is not loaded yet');
     return;
   }
 
-  window.gtag('event', eventName, eventParams);
-
-  console.log('[Analytics] Event tracked:', eventName, eventParams);
+  try {
+    window.gtag('event', eventName, eventParams);
+  } catch {
+    // AdBlock veya ağ hatası — sessizce yoksay
+  }
 };
 
 /**

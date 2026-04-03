@@ -3,9 +3,7 @@
  * Uses yahoo-finance2 for live data and technicalindicators for RSI/MA calculations
  */
 
-import YahooFinance from 'yahoo-finance2';
-
-const yahooFinance = new YahooFinance();
+import yahooFinance from 'yahoo-finance2';
 import { RSI, SMA } from 'technicalindicators';
 
 export interface RealStockData {
@@ -87,13 +85,15 @@ export async function getRealStockData(ticker: string): Promise<RealStockData> {
     
     if (typeof currentRSI === 'number' && typeof ma50 === 'number') {
       if (currentRSI < 45 && currentPrice > ma50) {
-        teknik_durum = "NEGATİF";
+        teknik_durum = "KARIŞIK";
       } else if (currentRSI > 55 && currentPrice > ma50) {
         teknik_durum = "POZİTİF";
       } else if (currentRSI < 30) {
-        teknik_durum = "NEGATİF";
+        teknik_durum = "POZİTİF"; // Aşırı satım → dip fırsatı
       } else if (currentRSI > 70) {
-        teknik_durum = "POZİTİF";
+        teknik_durum = "NEGATİF"; // Aşırı alım → düzeltme riski
+      } else if (currentPrice < ma50) {
+        teknik_durum = "NEGATİF";
       } else {
         teknik_durum = "KARIŞIK";
       }

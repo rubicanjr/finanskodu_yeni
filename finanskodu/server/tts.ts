@@ -43,6 +43,12 @@ ttsRouter.post("/", async (req: Request, res: Response) => {
       return;
     }
 
+    // Prevent TTS abuse: limit text length to 5000 characters
+    if (text.length > 5000) {
+      res.status(400).json({ error: "Text exceeds maximum length of 5000 characters" });
+      return;
+    }
+
     if (!voiceName || typeof voiceName !== "string") {
       res.status(400).json({ error: "Voice name is required" });
       return;

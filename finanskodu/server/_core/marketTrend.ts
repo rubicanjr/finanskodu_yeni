@@ -5,6 +5,32 @@
 
 import { getRealStockPrice } from "./stockData";
 
+/**
+ * Fetch the previous close price from Yahoo Finance
+ */
+async function getPreviousClose(ticker: string): Promise<number | null> {
+  try {
+    const symbol = ticker.endsWith(".IS") ? ticker : `${ticker}.IS`;
+    const response = await fetch(
+      `https://query1.finance.yahoo.com/v10/finance/quoteSummary/${symbol}?modules=price`,
+      {
+        headers: {
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        },
+      }
+    );
+
+    if (!response.ok) return null;
+
+    const data = await response.json();
+    const previousClose = data?.quoteSummary?.result?.[0]?.price?.regularMarketPreviousClose?.raw;
+
+    return typeof previousClose === "number" && previousClose > 0 ? previousClose : null;
+  } catch {
+    return null;
+  }
+}
+
 export interface MarketTrendData {
   currentPrice: number;
   previousPrice: number;
@@ -22,20 +48,20 @@ export async function getMarketTrend(ticker: string): Promise<MarketTrendData> {
     // Fetch current price
     const currentPrice = await getRealStockPrice(ticker);
     
-    // For simplicity, estimate previous price (1 month ago)
-    // In production, use a proper historical data API
-    const estimatedPreviousPrice = currentPrice * 0.95; // Assume 5% change
+    // Fetch real previous close instead of faking it
+    const previousClose = await getPreviousClose(ticker);
+    const previousPrice = previousClose ?? currentPrice; // NÖTR if unavailable
     
-    // Determine trend
+    // Determine trend (0.1% threshold to avoid noise)
     let trend: "POZİTİF" | "NEGATİF" | "NÖTR";
     let trendColor: "green" | "red" | "gray";
     let technicalLevel: number;
     
-    if (currentPrice > estimatedPreviousPrice) {
+    if (currentPrice > previousPrice * 1.001) {
       trend = "POZİTİF";
       trendColor = "green";
       technicalLevel = parseFloat((currentPrice * 1.15).toFixed(2));
-    } else if (currentPrice < estimatedPreviousPrice) {
+    } else if (currentPrice < previousPrice * 0.999) {
       trend = "NEGATİF";
       trendColor = "red";
       technicalLevel = parseFloat((currentPrice * 0.90).toFixed(2));
@@ -45,9 +71,11 @@ export async function getMarketTrend(ticker: string): Promise<MarketTrendData> {
       technicalLevel = currentPrice;
     }
     
-    const percentChange = parseFloat(
-      (((currentPrice - estimatedPreviousPrice) / estimatedPreviousPrice) * 100).toFixed(2)
-    );
+    const percentChange = previousPrice > 0
+      ? parseFloat(
+          (((currentPrice - previousPrice) / previousPrice) * 100).toFixed(2)
+        )
+      : 0;
     
     // Analist hedef fiyat ortalaması (fallback: currentPrice * 1.45)
     const targetMeanPrice = parseFloat((currentPrice * 1.45).toFixed(2));
@@ -63,7 +91,7 @@ export async function getMarketTrend(ticker: string): Promise<MarketTrendData> {
     
     return {
       currentPrice,
-      previousPrice: estimatedPreviousPrice,
+      previousPrice,
       trend,
       trendColor,
       technicalLevel,

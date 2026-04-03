@@ -13,6 +13,26 @@ export function createApp() {
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
   
+  // CORS: restrict API access
+  app.use((req, res, next) => {
+    const origin = req.headers.origin;
+    const allowedOrigins = [
+      "https://finanskodu.com",
+      "https://www.finanskodu.com",
+    ];
+    // Allow all origins in development, restrict in production
+    if (process.env.NODE_ENV !== "production" || !origin || allowedOrigins.includes(origin)) {
+      res.setHeader("Access-Control-Allow-Origin", origin || "*");
+    }
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    if (req.method === "OPTIONS") {
+      res.status(204).end();
+      return;
+    }
+    next();
+  });
+
   // Prevent favicon.ico from hitting the API or SSR and throwing 500
   app.get("/favicon.ico", (req, res) => res.status(204).end());
   

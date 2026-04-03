@@ -23,6 +23,8 @@ export const useThirdPartyScript = (
       script.src = src;
       script.async = options?.async ?? true;
       if (options?.defer) script.defer = true;
+      // Silently handle blocked scripts (AdBlock / ERR_BLOCKED_BY_CLIENT)
+      script.onerror = () => {};
       document.body.appendChild(script);
     };
 

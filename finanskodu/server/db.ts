@@ -33,7 +33,11 @@ let _client: ReturnType<typeof postgres> | null = null;
 export async function getDb() {
   if (!_db && ENV.supabaseDatabaseUrl) {
     try {
-      _client = postgres(ENV.supabaseDatabaseUrl);
+      _client = postgres(ENV.supabaseDatabaseUrl, {
+        max: 20,
+        idle_timeout: 30,
+        connect_timeout: 10,
+      });
       _db = drizzle(_client);
       console.log("[Database] Connected to Supabase PostgreSQL");
     } catch (error) {
@@ -219,15 +223,23 @@ export async function getPosts(options?: {
   const db = await getDb();
   if (!db) return [];
 
-  let query = db.select().from(posts).orderBy(desc(posts.createdAt));
+  const conditions = [];
 
   if (options?.category && options.category !== "all") {
-    query = query.where(eq(posts.category, options.category)) as any;
+    conditions.push(eq(posts.category, options.category));
   }
 
   if (options?.postType) {
-    query = query.where(eq(posts.postType, options.postType)) as any;
+    conditions.push(eq(posts.postType, options.postType));
   }
+
+  let query = db.select().from(posts);
+
+  if (conditions.length > 0) {
+    query = query.where(conditions.length === 1 ? conditions[0] : and(...conditions)) as any;
+  }
+
+  query = query.orderBy(desc(posts.createdAt)) as any;
 
   if (options?.limit) {
     query = query.limit(options.limit) as any;
@@ -366,7 +378,7 @@ export async function togglePostLike(userId: string, postId: string): Promise<{ 
     // Unlike
     await db.delete(likes).where(eq(likes.id, existingLike[0].id));
     await db.update(posts)
-      .set({ likesCount: sql`${posts.likesCount} - 1` })
+      .set({ likesCount: sql`GREATEST(0, ${posts.likesCount} - 1)` })
       .where(eq(posts.id, postId));
     return { liked: false };
   } else {
