@@ -1,0 +1,360 @@
+{
+  "nav": {
+    "home": "Ana Sayfa",
+    "products": "Dijital Araçlar",
+    "manifesto": "Manifesto",
+    "blog": "Blog",
+    "analysis": "Finansal Analiz",
+    "contact": "İletişim",
+    "kodOdasi": "Kod Odası",
+    "ariaLabel": "Ana navigasyon",
+    "goToPage": "sayfasına git",
+    "goToSection": "bölümüne git",
+    "closeMenu": "Menüyü kapat",
+    "openMenu": "Menüyü aç",
+    "mobileMenu": "Mobil navigasyon menüsü",
+    "kurucuStratejist": "Kurucu Stratejistimizle Tanışın",
+    "kurumsal": "Kurumsal",
+    "projeler": "Projeler",
+    "kaynakKutuphanesi": "Kaynak Kütüphanesi",
+    "iletisim": "İletişim",
+    "ortaklik": "Ortaklık",
+    "kvkk": "Gizlilik Politikası"
+  },
+  "hero": {
+    "eyebrow": "// FİNANSAL VERİMLİLİK İÇİN",
+    "heading1": "Finansınızı finanskodu dijital ürünleri ile bir üst seviyeye taşıyın.",
+    "heading2": "",
+    "heading3": "",
+    "subtitle": "100+ test edilmiş AI aracı, finansal metodoloji ve algoritmik analiz. Sen pilotsun; navigasyonu biz üstleniyoruz.",
+    "newSubtitle": "Kişisel ve/veya kurumsal finansinizi finanskodu dijital ürünleri ile bir üst seviyeye taşıyın.",
+    "cta1": "Dijital Araçları Keşfet",
+    "cta2": "Kod Odası'na Git",
+    "terminal": {
+      "ready": "Sistem Hazır...",
+      "analyzing": "Analiz Başlıyor...",
+      "loading": "Veriler Yükleniyor...",
+      "scanning": "Portföy Taranıyor...",
+      "calculating": "Strateji Hesaplanıyor..."
+    }
+  },
+  "products": {
+    "eyebrow": "// DİJİTAL VİTRİN",
+    "title": "Dijital",
+    "titleHighlight": "Araçlar",
+    "subtitle": "100+ hazır AI prompt, finansal metodoloji ve aylık strateji bülteni",
+    "viewDetails": "Detayları Gör",
+    "comingSoon": "Yakında",
+    "goTo": "sayfasına git",
+    "speechNotSupported": "Tarayıcınız sesli okuma özelliğini desteklemiyor.",
+    "startSpeech": "Sesli okumayı başlat",
+    "stopSpeech": "Sesli okumayı durdur",
+    "hero": {
+      "title": "Dijital Araçlar",
+      "subtitle": "Finansal verimliliğinizi artıracak, yapay zeka destekli dijital çözümler"
+    },
+    "finansalPerformans": {
+      "title": "Finansal Performans Takip Sistemi",
+      "description": "Kişisel ve kurumsal finansınızı gerçek zamanlı izleyin, analiz edin ve optimize edin. Yapay zeka destekli öngörüler ile geleceğe hazır olun.",
+      "feature1": "Gerçek zamanlı finansal dashboard ve raporlama",
+      "feature2": "AI destekli harcama analizi ve öneriler",
+      "feature3": "Bütçe planlama ve hedef takibi",
+      "feature4": "Çoklu hesap ve portföy yönetimi",
+      "price": "₺299/ay",
+      "cta": "Hemen Başla"
+    },
+    "yapayZekaAsistan": {
+      "title": "Yapay Zeka Finansal Asistan",
+      "description": "7/24 yanınızda olan AI asistanınız ile finansal kararlarınızı güçlendirin. Piyasa analizleri, yatırım önerileri ve risk değerlendirmeleri.",
+      "feature1": "Doğal dil ile finansal sorgulama",
+      "feature2": "Otomatik piyasa analizi ve sinyal üretimi",
+      "feature3": "Kişiselleştirilmiş yatırım stratejileri",
+      "feature4": "Risk yönetimi ve portföy optimizasyonu",
+      "price": "₺499/ay",
+      "cta": "Asistanı Dene"
+    },
+    "kurumsalCozumler": {
+      "title": "Kurumsal Finansal Çözümler",
+      "description": "Şirketinizin finansal operasyonlarını dijitalleştirin. Ekip yönetimi, raporlama, compliance ve entegrasyon desteği ile tam kontrol.",
+      "feature1": "Çoklu kullanıcı ve yetki yönetimi",
+      "feature2": "API entegrasyonu ve özel raporlar",
+      "feature3": "Compliance ve denetim desteği",
+      "feature4": "Öncelikli destek ve eğitim",
+      "price": "Özel Fiyat",
+      "cta": "Teklif Al"
+    },
+    "faq": {
+      "title": "Sıkça Sorulan Sorular",
+      "q1": "Dijital araçlar nasıl çalışır?",
+      "a1": "Tüm dijital araçlarımız bulut tabanlıdır ve herhangi bir kurulum gerektirmez. Hesabınızı oluşturduktan sonra web tarayıcınız üzerinden anında erişebilirsiniz.",
+      "q2": "Verilerim güvende mi?",
+      "a2": "Evet, tüm verileriniz 256-bit SSL şifreleme ile korunur ve düzenli olarak yedeklenir. KVKK ve GDPR uyumlu çalışıyoruz.",
+      "q3": "Üyeliğimi iptal edebilir miyim?",
+      "a3": "Evet, istediğiniz zaman üyeliğinizi iptal edebilirsiniz. İptal sonrası mevcut dönem sonuna kadar hizmetlerimizi kullanmaya devam edebilirsiniz.",
+      "q4": "Deneme süresi var mı?",
+      "a4": "Evet, tüm ürünlerimizde 14 günlük ücretsiz deneme süresi sunuyoruz. Kredi kartı bilgisi gerekmez.",
+      "q5": "Kurumsal destek alabilir miyim?",
+      "a5": "Kurumsal paketlerimizde öncelikli destek, özel eğitimler ve danışmanlık hizmetleri sunuyoruz. Detaylı bilgi için iletişime geçin."
+    },
+    "cta": {
+      "title": "Finansal Dönüşümünüze Bugün Başlayın",
+      "subtitle": "14 gün ücretsiz deneyin, kredi kartı gerekmez",
+      "button": "Ücretsiz Deneyin"
+    },
+    "item1": {
+      "title": "AI Prompt Kütüphanesi",
+      "desc": "Finans profesyonelleri için özel olarak tasarlanmış 100+ yapay zeka prompt koleksiyonu.",
+      "badge": "Hemen Kullan",
+      "journey": "BAŞLA",
+      "cta": "Prompt'ları Keşfet"
+    },
+    "item2": {
+      "title": "FİNANS KODU: Kaos İçinde Düzen",
+      "desc": "Finansal operasyonlarınızı dönüştürecek kapsamlı metodoloji ve araç seti.",
+      "badge": "Çok Satan",
+      "journey": "DEVAM ET",
+      "cta": "Sistemi İncele"
+    },
+    "item3": {
+      "title": "Pro - Algoritmik Strateji ve Analiz Bülteni",
+      "desc": "Piyasa yönü, makro analizler ve algoritmik sinyaller içeren kapsamlı aylık bülten.",
+      "badge": "Aylık Sinyal",
+      "journey": "İLERLE",
+      "cta": "Bültene Katıl"
+    }
+  },
+  "digitalTools": {
+    "hero": {
+      "title": "Dijital Araçlar",
+      "subtitle": "Finansal verimliliğinizi artıracak, yapay zeka destekli dijital çözümler"
+    },
+    "featuresTitle": "Özellikler",
+    "faqTitle": "Sıkça Sorulan Sorular",
+    "purchaseButton": "Satın Al",
+    "consultationButton": "Ürünle ilgili Görüşme Talep Et",
+    "aiPromptLibrary": {
+      "title": "AI Prompt Kütüphanesi",
+      "subtitle": "Özel olarak tasarlanmış yapay zeka prompt koleksiyonu",
+      "description": "Finans Kodu: AI Prompt Kütüphanesi (100+ Komut) - Yapay zeka ile 'sohbet etmeyi' bırakın, ona 'emretmeyi' öğrenin. Herkes yapay zeka kullanıyor ama herkes aynı sonucu alamıyor. Aradaki fark, sorduğunuz sorunun (Prompt) kalitesidir. Özellikle Finansal analizde hata payı yoktur. Bu yüzden, ChatGPT, Gemini veya Claude ile çalışırken rastgele cümleler kuramazsınız. Bir mühendis disipliniyle, bağlamı ve kısıtları net belirlenmiş komutlar kullanmalısınız. Finans Kodu: AI Prompt Kütüphanesi, deneme-yanılma sürecini ortadan kaldırır. Sizin için test edilmiş, optimize edilmiş ve finansal terminolojiye hakim 100'den fazla 'Akıllı Komut' içerir.",
+      "feature1": "🧠 100+ Profesyonel Komut: Genel sohbetler için değil; finansal analiz, raporlama ve strateji oluşturmak için optimize edilmiş dev arşiv.",
+      "feature2": "👔 Sanal Analist: ChatGPT, Gemini veya Claude'u sıradan bir bottan, sizin için çalışan 'Kıdemli Bir Analiste' dönüştüren özel kurgular.",
+      "feature3": "⚡ Hız ve Verimlilik: Saatler süren pazar araştırmalarını ve veri özetlerini saniyelere düşüren, 'sonuç odaklı' mühendislik promptları.",
+      "feature4": "📊 Tam Kapsam: Bilanço yorumlamadan profesyonel e-postalara, Excel formül üretiminden risk analizine kadar her senaryo için hazır şablonlar.",
+      "feature5": "📋 Kopyala-Yapıştır: Karmaşık 'prompt mühendisliği' öğrenmenize gerek yok. Hazır şablonları kopyalayın, verinizi girin ve sonucu alın.",
+      "feature6": "🚀 AI Okuryazarlığı: Sadece çıktı almayı değil; yapay zekayı bir 'Düşünce Partneri' olarak nasıl yöneteceğinizi öğreten strüktür.",
+      "faq1Question": "Zaten yapay zekaya soru sorabiliyorum, buna neden ihtiyaçım var?",
+      "faq1Answer": "Herkes soru sorabilir ama herkes doğru cevabı alamaz. 'Bana piyasayı anlat' demekle, bu kütüphanedeki gibi parametreleri, tonu, analiz formatı ve kısıtlamaları belirlenmiş bir 'Mühendislik Promptu' girmek arasında dağlar kadar fark vardır.",
+      "faq2Question": "Hangi yapay zeka modelleriyle uyumlu?",
+      "faq2Answer": "Bu kütüphane 'Model Bağımsız' (Model Agnostic) hazırlanmıştır. ChatGPT (3.5/4o), Google Gemini, Claude veya Copilot fark etmeksizin tüm büyük dil modellerinde çalışır.",
+      "faq3Question": "Bu bir eğitim videosu mu?",
+      "faq3Answer": "Hayır. Bu, doğrudan işinizde kullanabileceğiniz yazılı bir 'Komut Veritabanı'dır. Videoları izleyip not almakla uğraşmazsınız; ihtiyacınız olan başlığı bulur, komutu kopyalar ve işinizi halledersiniz.",
+      "faq4Question": "İngilizce bilmem gerekiyor mu?",
+      "faq4Answer": "Hayır. Tüm promptlar Türkçe olarak hazırlanmış ve optimize edilmiştir. Ancak dilerseniz yapay zekaya 'Cevabı İngilizce ver' diyerek uluslararası raporlar da hazırlatabilirsiniz.",
+      "faq5Question": "Güncellemelerden faydalanacak mıyım?",
+      "faq5Answer": "AI dünyası hızla değişiyor. Bu kütüphane statik bir dosya değildir; yeni ve etkili prompt teknikleri keşfedildikçe güncellenir ve siz de bu güncel versiyonlara erişim sağlarsınız."
+    },
+    "finansKodu": {
+      "title": "FİNANS KODU: Kaos İçinde Düzen",
+      "subtitle": "Finansal Özgürlük ve Sürdürülebilirlik İçin: 'Sistemin Kaynak Kodları'",
+      "description": "Bir binayı inşa etmeden önce temeli atarsınız. Bir yazılımı kodlamadan önce mimarisini kurarsınız. Peki, finansal geleceğinizi inşa ederken hangi 'kurallara' sadık kalıyorsunuz? 'FİNANS KODU: Kaos İçinde Düzen', teknik bir Excel eğitimi veya geçici bir yatırım tavsiyesi değildir. Bu belge, bir Endüstri Mühendisi ve CIO perspektifiyle yazılmış, finansal kararların 'Anayasası'dır. Kaosun içinde kaybolmamanız, duygusal kararlarla hata yapmamanız ve sürdürülebilir bir büyüme yakalamanız için gereken Temel Kanunlar bu dosyanın içindedir. Sisteminizi kurun, duygularınızı devreden çıkarın. Çünkü matematikte 'umarım' diye bir değişken yoktur.",
+      "feature1": "🏭 Mühendislik Perspektifi: Finansı Girdi-Çıktı ve Optimizasyon problemi olarak ele alan sistematik bir yaklaşım",
+      "feature2": "🧠 Duygu-Bozucu Algoritmalar: Piyasa düşerken panik yapmanızı, yükselirken açgözlü olmanızı engelleyen, önceden tanımlı davranış kalıpları",
+      "feature3": "⚖️ Risk/Getiri Mühendisliği: Sistemi yıkmadan ne kadar risk alabilirim? sorusunu çözen matematiksel formüller",
+      "feature4": "🔄 Sürdürülebilir Varlık Döngüsü: Tek seferlik vurkaç kazançları değil, 10-20 yıllık Bileşik Getiri etkisini maksimize eden portföy mimarisi",
+      "feature5": "🎯 Karar Matrisleri: Hangi varlığın, ne zaman ve hangi koşullarda portföye ekleneceğine dair sübjektif değil, objektif kriterler",
+      "feature6": "🚫 Gürültü Filtreleme: Haber akışları, tüyolar ve manipülasyonlar arasında kaybolmadan sadece sinyale odaklanılan zihinsel modeller",
+      "faq1Question": "Bu dosyanın içinde hisse senedi veya coin tüyoları var mı?",
+      "faq1Answer": "Hayır. Bu dosya size 'hangi balığı tutacağınızı' değil, okyanusun durumuna göre 'hangi oltayı kullanacağınızı' ve fırtına çıktığında 'gemiyi nasıl limana yanaştıracağınızı' öğretir. Balık (Tüyo) bayatlar, ama Balıkçılık (Metodoloji) ömür boyu besler.",
+      "faq2Question": "İleri düzey matematik veya Excel bilmem gerekiyor mu?",
+      "faq2Answer": "Hayır. 'Finans Kodu' bir mühendis tarafından yazılmış olsa da, dili herkesin anlayabileceği sadeliktedir. Karmaşık formüller değil, 'Sağlam Mantık' üzerine kuruludur. İhtiyacınız olan tek şey hesap makinesi ve disiplindir.",
+      "faq3Question": "Bu bir eğitim videosu mu yoksa yazılı bir kaynak mı?",
+      "faq3Answer": "Bu, dijital bir okunabilir belgedir (PDF/E-Kitap formatında). Videolar izlenir ve unutulur; ancak bu doküman, her yatırım kararı öncesinde dönüp bakacağınız, masanızda durması gereken bir 'Referans Kitapçığı' (Cheatsheet) olarak tasarlanmıştır.",
+      "faq4Question": "Bu sistem kısa vadeli al-sat (Trade) yapanlar için uygun mu?",
+      "faq4Answer": "Eğer amacınız 'yarın zengin olmak' ise bu ürün size göre değildir. Ancak amacınız trade işlemlerinizi 'duygusal kumardan' çıkarıp 'disiplinli bir iş modeline' dönüştürmekse, buradaki risk yönetimi kuralları hayat kurtarıcıdır.",
+      "faq5Question": "Neden 'Kaos İçinde Düzen' diyoruz?",
+      "faq5Answer": "Çünkü piyasalar kaotiktir, tahmin edilemez. Piyasayı kontrol edemezsiniz, kontrol edebileceğiniz tek şey 'kendi davranışlarınızdır'. Bu doküman, dışarıdaki kaos ne olursa olsun, içerideki düzeni (portföyünüzü) nasıl koruyacağınızın anayasasıdır."
+    },
+    "proBulletin": {
+      "title": "Pro - Algoritmik Strateji ve Analiz Bülteni (1 Aylık Erişim)",
+      "subtitle": "Veriyi sağlıyoruz, stratejinizi denetliyoruz. Hata şansını sıfıra indirin.",
+      "description": "Bu paket; Finans Kodu'nun en gelişmiş Algoritmik Veri Akışı (1 Ay) hizmeti ile portföyünüzü mühendis gözüyle inceleyen Birebir Check-Up seansını birleştirir. Sadece piyasanın nereye gittiğini bilmek yetmez; sizin o piyasada nerede durduğunuz da önemlidir. Algoritmalarımız Altın ve Fon piyasalarındaki yönü tayin ederken, 45 dakikalık birebir strateji seansmızda mevcut varlık dağılımınızdaki 'mantık hatalarını' (bug'ları) temizliyoruz. Duygu yok, tahmin yok. Hem makro veride hem de kişisel portföyünüzde sadece matematik var.",
+      "feature1": "🥇 Altın Algoritması: Ons, Gram ve Altın sertifikaları için duygulardan arınmış, tamamen veriye dayalı trend ve yön analizi sinyalleri.",
+      "feature2": "📈 Akıllı Fon Sepetleri: Onlarca TEFAS fonu arasından matematiksel modellerle seçilmiş, kazandırma potansiyeli yüksek sepet stratejileri",
+      "feature3": "🎙️ Haftalık Sesli Brifing: Haftanın karmaşasını değil, stratejisini dinleyin. Piyasa gürültüsünü filtreleyen net ve öz sesli yönetici notla",
+      "feature4": "🚀 Kanıtlanmış Model: Son ay referans portföyde %30 büyüme yakalayan matematiksel disiplini ve stratejiyi yatırımlarınıza entegre edin",
+      "feature5": "🎯 Yüksek Veri İsabeti: Trend yönü tayininde %99 teknik veri akışı başarısına sahip algoritmalarla belirsizliği minimize et, yönünü bul",
+      "feature6": "🔍 1:1 Finansal Check-Up: 45 dk'lık online seansta portföyünüzdeki mantık hatalarını ve riskleri temizleyen kişisel Denetim hizmeti",
+      "feature7": "🛣️ Kişisel Reçete: Görüşme sonunda genel geçer tavsiyeler değil, bütçenize ve hedefinize özel 'Optimizasyon Planı' çıkarılır.",
+      "feature8": "📲 VIP İletişim Hattı: Günlük piyasa değişimlerini, model sinyallerini ve check-up sonrası takibi içeren özel birebir iletişim",
+      "faq1Question": "Bu hizmette doğrudan 'Al-Sat' tüyosu mu veriliyor?",
+      "faq1Answer": "Hayır. Finans Kodu bir 'tüyo merkezi' değil, bir 'veri işleme istasyonu'dur. Size 'Şunu al' demek yerine; algoritmamızın ürettigi giriş-çıkış bölgelerini, trend değişim sinyallerini ve risk seviyelerini sunarız. Karar her zaman yatırımcıya aittir.",
+      "faq2Question": "%99 Başarı oranı kesin kazanç anlamına mı gelir?",
+      "faq2Answer": "Finansal piyasalarda 'garanti' kelimesi sadece dolandırıcılar tarafından kullanılır. %99, algoritmamızın 'Teknik Veri Akışı' başarısıdır; yani trendin yönünü doğru okuma kapasitesidir. Biz geleceği değil, verinin ne söylediğini garanti ederiz",
+      "faq3Question": "Hiç finans bilgim yok, analizleri anlayabilir miyim?",
+      "faq3Answer": "Evet. Bizim işimiz karmaşık matematiği arka planda yapmak ve size 'sadeleştirilmiş sonucu' sunmaktır. Sesli notlar ve özetler, her seviyeden yatırımcının anlayabileceği netliktedir.",
+      "faq4Question": "Hizmet süresi nasıl işliyor?",
+      "faq4Answer": "Satın alımınızla birlikte 30 gün boyunca Telegram kanalına ve bültenlere erişim hakkı kazanırsınız. Süre sonunda erişim otomatik olarak sonlanır, devam etmek için üyeliğinizi yenilemeniz gerekir.",
+      "faq5Question": "Bu analizler hisse senetlerini kapsıyor mu?",
+      "faq5Answer": "Bu paket spesifik olarak Altın ve Yatırım Fonları (TEFAS) dikeyine odaklanmıştır. Hisse senedi piyasasının manipülatif gürültüsünden uzak, daha stabil ve makro trendlere dayalı varlıkları yönetmek isteyenler için tasarlanmıştır.",
+      "faq6Question": "Mentörlük görüşmesi (Check-Up) nasıl yapılıyor?",
+      "faq6Answer": "Ürünü satın aldıktan sonra size özel bir takvim linki iletiliyor. Online (Zoom/Google Meet) üzerinden 45 dakikalık, tamamen size ve rakamlarınıza odaklanılan bir seans gerçekleştiriyoruz.",
+      "faq7Question": "Görüşme için hazırlık yapmam gerekiyor mu?",
+      "faq7Answer": "Evet. Verimli bir 45 dakika geçirmek için mevcut varlık dağılımınızı (Hisse, Altın, Döviz vb. oranları) ve finansal hedeflerinizi önden not etmeniz, reçetenin doğruluğunu artırır."
+    }
+  },
+  "processModel": {
+    "heading": "Finans ihtiyaçların standart ürünlerimizin dışına çıkıyorsa, sana özel çözüm için buradayız.",
+    "subheading": "3 Adımda Finans Kodu Süreci",
+    "description": "Fikirden canlı kullanıma kadar, finansal süreçlerini nasıl hayata geçirdiğimizi adım adım gör.",
+    "step1": {
+      "title": "Keşif & Analiz",
+      "description": "Mevcut finansal süreçlerinizi, açı noktalarınızı ve hedeflerinizi detaylı bir şekilde analiz ediyoruz. Veri akışlarını, darboğazları ve otomasyon fırsatlarını belirliyoruz."
+    },
+    "step2": {
+      "title": "Tasarım & Geliştirme",
+      "description": "Size özel çözüm mimarisini tasarlıyoruz. Yapay zeka, otomasyon ve mühendislik prensiplerini birleştirerek operasyonel verimliliğinizi maksimize edecek sistemleri geliştiriyoruz."
+    },
+    "step3": {
+      "title": "Kurulum & Sürekli Beta",
+      "description": "Sistemi devreye alıyor, ekibinizi eğitiyor ve sürekli iyileştirme döngüsüne geçiyoruz. Piyasa değiştikçe, sistemleriniz de evrim geçiriyor. Sonuç: Sürdürülebilir büyüme ve rekabet avantajı."
+    }
+  },
+  "comparison": {
+    "eyebrow": "// KAOS vs DÜZEN",
+    "title": "Piyasa Gürültüsünden",
+    "titleHighlight": "Stratejiye",
+    "subtitle": "Çoğu yatırımcı kaosta kaybolur. Finans Kodu, gürültüyü filtreleyerek sana net bir yol haritası sunar.",
+    "chaos": {
+      "title": "KAOS",
+      "subtitle": "Geleneksel Yaklaşım",
+      "result": "Sonuç: Kayıp & Stres",
+      "items": [
+        "Haberlere göre alım-satım",
+        "Duygusal kararlar",
+        "Sürü psikolojisi",
+        "Bilgi kirliliği",
+        "Zamansız giriş-çıkış"
+      ]
+    },
+    "order": {
+      "title": "DÜZEN",
+      "subtitle": "AI Destekli Yaklaşım",
+      "result": "Sonuç: Disiplin & Kazanç",
+      "items": [
+        "AI destekli veri analizi",
+        "Risk yönetimi algoritmaları",
+        "Otomatik sinyal üretimi",
+        "Teknik + Temel analiz",
+        "Disiplinli strateji"
+      ]
+    },
+    "cta": "Düzene Geç"
+  },
+  "manifesto": {
+    "eyebrow": "// MANİFESTO",
+    "title": "Kaos'tan",
+    "titleHighlight": "Düzen",
+    "titleSuffix": "'e",
+    "subtitle": "Finansçıların yaşadığı günlük mücadeleyi anlıyoruz. Çünkü biz de oradaydık.",
+    "problem": {
+      "title": "Mevcut Durum",
+      "subtitle": "Finansal Kaos"
+    },
+    "solution": {
+      "title": "Finans Kodu Çözümü",
+      "subtitle": "Mühendislik Harikası"
+    },
+    "quote": "Size zaman ve hız kazandırıyoruz. Çünkü finansın karmaşıklığını çözmek için",
+    "quoteHighlight": "mühendislik düşüncesi",
+    "quoteEnd": "gerekir.",
+    "quoteAuthor": "— Finans Kodu Ekibi"
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Algoritmik finans, yapay zeka ve verimlilik stratejileri hakkında derinlemesine içerikler",
+    "readMore": "Devamını Oku",
+    "backToBlog": "Blog'a Dön",
+    "allPosts": "Tüm yazıları görüntüle",
+    "titleHighlight": "Analizler",
+    "pageSubtitle": "Finans, yatırım, otomasyon ve yapay zeka konularında güncel içerikler",
+    "noResults": "Bu kategoride henüz içerik bulunmuyor.",
+    "allCategories": "Tümü",
+    "loading": "Yükleniyor...",
+    "notFound": "Blog yazısı bulunamadı",
+    "notFoundDesc": "Aradığınız blog yazısı mevcut değil veya kaldırılmış olabilir.",
+    "backToList": "Blog listesine dön"
+  },
+  "testimonials": {
+    "title": "Kullanıcı Yorumları",
+    "subtitle": "Finans Kodu ile finansal özgürlük yolculuğuna çıkanların deneyimleri"
+  },
+  "about": {
+    "title": "Hakkımızda",
+    "subtitle": "Finansal özgürlük yolculuğunuzda size rehberlik edecek ekip"
+  },
+  "footer": {
+    "meetFounder": "Kurucu Stratejistimizle tanışın:",
+    "quickLinks": "Hızlı Linkler",
+    "social": "Sosyal Medya",
+    "followUs": "Bizi sosyal medyada takip edin!",
+    "newsletter": {
+      "title": "Güncel Kalın",
+      "subtitle": "Yeni ürünler, AI ipuçları ve verimlilik stratejileri için e-bültenimize katılın.",
+      "placeholder": "E-posta adresiniz",
+      "cta": "Katıl",
+      "success": "E-bülten kaydınız alındı! Yakında sizinle iletişime geçeceğiz."
+    },
+    "copyright": "Tüm hakları saklıdır."
+  },
+  "kodOdasi": {
+    "title": "Kod Odası",
+    "subtitle": "Finans topluluğu — Gerçek zamanlı sohbet",
+    "loginTitle": "Kod Odası'na Hoş Geldiniz",
+    "loginDesc": "Yatırım, borsa ve ekonomiyi birlikte tartışmak için Google hesabınızla giriş yapın.",
+    "loginButton": "Google ile Giriş Yap",
+    "loginTerms": "Giriş yaparak kullanım şartlarını kabul etmiş olursunuz.",
+    "messagePlaceholder": "Mesajınızı yazın... (Enter ile gönder)",
+    "send": "Gönder",
+    "sending": "Gönderiliyor...",
+    "loading": "Mesajlar yükleniyor...",
+    "noMessages": "Henüz mesaj yok. İlk mesajı siz gönderin!",
+    "signOut": "Çıkış",
+    "rateLimitError": "⚠️ Çok hızlı mesaj gönderiyorsunuz. Biraz bekleyin.",
+    "sendError": "Mesaj gönderilemedi. Tekrar deneyin.",
+    "loadError": "Mesajlar yüklenemedi. Sayfayı yenileyin.",
+    "tabs": {
+      "general": "Genel",
+      "bugs": "Hata",
+      "performance": "Performans",
+      "ui": "Arayüz Tasarımı"
+    },
+    "newPost": "Yeni Gönderi",
+    "postPlaceholder": "Düşüncelerinizi paylaşın..."
+  },
+  "theme": {
+    "light": "Açık Tema",
+    "dark": "Koyu Tema",
+    "toggle": "Temayı Değiştir"
+  },
+  "language": {
+    "tr": "Türkçe",
+    "en": "English",
+    "toggle": "Dili Değiştir"
+  },
+  "mobile": {
+    "assistant": "Asistan",
+    "navigation": "Mobil navigasyon"
+  },
+  "analysis": {
+    "maintenance": {
+      "title": "Bakım Çalışması",
+      "subtitle": "Finansal Analiz aracımız şu anda bakımdadır.",
+      "description": "Daha güçlü ve doğru analizler sunabilmek için sistemlerimizi güncelliyoruz. Kısa süre içinde tekrar hizmetinizde olacağız.",
+      "eta": "Tahmini dönüş: Yakında",
+      "backHome": "Ana Sayfaya Dön"
+    }
+  },
+  "accessibility": {
+    "skipToContent": "Ana içeriğe atla"
+  }
+}

@@ -1,0 +1,120 @@
+import { trpc } from "@/lib/trpc";
+import { supabase } from "@/lib/supabase";
+import { UNAUTHED_ERR_MSG } from '@shared/const';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { httpBatchLink, TRPCClientError } from "@trpc/client";
+import { createRoot } from "react-dom/client";
+import superjson from "superjson";
+import { HelmetProvider } from "react-helmet-async";
+import App from "./App";
+import "./index.css";
+import { initWebVitals } from "@/lib/webVitals";
+
+const queryClient = new QueryClient();
+
+const redirectToLoginIfUnauthorized = (error: unknown) => {
+  if (!(error instanceof TRPCClientError)) return;
+  if (typeof window === "undefined") return;
+
+  const isUnauthorized = error.message === UNAUTHED_ERR_MSG;
+
+  if (!isUnauthorized) return;
+
+  // For Supabase Auth, we don't redirect - user can sign in via modal
+  console.warn("[Auth] Unauthorized access - user needs to sign in");
+};
+
+queryClient.getQueryCache().subscribe(event => {
+  if (event.type === "updated" && event.action.type === "error") {
+    const error = event.query.state.error;
+    redirectToLoginIfUnauthorized(error);
+    console.error("[API Query Error]", error);
+  }
+});
+
+queryClient.getMutationCache().subscribe(event => {
+  if (event.type === "updated" && event.action.type === "error") {
+    const error = event.mutation.state.error;
+    redirectToLoginIfUnauthorized(error);
+    console.error("[API Mutation Error]", error);
+  }
+});
+
+const trpcClient = trpc.createClient({
+  links: [
+    httpBatchLink({
+      url: "/api/trpc",
+      transformer: superjson,
+      async fetch(input, init) {
+        // Get Supabase session token
+        const { data: { session } } = await supabase.auth.getSession();
+        const token = session?.access_token;
+
+        // Add Authorization header if token exists
+        const headers = new Headers(init?.headers);
+        if (token) {
+          headers.set('Authorization', `Bearer ${token}`);
+        }
+
+        return globalThis.fetch(input, {
+          ...(init ?? {}),
+          headers,
+          credentials: "include",
+        });
+      },
+    }),
+  ],
+});
+
+createRoot(document.getElementById("root")!).render(
+  <HelmetProvider>
+    <trpc.Provider client={trpcClient} queryClient={queryClient}>
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
+    </trpc.Provider>
+  </HelmetProvider>
+);
+
+// Web Vitals izlemeyi başlat (render sonrası — ana thread'i bloklamaz)
+initWebVitals();
+
+// ╔════════════════════════════════════════════════════════════════════════════╗
+// ║ STALE CHUNK KURTARICI                                                        ║
+// ║ Eski SW cache'indeki bir JS chunk bulunamazsa Vite/React "ChunkLoadError"   ║
+// ║ fırlatır ve uygulama siyah ekrana düşer. Bu yakalayıcı sayfayı bir kez      ║
+// ║ otomatik yeniler — yeni index.html yeni hash'li chunk'ları çağırır.         ║
+// ╚════════════════════════════════════════════════════════════════════════════╝
+const CHUNK_RELOAD_KEY = 'fk_chunk_reload_at';
+
+function handleChunkLoadError(error: unknown): void {
+  const isChunkError =
+    error instanceof Error &&
+    (error.name === 'ChunkLoadError' ||
+      /loading chunk \d+ failed/i.test(error.message) ||
+      /failed to fetch dynamically imported module/i.test(error.message) ||
+      /error loading.*\.js/i.test(error.message));
+
+  if (!isChunkError) return;
+
+  // Sonsuz döngü önleme: son 10 saniye içinde zaten yenilendiyse dur
+  const lastReload = parseInt(sessionStorage.getItem(CHUNK_RELOAD_KEY) || '0', 10);
+  const now = Date.now();
+  if (now - lastReload < 10_000) {
+    console.error('[ChunkLoadError] Otomatik yenileme başarısız — kullanıcı müdahalesi gerekiyor.', error);
+    return;
+  }
+
+  console.warn('[ChunkLoadError] Eski chunk tespit edildi, sayfa yenileniyor…', error);
+  sessionStorage.setItem(CHUNK_RELOAD_KEY, String(now));
+  window.location.reload();
+}
+
+// Global hata yakalayıcılar
+window.addEventListener('error', (event) => {
+  handleChunkLoadError(event.error);
+});
+
+window.addEventListener('unhandledrejection', (event) => {
+  handleChunkLoadError(event.reason);
+});

@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="tr">
+
+  <head>
+    <!-- TEMA FLASH ENGELLEYİCİ — bu script en üstte, diğer her şeyden önce olmalı -->
+    <script>
+      (function() {
+        try {
+          var saved = localStorage.getItem('fk-theme');
+          var theme = saved === 'light' || saved === 'dark' ? saved : 'dark';
+          document.documentElement.classList.remove('light', 'dark');
+          document.documentElement.classList.add(theme);
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch(e) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <!-- WCAG 2.1 AA uyumlu: maximum-scale kaldırıldı — kullanıcılar zoom yapabilir -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Finans | Finans Analiz Platformu ve Araçları - Finans Kodu</title>
+    <!-- Meta description: Helmet tarafından dinamik olarak yönetilir. Statik fallback kaldırıldı — duplicate meta description önlemek için. -->
+    <meta name="author" content="Rubi Can İçliyürek" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+
+    <!-- ============================================================
+         FAVICON & WEB APP MANIFEST
+         ============================================================ -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#050810" />
+    <meta name="msapplication-TileColor" content="#050810" />
+
+    <!-- ============================================================
+         PRECONNECT: 3. taraf kaynaklara erken bağlantı (DNS + TLS maliyeti azaltır)
+         ============================================================ -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
+    <link rel="preconnect" href="https://www.clarity.ms" />
+    <link rel="preconnect" href="https://d2xsxph8kpxj0f.cloudfront.net" crossorigin />
+    <!-- Firebase: Auth ve Firestore için preconnect -->
+    <link rel="preconnect" href="https://firebaseapp.com" />
+    <link rel="preconnect" href="https://firestore.googleapis.com" />
+    <!-- TradingView widget için preconnect -->
+    <link rel="preconnect" href="https://s3.tradingview.com" />
+    <!-- DNS prefetch: analitik ve CDN için -->
+    <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+    <link rel="dns-prefetch" href="https://static.clarity.ms" />
+    <link rel="dns-prefetch" href="https://www.gstatic.com" />
+
+    <!-- ============================================================
+         OPEN GRAPH / SOCIAL MEDIA
+         og:image: 1200x630 OG görseli (logo.png yerine gerçek OG görseli)
+         ============================================================ -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Finans Kodu" />
+    <meta property="og:title" content="Finans | Finans Analiz Platformu ve Araçları - Finans Kodu" />
+    <meta property="og:description" content="Finans analiz, algoritmik ticaret ve yapay zeka destekli borsa araçlarıyla Türkiye piyasalarında bilinçli kararlar alın. Finans Kodu ile portföyünüzü güçlendirin." />
+    <meta property="og:url" content="https://finanskodu.com/" />
+    <meta property="og:image" content="https://finanskodu.com/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Finans Kodu - Yapay Zeka Destekli Finansal Analiz Platformu" />
+    <meta property="og:locale" content="tr_TR" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@finanskodu" />
+    <meta name="twitter:title" content="Finans | Finans Analiz Platformu ve Araçları - Finans Kodu" />
+    <meta name="twitter:description" content="Finans analiz, algoritmik ticaret ve yapay zeka destekli borsa araçlarıyla Türkiye piyasalarında bilinçli kararlar alın. Finans Kodu ile portföyünüzü güçlendirin." />
+    <meta name="twitter:image" content="https://finanskodu.com/og-image.png" />
+
+    <!-- Canonical: Her sayfa kendi canonical'ını React Helmet ile dinamik olarak tanımlar.
+         Statik fallback kasıtlı olarak kaldırıldı — yanlış canonical tüm sayfalarda
+         tekrarlanmasın diye. Her sayfanın Helmet'inde doğru canonical mevcuttur. -->
+
+    <!-- ============================================================
+         HREFLANG: Dil/bölge hedefleme — arama motorlarına doğru dili bildir
+         ============================================================ -->
+    <link rel="alternate" hreflang="tr-TR" href="https://finanskodu.com/" />
+    <link rel="alternate" hreflang="tr" href="https://finanskodu.com/" />
+    <link rel="alternate" hreflang="x-default" href="https://finanskodu.com/" />
+
+    <!-- Bing Webmaster Tools Verification -->
+    <meta name="msvalidate.01" content="DDF667ECAA6E5E2F19F2CFF898AC9BAC" />
+
+    <!-- ============================================================
+         GOOGLE ANALYTICS 4: window.load'dan sonra yükle (FCP/LCP bloklamaz)
+         Çerez onayı varsa yükle (KVKK uyumu — cookieConsent flag'i kontrol edilir)
+         ============================================================ -->
+    <script>
+      (function() {
+        function loadGA4() {
+          // KVKK: Çerez onayı yoksa analitik yükleme
+          try {
+            var consent = localStorage.getItem('fk-cookie-consent');
+            if (consent === 'rejected') return;
+          } catch(e) {}
+          var s = document.createElement('script');
+          s.async = true;
+          s.src = 'https://www.googletagmanager.com/gtag/js?id=%VITE_GA4_MEASUREMENT_ID%';
+          s.onerror = function() {}; // AdBlock sessizce yoksay
+          document.head.appendChild(s);
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          window.gtag = gtag;
+          gtag('js', new Date());
+          gtag('config', '%VITE_GA4_MEASUREMENT_ID%', {
+            send_page_view: false,
+            // KVKK: Onay yoksa sadece anonim veri
+            anonymize_ip: true
+          });
+        }
+        if (document.readyState === 'complete') {
+          loadGA4();
+        } else {
+          window.addEventListener('load', loadGA4, { once: true, passive: true });
+        }
+      })();
+    </script>
+
+    <!-- Microsoft Clarity: window.load'dan sonra, çerez onayı varsa yükle -->
+    <script>
+      (function() {
+        function loadClarity() {
+          try {
+            var consent = localStorage.getItem('fk-cookie-consent');
+            if (consent === 'rejected') return;
+          } catch(e) {}
+          try {
+            (function(c,l,a,r,i,t,y){
+              c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+              t=l.createElement(r);t.async=1;t.defer=1;t.src="https://www.clarity.ms/tag/"+i;
+              t.onerror=function(){}; // AdBlock sessizce yoksay
+              y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+            })(window, document, "clarity", "script", "vi6tuxtune");
+          } catch(e) {}
+        }
+        if (document.readyState === 'complete') {
+          loadClarity();
+        } else {
+          window.addEventListener('load', loadClarity, { once: true, passive: true });
+        }
+      })();
+    </script>
+
+    <!-- ============================================================
+         CRITICAL CSS: above-the-fold inline — render-blocking önleme
+         ============================================================ -->
+    <style>
+      /* Critical: body defaults - prevents FOUC and layout shift */
+      *,*::before,*::after{box-sizing:border-box}
+      html{overflow-x:hidden;scroll-behavior:smooth}
+      body{margin:0;overflow-x:hidden;font-size:16px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;background:#050810;color:#F0F4F8;}
+      .dark{color-scheme:dark}
+      nav,header{display:block}
+      img{max-width:100%;height:auto}
+      #root{min-height:100vh}
+    </style>
+
+    <!-- Google Fonts: non-blocking load (media=print trick) -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;600;700&family=Space+Grotesk:wght@600;700&display=swap&subset=latin,latin-ext" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;600;700&family=Space+Grotesk:wght@600;700&display=swap&subset=latin,latin-ext" media="print" onload="this.media='all'" />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;600;700&family=Space+Grotesk:wght@600;700&display=swap&subset=latin,latin-ext" />
+    </noscript>
+
+    <!-- ============================================================
+         STRUCTURED DATA (Schema.org)
+         E-E-A-T sinyalleri: Organization, Person (founder), SoftwareApplication
+         ============================================================ -->
+
+    <!-- Organization Schema: E-E-A-T için zenginleştirildi -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": "https://finanskodu.com/#organization",
+      "name": "Finans Kodu",
+      "url": "https://finanskodu.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://finanskodu.com/assets/fk-logo-new.webp",
+        "width": 200,
+        "height": 50
+      },
+      "description": "Türkiye'nin finans profesyonelleri için yapay zeka destekli borsa analizi, algoritmik ticaret stratejileri ve Excel otomasyon araçları.",
+      "foundingDate": "2023",
+      "founder": {
+        "@type": "Person",
+        "name": "Rubi Can İçliyürek",
+        "url": "https://finanskodu.com/kurucu-stratejist",
+        "jobTitle": "Kurucu Stratejist",
+        "sameAs": [
+          "https://www.linkedin.com/in/rubicanicli/"
+        ]
+      },
+      "sameAs": [
+        "https://finanskodu.com"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "info@finanskodu.com",
+        "contactType": "customer service",
+        "availableLanguage": "Turkish"
+      }
+    }
+    </script>
+
+    <!-- SoftwareApplication Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Finans Kodu AI Prompt Kütüphanesi",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Web",
+      "url": "https://finanskodu.com/dijital-araclar/ai-prompt-kutuphanesi",
+      "description": "Finans profesyonelleri için optimize edilmiş yapay zeka promptları ve algoritmik analiz araçları.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "TRY"
+      },
+      "publisher": {
+        "@id": "https://finanskodu.com/#organization"
+      }
+    }
+    </script>
+
+    <!-- WebSite Schema: Sitelinks Searchbox için -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": "https://finanskodu.com/#website",
+      "url": "https://finanskodu.com",
+      "name": "Finans Kodu",
+      "description": "Yapay zeka destekli finansal mühendislik ve algoritmik ticaret platformu",
+      "publisher": {
+        "@id": "https://finanskodu.com/#organization"
+      },
+      "inLanguage": "tr-TR"
+    }
+    </script>
+
+    <!-- BreadcrumbList Schema for Home Page -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Ana Sayfa",
+          "item": "https://finanskodu.com/"
+        }
+      ]
+    }
+    </script>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // Umami Analytics: sadece VITE_ANALYTICS_ENDPOINT env değişkeni build'de
+      // yerleştirilmişse yükle. Değişken çözümlenmemişse (%VITE_...% literal
+      // kalırsa) script hiç yüklenmez ve konsol hatası oluşmaz.
+      (function() {
+        var endpoint = '%VITE_ANALYTICS_ENDPOINT%';
+        var siteId   = '%VITE_ANALYTICS_WEBSITE_ID%';
+        if (!endpoint || endpoint.indexOf('%VITE_') === 0) return;
+        var s = document.createElement('script');
+        s.defer = true;
+        s.src = endpoint + '/umami';
+        s.setAttribute('data-website-id', siteId);
+        document.body.appendChild(s);
+      })();
+    </script>
+  </body>
+
+</html>
